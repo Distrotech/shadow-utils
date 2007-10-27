@@ -2,7 +2,7 @@ Goal: Fix a typo in the newgrp man page.
 
 Fixes: #439090
 
-Staus wrt upstream: not forwarded
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Index: shadow-4.0.18.1/man/fr/fr.po
 ===================================================================
