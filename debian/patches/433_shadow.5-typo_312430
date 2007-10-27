@@ -1,7 +1,7 @@
 Goal: fix typo
 Fixes:
 
-Status wrt upstream: Forwarded but not applied yet
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Index: shadow-4.0.18.1/man/shadow.5.xml
 ===================================================================
