@@ -1,8 +1,7 @@
 Goal: Be up front on the origin of our su.
 Fixes: #244297
 
-Status wrt upstream: It must be forwarded upstream.
-                     Upstream also uses some bits from the GNU shellutils.
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Index: shadow-4.0.18.1/src/su.c
 ===================================================================
