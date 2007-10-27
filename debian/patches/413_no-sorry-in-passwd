@@ -1,7 +1,7 @@
 Goal: No longer print "sorry" and apologize to users
 Fixes: #384164
 
-Status wrt upstream: not reported yet.
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Note: 
 

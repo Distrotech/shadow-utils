@@ -2,8 +2,7 @@ Goal: Fix the traslation of Sorry in German
 
 Fixes: #383045
 
-Status wrt upstream: Forwarded. Waiting for apply to remove from trunk
-                     Not to be removed in etch
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Index: shadow-4.0.18.1/po/de.po
 ===================================================================

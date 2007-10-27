@@ -4,7 +4,7 @@ Fixes: #425689
 
 Note: Update asked to debian-l10n-italian in June 2007
 
-Status wrt upstream: should be forwarded
+Status wrt upstream: Will be fixed in 4.0.18.2
 
 Index: shadow-4.0.18.1/man/it/it.po
 ===================================================================
