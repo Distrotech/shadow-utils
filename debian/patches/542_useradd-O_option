@@ -1,0 +1,44 @@
+Goal: accepts the -O flag for backward compatibility. (was used by adduser?)
+
+Note: useradd.8 needs to be regenerated.
+
+Status wrt upstream: not included as this is just specific 
+                     backward compatibility for Debian
+
+Index: shadow-4.0.18.1/man/useradd.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-09-17 12:17:59.836052044 +0200
++++ shadow-4.0.18.1/man/useradd.8.xml	2006-09-17 12:18:01.136062380 +0200
+@@ -201,6 +201,11 @@
+ 	    <replaceable>UID_MIN</replaceable>=<replaceable>10</replaceable>,<replaceable>UID_MAX</replaceable>=<replaceable>499</replaceable>
+ 	    doesn't work yet.
+ 	  </para>
++          <para>
++            For the compatibility with previous Debian's
++            <command>useradd</command>, the <option>-O</option> option is
++            also supported.
++          </para>
+ 	</listitem>
+       </varlistentry>
+       <varlistentry>
+Index: shadow-4.0.18.1/src/useradd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/useradd.c	2006-09-17 12:17:58.252039450 +0200
++++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:18:01.140062412 +0200
+@@ -1023,7 +1023,7 @@
+ 			{NULL, 0, NULL, '\0'}
+ 		};
+ 		while ((c =
+-			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:",
++			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMop:s:u:",
+ 				     long_options, NULL)) != -1) {
+ 			switch (c) {
+ 			case 'b':
+@@ -1142,6 +1142,7 @@
+ 				kflg++;
+ 				break;
+ 			case 'K':
++			case 'O': /* compatibility with previous Debian useradd */
+ 				/*
+ 				 * override login.defs defaults (-K name=value)
+ 				 * example: -K UID_MIN=100 -K UID_MAX=499

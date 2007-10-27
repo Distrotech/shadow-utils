@@ -1,0 +1,53 @@
+Goal: No longer print "sorry" and apologize to users
+Fixes: #384164
+
+Status wrt upstream: not reported yet.
+
+Note: 
+
+Index: shadow-4.0.18.1/src/newgrp.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/newgrp.c	2007-06-21 01:51:59.071588730 +0200
++++ shadow-4.0.18.1/src/newgrp.c	2007-06-21 01:54:18.564486366 +0200
+@@ -403,7 +403,7 @@
+ 			 * there is no password, print out "Sorry" and give up
+ 			 */
+ 			sleep (1);
+-			fputs (_("Sorry.\n"), stderr);
++			fputs (_("No password.\n"), stderr);
+ 			goto failure;
+ 		}
+ 
+@@ -412,7 +412,6 @@
+ 				 "Invalid password for group `%s' from `%s'",
+ 				 group, name));
+ 			sleep (1);
+-			fputs (_("Sorry.\n"), stderr);
+ 			goto failure;
+ 		}
+ 	}
+Index: shadow-4.0.18.1/src/passwd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/passwd.c	2007-06-21 01:49:56.577825572 +0200
++++ shadow-4.0.18.1/src/passwd.c	2007-06-21 01:50:57.074745336 +0200
+@@ -350,7 +350,7 @@
+ 	if (now < ok) {
+ 		fprintf (stderr,
+ 			 _
+-			 ("Sorry, the password for %s cannot be changed yet.\n"),
++			 ("The password for %s cannot be changed yet.\n"),
+ 			 pw->pw_name);
+ 		SYSLOG ((LOG_WARN, "now < minimum age for `%s'", pw->pw_name));
+ 		closelog ();
+Index: shadow-4.0.18.1/src/su.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/su.c	2007-06-21 01:51:35.072810642 +0200
++++ shadow-4.0.18.1/src/su.c	2007-06-21 01:51:50.572021491 +0200
+@@ -171,7 +171,6 @@
+ 			 oldname[0] ? oldname : "???", name[0] ? name : "???"));
+ 	closelog ();
+ #endif
+-	puts (_("Sorry."));
+ 	exit (1);
+ }
+ 

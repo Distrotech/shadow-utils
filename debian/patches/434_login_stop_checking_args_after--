@@ -1,0 +1,20 @@
+Goal: terminate argument validation in login when it hits a '--'.
+Fixes: #66368
+
+Status wrt upstream: It could certainly be submitted to upstream.
+                     Upstream comment: "Better will be rewrite login
+                     for use getopt_long()."
+
+Index: shadow-4.0.18.1/src/login.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/login.c	2006-07-10 06:11:32.000000000 +0200
++++ shadow-4.0.18.1/src/login.c	2006-09-17 12:17:54.336008314 +0200
+@@ -253,6 +253,8 @@
+ 	for (arg = 1; arg < argc; arg++) {
+ 		if (argv[arg][0] == '-' && strlen (argv[arg]) > 2)
+ 			usage ();
++		if (!strcmp(argv[arg], "--"))
++			break; /* stop checking on a "--" */
+ 	}
+ }
+ 

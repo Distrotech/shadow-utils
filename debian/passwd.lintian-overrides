@@ -1,0 +1,20 @@
+passwd: setgid-binary usr/bin/chage 2755 root/shadow
+passwd: setuid-binary usr/bin/chfn 4755 root/root
+passwd: setuid-binary usr/bin/chsh 4755 root/root
+passwd: setgid-binary usr/bin/expiry 2755 root/shadow
+passwd: setuid-binary usr/bin/gpasswd 4755 root/root
+passwd: setuid-binary usr/bin/passwd 4755 root/root
+
+# passwd.config in a no-op (exit 0) when debconf is not installed. 
+# debconf is "important", and passwd is "required". A dependency would be *bad*
+passwd: seen-flag-requires-versioned-depends config
+passwd: missing-debconf-dependency
+
+# passwd.config uses adduser but does not strictly depend on it
+# as it fallbacks to useradd
+passwd: maintainer-script-needs-depends-on-adduser config
+
+# Wrong warning from lintian for untranslatable stuff
+passwd: malformed-prompt-in-templates passwd/root-password-crypted
+passwd: malformed-prompt-in-templates passwd/user-password-crypted
+passwd: malformed-prompt-in-templates passwd/user-uid

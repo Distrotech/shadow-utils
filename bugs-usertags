@@ -1,0 +1,25 @@
+This described the usertags used by the team.
+
+For usertags documentation, see
+http://lists.debian.org/debian-devel-announce/2005/09/msg00002.html
+
+All bugs tagged by team members must be tagged with 
+"user pkg-shadow-devel@lists.alioth.debian.org"
+
+Tags list
+---------
+
+toclose:         This bug has been announced to be closed in case no more news
+                 or information is received from the bug submitter or someone
+                 else until the delay specified in the limits_YYYYMMDD tag
+
+limits-YYYYMMDD: combine it with "toclose". Specifies the date after which
+                 bugs can be closed without other action in case no news 
+                 is received
+
+manpages-replace A bug reported angainst a manpages-xx package to indicate
+                 conflicting man pages. This tag can be used to tune the
+                 Replaces fields.
+
+su-transition:   This bug is related to the su transition (#276419)
+

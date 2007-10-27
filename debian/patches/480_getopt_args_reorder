@@ -1,0 +1,54 @@
+Goal: Allow SU options to be passed after - or the username
+
+Fixes: #331438 or #346445 in popularity-contest
+
+Note: The man page is clear about su usage:
+su [options] [-] [username [args]]
+but too many package are using this feature
+
+GNU su should also allow that.
+
+The only drawback I can see is (for upstream) that "su -x" (whish should
+start a shell in debug mode) won't work (su -- -x) will have to be used
+instead.
+This was a problem when -c was not an su option, but it is no more the
+case (a -- would have to be added for all the su -c "command"
+invocations).
+
+Index: shadow-4.0.18.1/src/su.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:18:07.616113902 +0200
++++ shadow-4.0.18.1/src/su.c	2006-09-17 12:18:08.884123984 +0200
+@@ -374,19 +374,9 @@
+ 		};
+ 
+ 		while ((c =
+-			getopt_long (argc, argv, "-c:hlmps:", long_options,
++			getopt_long (argc, argv, "c:hlmps:", long_options,
+ 				     &option_index)) != -1) {
+ 			switch (c) {
+-			case 1:
+-				/* this is not an su option */
+-				/* The next arguments are either '-', the
+-				 * target name, or arguments to be passed
+-				 * to the shell.
+-				 */
+-				/* rewind the (not yet handled) option */
+-				optind--;
+-				goto end_su_options;
+-				break;	/* NOT REACHED */
+ 			case 'c':
+ 				command = optarg;
+ 				break;
+@@ -408,10 +398,9 @@
+ 				shellstr = optarg;
+ 				break;
+ 			default:
+-				usage ();	/* NOT REACHED */
++				usage ();
+ 			}
+ 		}
+-	      end_su_options:
+ 		if (optind < argc && !strcmp (argv[optind], "-")) {
+ 			fakelogin = 1;
+ 			optind++;

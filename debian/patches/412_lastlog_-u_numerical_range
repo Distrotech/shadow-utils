@@ -1,0 +1,153 @@
+Goal: Sipport numerical UID and ranges in lastlog -u
+Fixes: #259494
+
+Status wrt upstream: not reported yet.
+
+Note: It also allows to mix -u and -t
+
+Index: shadow-4.0.18.1/man/lastlog.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/lastlog.8.xml	2007-06-19 13:23:42.000000000 +0100
++++ shadow-4.0.18.1/man/lastlog.8.xml	2007-06-19 14:35:26.000000000 +0100
+@@ -71,22 +71,20 @@
+       <varlistentry>
+ 	<term>
+ 	  <option>-u</option>, <option>--user</option>
+-	  <replaceable>LOGIN</replaceable>
++	  <replaceable>LOGIN</replaceable>|<replaceable>RANGE</replaceable>
+ 	</term>
+ 	<listitem>
+ 	  <para>Print the lastlog record for user with specified
+ 	    <emphasis remap='I'>LOGIN</emphasis> only.
+ 	  </para>
+-	</listitem>
+-      </varlistentry>
+-    </variablelist>
+-    <variablelist remap='TP'>
+-      <varlistentry>
+-	<term>
+-	  The <option>-t</option> flag overrides the use of <option>-u</option>.
+-	</term>
+-	<listitem>
+-	  <para></para>
++	  <para>Instead of a login name, <command>lastlog</command> also
++	  accepts a numerical user ID or a <replaceable>RANGE</replaceable> of
++	  users. This <replaceable>RANGE</replaceable> of users can be
++	  specified with a min and max values
++	  (<replaceable>UID_MIN-UID_MAX</replaceable>), a max value
++	  (<replaceable>-UID_MAX</replaceable>) or a min value
++	  (<replaceable>UID_MIN-</replaceable>).
++	  </para>
+ 	</listitem>
+       </varlistentry>
+     </variablelist>
+Index: shadow-4.0.18.1/src/lastlog.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/lastlog.c	2007-06-19 13:23:35.000000000 +0100
++++ shadow-4.0.18.1/src/lastlog.c	2007-06-19 14:22:21.000000000 +0100
+@@ -51,6 +51,8 @@
+  */
+ static FILE *lastlogfile;	/* lastlog file stream */
+ static off_t user;		/* one single user, specified on command line */
++static long umin;		/* one single user, specified on command line */
++static long umax;		/* one single user, specified on command line */
+ static int days;		/* number of days to consider for print command */
+ static time_t seconds;		/* that number of days in seconds */
+ static int inverse_days;	/* number of days to consider for print command */
+@@ -58,6 +60,7 @@
+ 
+ 
+ static int uflg = 0;		/* set if user is a valid user id */
++static int urange = 0;		/* set if user is a valid user id range */
+ static int tflg = 0;		/* print is restricted to most recent days */
+ static int bflg = 0;		/* print excludes most recent days */
+ static struct lastlog lastlog;	/* scratch structure to play with ... */
+@@ -127,26 +130,16 @@
+ {
+ 	off_t offset;
+ 
+-	if (uflg) {
+-		offset = user * sizeof lastlog;
+-
+-		if (fstat (fileno (lastlogfile), &statbuf)) {
+-			perror (LASTLOG_FILE);
+-			return;
+-		}
+-		if (offset >= statbuf.st_size)
+-			return;
+-
+-		fseeko (lastlogfile, offset, SEEK_SET);
+-		if (fread ((char *) &lastlog, sizeof lastlog, 1,
+-			   lastlogfile) == 1)
+-			print_one (pwent);
+-		else
+-			perror (LASTLOG_FILE);
+-	} else {
++	{
+ 		setpwent ();
+ 		while ((pwent = getpwent ())) {
++			if (uflg && user != pwent->pw_uid)
++				continue;
+ 			user = pwent->pw_uid;
++			if (urange &&
++			    ((umin != -1 && user < umin) ||
++			     (umax != -1 && user > umax)))
++				continue;
+ 			offset = user * sizeof lastlog;
+ 
+ 			fseeko (lastlogfile, offset, SEEK_SET);
+@@ -199,15 +192,47 @@
+ 				bflg++;
+ 				break;
+ 			case 'u':
++				/*
++				 * The user can be:
++				 *  - a login name
++				 *  - numerical
++				 *  - a numerical login ID
++				 *  - a range (-x, x-, x-y)
++				 */
+ 				pwent = getpwnam (optarg);
+-				if (!pwent) {
+-					fprintf (stderr,
+-						 _("Unknown User: %s\n"),
+-						 optarg);
+-					exit (1);
++				if (pwent) {
++					uflg = 1;
++					user = pwent->pw_uid;
++				} else {
++					char *endptr = NULL;
++					user = strtol(optarg, &endptr, 10);
++					if (*optarg != '\0' && *endptr == '\0') {
++						if (user < 0) {
++							/* -<userid> */
++							urange = 1;
++							umin = -1;
++							umax = -user;
++						} else {
++							/* <userid> */
++							uflg = 1;
++						}
++					} else if (endptr[0] == '-' && endptr[1] == '\0') {
++						/* <userid>- */
++						urange = 1;
++						umin = user;
++						umax = -1;
++					} else if (*endptr == '-') {
++						/* <userid>-<userid> */
++						urange = 1;
++						umin = user;
++						umax = atol(endptr+1);
++					} else {
++						fprintf (stderr,
++							 _("Unknown user or range: %s\n"),
++							 optarg);
++						exit (1);
++					}
+ 				}
+-				uflg++;
+-				user = pwent->pw_uid;
+ 				break;
+ 			default:
+ 				usage ();

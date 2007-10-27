@@ -1,0 +1,4 @@
+Tag: incorrect-file-perms
+Data: /usr/bin/(chage|chfn|chsh|expiry|gpasswd|passwd)
+Tag: whatis-parse-failed-on-manpage
+Data: /usr/share/man/(id|ja|ko|ru|tr|zh_CN|zh_TW)/

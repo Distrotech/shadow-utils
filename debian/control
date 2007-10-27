@@ -1,0 +1,37 @@
+Source: shadow
+Section: admin
+Priority: required
+Maintainer: Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+Standards-Version: 3.7.2.0
+Uploaders: Christian Perrier <bubulle@debian.org>, Martin Quinson <mquinson@debian.org>, Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>
+Build-Depends: autoconf, automake1.9, libtool, gettext, libpam0g-dev, debhelper (>= 5.0.0), quilt, dpkg-dev (>= 1.13.5), xsltproc, docbook-xsl, docbook-xml, libxml2-utils, cdbs, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64], gnome-doc-utils (>= 0.4.3-1)
+XS-X-Vcs-Svn: svn://svn.debian.org/svn/pkg-shadow/trunk
+
+Package: passwd
+Architecture: any
+Depends: ${shlibs:Depends}, ${loginpam}, debianutils (>= 2.15.2)
+Replaces: manpages-de (<< 0.4-9), manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-3), manpages-ja (<< 0.5.0.0.20050915-1), manpages-ko (<< 20050219-2), manpages-es (<< 1.55-4), manpages-es-extra (<< 0.8a-15), manpages-ru (<< 0.98-3), manpages-tr, manpages-zh
+Section: admin
+Priority: required
+Description: change and administer password and group data
+ This package includes passwd, chsh, chfn, and many other programs to
+ maintain password and group data.
+ .
+ Shadow passwords are supported.  See /usr/share/doc/passwd/README.Debian
+
+Package: login
+Architecture: any
+Pre-Depends: ${shlibs:Depends}, libpam-runtime (>= 0.76-14)
+Depends: libpam-modules (>= 0.72-5)
+Conflicts: gnunet (<< 0.7.0c-2), amavisd-new (<<2.3.3-8), python-4suite (<< 0.99cvs20060405-1), backupninja (<< 0.9.3-5), echolot (<< 2.1.8-4)
+Replaces: manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-2), manpages-ko (<< 20050219-2), manpages-ja (<< 0.5.0.0.20050915-1), manpages-de (<< 0.4-10), manpages-es-extra (<<0.8a-15), manpages-tr, manpages-zh
+Essential: yes
+Section: admin
+Priority: required
+Description: system login tools
+ These tools are required to be able to login and use your system. The
+ login program invokes your user shell and enables command execution. The
+ newgrp program is used to change your effective group ID (useful for
+ workgroup type situations). The su program allows changing your effective
+ user ID (useful being able to execute commands as another user).
+

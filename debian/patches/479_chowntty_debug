@@ -1,0 +1,62 @@
+Goal: Provide more info when chown_tty() phase of login fails (see #332198).
+
+Related: #332198 (helps to debug)
+
+Status wrt upstream: Not forwarded (dunno if there's any point in this).
+
+This patch increases verbosity of is_my_tty() routine which is called
+from chown_tty() which in turn is part of login sequence. Submitter of
+the bug #332198 sometimes gets telnet session refused, but message in
+syslog is not at all helpful:
+> ... login[453]: unable to determine TTY name, got /dev/pts/1
+and in fact it's misleading, because tty name is detected OK, it's
+is_my_tty() which is failing for a reason yet unknown (I suspect
+corruption of utmp file).
+
+Index: shadow-4.0.18.1/libmisc/chowntty.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/chowntty.c	2005-08-31 19:24:57.000000000 +0200
++++ shadow-4.0.18.1/libmisc/chowntty.c	2006-09-17 12:18:08.256118991 +0200
+@@ -40,6 +40,7 @@
+ #include "defines.h"
+ #include <pwd.h>
+ #include "getdef.h"
++#include <sys/sysmacros.h>
+ /*
+  * is_my_tty -- determine if "tty" is the same as TTY stdin is using
+  */
+@@ -47,12 +48,31 @@
+ {
+ 	struct stat by_name, by_fd;
+ 
+-	if (stat (tty, &by_name) || fstat (0, &by_fd))
++	if (stat (tty, &by_name)) {
++		/* Can use neither strerror() nor "%m" sequence -- first
++		 * is locale-dependent (while SYSLOG isn't) and for second
++		 * the SYSLOG macro isn't errno-transparent.  --xrgtn */
++		int e = errno;
++		SYSLOG ((LOG_WARN, "can't stat(`%s'): errno %i\n", tty, e));
+ 		return 0;
++	}
+ 
+-	if (by_name.st_rdev != by_fd.st_rdev)
++	if (fstat (0, &by_fd)) {
++		int e = errno;
++		SYSLOG ((LOG_WARN, "can't fstat(stdin): errno %i\n", e));
+ 		return 0;
+-	else
++	}
++
++	if (by_name.st_rdev != by_fd.st_rdev) {
++		SYSLOG ((LOG_WARN,
++			 "`%s'.st_rdev(%u,%u) != stdin.st_rdev(%u,%u)\n",
++			 tty,
++			 /* XXX: dev_t is 64bit, gnu_dev_mXXor are used
++			  * which are GNU extn */
++			 major(by_name.st_rdev), minor(by_name.st_rdev),
++			 major(by_fd.st_rdev), minor(by_fd.st_rdev)));
++		return 0;
++	} else
+ 		return 1;
+ }
+ 

@@ -1,0 +1,26 @@
+Goal: man_nonpam was renamed to man_nopam, but is still used in
+      man/sv/Makefile.am and man/it/Makefile.am
+
+Status wrt upstream: not reported yet
+
+Index: shadow-4.0.18.1/man/sv/Makefile.am
+===================================================================
+--- shadow-4.0.18.1.orig/man/sv/Makefile.am	2006-08-03 12:13:27.000000000 +0200
++++ shadow-4.0.18.1/man/sv/Makefile.am	2006-09-17 12:25:29.031623047 +0200
+@@ -54,4 +54,4 @@
+ 
+ EXTRA_DIST = \
+ 	$(man_MANS) \
+-	$(man_nonpam)
++	$(man_nopam)
+Index: shadow-4.0.18.1/man/it/Makefile.am
+===================================================================
+--- shadow-4.0.18.1.orig/man/it/Makefile.am	2006-08-03 12:11:59.000000000 +0200
++++ shadow-4.0.18.1/man/it/Makefile.am	2006-09-17 12:25:29.031623047 +0200
+@@ -46,5 +46,5 @@
+                         
+ EXTRA_DIST = \
+ 	$(man_MANS) \
+-	$(man_nonpam) \
++	$(man_nopam) \
+ 	id.1

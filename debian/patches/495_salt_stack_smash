@@ -1,0 +1,87 @@
+Goal: Do not break chpasswd/chgpasswd if compiled with
+      SSP (the -fstack-protector option in gcc 4.1) by fixing an
+      overflow in the 'salt' array
+
+Fix: #377825
+
+Author: Colin Watson <cjwatson@debian.org>
+
+Status wrt upstream: reported, not applied yet
+
+Index: shadow-4.0.18.1/libmisc/salt.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/salt.c	2006-09-17 12:17:58.260039514 +0200
++++ shadow-4.0.18.1/libmisc/salt.c	2006-09-17 12:18:13.948164248 +0200
+@@ -25,11 +25,13 @@
+ {
+ 	struct timeval tv;
+ 	static char result[40];
++	int max_salt_len = 8;
+ 
+ 	result[0] = '\0';
+ #ifndef USE_PAM
+ 	if (getdef_bool ("MD5_CRYPT_ENAB")) {
+ 		strcpy (result, "$1$");	/* magic for the new MD5 crypt() */
++		max_salt_len += 3;
+ 	}
+ #endif
+ 
+@@ -40,8 +42,8 @@
+ 	strcat (result, l64a (tv.tv_usec));
+ 	strcat (result, l64a (tv.tv_sec + getpid () + clock ()));
+ 
+-	if (strlen (result) > 3 + 8)	/* magic+salt */
+-		result[11] = '\0';
++	if (strlen (result) > max_salt_len)
++		result[max_salt_len] = '\0';
+ 
+ 	return result;
+ }
+Index: shadow-4.0.18.1/src/chgpasswd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chgpasswd.c	2006-09-17 12:17:58.260039514 +0200
++++ shadow-4.0.18.1/src/chgpasswd.c	2006-09-17 12:18:13.952164280 +0200
+@@ -244,10 +244,16 @@
+ 		newpwd = cp;
+ 		if (!eflg) {
+ 			if (md5flg) {
+-				char salt[12] = "$1$";
++				char md5salt[12] = "$1$";
++				char *salt = crypt_make_salt ();
+ 
+-				strcat (salt, crypt_make_salt ());
+-				cp = pw_encrypt (newpwd, salt);
++				if (strncmp (salt, "$1$", 3) == 0) {
++					strncat (md5salt, salt, 11);
++				} else {
++					strcat (md5salt, "$1$");
++					strncat (md5salt, salt, 8);
++				}
++				cp = pw_encrypt (newpwd, md5salt);
+ 			} else
+ 				cp = pw_encrypt (newpwd, crypt_make_salt ());
+ 		}
+Index: shadow-4.0.18.1/src/chpasswd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chpasswd.c	2006-09-17 12:17:58.228039259 +0200
++++ shadow-4.0.18.1/src/chpasswd.c	2006-09-17 12:18:13.972164439 +0200
+@@ -240,10 +240,16 @@
+ 		newpwd = cp;
+ 		if (!eflg) {
+ 			if (md5flg) {
+-				char salt[12] = "$1$";
++				char md5salt[12] = "";
++				char *salt = crypt_make_salt ();
+ 
+-				strcat (salt, crypt_make_salt ());
+-				cp = pw_encrypt (newpwd, salt);
++				if (strncmp (salt, "$1$", 3) == 0) {
++					strncat (md5salt, salt, 11);
++				} else {
++					strcat (md5salt, "$1$");
++					strncat (md5salt, salt, 8);
++				}
++				cp = pw_encrypt (newpwd, md5salt);
+ 			} else
+ 				cp = pw_encrypt (newpwd, crypt_make_salt ());
+ 		}

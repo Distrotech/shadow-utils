@@ -1,0 +1,48 @@
+Goal: Remove quite unwise password choice advices in passwd manpage
+Fixes: #386818
+
+Status wrt upstream: Forwarded without patch but ignored up to now
+
+Note: 
+
+Index: shadow-4.0.18.1/man/passwd.1.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/passwd.1.xml	2007-06-21 02:06:42.026632551 +0200
++++ shadow-4.0.18.1/man/passwd.1.xml	2007-06-21 02:04:59.531851133 +0200
+@@ -104,35 +104,9 @@
+ 
+       <para>
+ 	Your password must be easily remembered so that you will not be forced
+-	to write it on a piece of paper. This can be accomplished by
+-	appending two small words together and separating each with a
+-	special character or digit. For example, Pass%word.
++	to write it on a piece of paper.
+       </para>
+ 
+-      <para>
+-	Other methods of construction involve selecting an easily remembered
+-	phrase from literature and selecting the first or last letter from
+-	each word. An example of this is:
+-      </para>
+-
+-      <itemizedlist mark='bullet'>
+-	<listitem>
+-	  <para>Ask not for whom the bell tolls</para>
+-	</listitem>
+-	<listitem>
+-	  <para>which produces</para>
+-	</listitem>
+-	<listitem>
+-	  <para>An4wtbt</para>
+-	</listitem>
+-      </itemizedlist>
+-
+-      <para>
+-	You may be reasonably sure few crackers will have included this in
+-	their dictionaries. You should, however, select your own methods for
+-	constructing passwords and not rely exclusively on the methods given
+-	here.
+-      </para>
+     </refsect2>
+   </refsect1>
+ 

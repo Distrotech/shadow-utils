@@ -1,0 +1,4 @@
+Tag: incorrect-file-perms
+Data: (/bin/su|/usr/bin/newgrp)
+Tag: whatis-parse-failed-on-manpage
+Data: /usr/share/man/(ko|ru|tr)/

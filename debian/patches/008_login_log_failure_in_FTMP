@@ -1,0 +1,51 @@
+Goal: Log login failures to the btmp file
+
+Notes:
+ * I'm not sure login should add an entry in the FTMP file when PAM is used.
+   (but nothing in /etc/login.defs indicates that the failure is not logged)
+
+Index: shadow-4.0.18.1/src/login.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:17:54.336008314 +0200
++++ shadow-4.0.18.1/src/login.c	2006-09-17 12:17:54.972013371 +0200
+@@ -716,6 +716,20 @@
+ #endif				/* WITH_AUDIT */
+ 
+ 			  fprintf(stderr,"\nLogin incorrect\n");
++			  if (getdef_str("FTMP_FILE") != NULL) {
++#if HAVE_UTMPX_H
++			    failent = utxent;
++			    gettimeofday(&(failent.ut_tv), NULL);
++#else
++			    failent = utent;
++			    time(&failent.ut_time);
++#endif
++			    strncpy(failent.ut_user, failent_user, sizeof(failent.ut_user));
++#ifdef USER_PROCESS
++			    failent.ut_type = USER_PROCESS;
++#endif
++			    failtmp(&failent);
++			  }
+ 
+ 			  /* Let's give it another go around */
+ 			  pam_set_item(pamh,PAM_USER,NULL);
+Index: shadow-4.0.18.1/lib/getdef.c
+===================================================================
+--- shadow-4.0.18.1.orig/lib/getdef.c	2006-06-24 15:17:18.000000000 +0200
++++ shadow-4.0.18.1/lib/getdef.c	2006-09-17 12:17:54.992013530 +0200
+@@ -57,6 +57,7 @@
+ 	{"ERASECHAR", NULL},
+ 	{"FAIL_DELAY", NULL},
+ 	{"FAKE_SHELL", NULL},
++	{"FTMP_FILE", NULL},
+ 	{"GID_MAX", NULL},
+ 	{"GID_MIN", NULL},
+ 	{"HUSHLOGIN_FILE", NULL},
+@@ -88,7 +89,6 @@
+ 	{"ENVIRON_FILE", NULL},
+ 	{"ENV_TZ", NULL},
+ 	{"FAILLOG_ENAB", NULL},
+-	{"FTMP_FILE", NULL},
+ 	{"ISSUE_FILE", NULL},
+ 	{"LASTLOG_ENAB", NULL},
+ 	{"LOGIN_STRING", NULL},

@@ -1,0 +1,102 @@
+Goal: Do not hardcode pam_fail_delay and let pam_unix do its
+      job to set a delay...or not
+
+Fixes: #87648
+
+Status wrt upstream: Forwarded but not applied yet
+
+Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
+
+Index: shadow-4.0.18.1/src/login.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:17:55.628018587 +0200
++++ shadow-4.0.18.1/src/login.c	2006-09-17 12:18:04.272087315 +0200
+@@ -331,7 +331,6 @@
+ 	char ptime[80];
+ #endif
+ 	int reason = PW_LOGIN;
+-	int delay;
+ 	int retries;
+ 	int failed;
+ 	int flag;
+@@ -351,6 +350,7 @@
+ 	pid_t child;
+ 	char *pam_user;
+ #else
++	int delay;
+ 	struct spwd *spwd = NULL;
+ #endif
+ 	/*
+@@ -573,7 +573,6 @@
+ 			alarm (timeout);
+ 
+ 		environ = newenvp;	/* make new environment active */
+-		delay = getdef_num ("FAIL_DELAY", 1);
+ 		retries = getdef_num ("LOGIN_RETRIES", RETRIES);
+ 
+ #ifdef USE_PAM
+@@ -589,17 +588,12 @@
+ 
+ 		/*
+ 		 * hostname & tty are either set to NULL or their correct values,
+-		 * depending on how much we know. We also set PAM's fail delay to
+-		 * ours.
++		 * depending on how much we know.
+ 		 */
+ 		retcode = pam_set_item (pamh, PAM_RHOST, hostname);
+ 		PAM_FAIL_CHECK;
+ 		retcode = pam_set_item (pamh, PAM_TTY, tty);
+ 		PAM_FAIL_CHECK;
+-#ifdef HAVE_PAM_FAIL_DELAY
+-		retcode = pam_fail_delay (pamh, 1000000 * delay);
+-		PAM_FAIL_CHECK;
+-#endif
+ 		/* if fflg == 1, then the user has already been authenticated */
+ 		if (!fflg || (getuid () != 0)) {
+ 			int failcount = 0;
+@@ -640,8 +634,6 @@
+ 			  failed = 0;
+ 
+ 			  failcount++;
+-			  if (delay > 0)
+-			    retcode = pam_fail_delay(pamh, 1000000*delay);
+ 
+ 			  retcode = pam_authenticate (pamh, 0);
+ 
+@@ -934,13 +926,16 @@
+ 		if (pwent.pw_passwd[0] == '\0')
+ 			pw_auth ("!", username, reason, (char *) 0);
+ 
++#ifndef USE_PAM
+ 		/*
+ 		 * Wait a while (a la SVR4 /usr/bin/login) before attempting
+ 		 * to login the user again. If the earlier alarm occurs
+ 		 * before the sleep() below completes, login will exit.
+ 		 */
++		delay = getdef_num ("FAIL_DELAY", 1);
+ 		if (delay > 0)
+ 			sleep (delay);
++#endif
+ 
+ 		puts (_("Login incorrect"));
+ 
+Index: shadow-4.0.18.1/lib/getdef.c
+===================================================================
+--- shadow-4.0.18.1.orig/lib/getdef.c	2006-09-17 12:17:58.260039514 +0200
++++ shadow-4.0.18.1/lib/getdef.c	2006-09-17 12:18:04.276087346 +0200
+@@ -55,7 +55,6 @@
+ 	{"ENV_PATH", NULL},
+ 	{"ENV_SUPATH", NULL},
+ 	{"ERASECHAR", NULL},
+-	{"FAIL_DELAY", NULL},
+ 	{"FAILLOG_ENAB", NULL},
+ 	{"FAKE_SHELL", NULL},
+ 	{"FTMP_FILE", NULL},
+@@ -92,6 +91,7 @@
+ 	{"ENV_HZ", NULL},
+ 	{"ENVIRON_FILE", NULL},
+ 	{"ENV_TZ", NULL},
++	{"FAIL_DELAY", NULL},
+ 	{"ISSUE_FILE", NULL},
+ 	{"LASTLOG_ENAB", NULL},
+ 	{"LOGIN_STRING", NULL},

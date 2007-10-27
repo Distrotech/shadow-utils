@@ -1,0 +1,21 @@
+Goal: do not use MAIL_FILE in userdel:
+      When MAIL_FILE is used, the mail spool is in the home directory, so
+      it do not need to be removed (in addition to the user's home
+      directory)
+
+Note: usermod should be checked also. Maybe MAIL_FILE can be removed from
+      login.defs
+
+Index: shadow-4.0.18.1/src/userdel.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/userdel.c	2006-09-17 12:17:58.256039482 +0200
++++ shadow-4.0.18.1/src/userdel.c	2006-09-17 12:18:02.408072494 +0200
+@@ -550,7 +550,7 @@
+ 
+ 	maildir = getdef_str ("MAIL_DIR");
+ #ifdef MAIL_SPOOL_DIR
+-	if (!maildir && !getdef_str ("MAIL_FILE"))
++	if (!maildir)
+ 		maildir = MAIL_SPOOL_DIR;
+ #endif
+ 	if (!maildir)

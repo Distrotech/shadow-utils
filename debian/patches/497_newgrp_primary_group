@@ -1,0 +1,24 @@
+Goal: Do not request a password when a user uses newgrp to switch to her
+      primary group.
+
+Fixes: #396691
+
+Status wrt upstream: not forwarded yet.
+
+Index: shadow-4.0.18.1/src/newgrp.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/newgrp.c	2007-04-15 15:25:01.000000000 +0200
++++ shadow-4.0.18.1/src/newgrp.c	2007-04-15 15:34:01.000000000 +0200
+@@ -357,6 +357,12 @@
+ 		needspasswd = 1;
+ 
+ 	/*
++	 * If it's her primary group, do not request a password.
++	 */
++	if (grp->gr_gid == pwd->pw_gid)
++		needspasswd = 0;
++
++	/*
+ 	 * If she does not have either a shadowed password, or a regular
+ 	 * password, and the group has a password, she needs to give the
+ 	 * group password.

@@ -1,0 +1,31 @@
+Goal: Clarify the online help of usermod
+
+Fix: #363033
+
+Author: Christian Perrier <bubulle@debian.org>
+
+Status wrt upstream: forwarded but not applied yet
+
+Index: shadow-4.0.18.1/src/usermod.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/usermod.c	2006-09-17 12:17:58.256039482 +0200
++++ shadow-4.0.18.1/src/usermod.c	2006-09-17 12:18:11.400143989 +0200
+@@ -279,8 +279,6 @@
+ 	fprintf (stderr, _("Usage: usermod [options] LOGIN\n"
+ 			   "\n"
+ 			   "Options:\n"
+-			   "  -a, --append			append the user to the supplemental GROUPS\n"
+-			   "				(use only with -G)\n"
+ 			   "  -c, --comment COMMENT		new value of the GECOS field\n"
+ 			   "  -d, --home HOME_DIR		new home directory for the user account\n"
+ 			   "  -e, --expiredate EXPIRE_DATE	set account expiration date to EXPIRE_DATE\n"
+@@ -288,6 +286,9 @@
+ 			   "				to INACTIVE\n"
+ 			   "  -g, --gid GROUP		force use GROUP as new primary group\n"
+ 			   "  -G, --groups GROUPS		new list of supplementary GROUPS\n"
++			   "  -a, --append		append the user to the supplemental GROUPS\n"
++			   "				mentioned by the -G option without removing\n"
++			   "				him/her from other groups\n"
+ 			   "  -h, --help			display this help message and exit\n"
+ 			   "  -l, --login NEW_LOGIN		new value of the login name\n"
+ 			   "  -L, --lock			lock the user account\n"

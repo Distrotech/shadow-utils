@@ -1,0 +1,20 @@
+Goal: MKINSTALLDIRS is not defined otherwise.
+
+Fixes: #384631
+
+Note: this is a minimal patch. Maybe it would be better to update the file
+to the new one distributed with gettext.
+
+Index: shadow-4.0.18.1/po/Makefile.in.in
+===================================================================
+--- shadow-4.0.18.1.orig/po/Makefile.in.in	2006-06-12 02:35:49.000000000 +0200
++++ shadow-4.0.18.1/po/Makefile.in.in	2006-09-17 12:18:17.300190899 +0200
+@@ -26,7 +26,7 @@
+ 
+ INSTALL = @INSTALL@
+ INSTALL_DATA = @INSTALL_DATA@
+-MKINSTALLDIRS = @MKINSTALLDIRS@
++MKINSTALLDIRS = @install_sh@ -d
+ mkinstalldirs = $(SHELL) $(MKINSTALLDIRS)
+ 
+ GMSGFMT = @GMSGFMT@

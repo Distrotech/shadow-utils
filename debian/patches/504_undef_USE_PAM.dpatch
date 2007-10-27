@@ -1,0 +1,175 @@
+Goal: Do not use PAM for chage, chpasswd, groupadd, groupdel, groupmod
+      newusers, useradd, userdel, usermod, chgpasswd (keep them low-level)
+Fixes: #283961, #162181, #162199, #162228, #369806.
+
+Index: shadow-4.0.18.1/src/chage.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chage.c	2006-07-19 18:38:57.000000000 +0200
++++ shadow-4.0.18.1/src/chage.c	2006-09-17 12:17:58.228039259 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: chage.c,v 1.73 2006/07/11 13:15:41 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/chpasswd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chpasswd.c	2006-06-24 12:18:55.000000000 +0200
++++ shadow-4.0.18.1/src/chpasswd.c	2006-09-17 12:17:58.228039259 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: chpasswd.c,v 1.37 2006/06/24 10:18:55 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/groupadd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/groupadd.c	2006-07-28 19:38:52.000000000 +0200
++++ shadow-4.0.18.1/src/groupadd.c	2006-09-17 12:17:58.232039291 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: groupadd.c,v 1.55 2006/07/28 17:38:52 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/groupdel.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/groupdel.c	2006-01-18 20:55:15.000000000 +0100
++++ shadow-4.0.18.1/src/groupdel.c	2006-09-17 12:17:58.244039386 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: groupdel.c,v 1.31 2006/01/18 19:55:15 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/groupmod.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/groupmod.c	2006-07-28 19:38:52.000000000 +0200
++++ shadow-4.0.18.1/src/groupmod.c	2006-09-17 12:17:58.248039418 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: groupmod.c,v 1.41 2006/07/28 17:38:52 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/newusers.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/newusers.c	2006-03-07 16:50:33.000000000 +0100
++++ shadow-4.0.18.1/src/newusers.c	2006-09-17 12:17:58.248039418 +0200
+@@ -34,6 +34,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: newusers.c,v 1.33 2006/03/07 15:47:32 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/useradd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/useradd.c	2006-07-28 19:42:48.000000000 +0200
++++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:17:58.252039450 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: useradd.c,v 1.100 2006/07/28 17:42:48 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/userdel.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/userdel.c	2006-07-10 06:11:32.000000000 +0200
++++ shadow-4.0.18.1/src/userdel.c	2006-09-17 12:17:58.256039482 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: userdel.c,v 1.66 2006/07/10 04:11:32 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/usermod.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/usermod.c	2006-07-28 19:42:48.000000000 +0200
++++ shadow-4.0.18.1/src/usermod.c	2006-09-17 12:17:58.256039482 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: usermod.c,v 1.71 2006/07/28 17:42:48 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/src/chgpasswd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chgpasswd.c	2006-06-20 22:00:04.000000000 +0200
++++ shadow-4.0.18.1/src/chgpasswd.c	2006-09-17 12:17:58.260039514 +0200
+@@ -28,6 +28,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: chgpasswd.c,v 1.5 2006/06/20 20:00:04 kloczek Exp $"
+ 
+Index: shadow-4.0.18.1/lib/getdef.c
+===================================================================
+--- shadow-4.0.18.1.orig/lib/getdef.c	2006-09-17 12:17:55.628018587 +0200
++++ shadow-4.0.18.1/lib/getdef.c	2006-09-17 12:17:58.260039514 +0200
+@@ -82,6 +82,9 @@
+ 	{"UMASK", NULL},
+ 	{"USERDEL_CMD", NULL},
+ 	{"USERGROUPS_ENAB", NULL},
++	/* some utilities are not compiled with PAM, and need
++	 * MD5_CRYPT_ENAB variable to know wether the passwords use MD5 */
++	{"MD5_CRYPT_ENAB", NULL},
+ #ifndef USE_PAM
+ 	{"CHFN_AUTH", NULL},
+ 	{"CHSH_AUTH", NULL},
+@@ -93,7 +96,6 @@
+ 	{"LASTLOG_ENAB", NULL},
+ 	{"LOGIN_STRING", NULL},
+ 	{"MAIL_CHECK_ENAB", NULL},
+-	{"MD5_CRYPT_ENAB", NULL},
+ 	{"MOTD_FILE", NULL},
+ 	{"NOLOGINS_FILE", NULL},
+ 	{"OBSCURE_CHECKS_ENAB", NULL},
+Index: shadow-4.0.18.1/lib/prototypes.h
+===================================================================
+--- shadow-4.0.18.1.orig/lib/prototypes.h	2006-02-07 17:36:30.000000000 +0100
++++ shadow-4.0.18.1/lib/prototypes.h	2006-09-17 12:17:58.260039514 +0200
+@@ -130,8 +130,12 @@
+ /* rlogin.c */
+ extern int do_rlogin (const char *, char *, int, char *, int);
+ 
++#ifndef USE_PAM
++/* As we are messing up with USE_PAM in libmisc/salt.c, make sure
++ * crypt_make_salt is never used with utilities compiled with PAM */
+ /* salt.c */
+ extern char *crypt_make_salt (void);
++#endif
+ 
+ /* setugid.c */
+ extern int setup_groups (const struct passwd *);
+Index: shadow-4.0.18.1/libmisc/salt.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/salt.c	2005-08-31 19:24:58.000000000 +0200
++++ shadow-4.0.18.1/libmisc/salt.c	2006-09-17 12:17:58.260039514 +0200
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <config.h>
++#undef USE_PAM
+ 
+ #ident "$Id: salt.c,v 1.10 2005/08/31 17:24:58 kloczek Exp $"
+ 

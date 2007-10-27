@@ -1,0 +1,61 @@
+Goal:
+   The getpwnam man page specifies:
+
+       The getpwnam() and getpwuid() functions return a pointer  to  a  passwd
+       structure,  or  NULL  if  the  matching  entry is not found or an error
+       occurs.  If an error occurs, errno is set appropriately.  If one  wants
+       to  check  errno  after  the  call, it should be set to zero before the
+       call.
+
+       The return value may point to static area, and may  be  overwritten  by
+       subsequent calls to getpwent(), getpwnam(), or getpwuid().
+
+   There is no garranty that a PAM module will not use one of these
+   functions.  (This is the case of pam_unix in PAM 0.76)
+   So the structure must be duplicated before being used (there are call
+   to PAM between the call to getpwnam and the usage of the passwd
+   structure).
+
+   In the GNU libc, only a call to the same function (getpwent(),
+   getpwnam(), or getpwuid()) overrides the static area.
+
+   This patch should fix this kind of issues for the GNU libc. However,
+   getpwuid is often called after the call to getpwnam in shaow. I did not
+   checked if there may be an issue for non-GNU libc.
+
+Fixes: #341230
+
+Status wrt upstream: 
+
+Index: shadow-4.0.18.1/src/chfn.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chfn.c	2006-05-07 19:44:39.000000000 +0200
++++ shadow-4.0.18.1/src/chfn.c	2006-09-17 12:18:06.364103948 +0200
+@@ -334,6 +334,11 @@
+ 		}
+ 		user = xstrdup (pw->pw_name);
+ 	}
++	pw = __pw_dup(pw);
++	if (!pw) {
++		fprintf (stderr, _("%s: out of memory\n"), Prog);
++		exit (E_NOPERM);
++	}
+ 
+ #ifdef	USE_NIS
+ 	/*
+Index: shadow-4.0.18.1/src/chsh.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/chsh.c	2006-07-13 23:26:35.000000000 +0200
++++ shadow-4.0.18.1/src/chsh.c	2006-09-17 12:18:06.368103980 +0200
+@@ -265,6 +265,11 @@
+ 		}
+ 		user = xstrdup (pw->pw_name);
+ 	}
++	pw = __pw_dup(pw);
++	if (!pw) {
++		fprintf (stderr, _("%s: out of memory\n"), Prog);
++		exit (1);
++	}
+ 
+ #ifdef	USE_NIS
+ 	/*

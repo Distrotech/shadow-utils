@@ -1,0 +1,23 @@
+Goal: Fix translation error in su(1)
+
+Fixes: 
+
+Note: Noticed by nekral and bubulle at Debconf7
+
+Status wrt upstream: should be forwarded
+
+Index: shadow-4.0.18.1/man/fr/fr.po
+===================================================================
+--- shadow-4.0.18.1.orig/man/fr/fr.po	2007-06-18 18:17:21.328221144 +0200
++++ shadow-4.0.18.1/man/fr/fr.po	2007-06-18 18:18:36.324402669 +0200
+@@ -1764,8 +1764,8 @@
+ "Si l'utilisateur cible possède un interpréteur de commande restreint (par "
+ "exemple, le champ de l'interpréteur de commande dans <filename>/etc/passwd</"
+ "filename> n'est pas renseigné dans <filename>/etc/shell</filename>), alors, "
+-"l'option <option>--shell</option> de la variable d'environnement <envar>"
+-"$SHELL</envar> ne sera pas prise en compte à moins que <command>su</command> "
++"ni l'option <option>--shell</option> ni la variable d'environnement <envar>"
++"$SHELL</envar> ne seront prises en compte à moins que <command>su</command> "
+ "ne soit appelé par le superutilisateur."
+ 
+ #: su.1.xml:152(term)

@@ -1,0 +1,46 @@
+Goal: Fix FTBFS on Hurd because PATH-MAX is undefined
+
+Fix: #372155
+
+Author: Michael Banck  <mbanck@debian.org>
+
+Status wrt upstream: should be forwarded
+
+Index: shadow-4.0.18.1/lib/commonio.c
+===================================================================
+--- shadow-4.0.18.1/lib/commonio.c.orig	2006-12-07 06:57:01.000000000 +0000
++++ shadow-4.0.18.1/lib/commonio.c	2006-12-07 06:57:40.000000000 +0000
+@@ -46,17 +47,31 @@
+ int lrename (const char *old, const char *new)
+ {
+ 
++#ifdef PATH_MAX
+ 	char resolved_path[PATH_MAX];
++#endif
++	char *r;
+ 	int res;
+ 
+ #if defined(S_ISLNK)
+ 	struct stat sb = { 0 };
+ 	if (lstat (new, &sb) == 0 && S_ISLNK (sb.st_mode)) {
+-		if (realpath (new, resolved_path) == NULL) {
++#ifndef PATH_MAX
++		r = realpath (new, NULL);
++#else
++		r = realpath (new, resolved_path);
++#endif
++		if (r == NULL) {
++#ifndef PATH_MAX
++			free (r);
++#endif
+ 			perror ("realpath in lrename()");
+ 		} else {
+-			new = resolved_path;
++			new = r;
+ 		}
++#ifndef PATH_MAX
++	free (r);
++#endif
+ 	}
+ #endif
+ 	res = rename (old, new);

@@ -1,0 +1,51 @@
+#! /bin/sh -e
+## 407_32char_grnames_240456.dpatch by xrgtn
+##
+## All lines beginning with `## DP:' are a description of the patch.
+##
+## DP: The patch allows 32 character long group names instead of only 16
+## DP: characters.
+## DP: 
+## DP: Comments from Karl Ramm (shadow 1:4.0.3-23, 28 Mar 2004 19:46:34 -0500):
+## DP: 
+## DP: increase maximum group name size to 32 for no particularly good reason
+## DP: closes: #240456
+
+if [ $# -lt 1 ]; then
+    echo "`basename $0`: script expects -patch|-unpatch as argument" >&2
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch} ${2:+-d $2}"
+
+case "$1" in
+    -patch) patch -p1 ${patch_opts} < $0;;
+    -unpatch) patch -R -p1 ${patch_opts} < $0;;
+    *)
+        echo "`basename $0`: script expects -patch|-unpatch as argument" >&2
+        exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+
+Index: shadow-4.0.18.1/libmisc/chkname.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/chkname.c	2006-09-17 12:17:59.836052044 +0200
++++ shadow-4.0.18.1/libmisc/chkname.c	2006-09-17 12:18:00.496057292 +0200
+@@ -66,10 +66,10 @@
+ int check_group_name (const char *name)
+ {
+ 	/*
+-	 * Arbitrary limit for group names - max 16
+-	 * characters (same as on HP-UX 10).
++	 * Arbitrary limit for group names - max 32
++	 * same as linux UT_NAMESIZE
+ 	 */
+-	if (strlen (name) > 16)
++	if (strlen (name) > 32)
+ 		return 0;
+ 
+ 	return good_name (name);

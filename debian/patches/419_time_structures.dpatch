@@ -1,0 +1,202 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 319_time_structures.dpatch by Nicolas FRANCOIS <nicolas.francois@centraliens.net>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: I didn't find a related bug in the BTS.
+## DP: It must be related to the 1:4.0.3-22 changelog:
+## DP:   Don't assume that lastlog.ll_time or utmp.ut_time or utmpx.ut_tv are
+## DP:   made up of time_ts and timevals, because they aren't on x86-64.
+## DP:   Dismaying but true.
+## DP:   -- Karl Ramm <kcr@debian.org>  Sun, 14 Mar 2004
+## DP: 
+## DP: Some parts of this patch have been applied upstream. The other parts
+## DP: should be checked.
+
+@DPATCH@
+Index: shadow-4.0.3/libmisc/log.c
+===================================================================
+--- shadow-4.0.3.orig/libmisc/log.c	1998-04-16 21:57:44.000000000 +0200
++++ shadow-4.0.3/libmisc/log.c	2005-05-12 14:05:29.976542831 +0200
+@@ -88,7 +88,7 @@ dolastlog(struct lastlog *ll, const stru
+ 	if (ll)
+ 		*ll = newlog;
+ 
+-	time(&newlog.ll_time);
++	newlog.ll_time = time(0);
+ 	strncpy(newlog.ll_line, line, sizeof newlog.ll_line);
+ #if HAVE_LL_HOST
+ 	strncpy(newlog.ll_host, host, sizeof newlog.ll_host);
+Index: shadow-4.0.3/libmisc/utmp.c
+===================================================================
+--- shadow-4.0.3.orig/libmisc/utmp.c	2002-03-08 05:30:30.000000000 +0100
++++ shadow-4.0.3/libmisc/utmp.c	2005-05-12 14:05:29.994540142 +0200
+@@ -111,7 +111,7 @@ checkutmp(int picky)
+ 		/* XXX - assumes /dev/tty?? */
+ 		strncpy(utent.ut_id, utent.ut_line + 3, sizeof utent.ut_id);
+ 		strcpy(utent.ut_user, "LOGIN");
+-		time(&utent.ut_time);
++		utent.ut_time = time(0);
+ 	}
+ }
+ 
+@@ -195,7 +195,7 @@ checkutmp(int picky)
+ 		strcpy(utent.ut_user, "LOGIN");
+ 		utent.ut_pid = getpid();
+ 		utent.ut_type = LOGIN_PROCESS;
+-		time(&utent.ut_time);
++		utent.ut_time = time(0);
+ #if HAVE_UTMPX_H
+ 		strncpy(utxent.ut_line, line, sizeof utxent.ut_line);
+ 		if ((utx = getutxline(&utxent)))
+@@ -204,7 +204,15 @@ checkutmp(int picky)
+ 		strcpy(utxent.ut_user, "LOGIN");
+ 		utxent.ut_pid = utent.ut_pid;
+ 		utxent.ut_type = utent.ut_type;
+-		gettimeofday((struct timeval *) &utxent.ut_tv, NULL);
++		/* don't assume that utmpx.ut_tv is a struct timeval */
++		{
++		    struct timeval tv;
++
++		    gettimeofday(&tv, NULL);
++
++		    utxent.ut_tv.tv_sec = tv.tv_sec;
++		    utxent.ut_tv.tv_usec = tv.tv_usec;
++		}
+ 		utent.ut_time = utxent.ut_tv.tv_sec;
+ #endif
+ 	}
+@@ -230,7 +238,7 @@ checkutmp(int picky)
+ 		line += 5;
+ 
+ 	(void) strncpy (utent.ut_line, line, sizeof utent.ut_line);
+-	(void) time (&utent.ut_time);
++	utent.ut_time = time(0);
+ }
+ 
+ #endif	/* !USG */
+@@ -286,7 +294,7 @@ setutmp(const char *name, const char *li
+ {
+ 	utent.ut_type = USER_PROCESS;
+ 	strncpy(utent.ut_user, name, sizeof utent.ut_user);
+-	time(&utent.ut_time);
++	utent.ut_time = time(0);
+ 	/* other fields already filled in by checkutmp above */
+ 	setutent();
+ 	pututline(&utent);
+@@ -375,7 +383,14 @@ setutmp(const char *name, const char *li
+ 
+ 	utline.ut_type = utxline.ut_type = USER_PROCESS;
+ 
+-	gettimeofday(&utxline.ut_tv, NULL);
++	/* don't assume that utmpx.ut_tv is a struct timeval */
++	{
++	    struct timeval tv;
++
++	    gettimeofday(&tv, NULL);
++	    utxline.ut_tv.tv_sec = tv.tv_sec;
++	    utxline.ut_tv.tv_usec = tv.tv_usec;
++	}
+ 	utline.ut_time = utxline.ut_tv.tv_sec;
+ 
+ 	strncpy(utxline.ut_host, host ? host : "", sizeof utxline.ut_host);
+@@ -435,7 +450,7 @@ setutmp(const char *name, const char *li
+ 	 * Put in the current time (common to everyone)
+ 	 */
+ 
+-	(void) time (&utmp.ut_time);
++	utmp.ut_time = time(0);
+ 
+ #ifdef UT_HOST
+ 	/*
+Index: shadow-4.0.3/src/lastlog.c
+===================================================================
+--- shadow-4.0.3.orig/src/lastlog.c	2005-05-12 14:05:24.511359400 +0200
++++ shadow-4.0.3/src/lastlog.c	2005-05-12 14:05:29.994540142 +0200
+@@ -184,7 +184,13 @@ static void print_one (const struct pass
+ #endif
+ 		once++;
+ 	}
+-	tm = localtime (&lastlog.ll_time);
++	/* don't assume lastlog.ll_time is a time_t */
++	{
++	    time_t when;
++
++	    when = lastlog.ll_time;
++	    tm = localtime (&when);
++	}
+ #ifdef HAVE_STRFTIME
+ 	strftime (ptime, sizeof (ptime), "%a %b %e %H:%M:%S %z %Y", tm);
+ 	cp = ptime;
+@@ -193,7 +199,7 @@ static void print_one (const struct pass
+ 	cp[24] = '\0';
+ #endif
+ 
+-	if (lastlog.ll_time == (time_t) 0)
++	if (lastlog.ll_time == 0)
+ 		cp = _("**Never logged in**\0");
+ 
+ #ifdef HAVE_LL_HOST
+Index: shadow-4.0.3/src/login.c
+===================================================================
+--- shadow-4.0.3.orig/src/login.c	2005-05-12 14:04:27.490878998 +0200
++++ shadow-4.0.3/src/login.c	2005-05-12 14:05:29.995539993 +0200
+@@ -849,10 +849,18 @@ int main (int argc, char **argv)
+ 			  if (getdef_str("FTMP_FILE") != NULL) {
+ #if HAVE_UTMPX_H
+ 			    failent = utxent;
+-			    gettimeofday(&(failent.ut_tv), NULL);
++			    /* don't assume that utmpx.ut_tv is a struct
++			       timeval */
++			    {
++				struct timeval tv;
++
++				gettimeofday(&tv, NULL);
++				failent.ut_tv.tv_sec = tv.tv_sec;
++				failent.ut_tv.tv_usec = tv.tv_usec;
++			    }
+ #else
+ 			    failent = utent;
+-			    time(&failent.ut_time);
++			    failent.ut_time = time(0);
+ #endif
+ 			    strncpy(failent.ut_user, failent_user, sizeof(failent.ut_user));
+ #ifdef USER_PROCESS
+@@ -1093,10 +1101,17 @@ int main (int argc, char **argv)
+ 
+ #if HAVE_UTMPX_H
+ 			failent = utxent;
+-			gettimeofday (&(failent.ut_tv), NULL);
++			/* don't assume that utmpx.ut_tv is a struct timeval */
++			{
++			    struct timeval tv;
++			    
++			    gettimeofday(&tv, NULL);
++			    failent.ut_tv.tv_sec = tv.tv_sec;
++			    failent.ut_tv.tv_usec = tv.tv_usec;
++			}
+ #else
+ 			failent = utent;
+-			time (&failent.ut_time);
++			failent.ut_time = time(0);
+ #endif
+ 			if (pwd) {
+ 				failent_user = pwent.pw_name;
+@@ -1378,15 +1393,16 @@ int main (int argc, char **argv)
+ 		}
+ 		if (getdef_bool ("LASTLOG_ENAB")
+ 		    && lastlog.ll_time != 0) {
++		        time_t when = lastlog.ll_time; /* may not be a time_t */
+ #ifdef HAVE_STRFTIME
+ 			strftime (ptime, sizeof (ptime),
+ 				  "%a %b %e %H:%M:%S %z %Y",
+-				  localtime (&lastlog.ll_time));
++				  localtime (&when));
+ 			printf (_("Last login: %s on %s"),
+ 				ptime, lastlog.ll_line);
+ #else
+ 			printf (_("Last login: %.19s on %s"),
+-				ctime (&lastlog.ll_time),
++				ctime (&when),
+ 				lastlog.ll_line);
+ #endif
+ #ifdef HAVE_LL_HOST		/* SVR4 || __linux__ || SUN4 */

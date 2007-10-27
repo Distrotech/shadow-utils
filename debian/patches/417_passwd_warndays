@@ -1,0 +1,21 @@
+Goal: Use "warndays as long option for "-w" and not "warning"
+
+Fixes: #445481
+
+Status wrt upstream: Not reported yet. Should be applied
+
+Note: 
+
+Index: shadow-4.0.18.1/src/passwd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/passwd.c
++++ shadow-4.0.18.1/src/passwd.c
+@@ -655,7 +655,7 @@
+ 			{"repository", required_argument, NULL, 'r'},
+ 			{"status", no_argument, NULL, 'S'},
+ 			{"unlock", no_argument, NULL, 'u'},
+-			{"warning", required_argument, NULL, 'w'},
++			{"warndays", required_argument, NULL, 'w'},
+ 			{"maxdays", required_argument, NULL, 'x'},
+ 			{NULL, 0, NULL, '\0'}
+ 		};

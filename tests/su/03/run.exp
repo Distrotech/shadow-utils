@@ -1,0 +1,95 @@
+#!/usr/bin/expect
+
+set timeout 2
+expect_after default {puts "\nFAIL"; exit 1}
+
+spawn /bin/bash
+expect "# "
+
+#=============================================================================
+#
+# Test the -c option
+#
+#=============================================================================
+send "/bin/su myuser -c ls\r"
+expect "data  run  run.exp  tmp\r\n"
+expect "# "
+
+send "/bin/su -- myuser -c ls\r"
+expect "data  run  run.exp  tmp\r\n"
+expect "# "
+
+send "/bin/su myuser -- -c ls\r"
+expect "data  run  run.exp  tmp\r\n"
+expect "# "
+
+# This is Debian specific. Use su's -c option
+send "/bin/su -c ls myuser\r"
+expect "data  run  run.exp  tmp\r\n"
+expect "# "
+
+send "/bin/su -c ls -- myuser\r"
+expect "data  run  run.exp  tmp\r\n"
+expect "# "
+
+# non login su should not change the working directory
+send "/bin/su myuser -c pwd\r"
+expect "/su/03\r\n"
+expect "# "
+
+# Same tests with login su
+send "/bin/su - myuser -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+send "/bin/su - -- myuser -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+send "/bin/su - myuser -- -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+# The same with -l/--login
+send "/bin/su -l myuser -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+send "/bin/su --login -- myuser -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+send "/bin/su -l myuser -- -c pwd\r"
+expect "/home\r\n"
+expect "# "
+
+# make sure -c is an su option
+send "/bin/su -c pwd - myuser\r"
+expect "/home\r\n"
+expect "# "
+
+send "/bin/su -c pwd -- - myuser\r"
+expect "/home\r\n"
+expect "# "
+
+# getopt must reorder the options/non-options
+send "/bin/su -p -c pwd -- - myuser\r"
+expect "/su/03\r\n"
+expect "# "
+send "/bin/su -p -c pwd - myuser\r"
+expect "/su/03\r\n"
+expect "# "
+send "/bin/su -c pwd -p - myuser\r"
+expect "/su/03\r\n"
+expect "# "
+send "/bin/su -c pwd - -p myuser\r"
+expect "/su/03\r\n"
+expect "# "
+send "/bin/su -c pwd - myuser -p\r"
+expect "/su/03\r\n"
+expect "# "
+
+
+puts "\nPASS"
+exit 0
+

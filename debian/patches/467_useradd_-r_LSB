@@ -1,0 +1,140 @@
+Goal: Add a "-r" option to useradd
+
+Fixes: #333706
+
+Status wrt upstream: Forwarded but not applied yet. Not sure that upstream
+                     is really ready to apply it. We apply it anyway because 
+                     LSB compliance is important for Debian
+
+Index: shadow-4.0.18.1/src/useradd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/useradd.c	2006-09-17 12:18:01.140062412 +0200
++++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:18:05.004093135 +0200
+@@ -127,6 +127,7 @@
+     mflg = 0,			/* create user's home directory if it doesn't exist */
+     nflg = 0,			/* create a group having the same name as the user */
+     oflg = 0,			/* permit non-unique user ID to be specified with -u */
++    rflg = 0,			/* create a system account (LSB compliance) */
+     sflg = 0,			/* shell program for new account */
+     uflg = 0;			/* specify user ID for new account */
+ 
+@@ -638,6 +639,7 @@
+ 			   "				(non-unique) UID\n"
+ 			   "  -p, --password PASSWORD	use encrypted password for the new user\n"
+ 			   "				account\n"
++			   "  -r, --system			create a system account\n"
+ 			   "  -s, --shell SHELL		the login shell for the new user account\n"
+ 			   "  -u, --uid UID			force use the UID for the new user account\n"
+ 			   "\n"));
+@@ -686,11 +688,19 @@
+ 	spent->sp_namp = (char *) user_name;
+ 	spent->sp_pwdp = (char *) user_pass;
+ 	spent->sp_lstchg = time ((time_t *) 0) / SCALE;
+-	spent->sp_min = scale_age (getdef_num ("PASS_MIN_DAYS", -1));
+-	spent->sp_max = scale_age (getdef_num ("PASS_MAX_DAYS", -1));
+-	spent->sp_warn = scale_age (getdef_num ("PASS_WARN_AGE", -1));
+-	spent->sp_inact = scale_age (def_inactive);
+-	spent->sp_expire = scale_age (user_expire);
++	if (!rflg) {
++		spent->sp_min = scale_age (getdef_num ("PASS_MIN_DAYS", -1));
++		spent->sp_max = scale_age (getdef_num ("PASS_MAX_DAYS", -1));
++		spent->sp_warn = scale_age (getdef_num ("PASS_WARN_AGE", -1));
++		spent->sp_inact = scale_age (def_inactive);
++		spent->sp_expire = scale_age (user_expire);
++        } else {
++		spent->sp_min = scale_age(-1);
++		spent->sp_max = scale_age(-1);
++		spent->sp_warn = scale_age(-1);
++		spent->sp_inact = scale_age(-1);
++		spent->sp_expire = scale_age(-1);
++	}
+ 	spent->sp_flag = -1;
+ }
+ 
+@@ -838,8 +848,13 @@
+ 	const struct passwd *pwd;
+ 	uid_t uid_min, uid_max;
+ 
+-	uid_min = getdef_unum ("UID_MIN", 1000);
+-	uid_max = getdef_unum ("UID_MAX", 60000);
++	if (!rflg) {
++		uid_min = getdef_unum ("UID_MIN", 1000);
++		uid_max = getdef_unum ("UID_MAX", 60000);
++	} else {
++		uid_min = 1;
++		uid_max = getdef_unum ("UID_MIN", 1000) - 1;
++	}
+ 
+ 	/*
+ 	 * Start with some UID value if the user didn't provide us with
+@@ -1018,12 +1033,13 @@
+ 			{"create-home", no_argument, NULL, 'm'},
+ 			{"non-unique", no_argument, NULL, 'o'},
+ 			{"password", required_argument, NULL, 'p'},
++			{"system", no_argument, NULL, 'r'},
+ 			{"shell", required_argument, NULL, 's'},
+ 			{"uid", required_argument, NULL, 'u'},
+ 			{NULL, 0, NULL, '\0'}
+ 		};
+ 		while ((c =
+-			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMop:s:u:",
++			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMop:rs:u:",
+ 				     long_options, NULL)) != -1) {
+ 			switch (c) {
+ 			case 'b':
+@@ -1177,6 +1193,9 @@
+ 				}
+ 				user_pass = optarg;
+ 				break;
++			case 'r':
++				rflg++;
++				break;
+ 			case 's':
+ 				if (!VALID (optarg)
+ 				    || (optarg[0]
+@@ -1569,24 +1588,27 @@
+  */
+ static void create_home (void)
+ {
+-	if (access (user_home, F_OK)) {
+-		/* XXX - create missing parent directories.  --marekm */
+-		if (mkdir (user_home, 0)) {
+-			fprintf (stderr,
+-				 _
+-				 ("%s: cannot create directory %s\n"),
+-				 Prog, user_home);
+-			fail_exit (E_HOMEDIR);
+-		}
+-		chown (user_home, user_id, user_gid);
+-		chmod (user_home,
+-		       0777 & ~getdef_num ("UMASK", GETDEF_DEFAULT_UMASK));
+-		home_added++;
+-#ifdef WITH_AUDIT
+-		audit_logger (AUDIT_USER_CHAUTHTOK, Prog,
+-			      "adding home directory", user_name, user_id, 1);
+-#endif
+-	}
++  if (!rflg) { /* for system accounts defaults are ignored and we
++		    * do not create a home dir -- gafton */
++		if (access (user_home, F_OK)) {
++			/* XXX - create missing parent directories.  --marekm */
++			if (mkdir (user_home, 0)) {
++				fprintf (stderr,
++					 _
++				 	("%s: cannot create directory %s\n"),
++				 	Prog, user_home);
++				fail_exit (E_HOMEDIR);
++			}
++			chown (user_home, user_id, user_gid);
++			chmod (user_home,
++			       0777 & ~getdef_num ("UMASK", GETDEF_DEFAULT_UMASK));
++			home_added++;
++  #ifdef WITH_AUDIT
++			audit_logger (AUDIT_USER_CHAUTHTOK, Prog,
++  			      "adding home directory", user_name, user_id, 1);
++  #endif
++		}
++  }
+ }
+ 
+ /*

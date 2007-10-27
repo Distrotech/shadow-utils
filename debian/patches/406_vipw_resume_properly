@@ -1,0 +1,21 @@
+Goal: Resume properly after ^Z
+
+Fix: #414542
+
+Author: dean gaudet <dean@arctic.org>
+
+Status wrt upstream: should be forwarded
+
+Index: shadow-4.0.18.1/src/vipw.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/vipw.c	2007-04-15 14:10:37.522147236 +0200
++++ shadow-4.0.18.1/src/vipw.c	2007-04-15 14:11:09.146401712 +0200
+@@ -208,7 +208,7 @@
+ 		pid = waitpid (pid, &status, WUNTRACED);
+ 		if (WIFSTOPPED (status)) {
+ 			kill (getpid (), SIGSTOP);
+-			kill (getpid (), SIGCONT);
++			kill (pid, SIGCONT);
+ 		} else
+ 			break;
+ 	}

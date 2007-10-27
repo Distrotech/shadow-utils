@@ -1,0 +1,40 @@
+Goal: Recommend using adduser and deluser.
+
+Fixes: #406046
+
+Status wrt upstream: Debian specific patch.
+
+Index: shadow-4.0.18.1/man/useradd.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/useradd.8.xml	2007-01-09 22:09:38.000000000 +0100
++++ shadow-4.0.18.1/man/useradd.8.xml	2007-01-09 22:13:47.000000000 +0100
+@@ -34,6 +34,12 @@
+   <refsect1 id='description'>
+     <title>DESCRIPTION</title>
+       <para>
++	<command>useradd</command> is a low level utility for adding
++	users.  On Debian, administrators should usually use
++	<citerefentry><refentrytitle>adduser</refentrytitle>
++	<manvolnum>8</manvolnum></citerefentry> instead.
++      </para>
++      <para>
+ 	When invoked without the <option>-D</option> option, the
+ 	 <command>useradd</command> command creates a new user account using
+ 	the values specified on the command line and the default values from
+Index: shadow-4.0.18.1/man/userdel.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/userdel.8.xml	2007-01-09 22:13:59.000000000 +0100
++++ shadow-4.0.18.1/man/userdel.8.xml	2007-01-09 22:22:04.000000000 +0100
+@@ -23,6 +23,12 @@
+   <refsect1 id='description'>
+     <title>DESCRIPTION</title>
+     <para>
++      <command>userdel</command> is a low level utility for adding
++      users.  On Debian, administrators should usually use
++      <citerefentry><refentrytitle>deluser</refentrytitle>
++      <manvolnum>8</manvolnum></citerefentry> instead.
++    </para>
++    <para>
+       The <command>userdel</command> command modifies the system account
+       files, deleting all entries that refer to <emphasis
+       remap='I'>login_name</emphasis>. The named user must exist.

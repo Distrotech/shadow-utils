@@ -1,0 +1,23 @@
+Goal: Mention sg(1) in newgrp(1)
+
+Fixes: #396690
+
+Note: 
+
+Status wrt upstream: not applied yet. Tomasz applied the same for
+                     su(1) but not for newgrp(1)
+
+Index: shadow-4.0.18.1/man/newgrp.1.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/newgrp.1.xml	2007-06-17 07:37:04.471806587 +0200
++++ shadow-4.0.18.1/man/newgrp.1.xml	2007-06-17 07:37:32.970369504 +0200
+@@ -93,6 +93,9 @@
+ 	<refentrytitle>su</refentrytitle><manvolnum>1</manvolnum>
+       </citerefentry>,
+       <citerefentry>
++	<refentrytitle>sg</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
+ 	<refentrytitle>gpasswd</refentrytitle><manvolnum>1</manvolnum>
+       </citerefentry>,
+       <citerefentry>

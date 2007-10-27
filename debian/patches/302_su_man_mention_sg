@@ -1,0 +1,22 @@
+Goal: Mention sg(1) in su(1)
+
+Fixes: #396690
+
+Note: 
+
+Status wrt upstream: Applied in CVS
+
+Index: shadow-4.0.18.1/man/su.1.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/su.1.xml	2007-06-17 07:30:14.492480422 +0200
++++ shadow-4.0.18.1/man/su.1.xml	2007-06-17 07:31:15.989379347 +0200
+@@ -199,6 +199,9 @@
+ 	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
++	<refentrytitle>sg</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
+ 	<refentrytitle>sh</refentrytitle><manvolnum>1</manvolnum>
+       </citerefentry>
+     </para>

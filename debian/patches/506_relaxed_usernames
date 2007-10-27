@@ -1,0 +1,79 @@
+Goal: Relaxed usernames/groupnames checking patch.
+
+Status wrt upstream: Debian specific. Not to be used upstream
+
+Details:
+ Allows any non-empty user/grounames that don't contain ':' and '\n'
+ characters and don't start with '-'. This patch is more restrictive
+ than original Karl's version. closes: #264879
+ Also closes: #377844
+ 
+ Comments from Karl Ramm (shadow 1:4.0.3-9, 20 Aug 2003 02:06:50 -0400):
+ 
+ I can't come up with a good justification as to why characters other
+ than ':'s and '\0's should be disallowed in group and usernames (other
+ than '-' as the leading character).  Thus, the maintenance tools don't
+ anymore.  closes: #79682, #166798, #171179
+
+Index: shadow-4.0.18.1/libmisc/chkname.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/chkname.c	2005-08-31 18:24:57.000000000 +0100
++++ shadow-4.0.18.1/libmisc/chkname.c	2007-06-18 22:06:29.000000000 +0100
+@@ -17,6 +17,7 @@
+ #endif
+ static int good_name (const char *name)
+ {
++#if 0
+ 	/*
+ 	 * User/group names must match [a-z_][a-z0-9_-]*[$]
+ 	 */
+@@ -30,6 +31,20 @@
+ 		      (*name == '$' && *(name + 1) == '\0')))
+ 			return 0;
+ 	}
++#endif
++	/*
++     * POSIX indicate that usernames are composed of characters from the
++     * portable filename character set [A-Za-z0-9._-], and that the hyphen
++     * should not be used as the first character of a portable user name.
++     *
++	 * Allow more relaxed user/group names in Debian -- ^[^-:\s][^:\s]*$
++	 */
++	if (!*name || isspace(*name))
++		return 0;
++	do
++		if (*name == ':' || isspace(*name))
++			return 0;
++	while (*++name);
+ 
+ 	return 1;
+ }
+Index: shadow-4.0.18.1/man/useradd.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-07-24 06:48:36.000000000 +0100
++++ shadow-4.0.18.1/man/useradd.8.xml	2007-06-18 22:10:15.000000000 +0100
+@@ -172,6 +172,7 @@
+ 	    valid in conjunction with the <option>-m</option> option. The
+ 	    default is to not create the directory and to not copy any
+ 	    files.
++	    This option may not function correctly if the username has a / in it.
+ 	  </para>
+ 	</listitem>
+       </varlistentry>
+@@ -353,9 +354,13 @@
+     </para>
+ 
+     <para>
+-      Usernames must begin with a lower case letter or an underscore, and
+-      only lower case letters, underscores, dashes, and dollar signs may
+-      follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]
++      It is usually recommended to only use usernames that begin with
++      a lower case letter or an underscore, and are only followed by lower
++      case letters, digits, underscores, dashes, and optionally terminated by
++      a dollar sign. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
++      On Debian, the only constraints are that usernames must neither start
++      with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
++      end of line: '\n', tabulation: '\t', etc.).
+     </para>
+   </refsect1>
+ 

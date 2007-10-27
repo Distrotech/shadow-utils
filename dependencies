@@ -1,0 +1,94 @@
+Build-Depends:
+==============
+ * autoconf
+ * automake1.9
+   works with 1.7 or 1.9 (at least)
+ * libtool
+ * gettext
+   POT, PO, GMO regenerated?
+ * libpam0g-dev
+   OK
+ * debhelper (>= 4.1.16)
+ * po-debconf
+   OK
+ * quilt
+   patch system
+ * dpkg-dev (>= 1.13.5)
+ * xsltproc
+   used to generate the manpages
+ * docbook-xsl
+   needed for /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl
+ * docbook-xml
+   manpages/docbook.xsl includes html/docbook.xsl
+   (But it is not strictly needed. The generated manpages are identical.
+   Without it, a warning is generated.)
+   Needed by JH_CHECK_XML_CATALOG([-//OASIS//DTD DocBook XML V4.1.2//EN], [DocBook XML DTD V4.1.2], [], enable_man=no)
+ * libxml2-utils
+   needed by the JH_CHECK_XML_CATALOG macros
+ * cdbs
+   used in debian/rules
+ * libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64]
+ * gnome-doc-utils (>= 0.4.3-1)
+   xml2po, 0.4.3-1 needed for the -l switch.
+
+passwd Depends:
+===============
+ * ${shlibs:Depends}
+   OK
+ * ${loginpam}
+   - hurd
+     login
+     libpam-modules (>= 0.72-5)
+   - other archs
+     + login (>= 970502-1)
+       login is needed because some passwd utils need /etc/login.defs
+       login is Essential, so this is just to enforce the version
+     + libpam-modules (>= 0.72-5)
+ * debianutils (>= 2.15.2)
+   After 1:4.0.12-6, {add,remove}-shell are distributed in debianutils (2.15)
+   /etc/shell was forgotten and introduced in debianutils in 2.15.2
+
+passwd Conflicts:
+=================
+
+passwd Replaces:
+================
+   Some of the passwd man pages are also distributed in some manpages* packages.
+   Look at the debian/02/run test to optimize these dependencies.
+   NOTE: Not all maintainers have been notified.
+ * manpages-de (<< 0.4-9), manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-3), manpages-ja (<< 0.5.0.0.20050915-1), manpages-ko (<< 20050219-2), manpages-es (<< 1.55-4), manpages-es-extra (<< 0.8a-15), manpages-ru (<< 0.98-3)
+   All those packages have been updated during sarge->etch. So these Replaces
+   should be removed after lenny release
+ * manpages-tr, manpages-zh
+   Those packages are still in etch, so the Replaces should be kept even
+   after lenny release
+
+login Pre-Depends:
+==================
+ * ${shlibs:Depends}
+ * libpam-runtime (>= 0.76-14)
+   sarge contained 0.76-22
+
+Why Pre-Depends? (because it's an essential package?)
+
+login Depends:
+==============
+ * libpam-modules (>= 0.72-5)
+   libpam-modules is needed.
+   potato contained 0.72-9
+
+login Conflicts:
+================
+
+login Replaces:
+===============
+ * Some of the login man pages are also distributed in some manpages* packages.
+   Look at the debian/02/run test to optimize these dependencies.
+   NOTE: Not all maintainers have been notified.
+   - manpages-fi, manpages-fr (<<1.64.0-1), manpages-hu, manpages-it, manpages-ko, manpages-ja (<< 0.5.0.0.20050915-1), manpages-de (<< 0.4-10), manpages-es-extra (<<0.8a-15) 
+     Those are packages that have been updated during sarge->etch. These
+     Replaces should be removed after lenny
+   - manpages-tr, manpages-zh
+     Those packages are still in etch, so the Replaces should be kept even
+     after lenny release
+

@@ -1,0 +1,275 @@
+Goal: Fix Swedish manpages's PO file encoding.
+
+Fixes: #403210
+
+Status wrt upstream: Applied in CVS. Will be fixed in 4.0.18.2
+
+Index: shadow-4.0.18.1/man/sv/sv.po
+===================================================================
+--- shadow-4.0.18.1.orig/man/sv/sv.po	2007-02-25 16:36:02.000000000 +0100
++++ shadow-4.0.18.1/man/sv/sv.po	2007-02-25 16:36:19.000000000 +0100
+@@ -2,7 +2,7 @@
+ msgstr ""
+ "Project-Id-Version: man pages for shadow 4.0.18\n"
+ "POT-Creation-Date: 2006-07-24 07:49+0200\n"
+-"PO-Revision-Date: 2006-07-20 15:34+0100\n"
++"PO-Revision-Date: 2007-02-25 16:34+0100\n"
+ "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+ "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
+ "MIME-Version: 1.0\n"
+@@ -98,7 +98,7 @@
+ "respektive. Med flaggan <option>-s</option>, kommer de att redigera "
+ "skuggversionerna av dessa filer, <filename>/etc/shadow</filename> och "
+ "<filename>/etc/gshadow</filename>, respektive. Programmen kommer att ställa "
+-"in de lämpliga lås som behövs för att förhindra att filerna skadas. NÃ¤r de "
++"in de lämpliga lås som behövs för att förhindra att filerna skadas. När de "
+ "letar efter en redigerare kommer programmen att första försöka med "
+ "miljövariabeln <envar>$VISUAL</envar>, sedan miljövariabeln <envar>$EDITOR</"
+ "envar> och till sist standardredigeraren, <citerefentry><refentrytitle>vi</"
+@@ -819,7 +819,7 @@
+ #: useradd.8.xml:11(refpurpose)
+ msgid "create a new user or update default new user information"
+ msgstr ""
+-"skapa en ny användare eller uppdatera standardinformation för nya anvÃ¤ndare"
++"skapa en ny användare eller uppdatera standardinformation för nya användare"
+ 
+ #: useradd.8.xml:23(arg) useradd.8.xml:27(arg)
+ msgid "-D"
+@@ -1054,7 +1054,7 @@
+ "lower case letters, underscores, dashes, and dollar signs may follow. In "
+ "regular expression terms: [a-z_][a-z0-9_-]*[$]"
+ msgstr ""
+-"Användarnamn måste börja med en gemen bokstav eller ett understreck och fÃ¥r "
++"Användarnamn måste börja med en gemen bokstav eller ett understreck och får "
+ "endast innehålla gemener, understreck, minustecken och på slutet ett dollar-"
+ "tecken. I reguljära uttryckstermer: [a-z_][a-z0-9_-]*[$]"
+ 
+@@ -1242,8 +1242,8 @@
+ "delimited by \",\" or the words <emphasis>ALL EXCEPT</emphasis> followed by "
+ "a list of usernames delimited by \",\""
+ msgstr ""
+-"Där till-id är antingen ordet <emphasis>ALL</emphasis>, en lista med anvÃ"
+-"¤ndarnamn separerade med \",\" eller orden <emphasis>ALL EXCEPT</emphasis> "
++"Där till-id är antingen ordet <emphasis>ALL</emphasis>, en lista med "
++"användarnamn separerade med \",\" eller orden <emphasis>ALL EXCEPT</emphasis> "
+ "följt av en lista med användarnamn separerade med \",\""
+ 
+ #: suauth.5.xml:53(para)
+@@ -1416,8 +1416,8 @@
+ "user logged in directly."
+ msgstr ""
+ "<command>su</command> används för att bli en annan användare under en "
+-"inloggningssession. Om det startas utan <option>användarnamn</option>, vÃ"
+-"¤ljer <command>su</command> superanvändaren. Det valfria argumentet <option>-"
++"inloggningssession. Om det startas utan <option>användarnamn</option>, "
++"väljer <command>su</command> superanvändaren. Det valfria argumentet <option>-"
+ "</option> kan användas för att tillhandahålla en miljö som liknar den som "
+ "användaren skulle förvänta sig om användaren hade loggat in direkt."
+ 
+@@ -1532,8 +1532,8 @@
+ "<filename>/bin/sh</filename> if a shell could not be found by any above "
+ "method."
+ msgstr ""
+-"<filename>/bin/sh</filename> om ett skal inte kunde hittas med någon ovanstÃ"
+-"¥ende metod."
++"<filename>/bin/sh</filename> om ett skal inte kunde hittas med någon "
++"ovanstående metod."
+ 
+ #: su.1.xml:114(para)
+ msgid ""
+@@ -1566,8 +1566,8 @@
+ "If the target user has a restricted shell, this option has no effect (unless "
+ "<command>su</command> is called by root)."
+ msgstr ""
+-"Om målanvändaren har ett begränsat skal har denna flagga ingen effekt (sÃ"
+-"¥vida inte <command>su</command> har startats av root)."
++"Om målanvändaren har ett begränsat skal har denna flagga ingen effekt "
++"(såvida inte <command>su</command> har startats av root)."
+ 
+ #: su.1.xml:169(para)
+ msgid ""
+@@ -1757,7 +1757,7 @@
+ "This file must not be readable by regular users if password security is to "
+ "be maintained."
+ msgstr ""
+-"Denna fil får inte vara läsbar av vanliga användare om lösenordssÃ¤kerheten "
++"Denna fil får inte vara läsbar av vanliga användare om lösenordssäkerheten "
+ "ska upprätthållas."
+ 
+ #: shadow.5.xml:124(para)
+@@ -2321,7 +2321,7 @@
+ "emphasis> och <emphasis>oper</emphasis> på <filename>/dev/console</filename> "
+ "när som helst. Detta illustrerar hur filen <filename>/etc/porttime</"
+ "filename> är en ordnad lista för åtkomsttider. Alla andra användare skulle "
+-"matcha den andra poster, vilken inte tillåter någon Ã¥tkomst oavsett tid."
++"matcha den andra poster, vilken inte tillåter någon åtkomst oavsett tid."
+ 
+ #: porttime.5.xml:62(programlisting)
+ #, no-wrap
+@@ -2373,7 +2373,7 @@
+ "<filename>/etc/passwd</filename> contains one line for each user account, "
+ "with seven fields delimited by colons (<quote>:</quote>). These fields are:"
+ msgstr ""
+-"<filename>/etc/passwd</filename> innehåller en rad för varje anvÃ¤ndarkonto "
++"<filename>/etc/passwd</filename> innehåller en rad för varje användarkonto "
+ "men sju fält separerade med kolontecken (<quote>:</quote>). Dessa fält är:"
+ 
+ #: passwd.5.xml:27(para)
+@@ -2492,9 +2492,9 @@
+ "login shell, or his/her password expiry date and interval."
+ msgstr ""
+ "<command>passwd</command> ändrar lösenord för användarkonton. En vanlig "
+-"användare kan endast ändra lösenordet för sitt egna konto men superanvÃ"
+-"¤ndaren kan ändra lösenord för alla konton. <command>passwd</command> Ã"
+-"¤ndrar även kontoinformation, såsom det fullständiga namnet för anvÃ¤ndaren, "
++"användare kan endast ändra lösenordet för sitt egna konto men "
++"superanvändaren kan ändra lösenord för alla konton. <command>passwd</command> "
++"ändrar även kontoinformation, såsom det fullständiga namnet för användaren, "
+ "användarens inloggningsskal eller hans/hennes utgångsdatum för lösenordet "
+ "och intervall."
+ 
+@@ -2509,8 +2509,8 @@
+ "user has only one chance to enter the correct password. The super user is "
+ "permitted to bypass this step so that forgotten passwords may be changed."
+ msgstr ""
+-"Användaren frågas först efter hans/hennes gamla lösenord, om det finns nÃ"
+-"¥got. Detta lösenord krypteras sedan och jämförs mot det lagrade lösenordet. "
++"Användaren frågas först efter hans/hennes gamla lösenord, om det finns "
++"något. Detta lösenord krypteras sedan och jämförs mot det lagrade lösenordet. "
+ "Användaren har endast en chans att ange det korrekta lösenordet. "
+ "Superanvändaren tillåts kringgå detta steg så att bortglömda lösenord kan "
+ "ändras."
+@@ -2521,8 +2521,8 @@
+ "to see if the user is permitted to change the password at this time. If not, "
+ "<command>passwd</command> refuses to change the password and exits."
+ msgstr ""
+-"Efter att lösenordet har matats in kontrolleras lösenordets Ã"
+-"¥ldringsinformation för att se om användaren tillåts att ändra lösenord för "
++"Efter att lösenordet har matats in kontrolleras lösenordets "
++"åldringsinformation för att se om användaren tillåts att ändra lösenord för "
+ "tillfället. Om inte, nekar <command>passwd</command> att ändra lösenordet "
+ "och avslutas."
+ 
+@@ -2582,7 +2582,7 @@
+ msgstr ""
+ "Säkerhet i ett lösenord beror på styrkan på krypteringsalgoritmen och "
+ "nyckellängden. Krypteringsmetoden för <emphasis>UNIX-system</emphasis> är "
+-"baserad på NBS DES-algoritmen och är mycket säker. Längden på nyckeln Ã¤r "
++"baserad på NBS DES-algoritmen och är mycket säker. Längden på nyckeln är "
+ "beroende på slumpmässigheten för det valda lösenordet."
+ 
+ #: passwd.1.xml:96(para)
+@@ -2607,7 +2607,7 @@
+ "For example, Pass%word."
+ msgstr ""
+ "Ditt lösenord måste vara lätt att komma ihåg så att du inte behöver skriva "
+-"ner det på en papperslapp. Detta kan göras genom att lägga till tvÃ¥ små ord "
++"ner det på en papperslapp. Detta kan göras genom att lägga till två små ord "
+ "tillsammans och separera dem med ett specialtecken eller siffra. Till "
+ "exempel, Pass%word."
+ 
+@@ -2668,7 +2668,7 @@
+ "Delete a user's password (make it empty). This is a quick way to disable a "
+ "password for an account. It will set the named account passwordless."
+ msgstr ""
+-"Ta bort en användares lösenord (gör det blankt). Detta är ett snabbt sÃ¤tt "
++"Ta bort en användares lösenord (gör det blankt). Detta är ett snabbt sätt "
+ "att inaktivera ett lösenord för ett konto. Det kommer att ta bort det "
+ "angivna kontots lösenord."
+ 
+@@ -2701,7 +2701,7 @@
+ msgstr ""
+ "Denna flagga används för att inaktivera ett konto efter att lösenordet har "
+ "varit utgånget i ett antal dagar. Efter att ett användarkonto har haft ett "
+-"utgånget lösenord i <replaceable>INAKTIV</replaceable> dagar får anvÃ¤ndaren "
++"utgånget lösenord i <replaceable>INAKTIV</replaceable> dagar får användaren "
+ "inte längre logga in med detta konto."
+ 
+ #: passwd.1.xml:199(term)
+@@ -2728,7 +2728,7 @@
+ "password to a value which matches no possible encrypted value."
+ msgstr ""
+ "Lås angivet konto. Denna flagga inaktiverar ett konto genom att ändra "
+-"lösenordet till ett värde som inte matchar något möjligt krypterat vÃ¤rde."
++"lösenordet till ett värde som inte matchar något möjligt krypterat värde."
+ 
+ #: passwd.1.xml:222(term) chage.1.xml:109(term)
+ msgid ""
+@@ -2777,7 +2777,7 @@
+ "Första fältet är användarens inloggningsnamn. Det andra fältet indikerar om "
+ "användarkontot är låst (L), saknar lösenord (NP) eller har ett användbart "
+ "lösenord (P). Det tredje fältet anger datumet för senaste "
+-"lösenordsändringen. De nästa fyra fälten är minimal ålder, maximal Ã¥lder, "
++"lösenordsändringen. De nästa fyra fälten är minimal ålder, maximal ålder, "
+ "varningsperiod och inaktivitetsperiod för lösenordet. Dessa åldrar anges i "
+ "dagar."
+ 
+@@ -2791,8 +2791,8 @@
+ "password back to its previous value (to value before using <option>-l</"
+ "option> option)."
+ msgstr ""
+-"Lås upp angivet konto. Denna flagga återaktiverar ett konto genom att Ã¤ndra "
+-"tillbaka lösenordet till dess tidigare värde (till värdet före anvÃ¤ndning "
++"Lås upp angivet konto. Denna flagga återaktiverar ett konto genom att ändra "
++"tillbaka lösenordet till dess tidigare värde (till värdet före användning "
+ "av flaggan <option>-l</option>)."
+ 
+ #: passwd.1.xml:283(term)
+@@ -2811,7 +2811,7 @@
+ "about to expire."
+ msgstr ""
+ "Sätter antalet dagar för varning före ett lösenord behöver ändras. Flaggan "
+-"<replaceable>VARN_DAGAR</replaceable> är antalet dagar före anvÃ¤ndaren "
++"<replaceable>VARN_DAGAR</replaceable> är antalet dagar före användaren "
+ "varnas om att lösenordet är på väg att bli utgånget."
+ 
+ #: passwd.1.xml:296(term)
+@@ -2840,7 +2840,7 @@
+ "Inte alla flaggor kanske stöds. Kontroll av lösenordskomplexiteten kan "
+ "variera mellan olika system. Användare rekommenderas att välja ett lösenord "
+ "som är så komplext som han eller hon känner sig komfortabel med. Användare "
+-"kanske inte kan ändra sina lösenord på ett system om NIS Ã¤r aktiverat och "
++"kanske inte kan ändra sina lösenord på ett system om NIS är aktiverat och "
+ "de inte är inloggade mot NIS-servern."
+ 
+ #: passwd.1.xml:353(para) chage.1.xml:212(para)
+@@ -2900,8 +2900,8 @@
+ "available and exits non-zero. It is intended as a replacement shell field "
+ "for accounts that have been disabled."
+ msgstr ""
+-"<command>nologin</command> visar ett meddelande om att kontot inte är tillgÃ"
+-"¤ngligt och avslutas med icke-noll-status. Det är tänkt som ett ersÃ¤ttande "
++"<command>nologin</command> visar ett meddelande om att kontot inte är "
++"tillgängligt och avslutas med icke-noll-status. Det är tänkt som ett ersättande "
+ "skalfält för konton som har inaktiverats."
+ 
+ #: nologin.8.xml:27(para)
+@@ -4451,7 +4451,7 @@
+ "You may not remove the primary group of any existing user. You must remove "
+ "the user before you remove the group."
+ msgstr ""
+-"Du får inte ta bort den primära gruppen för någon existerande anvÃ¤ndare. Du "
++"Du får inte ta bort den primära gruppen för någon existerande användare. Du "
+ "måste ta bort användaren innan du tar bort gruppen."
+ 
+ #: groupdel.8.xml:80(para)
+@@ -5039,7 +5039,7 @@
+ "Remember to set permissions or umask to prevent readability of unencrypted "
+ "files by other users."
+ msgstr ""
+-"Kom ihåg att ställa in rättigheter eller umask för att förhindra lÃ¤sning av "
++"Kom ihåg att ställa in rättigheter eller umask för att förhindra läsning av "
+ "okrypterade filer för andra användare."
+ 
+ #: chpasswd.8.xml:86(para)
+@@ -5072,8 +5072,8 @@
+ "groups. Each line is of the format:"
+ msgstr ""
+ "<command>chgpasswd</command> läser en lista på gruppnamn och lösenordspar "
+-"från standard in och använder denna information för att uppdatera en uppsÃ"
+-"¤ttning redan existerande grupper. Varje rad är i formatet:"
++"från standard in och använder denna information för att uppdatera en "
++"uppsättning redan existerande grupper. Varje rad är i formatet:"
+ 
+ #: chgpasswd.8.xml:30(para)
+ msgid ""

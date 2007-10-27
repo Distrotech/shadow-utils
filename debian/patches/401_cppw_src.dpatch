@@ -1,0 +1,242 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 401_cppw_src.dpatch by  Nicolas FRANCOIS <nicolas.francois@centraliens.net>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Add cppw / cpgr
+
+@DPATCH@
+Index: shadow-4.0.18.1/src/cppw.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow-4.0.18.1/src/cppw.c	2006-10-21 13:45:56.000000000 +0200
+@@ -0,0 +1,198 @@
++/*
++  cppw, cpgr  copy with locking given file over the password or group file
++  with -s will copy with locking given file over shadow or gshadow file
++ 
++  Copyright (C) 1999 Stephen Frost <sfrost@snowman.net>
++
++  Based on vipw, vigr by:
++  Copyright (C) 1997 Guy Maor <maor@ece.utexas.edu>
++
++  This program is free software; you can redistribute it and/or modify
++  it under the terms of the GNU General Public License as published by
++  the Free Software Foundation; either version 2 of the License, or
++  (at your option) any later version.
++
++  This program is distributed in the hope that it will be useful, but
++  WITHOUT ANY WARRANTY; without even the implied warranty of
++  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++  General Public License for more details.
++
++  You should have received a copy of the GNU General Public License
++  along with this program; if not, write to the Free Software
++  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++
++  */
++
++#include <config.h>
++#include "defines.h"
++
++#include <errno.h>
++#include <sys/stat.h>
++#include <unistd.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <sys/types.h>
++#include <signal.h>
++#include <utime.h>
++#include "prototypes.h"
++#include "pwio.h"
++#include "shadowio.h"
++#include "groupio.h"
++#include "sgroupio.h"
++
++
++static const char *progname, *filename, *filenewname;
++static int filelocked = 0;
++static int (*unlock)();
++
++/* local function prototypes */
++static int create_backup_file (FILE *, const char *, struct stat *);
++static void cppwexit (const char *, int, int);
++static void cppwcopy (const char *, const char *, int (*) (void), int (*) (void));
++int main (int, char **);
++
++static int
++create_backup_file(FILE *fp, const char *backup, struct stat *sb)
++{
++  struct utimbuf ub;
++  FILE *bkfp;
++  int c;
++  mode_t mask;
++
++  mask = umask(077);
++  bkfp = fopen(backup, "w");
++  umask(mask);
++  if (!bkfp) return -1;
++
++  rewind(fp);
++  while ((c = getc(fp)) != EOF) {
++    if (putc(c, bkfp) == EOF) break;
++  }
++
++  if (c != EOF || fflush(bkfp)) {
++    fclose(bkfp);
++    unlink(backup);
++    return -1;
++  }
++  if (fclose(bkfp)) {
++    unlink(backup);
++    return -1;
++  }
++
++  ub.actime = sb->st_atime;
++  ub.modtime = sb->st_mtime;
++  if (utime(backup, &ub) ||
++      chmod(backup, sb->st_mode) ||
++      chown(backup, sb->st_uid, sb->st_gid)) {
++    unlink(backup);
++    return -1;
++  }
++  return 0;
++}
++
++static void
++cppwexit(const char *msg, int syserr, int ret)
++{
++  int err = errno;
++  if (filelocked) (*unlock)();
++  if (msg) fprintf(stderr, "%s: %s", progname, msg);
++  if (syserr) fprintf(stderr, ": %s", strerror(err));
++  fprintf(stderr, "\n%s: %s is unchanged\n", progname, filename);
++  exit(ret);
++}
++
++static void
++cppwcopy(const char *file, const char *in_file, int (*file_lock) (void), int (*file_unlock) (void))
++{
++  struct stat st1;
++  FILE *f;
++  char filenew[1024];
++
++  snprintf(filenew, sizeof filenew, "%s.new", file);
++  unlock = file_unlock;
++  filename = file;
++  filenewname = filenew;
++  
++  if (access(file, F_OK)) cppwexit(file, 1, 1);
++  if (!file_lock()) cppwexit("Couldn't lock file", errno, 5);
++  filelocked = 1;
++
++  /* file to copy has same owners, perm */
++  if (stat(file, &st1)) cppwexit(file, 1, 1);
++  if (!(f = fopen(in_file, "r"))) cppwexit(file, 1, 1);
++  if (create_backup_file(f, filenew, &st1))
++    cppwexit("Couldn't make backup", errno, 1);
++  
++  /* XXX - here we should check filenew for errors; if there are any,
++     fail w/ an appropriate error code and let the user manually fix
++     it. Use pwck or grpck to do the check.  - Stephen (Shamelessly
++     stolen from '--marekm's comment) */
++
++  if (rename(filenew, file) == -1) {
++    fprintf(stderr, "%s: can't copy %s: %s)\n",
++	    progname, filenew, strerror(errno));
++    cppwexit(0,0,1);
++  }
++
++  (*file_unlock)();
++}
++
++
++int
++main(int argc, char **argv)
++{
++  int flag;
++  int cpshadow = 0;
++  char *in_file;
++  char *c;
++  int e = 1;
++  int do_cppw;
++
++  progname = ((c = strrchr(*argv, '/')) ? c+1 : *argv);
++  do_cppw = (strcmp(progname, "cpgr") != 0);
++
++  while ((flag = getopt(argc, argv, "ghps")) != EOF) {
++    switch (flag) {
++    case 'p':
++      do_cppw = 1;
++      break;
++    case 'g':
++      do_cppw = 0;
++      break;
++    case 's':
++      cpshadow = 1;
++      break;
++    case 'h':
++      e = 0;
++    default:
++      printf("Usage:\n\
++`cppw <file>' copys over /etc/passwd   `cppw -s <file>' copys over /etc/shadow\n\
++`cpgr <file>' copys over /etc/group    `cpgr -s <file>' copys over /etc/gshadow\n\
++");
++      exit(e);
++    }
++  }
++
++  if (optind >= argc) {
++    cppwexit ("missing file argument, -h for usage",0,1);
++  }
++
++  in_file = argv[argc - 1];
++
++  if (do_cppw) {
++    if (cpshadow)
++      cppwcopy(SHADOW_FILE, in_file, spw_lock, spw_unlock);
++    else
++      cppwcopy(PASSWD_FILE, in_file, pw_lock, pw_unlock);
++  }
++  else {
++#ifdef SHADOWGRP
++    if (cpshadow)
++      cppwcopy(SGROUP_FILE, in_file, sgr_lock, sgr_unlock);
++    else
++#endif
++      cppwcopy(GROUP_FILE, in_file, gr_lock, gr_unlock);
++  }
++
++  return 0;
++}
+Index: shadow-4.0.18.1/src/Makefile.am
+===================================================================
+--- shadow-4.0.18.1.orig/src/Makefile.am	2006-10-21 13:45:26.000000000 +0200
++++ shadow-4.0.18.1/src/Makefile.am	2006-10-21 13:45:40.000000000 +0200
+@@ -24,6 +24,7 @@
+ sbin_PROGRAMS  = nologin
+ ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
+ usbin_PROGRAMS = \
++	cppw \
+ 	chgpasswd \
+ 	chpasswd \
+ 	groupadd \
+@@ -58,6 +59,7 @@
+ chgpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX)
+ chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX)
+ chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX)
++cppw_LDADD     = $(LDADD) $(LIBSELINUX)
+ gpasswd_LDADD  = $(LDADD) $(LIBAUDIT) $(LIBSELINUX)
+ groupadd_LDADD = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
+ groupdel_LDADD = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
+Index: shadow-4.0.18.1/po/POTFILES.in
+===================================================================
+--- shadow-4.0.18.1.orig/po/POTFILES.in	2006-10-21 13:45:26.000000000 +0200
++++ shadow-4.0.18.1/po/POTFILES.in	2006-10-21 13:45:40.000000000 +0200
+@@ -61,6 +61,7 @@
+ src/chgpasswd.c
+ src/chpasswd.c
+ src/chsh.c
++src/cppw.c
+ src/expiry.c
+ src/faillog.c
+ src/gpasswd.c

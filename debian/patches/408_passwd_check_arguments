@@ -1,0 +1,24 @@
+Goal: Check the passwd arguments and fail with the usage message if there
+      are more than one non option arguments (i.e. usernames).
+
+Fixes: #410268
+
+Status wrt upstream: not reported yet.
+
+Index: shadow-4.0.18.1/src/passwd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/passwd.c	2007-04-15 17:49:31.000000000 +0200
++++ shadow-4.0.18.1/src/passwd.c	2007-04-15 17:52:38.000000000 +0200
+@@ -740,6 +740,12 @@
+ 		name = myname;
+ 
+ 	/*
++	 * Make sure that at most one username was specified.
++	 */
++	if (argc > optind+1)
++		usage (E_USAGE);
++
++	/*
+ 	 * The -a flag requires -S, no other flags, no username, and
+ 	 * you must be root.  --marekm
+ 	 */

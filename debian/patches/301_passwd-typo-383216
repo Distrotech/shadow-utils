@@ -1,0 +1,19 @@
+Goal: fix a typo in passwd.1
+
+Fixes: #383216
+
+Status wrt upstream: Fix in CVS. Patch added only for etch branch
+
+Index: shadow-4.0.18.1/man/passwd.1.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/passwd.1.xml	2006-09-17 12:25:23.823581651 +0200
++++ shadow-4.0.18.1/man/passwd.1.xml	2006-09-17 12:25:29.707628421 +0200
+@@ -201,7 +201,7 @@
+ 	</term>
+ 	<listitem>
+ 	  <para>
+-	    Indicate change password should be performed only for expired
++	    Indicate password change should be performed only for expired
+ 	    authentication tokens (passwords). The user wishes to keep their
+ 	    non-expired tokens as before.
+ 	  </para>

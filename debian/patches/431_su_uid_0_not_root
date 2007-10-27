@@ -1,0 +1,28 @@
+Goal: don't assume uid 0 == "root", use getpwuid to fetch it
+Fixes: #81924
+
+Status wrt upstream: It was submitted upstream upstream (3 Jun 2005).
+                     Some modification may be needed before its inclusion
+                     upstream (multiple uid 0 accounts).
+http://lists.alioth.debian.org/pipermail/pkg-shadow-devel/2005-June/001287.html
+
+Index: shadow-4.0.18.1/src/su.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/su.c	2006-08-01 12:30:02.000000000 +0200
++++ shadow-4.0.18.1/src/su.c	2006-09-17 12:17:47.383953038 +0200
+@@ -427,7 +427,14 @@
+ 			optind++;
+ 	}
+ 	if (!name[0])		/* use default user ID */
+-		(void) strcpy (name, "root");
++	{
++		struct passwd *root_pw = getpwuid(0);
++		if (root_pw == NULL) {
++			SYSLOG((LOG_CRIT, "There is no UID 0 user."));
++			su_failure(tty);
++		}
++		strcpy(name, root_pw->pw_name);
++	}
+ 
+ 	doshell = argc == optind;	/* any arguments remaining? */
+ 	if (command)

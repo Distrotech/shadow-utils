@@ -1,0 +1,26 @@
+Goal: SHADOWPWD is now assumed (no more defined).
+
+Fixes: pwck do not detect missing users in /etc/shadow.
+
+Status wrt upstream: Not proposed to upstream yet.
+
+Index: shadow-4.0.18.1/src/pwck.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/pwck.c	2006-10-21 13:33:12.000000000 +0200
++++ shadow-4.0.18.1/src/pwck.c	2006-10-21 13:36:29.000000000 +0200
+@@ -344,7 +344,6 @@
+ 				pwd->pw_name, pwd->pw_shell);
+ 			errors++;
+ 		}
+-#ifdef SHADOWPWD
+ 		/*
+ 		 * Make sure this entry exists in the /etc/gshadow file.
+ 		 */
+@@ -397,7 +396,6 @@
+ 				}
+ 			}
+ 		}
+-#endif
+ 	}
+ 
+ 	if (!is_shadow)

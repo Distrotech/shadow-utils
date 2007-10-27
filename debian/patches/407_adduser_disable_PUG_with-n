@@ -1,0 +1,78 @@
+Goal: Document the creation of primary user groups.
+      Add the -n option to disable this behavior.
+
+Fixes: #416835
+
+Status wrt upstream: not reported yet.
+
+Notes:
+  * The nflg variable already existed, but was never set.
+
+  * This could also be done by just specifying that the -g's argument is
+    optional. As -n is already implemented in RedHat, it may be better
+    for compatibility to keep it.
+
+  * The debian/useradd.default file had to be updated to reflect these
+    changes.
+
+Index: shadow-4.0.18.1/man/useradd.8.xml
+===================================================================
+--- shadow-4.0.18.1.orig/man/useradd.8.xml	2007-04-15 16:16:36.000000000 +0200
++++ shadow-4.0.18.1/man/useradd.8.xml	2007-04-15 16:49:17.000000000 +0200
+@@ -134,8 +134,7 @@
+ 	  <para>
+ 	    The group name or number of the user's initial login group. The
+ 	    group name must exist. A group number must refer to an already
+-	    existing group. The default group number is 1 or whatever is
+-	    specified in <filename>/etc/default/useradd</filename>.
++	    existing group.
+ 	  </para>
+ 	</listitem>
+       </varlistentry>
+@@ -184,6 +183,23 @@
+       </varlistentry>
+       <varlistentry>
+ 	<term>
++	  <option>-n</option>
++	</term>
++	<listitem>
++	  <para>
++	    A group having the same name as the user being added to the
++	    system will be created by default (when <option>-g</option> is
++	    not specified). This option will turn off this behavior. When
++	    this option is used, users by default will be placed in
++	    whatever group is specified in the
++	    <replaceable>GROUP</replaceable> variable of
++	    <filename>/etc/default/useradd</filename>. If no default group
++	    is defined, group 100 (users) will be used.
++	  </para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term>
+ 	  <option>-K</option>, <option>--key</option>
+ 	  <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable>
+ 	</term>
+Index: shadow-4.0.18.1/src/useradd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/useradd.c	2007-04-15 16:15:22.000000000 +0200
++++ shadow-4.0.18.1/src/useradd.c	2007-04-15 16:16:11.000000000 +0200
+@@ -1036,7 +1036,7 @@
+ 			{NULL, 0, NULL, '\0'}
+ 		};
+ 		while ((c =
+-			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMop:rs:u:",
++			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMnop:rs:u:",
+ 				     long_options, NULL)) != -1) {
+ 			switch (c) {
+ 			case 'b':
+@@ -1177,6 +1177,9 @@
+ 			case 'm':
+ 				mflg++;
+ 				break;
++			case 'n':
++				nflg++;
++				break;
+ 			case 'o':
+ 				oflg++;
+ 				break;

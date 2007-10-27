@@ -1,0 +1,20 @@
+Index: shadow-4.0.18.1/src/Makefile.am
+===================================================================
+--- shadow-4.0.18.1.orig/src/Makefile.am	2006-09-17 12:17:59.228047210 +0200
++++ shadow-4.0.18.1/src/Makefile.am	2006-09-17 12:18:13.284158968 +0200
+@@ -21,7 +21,6 @@
+ # $prefix/bin and $prefix/sbin, no install-data hacks...)
+ 
+ bin_PROGRAMS   = groups login su
+-sbin_PROGRAMS  = nologin
+ ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
+ usbin_PROGRAMS = \
+ 	cppw \
+@@ -36,6 +35,7 @@
+ 	grpunconv \
+ 	logoutd \
+ 	newusers \
++	nologin \
+ 	pwck \
+ 	pwconv \
+ 	pwunconv \

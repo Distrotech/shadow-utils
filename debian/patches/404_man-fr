@@ -1,0 +1,19 @@
+Goal: Fix an error in the passwd.1 French translation
+
+Fixes: #395537
+
+Status wrt upstream: Should be forwarded
+
+Index: shadow-4.0.18.1/man/fr/fr.po
+===================================================================
+--- shadow-4.0.18.1.orig/man/fr/fr.po	2006-10-28 07:23:12.651916379 +0200
++++ shadow-4.0.18.1/man/fr/fr.po	2006-10-28 07:23:41.768138592 +0200
+@@ -3333,7 +3333,7 @@
+ #: passwd.1.xml:377(para)
+ msgid "<filename>passwd</filename> file busy, try again"
+ msgstr ""
+-"fichier <filename>passwdw/filename> en cours d'utilisation, veuillez "
++"fichier <filename>passwd</filename> en cours d'utilisation, veuillez "
+ "réessayer plus tard"
+ 
+ #: passwd.1.xml:341(para)

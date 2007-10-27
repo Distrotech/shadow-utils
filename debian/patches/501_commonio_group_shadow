@@ -1,0 +1,39 @@
+Goal: save the [g]shadow files with the 'shadow' group and mode 0440
+
+Fixes: #166793
+
+Index: shadow-4.0.18.1/lib/commonio.c
+===================================================================
+--- shadow-4.0.18.1.orig/lib/commonio.c	2006-06-08 15:36:11.000000000 +0200
++++ shadow-4.0.18.1/lib/commonio.c	2006-09-17 12:18:03.020077360 +0200
+@@ -13,6 +13,7 @@
+ #include <stdio.h>
+ #include <signal.h>
+ #include <pwd.h>
++#include <grp.h>
+ #include <nscd.h>
+ #ifdef HAVE_SHADOW_H
+ #include <shadow.h>
+@@ -699,13 +700,20 @@
+ 			goto fail;
+ 		}
+ 	} else {
++		struct group *grp;
+ 		/*
+ 		 * Default permissions for new [g]shadow files.
+ 		 * (passwd and group always exist...)
+ 		 */
+-		sb.st_mode = 0400;
++		sb.st_mode = 0440;
+ 		sb.st_uid = 0;
+-		sb.st_gid = 0;
++		/*
++		 * Try to retrieve the shadow's GID, and fall back to GID 0.
++		 */
++		if ((grp = getgrnam("shadow")) != NULL)
++			sb.st_gid = grp->gr_gid;
++		else
++			sb.st_gid = 0;
+ 	}
+ 
+ 	snprintf (buf, sizeof buf, "%s+", db->filename);

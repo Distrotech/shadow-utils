@@ -1,0 +1,60 @@
+Goal: Make login initialize a session to allow ^C and ^Z to work when
+      booting with init=/bin/login
+      Only do this if we are init (getppid() == 1) (see #380522)
+
+Fix: #374547
+
+Author: Samuel Thibault <samuel.thibault@ens-lyon.org>
+
+Status wrt upstream: reported, not applied yet
+
+Index: shadow-4.0.18.1/src/login.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:18:04.272087315 +0200
++++ shadow-4.0.18.1/src/login.c	2006-09-17 12:18:14.632169686 +0200
+@@ -41,6 +41,7 @@
+ #include <signal.h>
+ #include <stdio.h>
+ #include <sys/stat.h>
++#include <sys/ioctl.h>
+ #include "defines.h"
+ #include "faillog.h"
+ #include "failure.h"
+@@ -1046,6 +1047,12 @@
+ 	}
+ 	/* child */
+ #endif
++	/* If we were init, we need to start the session */
++	if (getppid() == 1) {
++		setsid();
++		if (ioctl(0, TIOCSCTTY, 1))
++			fprintf(stderr,_("TIOCSCTTY failed on %s"),tty);
++	}
+ 
+ 	/* We call set_groups() above because this clobbers pam_groups.so */
+ #ifndef USE_PAM
+Index: shadow-4.0.18.1/src/sulogin.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/sulogin.c	2006-05-13 01:13:10.000000000 +0200
++++ shadow-4.0.18.1/src/sulogin.c	2006-09-17 12:18:14.632169686 +0200
+@@ -35,6 +35,7 @@
+ #include <pwd.h>
+ #include <signal.h>
+ #include <stdio.h>
++#include <sys/ioctl.h>
+ #include "defines.h"
+ #include "getdef.h"
+ #include "prototypes.h"
+@@ -142,6 +143,12 @@
+ #endif
+ 		exit (1);	/* must be a terminal */
+ 	}
++	/* If we were init, we need to start the session */
++	if (getppid() == 1) {
++		setsid();
++		if (ioctl(0, TIOCSCTTY, 1))
++			fprintf(stderr,_("TIOCSCTTY failed"));
++	}
+ 	while (*envp)		/* add inherited environment, */
+ 		addenv (*envp++, NULL);	/* some variables change later */
+ 

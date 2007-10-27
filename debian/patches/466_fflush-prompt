@@ -1,0 +1,314 @@
+Goal: Fflush all prompts supposedly presented to a user, because we may
+      conversate with a script (over pipe) instead. See bug #333138.
+
+Status wrt upstream: may appear in 4.0.14
+      
+Index: shadow-4.0.18.1/libmisc/Makefile.am
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/Makefile.am	2005-09-05 18:21:37.000000000 +0200
++++ shadow-4.0.18.1/libmisc/Makefile.am	2006-09-17 12:18:05.616098001 +0200
+@@ -49,4 +49,5 @@
+ 	ulimit.c \
+ 	utmp.c \
+ 	valid.c \
+-	xmalloc.c
++	xmalloc.c \
++	yesno.c
+Index: shadow-4.0.18.1/libmisc/fields.c
+===================================================================
+--- shadow-4.0.18.1.orig/libmisc/fields.c	2005-08-31 19:24:57.000000000 +0200
++++ shadow-4.0.18.1/libmisc/fields.c	2006-09-17 12:18:05.620098032 +0200
+@@ -71,6 +71,7 @@
+ 		maxsize = sizeof (newf);
+ 
+ 	printf ("\t%s [%s]: ", prompt, buf);
++	fflush (stdout);
+ 	if (fgets (newf, maxsize, stdin) != newf)
+ 		return;
+ 
+Index: shadow-4.0.18.1/libmisc/yesno.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow-4.0.18.1/libmisc/yesno.c	2006-09-17 12:18:05.620098032 +0200
+@@ -0,0 +1,41 @@
++/*
++ * Common code for yes/no prompting
++ *
++ * Used by pwck.c and grpck.c
++ */
++
++#include <config.h>	/* configuration parameters like e.g. ENABLE_NLS */
++
++#ident "$Id$"
++
++#include <stdio.h>	/* printf(), fflush() & fgets() */
++#include "defines.h"	/* _() macro */
++
++/*
++ * yes_or_no - get answer to question from the user
++ */
++int yes_or_no (int read_only)
++{
++	char buf[80];
++
++	/*
++	 * In read-only mode all questions are answered "no".
++	 */
++	if (read_only) {
++		printf (_("No\n"));
++		return 0;
++	}
++
++	/*
++	 * Typically, there's a prompt on stdout, sometimes unflushed.
++	 */
++	fflush (stdout);
++
++	/*
++	 * Get a line and see what the first character is.
++	 */
++	if (fgets (buf, sizeof buf, stdin))
++		return buf[0] == 'y' || buf[0] == 'Y';
++
++	return 0;
++}
+Index: shadow-4.0.18.1/src/grpck.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/grpck.c	2006-09-17 12:17:53.712003353 +0200
++++ shadow-4.0.18.1/src/grpck.c	2006-09-17 12:18:05.620098032 +0200
+@@ -50,6 +50,8 @@
+ extern struct commonio_entry *__sgr_get_head (void);
+ #endif
+ 
++extern int yes_or_no (int);
++
+ /*
+  * Exit codes
+  */
+@@ -74,7 +76,6 @@
+ 
+ /* local function prototypes */
+ static void usage (void);
+-static int yes_or_no (void);
+ static void delete_member (char **, const char *);
+ 
+ /*
+@@ -91,30 +92,6 @@
+ }
+ 
+ /*
+- * yes_or_no - get answer to question from the user
+- */
+-static int yes_or_no (void)
+-{
+-	char buf[80];
+-
+-	/*
+-	 * In read-only mode all questions are answered "no".
+-	 */
+-	if (read_only) {
+-		printf (_("No\n"));
+-		return 0;
+-	}
+-
+-	/*
+-	 * Get a line and see what the first character is.
+-	 */
+-	if (fgets (buf, sizeof buf, stdin))
+-		return buf[0] == 'y' || buf[0] == 'Y';
+-
+-	return 0;
+-}
+-
+-/*
+  * delete_member - delete an entry in a list of members
+  */
+ static void delete_member (char **list, const char *member)
+@@ -301,7 +278,7 @@
+ 			 * prompt the user to delete the entry or not
+ 			 */
+ 			if (!prune) {
+-			        if (!yes_or_no ())
++			        if (!yes_or_no (read_only))
+ 				        continue;
+ 			} else {
+ 			        puts (_("Yes"));
+@@ -361,7 +338,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_gr;
+ 		}
+ 
+@@ -397,7 +374,7 @@
+ 				grp->gr_name, grp->gr_mem[i]);
+ 			printf (_("delete member '%s'? "), grp->gr_mem[i]);
+ 
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			SYSLOG ((LOG_INFO, "delete member '%s' group '%s'",
+@@ -422,7 +399,7 @@
+ 				printf (_("add group '%s' in %s ?"),
+ 					grp->gr_name, sgr_file);
+ 				errors++;
+-				if (yes_or_no ()) {
++				if (yes_or_no (read_only)) {
+ 					struct sgrp sg;
+ 					struct group gr;
+ 					static char *empty = NULL;
+@@ -509,7 +486,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			/*
+@@ -565,7 +542,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_sg;
+ 		}
+ 
+@@ -578,7 +555,7 @@
+ 				grp_file);
+ 			printf (_("delete line '%s'? "), sge->line);
+ 			errors++;
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_sg;
+ 		} else {
+ 			/**
+@@ -619,7 +596,7 @@
+ 			printf (_("delete administrative member '%s'? "),
+ 				sgr->sg_adm[i]);
+ 
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			SYSLOG ((LOG_INFO,
+@@ -646,7 +623,7 @@
+ 				sgr->sg_name, sgr->sg_mem[i]);
+ 			printf (_("delete member '%s'? "), sgr->sg_mem[i]);
+ 
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			SYSLOG ((LOG_INFO,
+Index: shadow-4.0.18.1/src/pwck.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/pwck.c	2006-05-07 19:44:39.000000000 +0200
++++ shadow-4.0.18.1/src/pwck.c	2006-10-21 16:26:23.000000000 +0200
+@@ -49,6 +49,8 @@
+ extern void __spw_del_entry (const struct commonio_entry *);
+ extern struct commonio_entry *__spw_get_head (void);
+ 
++extern int yes_or_no (int);
++
+ /*
+  * Exit codes
+  */
+@@ -73,7 +75,6 @@
+ 
+ /* local function prototypes */
+ static void usage (void);
+-static int yes_or_no (void);
+ 
+ /*
+  * usage - print syntax message and exit
+@@ -86,31 +87,6 @@
+ }
+ 
+ /*
+- * yes_or_no - get answer to question from the user
+- */
+-static int yes_or_no (void)
+-{
+-	char buf[80];
+-
+-	/*
+-	 * In read-only mode all questions are answered "no".
+-	 */
+-
+-	if (read_only) {
+-		printf (_("No\n"));
+-		return 0;
+-	}
+-
+-	/*
+-	 * Get a line and see what the first character is.
+-	 */
+-	if (fgets (buf, sizeof buf, stdin))
+-		return buf[0] == 'y' || buf[0] == 'Y';
+-
+-	return 0;
+-}
+-
+-/*
+  * pwck - verify password file integrity
+  */
+ int main (int argc, char **argv)
+@@ -261,7 +237,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			/*
+@@ -316,7 +292,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_pw;
+ 		}
+ 
+@@ -382,7 +358,7 @@
+ 				printf (_("add user '%s' in %s? "),
+ 					pwd->pw_name, spw_file);
+ 				errors++;
+-				if (yes_or_no ()) {
++				if (yes_or_no (read_only)) {
+ 					struct spwd sp;
+ 					struct passwd pw;
+ 
+@@ -462,7 +438,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (!yes_or_no ())
++			if (!yes_or_no (read_only))
+ 				continue;
+ 
+ 			/*
+@@ -517,7 +493,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_spw;
+ 		}
+ 
+@@ -538,7 +514,7 @@
+ 			/*
+ 			 * prompt the user to delete the entry or not
+ 			 */
+-			if (yes_or_no ())
++			if (yes_or_no (read_only))
+ 				goto delete_spw;
+ 		}
+ 

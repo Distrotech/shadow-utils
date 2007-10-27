@@ -1,0 +1,43 @@
+Goal: allow non numerical group identifier to be specified with useradd's
+      and usermod's -g options
+
+Fixes: #381394, #381399, #381404, #381408, #381448
+
+Status wrt upstream: Applied in CVS
+
+Index: shadow-4.0.18.1/src/useradd.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/useradd.c	2006-09-17 12:25:16.499523435 +0200
++++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:25:28.379617865 +0200
+@@ -206,11 +206,8 @@
+ 	char *errptr;
+ 
+ 	gid = strtol (grname, &errptr, 10);
+-	if (*errptr || errno == ERANGE || gid < 0) {
+-		fprintf (stderr,
+-			 _("%s: invalid numeric argument '%s'\n"), Prog, grname);
+-		exit (E_BAD_ARG);
+-	}
++	if (*grname != '\0' && *errptr == '\0' && errno != ERANGE && gid >= 0)
++		return getgrgid (gid);
+ 	return getgrnam (grname);
+ }
+ 
+Index: shadow-4.0.18.1/src/usermod.c
+===================================================================
+--- shadow-4.0.18.1.orig/src/usermod.c	2006-09-17 12:25:24.475586833 +0200
++++ shadow-4.0.18.1/src/usermod.c	2006-09-17 12:25:28.383617897 +0200
+@@ -167,11 +167,8 @@
+ 	char *errptr;
+ 
+ 	val = strtol (grname, &errptr, 10);
+-	if (*errptr || errno == ERANGE || val < 0) {
+-		fprintf (stderr, _("%s: invalid numeric argument '%s'\n"), Prog,
+-			 grname);
+-		exit (E_BAD_ARG);
+-	}
++	if (*grname != '\0' && *errptr == '\0' && errno != ERANGE && val >= 0)
++		return getgrgid (val);
+ 	return getgrnam (grname);
+ }
+ 
