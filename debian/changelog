@@ -12,6 +12,7 @@ shadow (1:4.0.18.1-12) UNRELEASED; urgency=low
       page. Thanks to Nicolas Aupetit. Closes: #439090
   * Debian packaging fixes:
     - Fix typos in useradd default file. Thanks to Justin Pryzby.
+    - Fix typos in cppw.8. Thanks to Justin Pryzby. Closes: #447757
 
  -- Christian Perrier <bubulle@debian.org>  Sun, 01 Jul 2007 22:56:57 +0200
 
