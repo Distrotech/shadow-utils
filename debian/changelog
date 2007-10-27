@@ -1,5 +1,7 @@
-shadow (1:4.0.18.1-12) UNRELEASED; urgency=low
+shadow (1:4.0.18.2-1) UNRELEASED; urgency=low
 
+  * New upstream version. This closes the following bugs:
+    - gpasswd manpage improvements. Closes: #445480
   * Upstream bugs not fixed in upstream's CVS:
     - debian/securetty.linux: Added xvc0 and hvc0 consoles to the Linux's
       consoles where root login is allowed. Closes: #423389
