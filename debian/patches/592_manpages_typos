@@ -31,6 +31,6 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
  	When invoked without the <option>-D</option> option, the
 -	<command>useradd</command> command creates a new user account using
 +	 <command>useradd</command> command creates a new user account using
- 	the values specified on the command line and the default values from
- 	the system. Depending on command line options, the useradd command
- 	will update system files and may also create the new user's home
+ 	the values specified on the command line plus the default values from
+ 	the system. Depending on command line options, the
+ 	<command>useradd</command> command
