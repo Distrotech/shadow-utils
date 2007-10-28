@@ -6,6 +6,25 @@ shadow (1:4.0.18.2-1) UNRELEASED; urgency=low
       priority" was added upstream. Note that it does not impact Debian
       because shadow is compiled with PAM support on Debian. Closes: #442334
     - Finnish translation. Closes: #448233
+    - Remove patches applied upstream:
+      + 438_su_GNU_origin
+      + 433_shadow.5-typo_312430
+      + 402-clarify_usermod_usage
+      + 498_man_nonpam_undefined
+      + 301_passwd-typo-383216
+      + 101_ja
+      + 102_de-fix-sorry
+      + 404_man-fr
+      + 103_man-de
+      + 104_man-sv
+      + 302_su_man_mention_sg
+      + 303_wording_fixes_in_su_man
+      + 201_fix_man_su_fr
+      + 202_it_man_uses_gettext
+      + 413_no-sorry-in-passwd
+      + 416_man-fr_newgrp
+    - The upstream tarball is now built with gettext 0.16. Remove
+      + 499_gettext-0.15
   * Upstream bugs not fixed in upstream's CVS:
     - debian/securetty.linux: Added xvc0 and hvc0 consoles to the Linux's
       consoles where root login is allowed. (triggered by #423389)
