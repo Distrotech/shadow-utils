@@ -19,7 +19,7 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
 ===================================================================
 --- shadow-4.0.18.1.orig/man/useradd.8.xml	2007-04-15 16:16:36.000000000 +0200
 +++ shadow-4.0.18.1/man/useradd.8.xml	2007-04-15 16:49:17.000000000 +0200
-@@ -134,8 +134,7 @@
+@@ -145,8 +145,7 @@
  	  <para>
  	    The group name or number of the user's initial login group. The
  	    group name must exist. A group number must refer to an already
@@ -29,7 +29,7 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
  	  </para>
  	</listitem>
        </varlistentry>
-@@ -184,6 +183,23 @@
+@@ -195,6 +194,23 @@
        </varlistentry>
        <varlistentry>
  	<term>

@@ -9,7 +9,7 @@ Index: shadow-4.0.18.1/src/su.c
 ===================================================================
 --- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:17:52.483993589 +0200
 +++ shadow-4.0.18.1/src/su.c	2006-09-17 12:17:53.099998487 +0200
-@@ -287,6 +287,7 @@
+@@ -304,6 +304,7 @@
  	struct passwd *pw = 0;
  	char **envp = environ;
  	char *shellstr = 0, *command = 0;
@@ -17,7 +17,7 @@ Index: shadow-4.0.18.1/src/su.c
  
  #ifdef USE_PAM
  	char **envcp;
-@@ -652,6 +653,14 @@
+@@ -669,6 +670,14 @@
  			su_failure (tty);
  		}
  	}

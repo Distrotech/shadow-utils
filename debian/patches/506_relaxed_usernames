@@ -52,7 +52,7 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
 ===================================================================
 --- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-07-24 06:48:36.000000000 +0100
 +++ shadow-4.0.18.1/man/useradd.8.xml	2007-06-18 22:10:15.000000000 +0100
-@@ -172,6 +172,7 @@
+@@ -183,6 +183,7 @@
  	    valid in conjunction with the <option>-m</option> option. The
  	    default is to not create the directory and to not copy any
  	    files.
@@ -60,7 +60,7 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
  	  </para>
  	</listitem>
        </varlistentry>
-@@ -353,9 +354,13 @@
+@@ -360,9 +361,13 @@
      </para>
  
      <para>
