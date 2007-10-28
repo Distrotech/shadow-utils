@@ -8,7 +8,7 @@ shadow (1:4.0.18.2-1) UNRELEASED; urgency=low
     - Finnish translation. Closes: #448233
   * Upstream bugs not fixed in upstream's CVS:
     - debian/securetty.linux: Added xvc0 and hvc0 consoles to the Linux's
-      consoles where root login is allowed. Closes: #423389
+      consoles where root login is allowed. (triggered by #423389)
     - debian/patches/417_passwd_warndays: Correct the long option name for
       "-w" from "warning" to "warndays". Closes: #445481
   * Upstream translation updates:
