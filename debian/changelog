@@ -25,6 +25,13 @@ shadow (1:4.0.18.2-1) UNRELEASED; urgency=low
       + 416_man-fr_newgrp
     - The upstream tarball is now built with gettext 0.16. Remove
       + 499_gettext-0.15
+    - Significant changes to patches
+      + 397_non_numerical_identifier
+        usermod.c was already patched upstream; useradd.c was not.
+      + 467_useradd_-r_LSB
+        Simplifications. There should be no changes.
+      + 409_man_generate_from_PO
+        The Italian PO was added upstream. Patch the Italian Makefile.
   * Upstream bugs not fixed in upstream's CVS:
     - debian/securetty.linux: Added xvc0 and hvc0 consoles to the Linux's
       consoles where root login is allowed. (triggered by #423389)

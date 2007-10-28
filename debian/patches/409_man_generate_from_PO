@@ -5,10 +5,10 @@ man_MANS (and man_nopam) variables.
 
 Status wrt upstream: not reported yet.
 
-Index: shadow-4.0.18.1/man/Makefile.am
+Index: shadow-4.0.18.2/man/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/Makefile.am	2007-05-17 13:50:42.000000000 +0200
-+++ shadow-4.0.18.1/man/Makefile.am	2007-05-17 13:50:43.000000000 +0200
+--- shadow-4.0.18.2.orig/man/Makefile.am	2007-10-28 17:50:38.000000000 +0100
++++ shadow-4.0.18.2/man/Makefile.am	2007-10-28 17:50:40.000000000 +0100
 @@ -114,141 +114,20 @@
  
  if ENABLE_REGENERATE_MAN
@@ -157,10 +157,10 @@ Index: shadow-4.0.18.1/man/Makefile.am
  
  $(POFILES): shadow-man-pages.pot
  
-Index: shadow-4.0.18.1/man/de/Makefile.am
+Index: shadow-4.0.18.2/man/de/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/de/Makefile.am	2006-08-03 12:00:56.000000000 +0200
-+++ shadow-4.0.18.1/man/de/Makefile.am	2007-05-17 13:50:43.000000000 +0200
+--- shadow-4.0.18.2.orig/man/de/Makefile.am	2007-10-28 17:50:37.000000000 +0100
++++ shadow-4.0.18.2/man/de/Makefile.am	2007-10-28 17:50:40.000000000 +0100
 @@ -13,3 +13,6 @@
  	vipw.8
  
@@ -168,10 +168,10 @@ Index: shadow-4.0.18.1/man/de/Makefile.am
 +
 +include ../generate_translations.mak
 +
-Index: shadow-4.0.18.1/man/fr/Makefile.am
+Index: shadow-4.0.18.2/man/fr/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/fr/Makefile.am	2006-08-03 12:25:46.000000000 +0200
-+++ shadow-4.0.18.1/man/fr/Makefile.am	2007-05-17 15:43:17.000000000 +0200
+--- shadow-4.0.18.2.orig/man/fr/Makefile.am	2007-10-28 17:50:37.000000000 +0100
++++ shadow-4.0.18.2/man/fr/Makefile.am	2007-10-28 17:50:40.000000000 +0100
 @@ -53,3 +53,6 @@
  EXTRA_DIST = \
  	$(man_MANS) \
@@ -179,10 +179,10 @@ Index: shadow-4.0.18.1/man/fr/Makefile.am
 +
 +include ../generate_translations.mak
 +
-Index: shadow-4.0.18.1/man/generate_translations.mak
+Index: shadow-4.0.18.2/man/generate_translations.mak
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ shadow-4.0.18.1/man/generate_translations.mak	2007-05-17 15:44:34.000000000 +0200
++++ shadow-4.0.18.2/man/generate_translations.mak	2007-10-28 17:50:40.000000000 +0100
 @@ -0,0 +1,20 @@
 +if ENABLE_REGENERATE_MAN
 +
@@ -204,21 +204,21 @@ Index: shadow-4.0.18.1/man/generate_translations.mak
 +CLEANFILES = .xml2po.mo $(man_MANS) $(addsuffix .xml,$(man_MANS))
 +
 +endif
-Index: shadow-4.0.18.1/man/pl/Makefile.am
+Index: shadow-4.0.18.2/man/pl/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/pl/Makefile.am	2006-08-03 12:08:58.000000000 +0200
-+++ shadow-4.0.18.1/man/pl/Makefile.am	2007-05-17 13:50:43.000000000 +0200
-@@ -53,3 +53,6 @@
+--- shadow-4.0.18.2.orig/man/pl/Makefile.am	2007-10-28 17:50:37.000000000 +0100
++++ shadow-4.0.18.2/man/pl/Makefile.am	2007-10-28 17:50:40.000000000 +0100
+@@ -54,3 +54,6 @@
  	id.1 \
  	shadow.3 \
  	sulogin.8
 +
 +include ../generate_translations.mak
 +
-Index: shadow-4.0.18.1/man/ru/Makefile.am
+Index: shadow-4.0.18.2/man/ru/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/ru/Makefile.am	2006-08-03 12:09:45.000000000 +0200
-+++ shadow-4.0.18.1/man/ru/Makefile.am	2007-05-17 13:50:43.000000000 +0200
+--- shadow-4.0.18.2.orig/man/ru/Makefile.am	2007-10-28 17:50:37.000000000 +0100
++++ shadow-4.0.18.2/man/ru/Makefile.am	2007-10-28 17:50:40.000000000 +0100
 @@ -58,3 +58,6 @@
  	$(man_nopam) \
  	id.1 \
@@ -226,14 +226,24 @@ Index: shadow-4.0.18.1/man/ru/Makefile.am
 +
 +include ../generate_translations.mak
 +
-Index: shadow-4.0.18.1/man/sv/Makefile.am
+Index: shadow-4.0.18.2/man/sv/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/man/sv/Makefile.am	2007-05-17 13:50:41.000000000 +0200
-+++ shadow-4.0.18.1/man/sv/Makefile.am	2007-05-17 13:50:43.000000000 +0200
+--- shadow-4.0.18.2.orig/man/sv/Makefile.am	2007-10-28 17:50:38.000000000 +0100
++++ shadow-4.0.18.2/man/sv/Makefile.am	2007-10-28 17:50:40.000000000 +0100
 @@ -55,3 +55,6 @@
  EXTRA_DIST = \
  	$(man_MANS) \
  	$(man_nopam)
 +
++include ../generate_translations.mak
++
+Index: shadow-4.0.18.2/man/it/Makefile.am
+===================================================================
+--- shadow-4.0.18.2.orig/man/it/Makefile.am	2007-10-28 17:51:43.000000000 +0100
++++ shadow-4.0.18.2/man/it/Makefile.am	2007-10-28 17:52:06.000000000 +0100
+@@ -49,3 +49,5 @@
+ 	$(man_nopam) \
+ 	id.1
+ 
 +include ../generate_translations.mak
 +
