@@ -52,7 +52,8 @@ shadow (1:4.0.18.1-11) unstable; urgency=low
 
   * The "Baguette laonnaise" release
   * Reactivate ECHOCTL in login after it disappeared in 4.0.8. Closes: #429758
-  * Disable audit support. Closes: #bug_not_yet_reported_by_Sesse
+  * Disable audit support. This fixes a failure to build from source.
+    Reported by Sesse
 
  -- Christian Perrier <bubulle@debian.org>  Fri, 22 Jun 2007 19:33:01 +0200
 
