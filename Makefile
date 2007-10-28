@@ -1,4 +1,4 @@
 PKG=shadow
-SITE=ftp://ftp.pld.org.pl/software/shadow/
+SITE=ftp://pkg-shadow.alioth.debian.org/pub/pkg-shadow/
 
 include /usr/share/quilt/quilt.debbuild.mk
