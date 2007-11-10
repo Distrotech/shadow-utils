@@ -4,6 +4,7 @@ Goal: allow non numerical group identifier to be specified with useradd's
 Fixes: #381394, #381399, #381404, #381408, #381448
 
 Status wrt upstream: Was applied in CVS for usermod
+                     Will be fixed in 4.0.19
 
 Index: shadow-4.0.18.1/src/useradd.c
 ===================================================================
