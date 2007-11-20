@@ -1,4 +1,4 @@
-Goal: Sipport numerical UID and ranges in lastlog -u
+Goal: Support numerical UID and ranges in lastlog -u
 Fixes: #259494
 
 Status wrt upstream: not reported yet.
