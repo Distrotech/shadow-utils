@@ -23,6 +23,11 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
         algorithm. It is tagged as deprecated and ENCRYPT_METHOD is
         recommended instead. New algorithms are also available.
         Closes: #447747
+  * Debian packaging fixes:
+    - debian/rules: compile with -W -Wall
+    - debian/rules: large files are now supported by configure. Remove
+      -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 from
+      CFLAGS.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
 

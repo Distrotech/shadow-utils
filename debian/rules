@@ -31,7 +31,7 @@ endif
 # Automatically controls patching at build time:
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
-CFLAGS = -g -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+CFLAGS = -g -W -Wall
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
   CFLAGS += -O0
 else
