@@ -8,7 +8,7 @@ but too many package are using this feature
 
 GNU su should also allow that.
 
-The only drawback I can see is (for upstream) that "su -x" (whish should
+The only drawback I can see is (for upstream) that "su -x" (which should
 start a shell in debug mode) won't work (su -- -x) will have to be used
 instead.
 This was a problem when -c was not an su option, but it is no more the
