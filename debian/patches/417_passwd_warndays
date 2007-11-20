@@ -2,7 +2,7 @@ Goal: Use "warndays as long option for "-w" and not "warning"
 
 Fixes: #445481
 
-Status wrt upstream: Not reported yet. Should be applied
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Note: 
 

@@ -3,7 +3,7 @@ Goal: Build the translated man pages at build time.
 Note: Translators must list the manpages which are translated in the
 man_MANS (and man_nopam) variables.
 
-Status wrt upstream: not reported yet.
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Index: shadow-4.0.18.2/man/Makefile.am
 ===================================================================

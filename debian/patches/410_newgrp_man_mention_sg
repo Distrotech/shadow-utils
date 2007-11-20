@@ -4,8 +4,7 @@ Fixes: #396690
 
 Note: 
 
-Status wrt upstream: not applied yet. Tomasz applied the same for
-                     su(1) but not for newgrp(1)
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Index: shadow-4.0.18.1/man/newgrp.1.xml
 ===================================================================

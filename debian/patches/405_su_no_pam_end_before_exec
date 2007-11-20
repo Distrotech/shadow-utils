@@ -7,7 +7,7 @@ anyway.
 
 Fixes: #412061
 
-Status wrt upstream: not reported yet.
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Index: shadow-4.0.18.1/src/su.c
 ===================================================================

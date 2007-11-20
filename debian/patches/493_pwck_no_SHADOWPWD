@@ -2,7 +2,7 @@ Goal: SHADOWPWD is now assumed (no more defined).
 
 Fixes: pwck do not detect missing users in /etc/shadow.
 
-Status wrt upstream: Not proposed to upstream yet.
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Index: shadow-4.0.18.1/src/pwck.c
 ===================================================================

@@ -25,7 +25,8 @@ Goal:
 
 Fixes: #341230
 
-Status wrt upstream: 
+Status wrt upstream: Fixed differently in 4.0.19. (all the getpwnam, ...
+                     reviewed)
 
 Index: shadow-4.0.18.1/src/chfn.c
 ===================================================================

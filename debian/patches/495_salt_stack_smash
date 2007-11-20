@@ -6,7 +6,8 @@ Fix: #377825
 
 Author: Colin Watson <cjwatson@debian.org>
 
-Status wrt upstream: reported, not applied yet
+Status wrt upstream: Will be fixed in 4.0.19
+                     This upstream section changed a lot.
 
 Index: shadow-4.0.18.1/libmisc/salt.c
 ===================================================================

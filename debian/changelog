@@ -1,3 +1,25 @@
+shadow (1:4.1.0-1) UNRELEASED; urgency=low
+
+  * New upstream release. This closes the following bugs:
+    - usermod: Make usermod options independent of the argument order.
+      Closes: #451518
+    - login: Improve logging of login when the user's passwd entry could not
+      be retrieved.  Closes: #451521
+    - Remove patches applied upstream:
+      + 468_duplicate_passwd_struct_before_usage
+      + 495_salt_stack_smash
+      + 397_non_numerical_identifier
+      + 405_su_no_pam_end_before_exec
+      + 493_pwck_no_SHADOWPWD
+      + 497_newgrp_primary_group
+      + 409_man_generate_from_PO
+      + 410_newgrp_man_mention_sg
+      + 411_chpasswd_document_no_pam
+      + 494_passwd_lock
+      + 417_passwd_warndays
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
+
 shadow (1:4.0.18.2-1) unstable; urgency=low
 
   * The "Vacherin" release.

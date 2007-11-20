@@ -1,7 +1,7 @@
-Goal: Document that chpasswd foes not use PAM.
+Goal: Document that chpasswd does not use PAM.
 Fixes: #396726
 
-Status wrt upstream: Not reported yet.
+Status wrt upstream: Will be fixed in 4.0.19.
 
 Note: Even when PAM support is activated in chpasswd, this patch is valid. The
 PAM support is only for the authentication of the caller.

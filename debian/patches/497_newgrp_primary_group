@@ -3,7 +3,7 @@ Goal: Do not request a password when a user uses newgrp to switch to her
 
 Fixes: #396691
 
-Status wrt upstream: not forwarded yet.
+Status wrt upstream: Will be fixed in 4.0.19
 
 Index: shadow-4.0.18.1/src/newgrp.c
 ===================================================================

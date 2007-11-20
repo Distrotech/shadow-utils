@@ -1,3 +1,5 @@
+Status wrt upstream: Will be fixed in 4.0.19.
+
 Index: shadow-4.0.18.1/man/passwd.1.xml
 ===================================================================
 --- shadow-4.0.18.1.orig/man/passwd.1.xml	2007-06-21 02:04:59.531851133 +0200
