@@ -17,6 +17,12 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
       + 411_chpasswd_document_no_pam
       + 494_passwd_lock
       + 417_passwd_warndays
+    - Updated patches:
+      + debian/patches/504_undef_USE_PAM.dpatch
+        MD5_CRYPT_ENAB is back in login.defs to define the default crypt
+        algorithm. It is tagged as deprecated and ENCRYPT_METHOD is
+        recommended instead. New algorithms are also available.
+        Closes: #447747
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
 
