@@ -9,11 +9,12 @@ Index: shadow-4.0.18.1/src/su.c
 ===================================================================
 --- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:17:52.483993589 +0200
 +++ shadow-4.0.18.1/src/su.c	2006-09-17 12:17:53.099998487 +0200
-@@ -304,6 +304,7 @@
+@@ -304,6 +304,8 @@
  	struct passwd *pw = 0;
  	char **envp = environ;
  	char *shellstr = 0, *command = 0;
 +	char *tmp_name;
++	char **ptr_tmp_name = &tmp_name;
  
  #ifdef USE_PAM
  	char **envcp;
@@ -21,7 +22,7 @@ Index: shadow-4.0.18.1/src/su.c
  			su_failure (tty);
  		}
  	}
-+	ret = pam_get_item(pamh, PAM_USER, (const void **) &tmp_name);
++	ret = pam_get_item(pamh, PAM_USER, (const void **) ptr_tmp_name);
 +	if (ret != PAM_SUCCESS) {
 +		SYSLOG((LOG_ERR, "pam_get_item: internal PAM error\n"));
 +		fprintf(stderr, "%s: Internal PAM error retrieving username\n", Prog);
