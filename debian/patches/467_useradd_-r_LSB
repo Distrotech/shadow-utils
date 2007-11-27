@@ -19,12 +19,12 @@ Index: shadow-4.0.18.2/src/useradd.c
      uflg = 0;			/* specify user ID for new account */
  
 @@ -639,6 +640,7 @@
- 			   "				(non-unique) UID\n"
- 			   "  -p, --password PASSWORD	use encrypted password for the new user\n"
- 			   "				account\n"
-+			   "  -r, --system			create a system account\n"
- 			   "  -s, --shell SHELL		the login shell for the new user account\n"
- 			   "  -u, --uid UID			force use the UID for the new user account\n"
+ 			   "                                (non-unique) UID\n"
+ 			   "  -p, --password PASSWORD       use encrypted password for the new user\n"
+ 			   "                                account\n"
++			   "  -r, --system                  create a system account\n"
+ 			   "  -s, --shell SHELL             the login shell for the new user account\n"
+ 			   "  -u, --uid UID                 force use the UID for the new user account\n"
  			   "\n"));
 @@ -687,11 +689,19 @@
  	spent->sp_namp = (char *) user_name;
