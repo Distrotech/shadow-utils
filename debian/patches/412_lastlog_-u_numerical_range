@@ -107,7 +107,7 @@ Index: shadow-4.0.18.1/src/lastlog.c
 +				 *  - a numerical login ID
 +				 *  - a range (-x, x-, x-y)
 +				 */
- 				pwent = getpwnam (optarg);
+ 				pwent = xgetpwnam (optarg);
 -				if (!pwent) {
 -					fprintf (stderr,
 -						 _("Unknown User: %s\n"),
