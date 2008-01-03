@@ -7,6 +7,7 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
       be retrieved.  Closes: #451521
     - Updated Russian translations. Thanks to Yuri Kozlov <kozlov.y@gmail.com>.
       Closes: #452291, #452296
+    - Section of newgrp fixed in the gshadow manpage. Closes: #454485
     - Remove patches applied upstream:
       + 468_duplicate_passwd_struct_before_usage
       + 495_salt_stack_smash
