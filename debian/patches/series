@@ -23,7 +23,7 @@
 466_fflush-prompt
 523_su_arguments_are_concatenated
 523_su_arguments_are_no_more_concatenated_by_default
-479_chowntty_debug
+579_chowntty_debug
 480_getopt_args_reorder
 483_su_fakelogin_wrong_arg0
 491_configure.in_friendly_selinux_detection
