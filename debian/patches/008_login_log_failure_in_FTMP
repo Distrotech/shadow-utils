@@ -8,17 +8,26 @@ Index: shadow-4.0.18.1/src/login.c
 ===================================================================
 --- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:17:54.336008314 +0200
 +++ shadow-4.0.18.1/src/login.c	2006-09-17 12:17:54.972013371 +0200
-@@ -716,6 +716,20 @@
+@@ -716,6 +716,29 @@
  #endif				/* WITH_AUDIT */
  
  			  fprintf(stderr,"\nLogin incorrect\n");
 +			  if (getdef_str("FTMP_FILE") != NULL) {
 +#if HAVE_UTMPX_H
 +			    failent = utxent;
-+			    gettimeofday(&(failent.ut_tv), NULL);
++			    if (sizeof (failent.ut_tv) == sizeof (struct timeval))
++				    gettimeofday((struct timeval *)
++				                 &failent.ut_tv, NULL);
++			    else {
++				    struct timeval tv;
++
++				    gettimeofday (&tv, NULL);
++				    failent.ut_tv.tv_sec = tv.tv_sec;
++				    failent.ut_tv.tv_usec = tv.tv_usec;
++			    }
 +#else
 +			    failent = utent;
-+			    time(&failent.ut_time);
++			    failent.ut_time = time(NULL);
 +#endif
 +			    strncpy(failent.ut_user, failent_user, sizeof(failent.ut_user));
 +#ifdef USER_PROCESS

@@ -32,8 +32,11 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
       -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 from
       CFLAGS.
     - 479_chowntty_debug was debian specific. Renamed to 579_chowntty_debug
-    - Reapply 419_time_structures.dpatch. Remove teh parts which are already
-      fixed upstream (not necessarily the same way).
+    - Remove (not applied patch) 419_time_structures.dpatch. All its chunks
+      are already applied upstream (with some differences), except one chunk
+      which comes from 008_login_log_failure_in_FTMP. Fix
+      008_login_log_failure_in_FTMP. This should fix some bugs causing invalid
+      faillog entries on 64 bit architectures with 32 bit compatibility.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
 
