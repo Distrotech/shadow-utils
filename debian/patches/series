@@ -6,8 +6,7 @@
 434_login_stop_checking_args_after--
 008_login_log_failure_in_FTMP
 429_login_FAILLOG_ENAB
-#
-# 419_time_structures.dpatch  # must be checked another time
+419_time_structures.dpatch
 401_cppw_src.dpatch
 504_undef_USE_PAM.dpatch
 504_undef_USE_PAM.nolibpam
