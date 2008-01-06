@@ -12,13 +12,14 @@ failed_tests=""
 
 run_test()
 {
-	if $1 >> testsuite.log
+	if $1 > $1.log
 	then
 		succeded=$((succeded+1))
 	else
 		failed=$((failed+1))
 		failed_tests="$failed_tests $1"
 	fi
+	cat $1.log >> testsuite.log
 }
 
 > testsuite.log
