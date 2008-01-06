@@ -29,8 +29,43 @@ echo "-: test failed"
 
 # Empty the complete log.
 > testsuite.log
-run_test ./su/01/run
-run_test ./su/02/run
+
+run_test ./su/01/su_root
+run_test ./su/01/su_user
+run_test ./su/02/env_FOO-options_--login
+run_test ./su/02/env_FOO-options_--login_bash
+run_test ./su/02/env_FOO-options_--preserve-environment
+run_test ./su/02/env_FOO-options_--preserve-environment_bash
+run_test ./su/02/env_FOO-options_-
+run_test ./su/02/env_FOO-options_-_bash
+run_test ./su/02/env_FOO-options_-l-m
+run_test ./su/02/env_FOO-options_-l-m_bash
+run_test ./su/02/env_FOO-options_-l
+run_test ./su/02/env_FOO-options_-l_bash
+run_test ./su/02/env_FOO-options_-m_bash
+run_test ./su/02/env_FOO-options_-m
+run_test ./su/02/env_FOO-options_-p
+run_test ./su/02/env_FOO-options_-p_bash
+run_test ./su/02/env_FOO-options__bash
+run_test ./su/02/env_FOO-options_
+run_test ./su/02/env_FOO-options_-p-
+run_test ./su/02/env_FOO-options_-p-_bash
+run_test ./su/02/env_special-options_-l-p
+run_test ./su/02/env_special-options_-l
+run_test ./su/02/env_special-options_-l-p_bash
+run_test ./su/02/env_special-options_-l_bash
+run_test ./su/02/env_special-options_-p
+run_test ./su/02/env_special-options_-p_bash
+run_test ./su/02/env_special-options_
+run_test ./su/02/env_special-options__bash
+run_test ./su/02/env_special_root-options_-l-p
+run_test ./su/02/env_special_root-options_-l-p_bash
+run_test ./su/02/env_special_root-options_-l
+run_test ./su/02/env_special_root-options_-l_bash
+run_test ./su/02/env_special_root-options_-p
+run_test ./su/02/env_special_root-options_-p_bash
+run_test ./su/02/env_special_root-options_
+run_test ./su/02/env_special_root-options__bash
 run_test ./su/03/run
 run_test ./convtools/01/run
 run_test ./chage/01/run
