@@ -15,12 +15,17 @@ run_test()
 	if $1 > $1.log
 	then
 		succeded=$((succeded+1))
+		echo -n "+"
 	else
 		failed=$((failed+1))
 		failed_tests="$failed_tests $1"
+		echo -n "-"
 	fi
 	cat $1.log >> testsuite.log
 }
+
+echo "+: test passed"
+echo "-: test failed"
 
 > testsuite.log
 run_test ./su/01/run
