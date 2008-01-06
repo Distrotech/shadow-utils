@@ -27,6 +27,7 @@ run_test()
 echo "+: test passed"
 echo "-: test failed"
 
+# Empty the complete log.
 > testsuite.log
 run_test ./su/01/run
 run_test ./su/02/run
@@ -58,6 +59,7 @@ run_test ./cptools/01/run4
 run_test ./cktools/01/run1
 run_test ./cktools/01/run2
 
+echo
 echo "$succeded test(s) passed"
 echo "$failed test(s) failed"
 echo "log written in 'testsuite.log'"
@@ -66,3 +68,4 @@ then
 	echo "the following tests failed:"
 	echo $failed_tests
 fi
+
