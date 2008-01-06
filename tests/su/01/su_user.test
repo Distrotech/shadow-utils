@@ -4,41 +4,22 @@ set -e
 
 cd $(dirname $0)
 
-# Rational:
-# Test that su can be used to switch to root and to a normal account
+. ../../common/config.sh
+. ../../common/log.sh
 
-# no testsuite password
-# root password: rootF00barbaz
-# myuser password: myuserF00barbaz
+log_start "$0" "su can be used to switch to a non-root user"
 
-save()
-{
-	[ ! -d tmp ] && mkdir tmp
-	for i in passwd group shadow gshadow
-	do
-		[ -f /etc/$i  ] && cp /etc/$i  tmp/$i
-	done
 
-	true
-}
-
-restore()
-{
-	for i in passwd group shadow gshadow
-	do
-		[ -f tmp/$i  ] && cp tmp/$i  /etc/$i  && rm tmp/$i
-	done
-	rmdir tmp
-}
-
-save
+save_config
 
 # restore the files on exit
-trap 'restore' 0
+trap 'log_status "$0" "FAILURE"; restore_config' 0
 
-cp data/{passwd,shadow,group,gshadow} /etc/
+change_config
 
-./run_su root rootF00barbaz '# '
+./run_su.exp myuser myuserF00barbaz '$ '
 
-./run_su myuser myuserF00barbaz '$ '
+log_status "$0" "SUCCESS"
+restore_config
+trap '' 0
 
