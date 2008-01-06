@@ -2,6 +2,10 @@
 
 set -e
 
+export LC_ALL=C
+unset LANG
+unset LANGUAGE
+
 succeded=0
 failed=0
 failed_tests=""
