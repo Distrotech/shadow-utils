@@ -37,6 +37,9 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
       which comes from 008_login_log_failure_in_FTMP. Fix
       008_login_log_failure_in_FTMP. This should fix some bugs causing invalid
       faillog entries on 64 bit architectures with 32 bit compatibility.
+    - debian/securetty.linux: Add ttyS1. Better comments for the ttyS and xen
+      consoles. Add a note for the devfs consoles. They are no more needed for
+      most users. Closes: #454584
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
 

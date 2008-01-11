@@ -2,11 +2,15 @@
 # See securetty(5) and login(1).
 console
 
-# for people with serial port consoles
+# Standard serial ports
 ttyS0
+ttyS1
 
-# for devfs
-tts/0
+# Standard hypervisor virtual console
+hvc0
+
+# Oldstyle Xen console
+xvc0
 
 # Standard consoles
 tty1
@@ -73,7 +77,14 @@ tty61
 tty62
 tty63
 
-# Same as above, but these only occur with devfs devices
+# devfs consoles
+# Note: On kernels greater than 2.6.12, this is not needed.
+
+# Standard serial ports, with devfs
+tts/0
+tts/1
+
+# Standard consoles, with devfs
 vc/1
 vc/2
 vc/3
@@ -137,7 +148,3 @@ vc/60
 vc/61
 vc/62
 vc/63
-
-# for Xen consoles
-xvc0
-hvc0
