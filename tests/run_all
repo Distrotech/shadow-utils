@@ -141,6 +141,24 @@ run_test ./cptools/01/run3
 run_test ./cptools/01/run4
 run_test ./cktools/01/run1
 run_test ./cktools/01/run2
+run_test ./crypt/login.defs_DES-MD5_CRYPT_ENAB/01_chpasswd.test
+run_test ./crypt/login.defs_DES/01_chpasswd.test
+run_test ./crypt/login.defs_DES/02_chpasswd--crypt-method-MD5.test
+run_test ./crypt/login.defs_DES/03_chpasswd--crypt-method-DES.test
+run_test ./crypt/login.defs_DES/04_chpasswd--crypt-method-NONE.test
+run_test ./crypt/login.defs_DES/05_chpasswd-e.test
+run_test ./crypt/login.defs_DES/06_chpasswd-m.test
+run_test ./crypt/login.defs_DES/07_chgpasswd.test
+run_test ./crypt/login.defs_DES/08_chgpasswd--crypt-method-MD5.test
+run_test ./crypt/login.defs_DES/09_chgpasswd--crypt-method-DES.test
+run_test ./crypt/login.defs_DES/10_chgpasswd--crypt-method-NONE.test
+run_test ./crypt/login.defs_DES/11_chgpasswd-e.test
+run_test ./crypt/login.defs_DES/12_chgpasswd-m.test
+run_test ./crypt/login.defs_MD5/01_chpasswd.test
+run_test ./crypt/login.defs_MD5_CRYPT_ENAB/01_chpasswd.test
+run_test ./crypt/login.defs_SHA256/01_chpasswd.test
+run_test ./crypt/login.defs_SHA512/01_chpasswd.test
+run_test ./crypt/login.defs_none/01_chpasswd.test
 
 echo
 echo "$succeded test(s) passed"
