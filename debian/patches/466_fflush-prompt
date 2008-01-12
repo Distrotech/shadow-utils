@@ -3,21 +3,21 @@ Goal: Fflush all prompts supposedly presented to a user, because we may
 
 Status wrt upstream: may appear in 4.0.14
       
-Index: shadow-4.0.18.1/libmisc/Makefile.am
+Index: shadow-4.1.0/libmisc/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/Makefile.am	2005-09-05 18:21:37.000000000 +0200
-+++ shadow-4.0.18.1/libmisc/Makefile.am	2006-09-17 12:18:05.616098001 +0200
-@@ -49,4 +49,5 @@
+--- shadow-4.1.0.orig/libmisc/Makefile.am
++++ shadow-4.1.0/libmisc/Makefile.am
+@@ -55,4 +55,5 @@
  	xgetgrnam.c \
  	xgetgrgid.c \
  	xgetspnam.c \
 -	xmalloc.c
 +	xmalloc.c \
 +	yesno.c
-Index: shadow-4.0.18.1/libmisc/fields.c
+Index: shadow-4.1.0/libmisc/fields.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/fields.c	2005-08-31 19:24:57.000000000 +0200
-+++ shadow-4.0.18.1/libmisc/fields.c	2006-09-17 12:18:05.620098032 +0200
+--- shadow-4.1.0.orig/libmisc/fields.c
++++ shadow-4.1.0/libmisc/fields.c
 @@ -71,6 +71,7 @@
  		maxsize = sizeof (newf);
  
@@ -26,10 +26,10 @@ Index: shadow-4.0.18.1/libmisc/fields.c
  	if (fgets (newf, maxsize, stdin) != newf)
  		return;
  
-Index: shadow-4.0.18.1/libmisc/yesno.c
+Index: shadow-4.1.0/libmisc/yesno.c
 ===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ shadow-4.0.18.1/libmisc/yesno.c	2006-09-17 12:18:05.620098032 +0200
+--- /dev/null
++++ shadow-4.1.0/libmisc/yesno.c
 @@ -0,0 +1,41 @@
 +/*
 + * Common code for yes/no prompting
@@ -72,10 +72,10 @@ Index: shadow-4.0.18.1/libmisc/yesno.c
 +
 +	return 0;
 +}
-Index: shadow-4.0.18.1/src/grpck.c
+Index: shadow-4.1.0/src/grpck.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/grpck.c	2006-09-17 12:17:53.712003353 +0200
-+++ shadow-4.0.18.1/src/grpck.c	2006-09-17 12:18:05.620098032 +0200
+--- shadow-4.1.0.orig/src/grpck.c
++++ shadow-4.1.0/src/grpck.c
 @@ -50,6 +50,8 @@
  extern struct commonio_entry *__sgr_get_head (void);
  #endif
@@ -142,7 +142,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				goto delete_gr;
  		}
  
-@@ -397,7 +374,7 @@
+@@ -398,7 +375,7 @@
  				grp->gr_name, grp->gr_mem[i]);
  			printf (_("delete member '%s'? "), grp->gr_mem[i]);
  
@@ -151,7 +151,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				continue;
  
  			SYSLOG ((LOG_INFO, "delete member '%s' group '%s'",
-@@ -422,7 +399,7 @@
+@@ -423,7 +400,7 @@
  				printf (_("add group '%s' in %s ?"),
  					grp->gr_name, sgr_file);
  				errors++;
@@ -160,7 +160,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  					struct sgrp sg;
  					struct group gr;
  					static char *empty = NULL;
-@@ -509,7 +486,7 @@
+@@ -510,7 +487,7 @@
  			/*
  			 * prompt the user to delete the entry or not
  			 */
@@ -169,7 +169,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				continue;
  
  			/*
-@@ -565,7 +542,7 @@
+@@ -566,7 +543,7 @@
  			/*
  			 * prompt the user to delete the entry or not
  			 */
@@ -178,7 +178,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				goto delete_sg;
  		}
  
-@@ -578,7 +555,7 @@
+@@ -579,7 +556,7 @@
  				grp_file);
  			printf (_("delete line '%s'? "), sge->line);
  			errors++;
@@ -187,7 +187,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				goto delete_sg;
  		} else {
  			/**
-@@ -619,7 +596,7 @@
+@@ -621,7 +598,7 @@
  			printf (_("delete administrative member '%s'? "),
  				sgr->sg_adm[i]);
  
@@ -196,7 +196,7 @@ Index: shadow-4.0.18.1/src/grpck.c
  				continue;
  
  			SYSLOG ((LOG_INFO,
-@@ -646,7 +623,7 @@
+@@ -649,7 +626,7 @@
  				sgr->sg_name, sgr->sg_mem[i]);
  			printf (_("delete member '%s'? "), sgr->sg_mem[i]);
  
@@ -205,10 +205,10 @@ Index: shadow-4.0.18.1/src/grpck.c
  				continue;
  
  			SYSLOG ((LOG_INFO,
-Index: shadow-4.0.18.1/src/pwck.c
+Index: shadow-4.1.0/src/pwck.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/pwck.c	2006-05-07 19:44:39.000000000 +0200
-+++ shadow-4.0.18.1/src/pwck.c	2006-10-21 16:26:23.000000000 +0200
+--- shadow-4.1.0.orig/src/pwck.c
++++ shadow-4.1.0/src/pwck.c
 @@ -49,6 +49,8 @@
  extern void __spw_del_entry (const struct commonio_entry *);
  extern struct commonio_entry *__spw_get_head (void);
@@ -276,7 +276,7 @@ Index: shadow-4.0.18.1/src/pwck.c
  				goto delete_pw;
  		}
  
-@@ -382,7 +358,7 @@
+@@ -383,7 +359,7 @@
  				printf (_("add user '%s' in %s? "),
  					pwd->pw_name, spw_file);
  				errors++;

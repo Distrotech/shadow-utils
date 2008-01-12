@@ -2,10 +2,10 @@ Goal: save the [g]shadow files with the 'shadow' group and mode 0440
 
 Fixes: #166793
 
-Index: shadow-4.0.18.1/lib/commonio.c
+Index: shadow-4.1.0/lib/commonio.c
 ===================================================================
---- shadow-4.0.18.1.orig/lib/commonio.c	2006-06-08 15:36:11.000000000 +0200
-+++ shadow-4.0.18.1/lib/commonio.c	2006-09-17 12:18:03.020077360 +0200
+--- shadow-4.1.0.orig/lib/commonio.c
++++ shadow-4.1.0/lib/commonio.c
 @@ -13,6 +13,7 @@
  #include <stdio.h>
  #include <signal.h>
@@ -14,7 +14,7 @@ Index: shadow-4.0.18.1/lib/commonio.c
  #include <nscd.h>
  #ifdef HAVE_SHADOW_H
  #include <shadow.h>
-@@ -699,13 +700,20 @@
+@@ -712,13 +713,20 @@
  			goto fail;
  		}
  	} else {

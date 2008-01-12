@@ -13,10 +13,10 @@ and in fact it's misleading, because tty name is detected OK, it's
 is_my_tty() which is failing for a reason yet unknown (I suspect
 corruption of utmp file).
 
-Index: shadow-4.0.18.1/libmisc/chowntty.c
+Index: shadow-4.1.0/libmisc/chowntty.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/chowntty.c	2005-08-31 19:24:57.000000000 +0200
-+++ shadow-4.0.18.1/libmisc/chowntty.c	2006-09-17 12:18:08.256118991 +0200
+--- shadow-4.1.0.orig/libmisc/chowntty.c
++++ shadow-4.1.0/libmisc/chowntty.c
 @@ -40,6 +40,7 @@
  #include "defines.h"
  #include <pwd.h>

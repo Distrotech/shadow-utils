@@ -6,11 +6,11 @@ Status wrt upstream: Debian specific.
 
 It is probably a bug of docbook-xsl 1.68.1-0.1
 
-Index: shadow-4.0.18.1/man/passwd.1.xml
+Index: shadow-4.1.0/man/passwd.1.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/passwd.1.xml	2006-07-24 07:48:36.000000000 +0200
-+++ shadow-4.0.18.1/man/passwd.1.xml	2006-09-17 12:18:10.728138646 +0200
-@@ -87,8 +87,8 @@
+--- shadow-4.1.0.orig/man/passwd.1.xml
++++ shadow-4.1.0/man/passwd.1.xml
+@@ -97,8 +97,8 @@
        <title>Hints for user passwords</title>
        <para>
  	The security of a password depends upon the strength of the
@@ -21,11 +21,11 @@ Index: shadow-4.0.18.1/man/passwd.1.xml
  	NBS DES algorithm and is very secure. The size of the key space
  	depends upon the randomness of the password which is selected.
        </para>
-Index: shadow-4.0.18.1/man/useradd.8.xml
+Index: shadow-4.1.0/man/useradd.8.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-09-17 12:18:01.136062380 +0200
-+++ shadow-4.0.18.1/man/useradd.8.xml	2006-09-17 12:18:10.728138646 +0200
-@@ -35,7 +35,7 @@
+--- shadow-4.1.0.orig/man/useradd.8.xml
++++ shadow-4.1.0/man/useradd.8.xml
+@@ -46,7 +46,7 @@
      <title>DESCRIPTION</title>
        <para>
  	When invoked without the <option>-D</option> option, the

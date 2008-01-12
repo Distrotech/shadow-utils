@@ -4,11 +4,11 @@ Notes:
  * I'm not sure login should add an entry in the FTMP file when PAM is used.
    (but nothing in /etc/login.defs indicates that the failure is not logged)
 
-Index: shadow-4.0.18.1/src/login.c
+Index: shadow-4.1.0/src/login.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:17:54.336008314 +0200
-+++ shadow-4.0.18.1/src/login.c	2006-09-17 12:17:54.972013371 +0200
-@@ -716,6 +716,29 @@
+--- shadow-4.1.0.orig/src/login.c
++++ shadow-4.1.0/src/login.c
+@@ -722,6 +722,29 @@
  #endif				/* WITH_AUDIT */
  
  			  fprintf(stderr,"\nLogin incorrect\n");
@@ -38,11 +38,11 @@ Index: shadow-4.0.18.1/src/login.c
  
  			  /* Let's give it another go around */
  			  pam_set_item(pamh,PAM_USER,NULL);
-Index: shadow-4.0.18.1/lib/getdef.c
+Index: shadow-4.1.0/lib/getdef.c
 ===================================================================
---- shadow-4.0.18.1.orig/lib/getdef.c	2006-06-24 15:17:18.000000000 +0200
-+++ shadow-4.0.18.1/lib/getdef.c	2006-09-17 12:17:54.992013530 +0200
-@@ -57,6 +57,7 @@
+--- shadow-4.1.0.orig/lib/getdef.c
++++ shadow-4.1.0/lib/getdef.c
+@@ -58,6 +58,7 @@
  	{"ERASECHAR", NULL},
  	{"FAIL_DELAY", NULL},
  	{"FAKE_SHELL", NULL},
@@ -50,7 +50,7 @@ Index: shadow-4.0.18.1/lib/getdef.c
  	{"GID_MAX", NULL},
  	{"GID_MIN", NULL},
  	{"HUSHLOGIN_FILE", NULL},
-@@ -88,7 +89,6 @@
+@@ -93,7 +94,6 @@
  	{"ENVIRON_FILE", NULL},
  	{"ENV_TZ", NULL},
  	{"FAILLOG_ENAB", NULL},

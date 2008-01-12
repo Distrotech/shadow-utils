@@ -8,10 +8,10 @@ Author: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
 Status wrt upstream: reported, not applied yet
 
-Index: shadow-4.0.18.1/src/login.c
+Index: shadow-4.1.0/src/login.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:18:04.272087315 +0200
-+++ shadow-4.0.18.1/src/login.c	2006-09-17 12:18:14.632169686 +0200
+--- shadow-4.1.0.orig/src/login.c
++++ shadow-4.1.0/src/login.c
 @@ -41,6 +41,7 @@
  #include <signal.h>
  #include <stdio.h>
@@ -20,7 +20,7 @@ Index: shadow-4.0.18.1/src/login.c
  #include "defines.h"
  #include "faillog.h"
  #include "failure.h"
-@@ -1046,6 +1047,12 @@
+@@ -1070,6 +1071,12 @@
  	}
  	/* child */
  #endif
@@ -33,10 +33,10 @@ Index: shadow-4.0.18.1/src/login.c
  
  	/* We call set_groups() above because this clobbers pam_groups.so */
  #ifndef USE_PAM
-Index: shadow-4.0.18.1/src/sulogin.c
+Index: shadow-4.1.0/src/sulogin.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/sulogin.c	2006-05-13 01:13:10.000000000 +0200
-+++ shadow-4.0.18.1/src/sulogin.c	2006-09-17 12:18:14.632169686 +0200
+--- shadow-4.1.0.orig/src/sulogin.c
++++ shadow-4.1.0/src/sulogin.c
 @@ -35,6 +35,7 @@
  #include <pwd.h>
  #include <signal.h>

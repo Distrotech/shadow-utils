@@ -7,11 +7,11 @@ Author: Mike Frysinger <vapier@gentoo.org>
 
 Status wrt upstream: reported by Mike, not applied yet
 
-Index: shadow-4.0.18.1/configure.in
+Index: shadow-4.1.0/configure.in
 ===================================================================
---- shadow-4.0.18.1.orig/configure.in	2006-08-03 12:17:21.000000000 +0200
-+++ shadow-4.0.18.1/configure.in	2006-09-17 12:18:10.116133780 +0200
-@@ -220,7 +220,7 @@
+--- shadow-4.1.0.orig/configure.in
++++ shadow-4.1.0/configure.in
+@@ -221,7 +221,7 @@
  	[with_libpam=$withval], [with_libpam=yes])
  AC_ARG_WITH(selinux,
  	[AC_HELP_STRING([--with-selinux], [use SELinux support @<:@default=autodetect@:>@])],
@@ -20,7 +20,7 @@ Index: shadow-4.0.18.1/configure.in
  AC_ARG_WITH(skey,
  	[AC_HELP_STRING([--with-skey], [use S/Key support @<:@default=no@:>@])],
  	[with_skey=$withval], [with_skey=no])
-@@ -282,15 +282,22 @@
+@@ -292,15 +292,22 @@
  		AC_DEFINE(HAVE_LIBCRACK_PW, 1, [Defined if it includes *Pw functions.]))
  fi
  

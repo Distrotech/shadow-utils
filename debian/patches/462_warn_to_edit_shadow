@@ -5,10 +5,10 @@ Fixes: #62821
 
 Status wrt upstream: Forwarded but not applied yet
 
-Index: shadow-4.0.18.1/src/vipw.c
+Index: shadow-4.1.0/src/vipw.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/vipw.c	2006-06-20 22:00:04.000000000 +0200
-+++ shadow-4.0.18.1/src/vipw.c	2006-09-17 12:18:03.644082321 +0200
+--- shadow-4.1.0.orig/src/vipw.c
++++ shadow-4.1.0/src/vipw.c
 @@ -41,6 +41,12 @@
  #include "pwio.h"
  #include "sgroupio.h"

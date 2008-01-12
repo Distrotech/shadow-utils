@@ -6,11 +6,11 @@ Status wrt upstream: It was submitted upstream upstream (3 Jun 2005).
                      upstream (multiple uid 0 accounts).
 http://lists.alioth.debian.org/pipermail/pkg-shadow-devel/2005-June/001287.html
 
-Index: shadow-4.0.18.1/src/su.c
+Index: shadow-4.1.0/src/su.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/su.c	2006-08-01 12:30:02.000000000 +0200
-+++ shadow-4.0.18.1/src/su.c	2006-09-17 12:17:47.383953038 +0200
-@@ -444,7 +444,14 @@
+--- shadow-4.1.0.orig/src/su.c
++++ shadow-4.1.0/src/su.c
+@@ -449,7 +449,14 @@
  			optind++;
  	}
  	if (!name[0])		/* use default user ID */

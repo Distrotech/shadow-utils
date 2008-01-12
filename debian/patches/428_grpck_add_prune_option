@@ -5,10 +5,10 @@ Fixes: #103385
 
 Status wrt upstream: It could certainly be submitted to upstream.
 
-Index: shadow-4.0.18.1/src/grpck.c
+Index: shadow-4.1.0/src/grpck.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/grpck.c	2006-05-07 19:44:39.000000000 +0200
-+++ shadow-4.0.18.1/src/grpck.c	2006-09-17 12:17:53.712003353 +0200
+--- shadow-4.1.0.orig/src/grpck.c
++++ shadow-4.1.0/src/grpck.c
 @@ -139,6 +139,7 @@
  	int errors = 0;
  	int changed = 0;

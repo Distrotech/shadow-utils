@@ -15,11 +15,11 @@ This was a problem when -c was not an su option, but it is no more the
 case (a -- would have to be added for all the su -c "command"
 invocations).
 
-Index: shadow-4.0.18.1/src/su.c
+Index: shadow-4.1.0/src/su.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:18:07.616113902 +0200
-+++ shadow-4.0.18.1/src/su.c	2006-09-17 12:18:08.884123984 +0200
-@@ -373,19 +373,9 @@
+--- shadow-4.1.0.orig/src/su.c
++++ shadow-4.1.0/src/su.c
+@@ -379,19 +379,9 @@
  		};
  
  		while ((c =
@@ -40,7 +40,7 @@ Index: shadow-4.0.18.1/src/su.c
  			case 'c':
  				command = optarg;
  				break;
-@@ -407,10 +397,9 @@
+@@ -413,10 +403,9 @@
  				shellstr = optarg;
  				break;
  			default:

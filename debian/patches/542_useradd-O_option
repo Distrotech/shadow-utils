@@ -5,11 +5,11 @@ Note: useradd.8 needs to be regenerated.
 Status wrt upstream: not included as this is just specific 
                      backward compatibility for Debian
 
-Index: shadow-4.0.18.1/man/useradd.8.xml
+Index: shadow-4.1.0/man/useradd.8.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-09-17 12:17:59.836052044 +0200
-+++ shadow-4.0.18.1/man/useradd.8.xml	2006-09-17 12:18:01.136062380 +0200
-@@ -212,6 +212,11 @@
+--- shadow-4.1.0.orig/man/useradd.8.xml
++++ shadow-4.1.0/man/useradd.8.xml
+@@ -224,6 +224,11 @@
  	    <replaceable>UID_MIN</replaceable>=<replaceable>10</replaceable>,<replaceable>UID_MAX</replaceable>=<replaceable>499</replaceable>
  	    doesn't work yet.
  	  </para>
@@ -21,11 +21,11 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
  	</listitem>
        </varlistentry>
        <varlistentry>
-Index: shadow-4.0.18.1/src/useradd.c
+Index: shadow-4.1.0/src/useradd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/useradd.c	2006-09-17 12:17:58.252039450 +0200
-+++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:18:01.140062412 +0200
-@@ -1024,7 +1024,7 @@
+--- shadow-4.1.0.orig/src/useradd.c
++++ shadow-4.1.0/src/useradd.c
+@@ -1009,7 +1009,7 @@
  			{NULL, 0, NULL, '\0'}
  		};
  		while ((c =
@@ -34,7 +34,7 @@ Index: shadow-4.0.18.1/src/useradd.c
  				     long_options, NULL)) != -1) {
  			switch (c) {
  			case 'b':
-@@ -1143,6 +1143,7 @@
+@@ -1125,6 +1125,7 @@
  				kflg++;
  				break;
  			case 'K':

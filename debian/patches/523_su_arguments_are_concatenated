@@ -8,11 +8,11 @@ Status wrt upstream: This is a Debian specific patch.
 Note: the fix of the man page is still missing.
       (to be taken from the trunk)
 
-Index: shadow-4.0.18.1/src/su.c
+Index: shadow-4.1.0/src/su.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:17:56.308023993 +0200
-+++ shadow-4.0.18.1/src/su.c	2006-09-17 12:18:07.008109068 +0200
-@@ -879,6 +879,35 @@
+--- shadow-4.1.0.orig/src/su.c
++++ shadow-4.1.0/src/su.c
+@@ -887,6 +887,35 @@
  			argv[0] = "-c";
  			argv[1] = command;
  		}

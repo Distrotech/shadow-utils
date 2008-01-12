@@ -5,11 +5,11 @@ Fixes: #410268
 
 Status wrt upstream: not reported yet.
 
-Index: shadow-4.0.18.1/src/passwd.c
+Index: shadow-4.1.0/src/passwd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/passwd.c	2007-04-15 17:49:31.000000000 +0200
-+++ shadow-4.0.18.1/src/passwd.c	2007-04-15 17:52:38.000000000 +0200
-@@ -740,6 +740,12 @@
+--- shadow-4.1.0.orig/src/passwd.c
++++ shadow-4.1.0/src/passwd.c
+@@ -789,6 +789,12 @@
  		name = myname;
  
  	/*

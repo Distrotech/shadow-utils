@@ -6,11 +6,11 @@ Author: Michael Banck  <mbanck@debian.org>
 
 Status wrt upstream: should be forwarded
 
-Index: shadow-4.0.18.1/lib/commonio.c
+Index: shadow-4.1.0/lib/commonio.c
 ===================================================================
---- shadow-4.0.18.1/lib/commonio.c.orig	2006-12-07 06:57:01.000000000 +0000
-+++ shadow-4.0.18.1/lib/commonio.c	2006-12-07 06:57:40.000000000 +0000
-@@ -47,17 +48,31 @@
+--- shadow-4.1.0.orig/lib/commonio.c
++++ shadow-4.1.0/lib/commonio.c
+@@ -50,17 +50,31 @@
  int lrename (const char *old, const char *new)
  {
  

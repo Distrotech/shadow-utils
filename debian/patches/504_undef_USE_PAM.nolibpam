@@ -1,8 +1,8 @@
-Index: shadow-4.0.18.1/src/Makefile.am
+Index: shadow-4.1.0/src/Makefile.am
 ===================================================================
---- shadow-4.0.18.1.orig/src/Makefile.am	2006-09-17 12:17:57.524033662 +0200
-+++ shadow-4.0.18.1/src/Makefile.am	2006-09-17 12:17:59.228047210 +0200
-@@ -54,17 +54,17 @@
+--- shadow-4.1.0.orig/src/Makefile.am
++++ shadow-4.1.0/src/Makefile.am
+@@ -55,17 +55,17 @@
  		 $(top_builddir)/lib/libshadow.la
  AM_CPPFLAGS    = -DLOCALEDIR=\"$(datadir)/locale\"
  
@@ -26,7 +26,7 @@ Index: shadow-4.0.18.1/src/Makefile.am
  grpck_LDADD    = $(LDADD) $(LIBSELINUX)
  grpconv_LDADD  = $(LDADD) $(LIBSELINUX)
  grpunconv_LDADD = $(LDADD) $(LIBSELINUX)
-@@ -73,7 +73,7 @@
+@@ -74,7 +74,7 @@
  	login_nopam.c
  login_LDADD    = $(LDADD) $(LIBPAM) $(LIBAUDIT)
  newgrp_LDADD   = $(LDADD) $(LIBPAM) $(LIBAUDIT)
@@ -35,7 +35,7 @@ Index: shadow-4.0.18.1/src/Makefile.am
  nologin_LDADD  =
  passwd_LDADD   = $(LDADD) $(LIBPAM) $(LIBCRACK) $(LIBAUDIT) $(LIBSELINUX)
  pwck_LDADD     = $(LDADD) $(LIBSELINUX)
-@@ -83,9 +83,9 @@
+@@ -84,9 +84,9 @@
  	su.c \
  	suauth.c
  su_LDADD       = $(LDADD) $(LIBPAM)

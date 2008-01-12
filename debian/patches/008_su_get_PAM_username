@@ -5,11 +5,11 @@ Notes:
    I don't know what this patch is used for. IMO, the user name is
    already known before calling pam_get_item(pamh, PAM_USER, ...)
 
-Index: shadow-4.0.18.1/src/su.c
+Index: shadow-4.1.0/src/su.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/su.c	2006-09-17 12:17:52.483993589 +0200
-+++ shadow-4.0.18.1/src/su.c	2006-09-17 12:17:53.099998487 +0200
-@@ -304,6 +304,8 @@
+--- shadow-4.1.0.orig/src/su.c
++++ shadow-4.1.0/src/su.c
+@@ -309,6 +309,8 @@
  	struct passwd *pw = 0;
  	char **envp = environ;
  	char *shellstr = 0, *command = 0;
@@ -18,7 +18,7 @@ Index: shadow-4.0.18.1/src/su.c
  
  #ifdef USE_PAM
  	char **envcp;
-@@ -669,6 +670,14 @@
+@@ -674,6 +676,14 @@
  			su_failure (tty);
  		}
  	}

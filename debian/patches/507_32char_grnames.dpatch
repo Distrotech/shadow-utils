@@ -31,10 +31,10 @@ exit 0
 
 @DPATCH@
 
-Index: shadow-4.0.18.1/libmisc/chkname.c
+Index: shadow-4.1.0/libmisc/chkname.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/chkname.c	2006-09-17 12:17:59.836052044 +0200
-+++ shadow-4.0.18.1/libmisc/chkname.c	2006-09-17 12:18:00.496057292 +0200
+--- shadow-4.1.0.orig/libmisc/chkname.c
++++ shadow-4.1.0/libmisc/chkname.c
 @@ -70,10 +70,10 @@
  int check_group_name (const char *name)
  {

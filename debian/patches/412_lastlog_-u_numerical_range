@@ -5,10 +5,10 @@ Status wrt upstream: not reported yet.
 
 Note: It also allows to mix -u and -t
 
-Index: shadow-4.0.18.1/man/lastlog.8.xml
+Index: shadow-4.1.0/man/lastlog.8.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/lastlog.8.xml	2007-06-19 13:23:42.000000000 +0100
-+++ shadow-4.0.18.1/man/lastlog.8.xml	2007-06-19 14:35:26.000000000 +0100
+--- shadow-4.1.0.orig/man/lastlog.8.xml
++++ shadow-4.1.0/man/lastlog.8.xml
 @@ -71,22 +71,20 @@
        <varlistentry>
  	<term>
@@ -41,10 +41,10 @@ Index: shadow-4.0.18.1/man/lastlog.8.xml
  	</listitem>
        </varlistentry>
      </variablelist>
-Index: shadow-4.0.18.1/src/lastlog.c
+Index: shadow-4.1.0/src/lastlog.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/lastlog.c	2007-06-19 13:23:35.000000000 +0100
-+++ shadow-4.0.18.1/src/lastlog.c	2007-06-19 14:22:21.000000000 +0100
+--- shadow-4.1.0.orig/src/lastlog.c
++++ shadow-4.1.0/src/lastlog.c
 @@ -51,6 +51,8 @@
   */
  static FILE *lastlogfile;	/* lastlog file stream */

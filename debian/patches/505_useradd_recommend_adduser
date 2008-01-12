@@ -4,11 +4,11 @@ Fixes: #406046
 
 Status wrt upstream: Debian specific patch.
 
-Index: shadow-4.0.18.2/man/useradd.8.xml
+Index: shadow-4.1.0/man/useradd.8.xml
 ===================================================================
---- shadow-4.0.18.2.orig/man/useradd.8.xml	2007-10-28 17:27:18.000000000 +0100
-+++ shadow-4.0.18.2/man/useradd.8.xml	2007-10-28 17:28:32.000000000 +0100
-@@ -34,6 +34,12 @@
+--- shadow-4.1.0.orig/man/useradd.8.xml
++++ shadow-4.1.0/man/useradd.8.xml
+@@ -45,6 +45,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
        <para>
@@ -21,11 +21,11 @@ Index: shadow-4.0.18.2/man/useradd.8.xml
  	When invoked without the <option>-D</option> option, the
  	 <command>useradd</command> command creates a new user account using
  	the values specified on the command line plus the default values from
-Index: shadow-4.0.18.2/man/userdel.8.xml
+Index: shadow-4.1.0/man/userdel.8.xml
 ===================================================================
---- shadow-4.0.18.2.orig/man/userdel.8.xml	2007-10-28 16:43:10.000000000 +0100
-+++ shadow-4.0.18.2/man/userdel.8.xml	2007-10-28 17:28:32.000000000 +0100
-@@ -23,6 +23,12 @@
+--- shadow-4.1.0.orig/man/userdel.8.xml
++++ shadow-4.1.0/man/userdel.8.xml
+@@ -30,6 +30,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
      <para>

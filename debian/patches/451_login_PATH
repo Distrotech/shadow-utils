@@ -4,10 +4,10 @@ Fixes: #330803
 
 Status wrt upstream:
 
-Index: shadow-4.0.18.1/libmisc/setupenv.c
+Index: shadow-4.1.0/libmisc/setupenv.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/setupenv.c	2006-05-13 01:13:10.000000000 +0200
-+++ shadow-4.0.18.1/libmisc/setupenv.c	2006-09-17 12:18:01.768067405 +0200
+--- shadow-4.1.0.orig/libmisc/setupenv.c
++++ shadow-4.1.0/libmisc/setupenv.c
 @@ -186,8 +186,8 @@
  {
  #ifndef USE_PAM

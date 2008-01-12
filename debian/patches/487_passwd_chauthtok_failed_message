@@ -6,10 +6,10 @@ Fixes: #352137
 
 Status wrt upstream: not forwarded yet
 
-Index: shadow-4.0.18.1/libmisc/pam_pass.c
+Index: shadow-4.1.0/libmisc/pam_pass.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/pam_pass.c	2005-10-19 17:21:07.000000000 +0200
-+++ shadow-4.0.18.1/libmisc/pam_pass.c	2006-09-17 12:18:12.028148982 +0200
+--- shadow-4.1.0.orig/libmisc/pam_pass.c
++++ shadow-4.1.0/libmisc/pam_pass.c
 @@ -38,6 +38,7 @@
  	ret = pam_chauthtok (pamh, flags);
  	if (ret != PAM_SUCCESS) {

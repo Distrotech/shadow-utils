@@ -5,11 +5,11 @@ Status wrt upstream: Forwarded without patch but ignored up to now
 
 Note: 
 
-Index: shadow-4.0.18.1/man/passwd.1.xml
+Index: shadow-4.1.0/man/passwd.1.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/passwd.1.xml	2007-06-21 02:06:42.026632551 +0200
-+++ shadow-4.0.18.1/man/passwd.1.xml	2007-06-21 02:04:59.531851133 +0200
-@@ -104,35 +104,9 @@
+--- shadow-4.1.0.orig/man/passwd.1.xml
++++ shadow-4.1.0/man/passwd.1.xml
+@@ -114,35 +114,9 @@
  
        <para>
  	Your password must be easily remembered so that you will not be forced

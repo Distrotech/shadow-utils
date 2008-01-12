@@ -6,11 +6,11 @@ Goal: do not use MAIL_FILE in userdel:
 Note: usermod should be checked also. Maybe MAIL_FILE can be removed from
       login.defs
 
-Index: shadow-4.0.18.1/src/userdel.c
+Index: shadow-4.1.0/src/userdel.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/userdel.c	2006-09-17 12:17:58.256039482 +0200
-+++ shadow-4.0.18.1/src/userdel.c	2006-09-17 12:18:02.408072494 +0200
-@@ -550,7 +550,7 @@
+--- shadow-4.1.0.orig/src/userdel.c
++++ shadow-4.1.0/src/userdel.c
+@@ -566,7 +566,7 @@
  
  	maildir = getdef_str ("MAIL_DIR");
  #ifdef MAIL_SPOOL_DIR

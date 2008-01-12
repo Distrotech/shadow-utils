@@ -15,10 +15,10 @@ Details:
  than '-' as the leading character).  Thus, the maintenance tools don't
  anymore.  closes: #79682, #166798, #171179
 
-Index: shadow-4.0.18.1/libmisc/chkname.c
+Index: shadow-4.1.0/libmisc/chkname.c
 ===================================================================
---- shadow-4.0.18.1.orig/libmisc/chkname.c	2005-08-31 18:24:57.000000000 +0100
-+++ shadow-4.0.18.1/libmisc/chkname.c	2007-06-18 22:06:29.000000000 +0100
+--- shadow-4.1.0.orig/libmisc/chkname.c
++++ shadow-4.1.0/libmisc/chkname.c
 @@ -17,6 +17,7 @@
  #endif
  static int good_name (const char *name)
@@ -48,11 +48,11 @@ Index: shadow-4.0.18.1/libmisc/chkname.c
  
  	return 1;
  }
-Index: shadow-4.0.18.1/man/useradd.8.xml
+Index: shadow-4.1.0/man/useradd.8.xml
 ===================================================================
---- shadow-4.0.18.1.orig/man/useradd.8.xml	2006-07-24 06:48:36.000000000 +0100
-+++ shadow-4.0.18.1/man/useradd.8.xml	2007-06-18 22:10:15.000000000 +0100
-@@ -183,6 +183,7 @@
+--- shadow-4.1.0.orig/man/useradd.8.xml
++++ shadow-4.1.0/man/useradd.8.xml
+@@ -195,6 +195,7 @@
  	    valid in conjunction with the <option>-m</option> option. The
  	    default is to not create the directory and to not copy any
  	    files.
@@ -60,7 +60,7 @@ Index: shadow-4.0.18.1/man/useradd.8.xml
  	  </para>
  	</listitem>
        </varlistentry>
-@@ -360,9 +361,13 @@
+@@ -372,9 +373,13 @@
      </para>
  
      <para>

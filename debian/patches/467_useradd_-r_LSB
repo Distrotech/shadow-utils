@@ -6,10 +6,10 @@ Status wrt upstream: Forwarded but not applied yet. Not sure that upstream
                      is really ready to apply it. We apply it anyway because 
                      LSB compliance is important for Debian
 
-Index: shadow-4.0.18.2/src/useradd.c
+Index: shadow-4.1.0/src/useradd.c
 ===================================================================
---- shadow-4.0.18.2.orig/src/useradd.c	2007-10-28 17:20:37.000000000 +0100
-+++ shadow-4.0.18.2/src/useradd.c	2007-10-28 18:04:50.000000000 +0100
+--- shadow-4.1.0.orig/src/useradd.c
++++ shadow-4.1.0/src/useradd.c
 @@ -127,6 +127,7 @@
      mflg = 0,			/* create user's home directory if it doesn't exist */
      nflg = 0,			/* create a group having the same name as the user */
@@ -18,7 +18,7 @@ Index: shadow-4.0.18.2/src/useradd.c
      sflg = 0,			/* shell program for new account */
      uflg = 0;			/* specify user ID for new account */
  
-@@ -639,6 +640,7 @@
+@@ -637,6 +638,7 @@
  			   "                                (non-unique) UID\n"
  			   "  -p, --password PASSWORD       use encrypted password for the new user\n"
  			   "                                account\n"
@@ -26,7 +26,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  			   "  -s, --shell SHELL             the login shell for the new user account\n"
  			   "  -u, --uid UID                 force use the UID for the new user account\n"
  			   "\n"));
-@@ -687,11 +689,19 @@
+@@ -685,11 +687,19 @@
  	spent->sp_namp = (char *) user_name;
  	spent->sp_pwdp = (char *) user_pass;
  	spent->sp_lstchg = time ((time_t *) 0) / SCALE;
@@ -51,7 +51,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  	spent->sp_flag = -1;
  }
  
-@@ -839,8 +849,13 @@
+@@ -822,8 +832,13 @@
  	const struct passwd *pwd;
  	uid_t uid_min, uid_max;
  
@@ -67,7 +67,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  
  	/*
  	 * Start with some UID value if the user didn't provide us with
-@@ -1019,12 +1034,13 @@
+@@ -1004,12 +1019,13 @@
  			{"create-home", no_argument, NULL, 'm'},
  			{"non-unique", no_argument, NULL, 'o'},
  			{"password", required_argument, NULL, 'p'},
@@ -82,7 +82,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  				     long_options, NULL)) != -1) {
  			switch (c) {
  			case 'b':
-@@ -1178,6 +1194,9 @@
+@@ -1160,6 +1176,9 @@
  				}
  				user_pass = optarg;
  				break;
@@ -92,7 +92,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  			case 's':
  				if (!VALID (optarg)
  				    || (optarg[0]
-@@ -1570,6 +1589,8 @@
+@@ -1553,6 +1572,8 @@
   */
  static void create_home (void)
  {
@@ -101,7 +101,7 @@ Index: shadow-4.0.18.2/src/useradd.c
  	if (access (user_home, F_OK)) {
  		/* XXX - create missing parent directories.  --marekm */
  		if (mkdir (user_home, 0)) {
-@@ -1593,6 +1614,7 @@
+@@ -1576,6 +1597,7 @@
  			      "adding home directory", user_name, user_id, 1);
  #endif
  	}

@@ -7,10 +7,10 @@ Status wrt upstream: Forwarded but not applied yet
 
 Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
 
-Index: shadow-4.0.18.1/src/login.c
+Index: shadow-4.1.0/src/login.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/login.c	2006-09-17 12:17:55.628018587 +0200
-+++ shadow-4.0.18.1/src/login.c	2006-09-17 12:18:04.272087315 +0200
+--- shadow-4.1.0.orig/src/login.c
++++ shadow-4.1.0/src/login.c
 @@ -331,7 +331,6 @@
  	char ptime[80];
  #endif
@@ -19,15 +19,15 @@ Index: shadow-4.0.18.1/src/login.c
  	int retries;
  	int failed;
  	int flag;
-@@ -351,6 +350,7 @@
- 	pid_t child;
+@@ -354,6 +353,7 @@
  	char *pam_user;
+ 	char **ptr_pam_user = &pam_user;
  #else
 +	int delay;
  	struct spwd *spwd = NULL;
  #endif
  	/*
-@@ -573,7 +573,6 @@
+@@ -578,7 +578,6 @@
  			alarm (timeout);
  
  		environ = newenvp;	/* make new environment active */
@@ -35,7 +35,7 @@ Index: shadow-4.0.18.1/src/login.c
  		retries = getdef_num ("LOGIN_RETRIES", RETRIES);
  
  #ifdef USE_PAM
-@@ -589,17 +588,12 @@
+@@ -594,17 +593,12 @@
  
  		/*
  		 * hostname & tty are either set to NULL or their correct values,
@@ -54,7 +54,7 @@ Index: shadow-4.0.18.1/src/login.c
  		/* if fflg == 1, then the user has already been authenticated */
  		if (!fflg || (getuid () != 0)) {
  			int failcount = 0;
-@@ -640,8 +634,6 @@
+@@ -645,8 +639,6 @@
  			  failed = 0;
  
  			  failcount++;
@@ -63,7 +63,7 @@ Index: shadow-4.0.18.1/src/login.c
  
  			  retcode = pam_authenticate (pamh, 0);
  
-@@ -934,13 +926,16 @@
+@@ -956,13 +948,16 @@
  		if (pwent.pw_passwd[0] == '\0')
  			pw_auth ("!", username, reason, (char *) 0);
  
@@ -80,11 +80,11 @@ Index: shadow-4.0.18.1/src/login.c
  
  		puts (_("Login incorrect"));
  
-Index: shadow-4.0.18.1/lib/getdef.c
+Index: shadow-4.1.0/lib/getdef.c
 ===================================================================
---- shadow-4.0.18.1.orig/lib/getdef.c	2006-09-17 12:17:58.260039514 +0200
-+++ shadow-4.0.18.1/lib/getdef.c	2006-09-17 12:18:04.276087346 +0200
-@@ -55,7 +55,6 @@
+--- shadow-4.1.0.orig/lib/getdef.c
++++ shadow-4.1.0/lib/getdef.c
+@@ -56,7 +56,6 @@
  	{"ENV_PATH", NULL},
  	{"ENV_SUPATH", NULL},
  	{"ERASECHAR", NULL},
@@ -92,7 +92,7 @@ Index: shadow-4.0.18.1/lib/getdef.c
  	{"FAILLOG_ENAB", NULL},
  	{"FAKE_SHELL", NULL},
  	{"FTMP_FILE", NULL},
-@@ -92,6 +91,7 @@
+@@ -94,6 +93,7 @@
  	{"ENV_HZ", NULL},
  	{"ENVIRON_FILE", NULL},
  	{"ENV_TZ", NULL},

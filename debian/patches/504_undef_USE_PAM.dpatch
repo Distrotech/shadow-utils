@@ -2,123 +2,123 @@ Goal: Do not use PAM for chage, chpasswd, groupadd, groupdel, groupmod
       newusers, useradd, userdel, usermod, chgpasswd (keep them low-level)
 Fixes: #283961, #162181, #162199, #162228, #369806.
 
-Index: shadow-4.0.18.1/src/chage.c
+Index: shadow-4.1.0/src/chage.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/chage.c	2006-07-19 18:38:57.000000000 +0200
-+++ shadow-4.0.18.1/src/chage.c	2006-09-17 12:17:58.228039259 +0200
+--- shadow-4.1.0.orig/src/chage.c
++++ shadow-4.1.0/src/chage.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: chage.c,v 1.73 2006/07/11 13:15:41 kloczek Exp $"
+ #ident "$Id: chage.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/chpasswd.c
+Index: shadow-4.1.0/src/chpasswd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/chpasswd.c	2006-06-24 12:18:55.000000000 +0200
-+++ shadow-4.0.18.1/src/chpasswd.c	2006-09-17 12:17:58.228039259 +0200
+--- shadow-4.1.0.orig/src/chpasswd.c
++++ shadow-4.1.0/src/chpasswd.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: chpasswd.c,v 1.37 2006/06/24 10:18:55 kloczek Exp $"
+ #ident "$Id: chpasswd.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/groupadd.c
+Index: shadow-4.1.0/src/groupadd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/groupadd.c	2006-07-28 19:38:52.000000000 +0200
-+++ shadow-4.0.18.1/src/groupadd.c	2006-09-17 12:17:58.232039291 +0200
+--- shadow-4.1.0.orig/src/groupadd.c
++++ shadow-4.1.0/src/groupadd.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: groupadd.c,v 1.56 2006/08/15 17:25:58 kloczek Exp $"
+ #ident "$Id: groupadd.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/groupdel.c
+Index: shadow-4.1.0/src/groupdel.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/groupdel.c	2006-01-18 20:55:15.000000000 +0100
-+++ shadow-4.0.18.1/src/groupdel.c	2006-09-17 12:17:58.244039386 +0200
+--- shadow-4.1.0.orig/src/groupdel.c
++++ shadow-4.1.0/src/groupdel.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: groupdel.c,v 1.32 2006/08/15 17:25:58 kloczek Exp $"
+ #ident "$Id: groupdel.c 1397 2007-11-18 23:15:26Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/groupmod.c
+Index: shadow-4.1.0/src/groupmod.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/groupmod.c	2006-07-28 19:38:52.000000000 +0200
-+++ shadow-4.0.18.1/src/groupmod.c	2006-09-17 12:17:58.248039418 +0200
+--- shadow-4.1.0.orig/src/groupmod.c
++++ shadow-4.1.0/src/groupmod.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: groupmod.c,v 1.42 2006/08/15 17:25:58 kloczek Exp $"
+ #ident "$Id: groupmod.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/newusers.c
+Index: shadow-4.1.0/src/newusers.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/newusers.c	2006-03-07 16:50:33.000000000 +0100
-+++ shadow-4.0.18.1/src/newusers.c	2006-09-17 12:17:58.248039418 +0200
+--- shadow-4.1.0.orig/src/newusers.c
++++ shadow-4.1.0/src/newusers.c
 @@ -34,6 +34,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: newusers.c,v 1.33 2006/03/07 15:47:32 kloczek Exp $"
+ #ident "$Id: newusers.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/useradd.c
+Index: shadow-4.1.0/src/useradd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/useradd.c	2006-07-28 19:42:48.000000000 +0200
-+++ shadow-4.0.18.1/src/useradd.c	2006-09-17 12:17:58.252039450 +0200
+--- shadow-4.1.0.orig/src/useradd.c
++++ shadow-4.1.0/src/useradd.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: useradd.c,v 1.103 2006/11/04 00:55:00 kloczek Exp $"
+ #ident "$Id: useradd.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/userdel.c
+Index: shadow-4.1.0/src/userdel.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/userdel.c	2006-07-10 06:11:32.000000000 +0200
-+++ shadow-4.0.18.1/src/userdel.c	2006-09-17 12:17:58.256039482 +0200
+--- shadow-4.1.0.orig/src/userdel.c
++++ shadow-4.1.0/src/userdel.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: userdel.c,v 1.67 2006/08/15 17:25:58 kloczek Exp $"
+ #ident "$Id: userdel.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/usermod.c
+Index: shadow-4.1.0/src/usermod.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/usermod.c	2006-07-28 19:42:48.000000000 +0200
-+++ shadow-4.0.18.1/src/usermod.c	2006-09-17 12:17:58.256039482 +0200
+--- shadow-4.1.0.orig/src/usermod.c
++++ shadow-4.1.0/src/usermod.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: usermod.c,v 1.74 2007/01/16 12:51:50 kloczek Exp $"
+ #ident "$Id: usermod.c 1460 2007-11-24 22:41:24Z nekral-guest $"
  
-Index: shadow-4.0.18.1/src/chgpasswd.c
+Index: shadow-4.1.0/src/chgpasswd.c
 ===================================================================
---- shadow-4.0.18.1.orig/src/chgpasswd.c	2006-06-20 22:00:04.000000000 +0200
-+++ shadow-4.0.18.1/src/chgpasswd.c	2006-09-17 12:17:58.260039514 +0200
+--- shadow-4.1.0.orig/src/chgpasswd.c
++++ shadow-4.1.0/src/chgpasswd.c
 @@ -28,6 +28,7 @@
   */
  
  #include <config.h>
 +#undef USE_PAM
  
- #ident "$Id: chgpasswd.c,v 1.5 2006/06/20 20:00:04 kloczek Exp $"
+ #ident "$Id: chgpasswd.c 1485 2007-12-09 22:54:53Z nekral-guest $"
  
