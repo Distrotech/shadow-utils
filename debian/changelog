@@ -1,5 +1,7 @@
 shadow (1:4.1.0-1) UNRELEASED; urgency=low
 
+  [ Nicolas FRANCOIS (Nekral) ]
+  * The "Bleu d'Auvergne" release
   * New upstream release. This closes the following bugs:
     - usermod: Make usermod options independent of the argument order.
       Closes: #451518
@@ -41,7 +43,11 @@ shadow (1:4.1.0-1) UNRELEASED; urgency=low
       consoles. Add a note for the devfs consoles. They are no more needed for
       most users. Closes: #454584
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 17 Nov 2007 18:33:26 +0100
+  [ Christian Perrier ]
+  * debian/control
+    - Updated to Standards: 3.7.3.0 (checked, no change needed)
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 12 Jan 2008 16:53:28 +0100
 
 shadow (1:4.0.18.2-1) unstable; urgency=low
 
