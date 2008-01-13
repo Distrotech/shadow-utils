@@ -24,7 +24,7 @@ Architecture: any
 Pre-Depends: ${shlibs:Depends}, libpam-runtime (>= 0.76-14)
 Depends: libpam-modules (>= 0.72-5)
 Conflicts: gnunet (<< 0.7.0c-2), amavisd-new (<<2.3.3-8), python-4suite (<< 0.99cvs20060405-1), backupninja (<< 0.9.3-5), echolot (<< 2.1.8-4)
-Replaces: manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-2), manpages-ko (<< 20050219-2), manpages-ja (<< 0.5.0.0.20050915-1), manpages-de (<< 0.4-10), manpages-es-extra (<<0.8a-15), manpages-tr, manpages-zh
+Replaces: manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-2), manpages-ko (<< 20050219-2), manpages-ja (<< 0.5.0.0.20050915-1), manpages-de, manpages-es-extra (<<0.8a-15), manpages-tr, manpages-zh
 Essential: yes
 Section: admin
 Priority: required
