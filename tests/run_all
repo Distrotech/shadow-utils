@@ -159,6 +159,24 @@ run_test ./crypt/login.defs_MD5_CRYPT_ENAB/01_chpasswd.test
 run_test ./crypt/login.defs_SHA256/01_chpasswd.test
 run_test ./crypt/login.defs_SHA512/01_chpasswd.test
 run_test ./crypt/login.defs_none/01_chpasswd.test
+run_test ./newusers/01_create_user/newusers.test
+run_test ./newusers/02_update_password/newusers.test
+run_test ./newusers/03_no_update_pid/newusers.test
+run_test ./newusers/04_no_update_gid/newusers.test
+run_test ./newusers/05_create_user_pid/newusers.test
+run_test ./newusers/06_create_user_gid/newusers.test
+run_test ./newusers/07_create_user_pid_gid/newusers.test
+run_test ./newusers/08_create_user_pid_other-gid/newusers.test
+run_test ./newusers/09_create_user_pid-as-user-bar/newusers.test
+run_test ./newusers/10_create_user_gid-as-group-bar/newusers.test
+run_test ./newusers/11_update_gecos/newusers.test
+run_test ./newusers/12_update_shell/newusers.test
+run_test ./newusers/13_create_user_new-home/newusers.test
+run_test ./newusers/14_create_user_existing-home/newusers.test
+run_test ./newusers/15_update_new-home/newusers.test
+run_test ./newusers/16_update_existing-home/newusers.test
+run_test ./newusers/17_create_user_pid-already-used/newusers.test
+run_test ./newusers/18_create_user_gid-already-used/newusers.test
 
 echo
 echo "$succeded test(s) passed"
