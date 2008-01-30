@@ -60,6 +60,9 @@ echo -n "Removing home directories..."
 rm -rf /tmp/test-newusers /tmp/test-newusers2
 echo "OK"
 
+# cleanup
+rm -f tmp/home_ls-a tmp/home_ls-a.old
+
 log_status "$0" "SUCCESS"
 restore_config
 trap '' 0

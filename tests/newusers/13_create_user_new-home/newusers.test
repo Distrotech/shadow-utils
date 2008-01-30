@@ -50,6 +50,9 @@ echo -n "Removing home directory..."
 rm -rf /tmp/test-newusers
 echo "OK"
 
+# cleanup
+rm -f tmp/home_ls-a
+
 log_status "$0" "SUCCESS"
 restore_config
 trap '' 0
