@@ -189,6 +189,7 @@ run_test ./newusers/18_create_user_gid-already-used/newusers.test
 run_test ./newusers/19_update_keep-old-home/newusers.test
 run_test ./newusers/20_multiple_users/newusers.test
 run_test ./newusers/21_create_user_UID_MAX/newusers.test
+run_test ./newusers/22_create_user_GID_MAX/newusers.test
 
 echo
 echo "$succeded test(s) passed"
