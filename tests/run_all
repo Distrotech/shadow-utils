@@ -98,6 +98,7 @@ run_test ./convtools/02_grpconv_remove_gshadow_only_entries/grpconv.test
 run_test ./convtools/03_grpconv_copy_passwd/grpconv.test
 run_test ./convtools/04_grpconv_no_password/grpconv.test
 run_test ./convtools/05_grpconv_copy_passwd_existing_gshadow/grpconv.test
+run_test ./convtools/06_grpconv_error_group_locked/grpconv.test
 run_test ./chage/01/run
 run_test ./chage/02/run
 run_test ./chsh/01/run
