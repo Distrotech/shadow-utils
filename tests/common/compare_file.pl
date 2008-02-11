@@ -8,9 +8,12 @@ my $file = join "", <FILE>;
 my $today = int(time()/(24*3600));
 $template =~ s/\@TODAY\@/$today/g;
 
-if ($template =~ m/(.*):\@PASS_DES (.*)\@:/m) {
-	my $user = $1;
-	my $pass = $2;
+my $tmp = $template;
+while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_DES ([^:]*)\@:(.*)$/s) {
+	my $user = $2;
+	my $pass = $3;
+	$tmp = $4;
+	if ($file =~ m/^$user:/m) {
 	$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_DES $pass\@:$2/m;
 	my $cryptpass = $1;
 	# Check the password
