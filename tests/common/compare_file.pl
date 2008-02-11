@@ -22,6 +22,9 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_DES ([^:]*)\@:(.*)$/s) {
 
 	die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
 		if ($checkpass ne $cryptpass);
+	} else {
+		die "No user '$user' in ".$ARGV[1].".\n";
+	}
 }
 
 $tmp = $template;
@@ -40,6 +43,9 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_MD5 (.*)\@:(.*)$/s) {
 
 	die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
 		if ($checkpass ne $cryptpass);
+	} else {
+		die "No user '$user' in ".$ARGV[1].".\n";
+	}
 }
 
 
