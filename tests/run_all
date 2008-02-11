@@ -102,6 +102,7 @@ run_test ./convtools/06_grpconv_error_group_locked/grpconv.test
 run_test ./convtools/07_grpconv_error_gshadow_locked/grpconv.test
 run_test ./convtools/08_grpunconv_no_gshadow_file/grpunconv.test
 run_test ./convtools/09_grpunconv_error_group_locked/grpunconv.test
+run_test ./convtools/10_grpunconv_error_gshadow_locked/grpunconv.test
 run_test ./chage/01/run
 run_test ./chage/02/run
 run_test ./chsh/01/run
