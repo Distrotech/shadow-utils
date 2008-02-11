@@ -202,6 +202,7 @@ run_test ./newusers/32_create_user_error_gshadow_group_exists/newusers.test
 run_test ./newusers/33_update_password_no_shadow_password/newusers.test
 run_test ./newusers/34_update_password_no_shadow/newusers.test
 run_test ./newusers/35_read_from_stdin/newusers.test
+run_test ./newusers/36_create_user_encrypted/newusers.test
 
 echo
 echo "$succeded test(s) passed"
