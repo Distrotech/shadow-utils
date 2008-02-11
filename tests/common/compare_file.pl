@@ -14,14 +14,14 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_DES ([^:]*)\@:(.*)$/s) {
 	my $pass = $3;
 	$tmp = $4;
 	if ($file =~ m/^$user:/m) {
-	$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_DES $pass\@:$2/m;
-	my $cryptpass = $1;
-	# Check the password
-	my $checkpass = qx|/usr/bin/openssl passwd -crypt -salt $cryptpass $pass|;
-	chomp $checkpass;
+		$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_DES $pass\@:$2/m;
+		my $cryptpass = $1;
+		# Check the password
+		my $checkpass = qx|/usr/bin/openssl passwd -crypt -salt $cryptpass $pass|;
+		chomp $checkpass;
 
-	die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
-		if ($checkpass ne $cryptpass);
+		die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
+			if ($checkpass ne $cryptpass);
 	} else {
 		die "No user '$user' in ".$ARGV[1].".\n";
 	}
@@ -33,16 +33,16 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_MD5 (.*)\@:(.*)$/s) {
 	my $pass = $3;
 	$tmp = $4;
 	if ($file =~ m/^$user:/m) {
-	$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_MD5 $pass\@:$2/m;
-	my $cryptpass = $1;
-	# Check the password
-	my $salt = $cryptpass;
-	$salt =~ s/^\$1\$//;
-	my $checkpass = qx|/usr/bin/openssl passwd -1 -salt '$salt' '$pass'|;
-	chomp $checkpass;
+		$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_MD5 $pass\@:$2/m;
+		my $cryptpass = $1;
+		# Check the password
+		my $salt = $cryptpass;
+		$salt =~ s/^\$1\$//;
+		my $checkpass = qx|/usr/bin/openssl passwd -1 -salt '$salt' '$pass'|;
+		chomp $checkpass;
 
-	die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
-		if ($checkpass ne $cryptpass);
+		die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
+			if ($checkpass ne $cryptpass);
 	} else {
 		die "No user '$user' in ".$ARGV[1].".\n";
 	}
