@@ -24,9 +24,12 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_DES ([^:]*)\@:(.*)$/s) {
 		if ($checkpass ne $cryptpass);
 }
 
-if ($template =~ m/(.*):\@PASS_MD5 (.*)\@:/m) {
-	my $user = $1;
-	my $pass = $2;
+$tmp = $template;
+while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_MD5 (.*)\@:(.*)$/s) {
+	my $user = $2;
+	my $pass = $3;
+	$tmp = $4;
+	if ($file =~ m/^$user:/m) {
 	$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_MD5 $pass\@:$2/m;
 	my $cryptpass = $1;
 	# Check the password
