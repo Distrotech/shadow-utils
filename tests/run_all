@@ -186,6 +186,7 @@ run_test ./newusers/15_update_new-home/newusers.test
 run_test ./newusers/16_update_existing-home/newusers.test
 run_test ./newusers/17_create_user_pid-already-used/newusers.test
 run_test ./newusers/18_create_user_gid-already-used/newusers.test
+run_test ./newusers/19_update_keep-old-home/newusers.test
 
 echo
 echo "$succeded test(s) passed"
