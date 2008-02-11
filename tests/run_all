@@ -192,6 +192,7 @@ run_test ./newusers/21_create_user_UID_MAX/newusers.test
 run_test ./newusers/22_create_user_GID_MAX/newusers.test
 run_test ./newusers/23_create_user_error_negativ_UID/newusers.test
 run_test ./newusers/24_create_user_error_invalid_UID/newusers.test
+run_test ./newusers/25_create_user_error_no_remaining_UID/newusers.test
 
 echo
 echo "$succeded test(s) passed"
