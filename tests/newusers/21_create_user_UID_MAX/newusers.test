@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../common/config.sh
 . ../../common/log.sh
 
-log_start "$0" "newusers does not increment the UID when UID_MAX is used"
+log_start "$0" "newusers reuses a lower UID when UID_MAX is used"
 
 save_config
 
