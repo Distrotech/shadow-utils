@@ -198,6 +198,7 @@ run_test ./newusers/27_create_user_error_invalid_username/newusers.test
 run_test ./newusers/28_create_user_error_invalid_groupname/newusers.test
 run_test ./newusers/30_create_user_different_groupname/newusers.test
 run_test ./newusers/31_create_user_error_invalid_GID/newusers.test
+run_test ./newusers/32_create_user_error_gshadow_group_exists/newusers.test
 
 echo
 echo "$succeded test(s) passed"
