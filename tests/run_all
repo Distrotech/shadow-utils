@@ -154,6 +154,7 @@ run_test ./usertools/03/useradd_change_defaults.test
 run_test ./usertools/04/01_useradd_add_user.test
 run_test ./usertools/05_userdel_del_from_group_members/userdel.test
 run_test ./usertools/06_userdel_del_from_gshadow_members/userdel.test
+run_test ./usertools/07_userdel_del_from_gshadow_admins/userdel.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
