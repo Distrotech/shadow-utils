@@ -134,6 +134,14 @@ run_test ./usertools/01/14_useradd_out_of_range_UID.test
 run_test ./usertools/01/15_useradd_specified_large_UID.test
 run_test ./usertools/01/16_useradd_add_user_to_multiple_groups.test
 run_test ./usertools/01/16_useradd_add_user_to_one_group.test
+run_test ./usertools/01/17_useradd_create_homedir.test
+run_test ./usertools/01/18_userdel_remove_homedir.test
+run_test ./usertools/01/19_userdel_delete_user_in_group.test
+run_test ./usertools/01/20_usermod_change_homedir.test
+run_test ./usertools/01/21_usermod_change_and_move_homedir.test
+run_test ./usertools/01/22_usermod_new_groups.test
+run_test ./usertools/01/23_usermod_add_groups.test
+run_test ./usertools/01/24_usermod_new_groups_remove_old_groups.test
 run_test ./usertools/02/useradd_default_default_values.test
 run_test ./usertools/02/useradd_get_default_values.test
 run_test ./usertools/02/useradd_change_default_INACTIVE.test
