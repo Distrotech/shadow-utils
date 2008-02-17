@@ -162,6 +162,7 @@ run_test ./usertools/11_usermod_move_homedir/usermod.test
 run_test ./usertools/12_usermod_move_homedir_dev_null/usermod.test
 run_test ./usertools/13_usermod_move_homedir_file/usermod.test
 run_test ./usertools/14_usermod_move_homedir_other_device/usermod.test
+run_test ./usertools/15_usermod_change_supplementary_groups/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
