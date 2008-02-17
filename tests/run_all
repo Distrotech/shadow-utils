@@ -171,6 +171,7 @@ run_test ./usertools/20_usermod_rename_user_in_member_lists/usermod.test
 run_test ./usertools/21_usermod_rename_user_in_member_lists-and-add_supplementary_groups/usermod.test
 run_test ./usertools/22_usermod-a_existing_supplementary_group/usermod.test
 run_test ./usertools/23_usermod-a_existing_supplementary_group+rename/usermod.test
+run_test ./usertools/24_usermod_locked_passwd/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
