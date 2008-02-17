@@ -183,6 +183,7 @@ run_test ./usertools/32_usermod-u_new_UID/usermod.test
 run_test ./usertools/33_usermod-u_existing_UID/usermod.test
 run_test ./usertools/34_usermod-u-o_existing_UID/usermod.test
 run_test ./usertools/35_usermod-u_invalid_UID/usermod.test
+run_test ./usertools/36_usermod_change_uid+move_homedir_other_device/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
