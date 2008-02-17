@@ -177,6 +177,7 @@ run_test ./usertools/26_usermod_locked_shadow/usermod.test
 run_test ./usertools/27_usermod-G_locked_gshadow/usermod.test
 run_test ./usertools/28_usermod-c_locked_group/usermod.test
 run_test ./usertools/29_usermod-c_locked_gshadow/usermod.test
+run_test ./usertools/30_usermod-l_locked_group/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
