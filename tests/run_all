@@ -182,6 +182,7 @@ run_test ./usertools/31_usermod-l_locked_gshadow/usermod.test
 run_test ./usertools/32_usermod-u_new_UID/usermod.test
 run_test ./usertools/33_usermod-u_existing_UID/usermod.test
 run_test ./usertools/34_usermod-u-o_existing_UID/usermod.test
+run_test ./usertools/35_usermod-u_invalid_UID/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
