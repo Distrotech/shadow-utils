@@ -161,6 +161,7 @@ run_test ./usertools/10_userdel_del_homedir_wrong_owner/userdel.test
 run_test ./usertools/11_usermod_move_homedir/usermod.test
 run_test ./usertools/12_usermod_move_homedir_dev_null/usermod.test
 run_test ./usertools/13_usermod_move_homedir_file/usermod.test
+run_test ./usertools/14_usermod_move_homedir_other_device/usermod.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3

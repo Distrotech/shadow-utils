@@ -1,0 +1,24 @@
+
+###############################################################################
+#
+# Test: ./usertools/14_usermod_move_homedir_other_device/usermod.test
+#
+###############################################################################
+#
+# Rational: usermod can move the user's home directory
+#
+###############################################################################
+Change the user's home directory (usermod -m -d /home/foo2 foo)...OK
+Check the passwd file...OK
+Check the group file...OK
+Check the shadow file...OK
+Check the gshadow file...OK
+Check the user's home directory was removed...OK
+Check the user's home directory was moved...OK
+Check content of /tmp/test-newusers...OK
+Remove the new home directory...done
+###############################################################################
+#
+# Status of test ./usertools/14_usermod_move_homedir_other_device/usermod.test: SUCCESS
+#
+###############################################################################
