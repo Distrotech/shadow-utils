@@ -8,7 +8,7 @@ cd $(dirname $0)
 . ../../common/log.sh
 
 # TBC: should usermod create the home directory?
-log_start "$0" "usermod does not move non-directory"
+log_start "$0" "usermod does not move non-directory (/dev/null)"
 
 save_config
 
