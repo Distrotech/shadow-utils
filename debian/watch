@@ -1,0 +1,3 @@
+version=3
+ftp://pkg-shadow.alioth.debian.org/pub/pkg-shadow/shadow-(.*)\.tar\.gz \
+  debian  uupdate
