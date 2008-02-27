@@ -17,7 +17,7 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_DES ([^:]*)\@:(.*)$/s) {
 		$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_DES $pass\@:$2/m;
 		my $cryptpass = $1;
 		# Check the password
-		my $checkpass = qx|/usr/bin/openssl passwd -crypt -salt $cryptpass $pass|;
+		my $checkpass = qx|/usr/bin/openssl passwd -crypt -salt '$cryptpass' $pass|;
 		chomp $checkpass;
 
 		die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
