@@ -16,7 +16,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "Add user foooo to group users (usermod -a foooo users)..."
+echo -n "Add user foooo to group users (gpasswd -a foooo users)..."
 gpasswd -a foooo users 2>tmp/gpasswd.err && exit || {
 	status=$?
 }
@@ -26,7 +26,7 @@ echo -n "Check returned status ($status)..."
 test "$status" = "1"
 echo "OK"
 
-echo "usermod reported:"
+echo "gpasswd reported:"
 echo "======================================================================="
 cat tmp/gpasswd.err
 echo "======================================================================="

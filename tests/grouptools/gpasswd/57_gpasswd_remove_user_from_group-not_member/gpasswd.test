@@ -26,7 +26,7 @@ echo -n "Check returned status ($status)..."
 test "$status" = "1"
 echo "OK"
 
-echo "usermod reported:"
+echo "gpasswd reported:"
 echo "======================================================================="
 cat tmp/gpasswd.err
 echo "======================================================================="

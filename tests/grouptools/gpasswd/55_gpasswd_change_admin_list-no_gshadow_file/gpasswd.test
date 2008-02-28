@@ -19,7 +19,7 @@ change_config
 echo "remove the gshadow file"
 rm -f /etc/gshadow
 
-echo -n "Set the lists of admins to foo (usermod -A foo users)..."
+echo -n "Set the lists of admins to foo (gpasswd -A foo users)..."
 gpasswd -A foo users 2>tmp/gpasswd.err && exit || {
 	status=$?
 }
@@ -29,7 +29,7 @@ echo -n "Check returned status ($status)..."
 test "$status" = "2"
 echo "OK"
 
-echo "usermod reported:"
+echo "gpasswd reported:"
 echo "======================================================================="
 cat tmp/gpasswd.err
 echo "======================================================================="
