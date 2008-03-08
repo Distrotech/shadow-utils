@@ -1,0 +1,9 @@
+Usage: groupmod [options] GROUP
+
+Options:
+  -g, --gid GID                 force use new GID by GROUP
+  -h, --help                    display this help message and exit
+  -n, --new-name NEW_GROUP      force use NEW_GROUP name by GROUP
+  -o, --non-unique              allow using duplicate (non-unique) GID by GROUP
+  -p, --password PASSWORD       use encrypted password for the new password
+
