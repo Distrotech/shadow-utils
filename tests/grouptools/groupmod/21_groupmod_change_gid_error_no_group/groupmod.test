@@ -32,7 +32,7 @@ echo -n "Check returned status ($status)..."
 test "$status" = "2"
 echo "OK"
 
-echo "groupadd reported:"
+echo "groupmod reported:"
 echo "======================================================================="
 cat tmp/groupmod.err
 echo "======================================================================="
