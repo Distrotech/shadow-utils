@@ -292,6 +292,8 @@ run_test ./cktools/01/run1
 run_test ./cktools/01/run2
 run_test ./cktools/02_pwck_sort/pwck.test
 run_test ./cktools/03_grpck_sort/grpck.test
+run_test ./cktools/04_pwck_sort_missing_shadow_user/pwck.test
+run_test ./cktools/05_grpck_sort_missing_shadow_group/grpck.test
 run_test ./crypt/login.defs_DES-MD5_CRYPT_ENAB/01_chpasswd.test
 run_test ./crypt/login.defs_DES/01_chpasswd.test
 run_test ./crypt/login.defs_DES/02_chpasswd--crypt-method-MD5.test
