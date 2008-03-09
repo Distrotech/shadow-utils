@@ -186,6 +186,15 @@ run_test ./grouptools/groupadd/17_groupadd_add_systemgroup/groupadd.test
 run_test ./grouptools/groupadd/18_groupadd_no_more_GID/groupadd.test
 run_test ./grouptools/groupadd/19_groupadd_-r_no_more_system_GID/groupadd.test
 run_test ./grouptools/groupadd/20_groupadd_add_existing_GID/groupadd.test
+run_test ./grouptools/groupdel/01_groupdel_delete_group/groupdel.test
+run_test ./grouptools/groupdel/02_groupdel_delete_group_no_gshadow_group/groupdel.test
+run_test ./grouptools/groupdel/03_groupdel_delete_group_no_gshadow_file/groupdel.test
+run_test ./grouptools/groupdel/04_groupdel_delete_group_error_busy_group/groupdel.test
+run_test ./grouptools/groupdel/05_groupdel_delete_group_error_unknown_group/groupdel.test
+run_test ./grouptools/groupdel/06_groupdel_delete_group_error_locked_group/groupdel.test
+run_test ./grouptools/groupdel/07_groupdel_delete_group_error_locked_gshadow/groupdel.test
+run_test ./grouptools/groupdel/08_groupdel_delete_group_error_no_group_parameter/groupdel.test
+run_test ./grouptools/groupdel/09_groupdel_delete_group_error_two_group_parameter/groupdel.test
 run_test ./grouptools/groupmod/01_groupmod_change_gid/groupmod.test
 run_test ./grouptools/groupmod/02_groupmod_change_gid_keep_primary_group/groupmod.test
 run_test ./grouptools/groupmod/03_groupmod_change_gid_no_gshadow_group/groupmod.test
