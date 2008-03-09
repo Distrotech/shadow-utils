@@ -368,6 +368,16 @@ run_test ./newusers/37_create_user_encrypt_MD5/newusers.test
 run_test ./newusers/38_update_password_no_shadow_encrypted/newusers.test
 run_test ./newusers/39_update_password_no_shadow_password_encrypted/newusers.test
 run_test ./newusers/40_update_password_encrypted/newusers.test
+run_test ./split_groups/01_useradd_split_group/useradd.test
+run_test ./split_groups/02_useradd_no_split_group/useradd.test
+run_test ./split_groups/03_useradd_split_group_already_split/useradd.test
+run_test ./split_groups/04_useradd_split_group_already_full/useradd.test
+run_test ./split_groups/05_useradd_split_group_already_split_passwd_differ/useradd.test
+run_test ./split_groups/06_useradd_split_group_already_split_GID_differ/useradd.test
+run_test ./split_groups/07_useradd_split_group_already_split_user_in_both_lines/useradd.test
+run_test ./split_groups/08_useradd_no_split_group_already_split/useradd.test
+run_test ./split_groups/09_groupdel_split_group_already_split/groupdel.test
+run_test ./split_groups/10_groupdel_no_split_group_already_split/groupdel.test
 
 echo
 echo "$succeded test(s) passed"
