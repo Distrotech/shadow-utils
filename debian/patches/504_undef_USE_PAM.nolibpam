@@ -8,10 +8,12 @@ Index: shadow-4.1.0/src/Makefile.am
  
 -chage_LDADD    = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
 +chage_LDADD    = $(LDADD) $(LIBAUDIT) $(LIBSELINUX)
- chfn_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
+-chfn_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
++chfn_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX)
 -chgpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
 +chgpasswd_LDADD = $(LDADD) $(LIBSELINUX) $(LIBCRYPT)
- chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
+-chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
++chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX)
 -chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
 +chpasswd_LDADD = $(LDADD) $(LIBSELINUX) $(LIBCRYPT)
  cppw_LDADD     = $(LDADD) $(LIBSELINUX)
@@ -28,17 +30,21 @@ Index: shadow-4.1.0/src/Makefile.am
  grpunconv_LDADD = $(LDADD) $(LIBSELINUX)
 @@ -74,7 +74,7 @@
  	login_nopam.c
- login_LDADD    = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
- newgrp_LDADD   = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBCRYPT)
+-login_LDADD    = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
++login_LDADD    = $(LDADD) $(LIBPAM) $(LIBAUDIT)
+-newgrp_LDADD   = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBCRYPT)
++newgrp_LDADD   = $(LDADD) $(LIBAUDIT) $(LIBCRYPT)
 -newusers_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
 +newusers_LDADD = $(LDADD) $(LIBSELINUX) $(LIBCRYPT)
  nologin_LDADD  =
- passwd_LDADD   = $(LDADD) $(LIBPAM) $(LIBCRACK) $(LIBAUDIT) $(LIBSELINUX) $(LIBCRYPT)
+-passwd_LDADD   = $(LDADD) $(LIBPAM) $(LIBCRACK) $(LIBAUDIT) $(LIBSELINUX) $(LIBCRYPT)
++passwd_LDADD   = $(LDADD) $(LIBPAM) $(LIBCRACK)  $(LIBAUDIT) $(LIBSELINUX)
  pwck_LDADD     = $(LDADD) $(LIBSELINUX)
 @@ -84,10 +84,10 @@
  	su.c \
  	suauth.c
- su_LDADD       = $(LDADD) $(LIBPAM) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
+-su_LDADD       = $(LDADD) $(LIBPAM) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
++su_LDADD       = $(LDADD) $(LIBPAM)
  sulogin_LDADD  = $(LDADD) $(LIBCRYPT)
 -useradd_LDADD  = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
 -userdel_LDADD  = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
