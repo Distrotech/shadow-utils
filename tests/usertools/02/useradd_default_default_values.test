@@ -28,6 +28,8 @@ echo -n "Check the default values..."
 diff -au data/useradd-D_default_values.out tmp/out
 echo "OK"
 
+rm -f tmp/out
+
 log_status "$0" "SUCCESS"
 restore_config
 trap '' 0
