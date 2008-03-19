@@ -27,6 +27,8 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       + debian/patches/401_cppw_src.dpatch
       + debian/patches/428_grpck_add_prune_option
   * debian/watch: Add a watch file for shadow.
+  * debian/rules, debian/recode_manpages.sh: Do not recode the manpages.
+    Keep them in UTF-8.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
 

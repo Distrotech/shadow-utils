@@ -48,7 +48,6 @@ binary-install/login::
 	# Lintian and Linda overrides
 	install -c -m 444  debian/login.lintian-overrides debian/login/usr/share/lintian/overrides/login
 	install -c -m 444  debian/login.linda-overrides debian/login/usr/share/linda/overrides/login
-	/bin/sh ./debian/recode_manpages.sh login
 
 binary-install/passwd::
 	install -c -m 444 man/shadowconfig.8 debian/passwd/usr/share/man/man8
@@ -74,7 +73,6 @@ endif
 	install -c -m 444  debian/passwd.lintian-overrides debian/passwd/usr/share/lintian/overrides/passwd
 	# Linda overrides files
 	install -c -m 444  debian/passwd.linda-overrides debian/passwd/usr/share/linda/overrides/passwd
-	/bin/sh ./debian/recode_manpages.sh passwd
 
 binary-predeb/login::
 	# No real need for login to be setuid root
