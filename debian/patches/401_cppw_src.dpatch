@@ -221,11 +221,11 @@ Index: shadow-4.1.0/src/Makefile.am
  	chpasswd \
  	groupadd \
 @@ -59,6 +60,7 @@
- chgpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX)
- chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX)
- chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX)
+ chgpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
+ chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
+ chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
 +cppw_LDADD     = $(LDADD) $(LIBSELINUX)
- gpasswd_LDADD  = $(LDADD) $(LIBAUDIT) $(LIBSELINUX)
+ gpasswd_LDADD  = $(LDADD) $(LIBAUDIT) $(LIBSELINUX) $(LIBCRYPT)
  groupadd_LDADD = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
  groupdel_LDADD = $(LDADD) $(LIBPAM) $(LIBAUDIT) $(LIBSELINUX)
 Index: shadow-4.1.0/po/POTFILES.in

@@ -10,13 +10,13 @@ Index: shadow-4.1.0/src/grpck.c
 --- shadow-4.1.0.orig/src/grpck.c
 +++ shadow-4.1.0/src/grpck.c
 @@ -139,6 +139,7 @@
- 	int errors = 0;
- 	int changed = 0;
- 	int i;
-+	int prune = 0;
- 	struct commonio_entry *gre, *tgre;
- 	struct group *grp;
- 	int sort_mode = 0;
+ /* Options */
+ static int read_only = 0;
+ static int sort_mode = 0;
++static int prune = 0;
+ 
+ /* local function prototypes */
+ static void usage (void);
 @@ -163,7 +164,7 @@
  	/*
  	 * Parse the command line arguments
@@ -36,18 +36,19 @@ Index: shadow-4.1.0/src/grpck.c
  		default:
  			usage ();
  		}
-@@ -296,8 +300,13 @@
+@@ -296,9 +300,14 @@
  			/*
  			 * prompt the user to delete the entry or not
  			 */
--			if (!yes_or_no ())
+-			if (!yes_or_no (read_only)) {
 +			if (!prune) {
-+			        if (!yes_or_no ())
++			        if (!yes_or_no (read_only)) {
 +				        continue;
++				}
 +			} else {
-+			        puts (_("Yes"));
++				puts (_("Yes"));
  				continue;
-+			}
+ 			}
  
  			/*
  			 * All group file deletions wind up here. This code

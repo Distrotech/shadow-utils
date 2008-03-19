@@ -29,8 +29,8 @@ Index: shadow-4.1.0/src/useradd.c
  			{NULL, 0, NULL, '\0'}
  		};
  		while ((c =
--			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:",
-+			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:mMop:s:u:",
+-			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:U",
++			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:U",
  				     long_options, NULL)) != -1) {
  			switch (c) {
  			case 'b':

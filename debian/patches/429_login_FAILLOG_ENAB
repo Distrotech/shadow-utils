@@ -11,15 +11,13 @@ Index: shadow-4.1.0/src/login.c
 ===================================================================
 --- shadow-4.1.0.orig/src/login.c
 +++ shadow-4.1.0/src/login.c
-@@ -130,11 +130,11 @@
+@@ -130,9 +130,9 @@
  static void setup_tty (void);
  static void check_flags (int, char *const *);
  
 +static struct faillog faillog;
 +
  #ifndef USE_PAM
- extern int login_access (const char *, const char *);
- 
 -static struct faillog faillog;
 -
  static void bad_time_notify (void);

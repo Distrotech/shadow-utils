@@ -7,13 +7,13 @@ Index: shadow-4.1.0/lib/commonio.c
 --- shadow-4.1.0.orig/lib/commonio.c
 +++ shadow-4.1.0/lib/commonio.c
 @@ -13,6 +13,7 @@
+ #include <errno.h>
  #include <stdio.h>
  #include <signal.h>
- #include <pwd.h>
 +#include <grp.h>
- #include <nscd.h>
- #ifdef HAVE_SHADOW_H
- #include <shadow.h>
+ #include "nscd.h"
+ #ifdef WITH_SELINUX
+ #include <selinux/selinux.h>
 @@ -712,13 +713,20 @@
  			goto fail;
  		}
