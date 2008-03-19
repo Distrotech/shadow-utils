@@ -48,11 +48,11 @@ test -d /tmp/test-newusers
 echo "OK"
 
 echo -n "Check content of /tmp/test-newusers..."
-stat --printf "%A %G:%U %N\n" /tmp/test-newusers/* /tmp/test-newusers/.* 2>/dev/null | sort > tmp/home_ls-a.old
+stat --printf "%A %U:%G %N\n" /tmp/test-newusers/* /tmp/test-newusers/.* 2>/dev/null | sort > tmp/home_ls-a.old
 diff -rauN data/home_ls-a.old tmp/home_ls-a.old
 echo "OK"
 echo -n "Check content of /tmp/test-newusers2..."
-stat --printf "%A %G:%U %N\n" /tmp/test-newusers2/* /tmp/test-newusers2/.* 2>/dev/null | sort > tmp/home_ls-a
+stat --printf "%A %U:%G %N\n" /tmp/test-newusers2/* /tmp/test-newusers2/.* 2>/dev/null | sort > tmp/home_ls-a
 diff -rauN data/home_ls-a tmp/home_ls-a
 echo "OK"
 

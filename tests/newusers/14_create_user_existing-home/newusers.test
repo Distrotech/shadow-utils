@@ -44,7 +44,7 @@ test -d /tmp/test-newusers
 echo "OK"
 
 echo -n "Check content of /tmp/test-newusers..."
-stat --printf "%A %G:%U %N\n" /tmp/test-newusers/* /tmp/test-newusers/.* 2>/dev/null | sort > tmp/home_ls-a
+stat --printf "%A %U:%G %N\n" /tmp/test-newusers/* /tmp/test-newusers/.* 2>/dev/null | sort > tmp/home_ls-a
 diff -rauN data/home_ls-a tmp/home_ls-a
 echo "OK"
 
