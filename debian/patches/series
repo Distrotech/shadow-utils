@@ -26,6 +26,5 @@
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
 406_vipw_resume_properly
-407_adduser_disable_PUG_with-n
 414_remove-unwise-advices
 415_login_put-echoctl-back
