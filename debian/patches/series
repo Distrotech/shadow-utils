@@ -24,7 +24,6 @@
 487_passwd_chauthtok_failed_message
 403_fix_PATH-MAX_hurd
 508_nologin_in_usr_sbin
-496_login_init_session
 505_useradd_recommend_adduser
 406_vipw_resume_properly
 407_adduser_disable_PUG_with-n

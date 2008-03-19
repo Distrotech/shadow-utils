@@ -13,6 +13,7 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       + debian/patches/467_useradd_-r_LSB
       + debian/patches/466_fflush-prompt
       + debian/patches/480_getopt_args_reorder
+      + debian/patches/496_login_init_session
   * debian/watch: Add a watch file for shadow.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
