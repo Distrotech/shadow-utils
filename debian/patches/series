@@ -14,7 +14,6 @@
 542_useradd-O_option
 454_userdel_no_MAIL_FILE
 501_commonio_group_shadow
-462_warn_to_edit_shadow
 463_login_delay_obeys_to_PAM
 467_useradd_-r_LSB
 466_fflush-prompt
