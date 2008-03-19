@@ -20,6 +20,13 @@ change_config
 echo "/bin/su -c pwd -p - myuser> tmp/out 2> tmp/err"
 /bin/su -c pwd -p - myuser> tmp/out 2> tmp/err
 
+echo "su reported:"
+echo "=== stdout ==="
+cat tmp/out
+echo "=== stderr ==="
+cat tmp/err
+echo "=============="
+
 echo -n "Checking tmp/out..."
 case "$(cat tmp/out)" in
 	*/su/03)

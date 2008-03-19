@@ -20,6 +20,13 @@ change_config
 echo "/bin/su myuser -c 'ls config'> tmp/out 2> tmp/err"
 /bin/su myuser -c 'ls config'> tmp/out 2> tmp/err
 
+echo "su reported:"
+echo "=== stdout ==="
+cat tmp/out
+echo "=== stderr ==="
+cat tmp/err
+echo "=============="
+
 echo -n "Checking tmp/out..."
 diff -au data/ls.out tmp/out
 rm -f tmp/out
