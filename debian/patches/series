@@ -12,7 +12,6 @@
 506_relaxed_usernames
 507_32char_grnames.dpatch
 542_useradd-O_option
-451_login_PATH
 454_userdel_no_MAIL_FILE
 501_commonio_group_shadow
 462_warn_to_edit_shadow
