@@ -27,7 +27,6 @@
 505_useradd_recommend_adduser
 406_vipw_resume_properly
 407_adduser_disable_PUG_with-n
-408_passwd_check_arguments
 412_lastlog_-u_numerical_range
 414_remove-unwise-advices
 415_login_put-echoctl-back
