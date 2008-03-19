@@ -15,7 +15,6 @@
 454_userdel_no_MAIL_FILE
 501_commonio_group_shadow
 463_login_delay_obeys_to_PAM
-467_useradd_-r_LSB
 466_fflush-prompt
 523_su_arguments_are_concatenated
 523_su_arguments_are_no_more_concatenated_by_default
