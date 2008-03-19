@@ -16,6 +16,10 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       + debian/patches/496_login_init_session
       + debian/patches/408_passwd_check_arguments
       + debian/patches/412_lastlog_-u_numerical_range
+    - Updated patches:
+      + debian/patches/504_undef_USE_PAM.nolibpam
+        $(LIBCRYPT) $(LIBSKEY) $(LIBMD) are no more included in libshadow.la.
+        Avoid link to unneeded libraries (spotted by dpkg-shlibdeps).
   * debian/watch: Add a watch file for shadow.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
