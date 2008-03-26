@@ -7,6 +7,8 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       Closes: #461670
     - Fix infinite loop in usermod when two groups have the same name.
       Closes: #470745
+    - Make SE Linux tests more strict, when the real UID is 0 SE Linux checks
+      will be performed. Closes: #472575
     - Remove patches applied upstream:
       + debian/patches/451_login_PATH
       + debian/patches/462_warn_to_edit_shadow
