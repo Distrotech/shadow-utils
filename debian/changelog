@@ -31,10 +31,11 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       + debian/patches/401_cppw_src.dpatch
       + debian/patches/428_grpck_add_prune_option
     - Updated translations:
+      + Italian. Closes: #472951
       + Korean. Closes: #471935
       + Portuguese. Closes: #472244
       + Russian. Closes: #472506
-      + Italian. Closes: #472951
+      + Slovak. Closes: #471802
   * debian/watch: Add a watch file for shadow.
   * debian/rules, debian/recode_manpages.sh: Do not recode the manpages.
     Keep them in UTF-8.
