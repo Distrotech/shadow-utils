@@ -48,6 +48,9 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
     unversionned; see above) in the passwd package.
   * debian/control: The passwd's Replaces on manpages-de can be versionned
     again. The su(1) manpage was removed from manpages-de.
+  * debian/securetty.linux: Added ttyUSB0, ttyUSB1, ttyUSB2, and MPC5200
+    serial ports (ttyPSC0, ttyPSC1, ttyPSC2, ttyPSC3, ttyPSC4, ttyPSC5).
+    Closes: #461374
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
 

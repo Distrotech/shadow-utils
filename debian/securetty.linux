@@ -6,6 +6,19 @@ console
 ttyS0
 ttyS1
 
+# USB dongles
+ttyUSB0
+ttyUSB1
+ttyUSB2
+
+# Embedded MPC platforms
+ttyPSC0
+ttyPSC1
+ttyPSC2
+ttyPSC3
+ttyPSC4
+ttyPSC5
+
 # Standard hypervisor virtual console
 hvc0
 
