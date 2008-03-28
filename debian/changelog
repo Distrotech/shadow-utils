@@ -39,6 +39,10 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
   * debian/rules, debian/control: login (>= 970502-1) was already provided
     by login in Hamm. libpam-modules (>= 0.72-5) was already provided by
     libpam-modules in Potato. Simplify the dependencies.
+  * debian/control: Move the dependency on libpam-modules from Depends to
+    Pre-Depends. The login package is Essential, and without libpam-modules,
+    login or su are not functional. Thanks to Steve Langasek for pointing this
+    out.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
 
