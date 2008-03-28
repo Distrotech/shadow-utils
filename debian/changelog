@@ -44,6 +44,8 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
     Pre-Depends. The login package is Essential, and without libpam-modules,
     login or su are not functional. Thanks to Steve Langasek for pointing this
     out.
+  * debian/control: There's no need for a dependency on login (now that it is
+    unversionned; see above) in the passwd package.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
 

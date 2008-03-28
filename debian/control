@@ -9,7 +9,7 @@ XS-X-Vcs-Svn: svn://svn.debian.org/svn/pkg-shadow/trunk
 
 Package: passwd
 Architecture: any
-Depends: ${shlibs:Depends}, login, libpam-modules, debianutils (>= 2.15.2)
+Depends: ${shlibs:Depends}, libpam-modules, debianutils (>= 2.15.2)
 Replaces: manpages-de (<< 0.4-9), manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-3), manpages-ja (<< 0.5.0.0.20050915-1), manpages-ko (<< 20050219-2), manpages-es (<< 1.55-4), manpages-es-extra (<< 0.8a-15), manpages-ru (<< 0.98-3), manpages-tr, manpages-zh
 Section: admin
 Priority: required
