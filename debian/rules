@@ -89,8 +89,3 @@ binary-predeb/passwd::
 	chgrp shadow debian/passwd/usr/bin/expiry
 	chmod g+s debian/passwd/usr/bin/chage
 	chmod g+s debian/passwd/usr/bin/expiry
-ifeq ($(DEB_HOST_ARCH_OS),hurd)
-	echo "loginpam=login, libpam-modules (>= 0.72-5)" >> debian/passwd.substvars
-else
-	echo "loginpam=login (>= 970502-1), libpam-modules (>= 0.72-5)" >> debian/passwd.substvars
-endif
