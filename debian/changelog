@@ -9,6 +9,8 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       Closes: #470745
     - Make SE Linux tests more strict, when the real UID is 0 SE Linux checks
       will be performed. Closes: #472575
+    - Option --password added to groupadd / groupmod (like useradd / usermod).
+      Closes: #445484
     - Remove patches applied upstream:
       + debian/patches/451_login_PATH
       + debian/patches/462_warn_to_edit_shadow
