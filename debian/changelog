@@ -36,6 +36,7 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
       + Portuguese. Closes: #472244
       + Russian. Closes: #472506
       + Slovak. Closes: #471802
+      + Turkish. Closes: #473279
   * debian/watch: Add a watch file for shadow.
   * debian/rules, debian/recode_manpages.sh: Do not recode the manpages.
     Keep them in UTF-8.
