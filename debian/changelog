@@ -1,4 +1,4 @@
-shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
+shadow (1:4.1.1-1) unstable; urgency=low
 
   * New upstream release. This closes the following bugs:
     - Fix errors when gpasswd is called without a gshadow file.
@@ -59,8 +59,9 @@ shadow (1:4.1.1~rc1-1) UNRELEASED; urgency=low
     Closes: #461374
   * debian/control: Change XS-X-Vcs-Svn to Vcs-Svn.  Update the link to the
     new repository layout.  Add a Vcs-Browser field.
+  * debian/control: Added Homepage field.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Feb 2008 18:33:31 +0100
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 03 Apr 2008 00:54:35 +0200
 
 shadow (1:4.1.0-2) unstable; urgency=low
 
