@@ -31,14 +31,14 @@ shadow (1:4.1.1-1) unstable; urgency=low
       + debian/patches/401_cppw_src.dpatch
       + debian/patches/428_grpck_add_prune_option
     - Updated translations:
+      + Basque. Closes: #473555
+      + German. Closes: #473646
       + Italian. Closes: #472951
       + Korean. Closes: #471935
       + Portuguese. Closes: #472244
       + Russian. Closes: #472506
       + Slovak. Closes: #471802
       + Turkish. Closes: #473279
-      + Basque. Closes: #473555
-      + German. Closes: #473646
   * debian/watch: Add a watch file for shadow.
   * debian/rules, debian/recode_manpages.sh: Do not recode the manpages.
     Keep them in UTF-8.
@@ -61,7 +61,7 @@ shadow (1:4.1.1-1) unstable; urgency=low
     new repository layout.  Add a Vcs-Browser field.
   * debian/control: Added Homepage field.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 03 Apr 2008 00:54:35 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 03 Apr 2008 01:31:10 +0200
 
 shadow (1:4.1.0-2) unstable; urgency=low
 
