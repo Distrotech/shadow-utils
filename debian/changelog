@@ -60,6 +60,7 @@ shadow (1:4.1.1-1) unstable; urgency=low
   * debian/control: Change XS-X-Vcs-Svn to Vcs-Svn.  Update the link to the
     new repository layout.  Add a Vcs-Browser field.
   * debian/control: Added Homepage field.
+  * debian/passwd.postrm: Removed (was empty).
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 03 Apr 2008 01:31:10 +0200
 
