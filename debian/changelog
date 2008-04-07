@@ -1,3 +1,10 @@
+shadow (1:4.1.1-2) UNRELEASED; urgency=low
+
+  * debian/control: chenged the "Replaces" on manpages-zh to a versioned
+    one on 1.5.1-1
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 07 Apr 2008 23:00:26 +0200
+
 shadow (1:4.1.1-1) unstable; urgency=low
 
   * New upstream release. This closes the following bugs:

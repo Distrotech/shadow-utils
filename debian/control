@@ -12,7 +12,7 @@ Homepage: http://pkg-shadow.alioth.debian.org/
 Package: passwd
 Architecture: any
 Depends: ${shlibs:Depends}, libpam-modules, debianutils (>= 2.15.2)
-Replaces: manpages-de (<< 0.4-9), manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-3), manpages-ja (<< 0.5.0.0.20050915-1), manpages-ko (<< 20050219-2), manpages-es (<< 1.55-4), manpages-es-extra (<< 0.8a-15), manpages-ru (<< 0.98-3), manpages-tr, manpages-zh
+Replaces: manpages-de (<< 0.4-9), manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-3), manpages-ja (<< 0.5.0.0.20050915-1), manpages-ko (<< 20050219-2), manpages-es (<< 1.55-4), manpages-es-extra (<< 0.8a-15), manpages-ru (<< 0.98-3), manpages-tr, manpages-zh (<<1.5.1-1)
 Section: admin
 Priority: required
 Description: change and administer password and group data
@@ -25,7 +25,7 @@ Package: login
 Architecture: any
 Pre-Depends: ${shlibs:Depends}, libpam-runtime, libpam-modules
 Conflicts: gnunet (<< 0.7.0c-2), amavisd-new (<<2.3.3-8), python-4suite (<< 0.99cvs20060405-1), backupninja (<< 0.9.3-5), echolot (<< 2.1.8-4)
-Replaces: manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-2), manpages-ko (<< 20050219-2), manpages-ja (<< 0.5.0.0.20050915-1), manpages-de (<< 0.5-3), manpages-es-extra (<<0.8a-15), manpages-tr, manpages-zh
+Replaces: manpages-fi (<< 0.2-4), manpages-fr (<<1.64.0-1), manpages-hu (<< 20010119-5), manpages-it (<< 0.3.4-2), manpages-ko (<< 20050219-2), manpages-ja (<< 0.5.0.0.20050915-1), manpages-de (<< 0.5-3), manpages-es-extra (<<0.8a-15), manpages-tr, manpages-zh (<<1.5.1-1)
 Essential: yes
 Section: admin
 Priority: required
