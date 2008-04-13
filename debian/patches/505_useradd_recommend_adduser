@@ -29,7 +29,7 @@ Index: shadow-4.1.0/man/userdel.8.xml
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
      <para>
-+      <command>userdel</command> is a low level utility for adding
++      <command>userdel</command> is a low level utility for removing
 +      users.  On Debian, administrators should usually use
 +      <citerefentry><refentrytitle>deluser</refentrytitle>
 +      <manvolnum>8</manvolnum></citerefentry> instead.
