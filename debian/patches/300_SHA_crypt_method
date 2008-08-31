@@ -1,0 +1,36 @@
+Goal: Fix bugs in the SHA encryption method that force the salt to have 8
+      bytes (instead of a random length between 8 and 16 bytes), and force
+      the number of SHA rounds to be equal to the lowest limit (at least
+      1000 SHA rounds).
+
+Status wrt upstream: Already applied upstream.
+
+Index: shadow-4.1.1/libmisc/salt.c
+===================================================================
+--- shadow-4.1.1.orig/libmisc/salt.c	2008-02-03 18:23:31.000000000 +0100
++++ shadow-4.1.1/libmisc/salt.c	2008-05-21 22:24:32.734281067 +0200
+@@ -90,9 +90,10 @@
+  */
+ static unsigned int SHA_salt_size (void)
+ {
+-	double rand_rounds = 9 * random ();
+-	rand_rounds /= RAND_MAX;
+-	return 8 + rand_rounds;
++	double rand_size;
++	seedRNG ();
++	rand_size = (double) 9.0 * random () / RAND_MAX;
++	return 8 + rand_size;
+ }
+ 
+ /* ! Arguments evaluated twice ! */
+@@ -131,8 +132,8 @@
+ 		if (min_rounds > max_rounds)
+ 			max_rounds = min_rounds;
+ 
+-		srand (time (NULL));
+-		rand_rounds = (max_rounds-min_rounds+1) * random ();
++		seedRNG ();
++		rand_rounds = (double) (max_rounds-min_rounds+1.0) * random ();
+ 		rand_rounds /= RAND_MAX;
+ 		rounds = min_rounds + rand_rounds;
+ 	} else if (0 == *prefered_rounds)

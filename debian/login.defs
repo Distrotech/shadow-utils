@@ -140,8 +140,8 @@ TTYPERM		0600
 # non-shell executables in place of login shell, like /usr/sbin/pppd for "ppp"
 # user and alike.
 #
-# Therefore the use of pam_umask is recommended (Debian package libpam-umask)
-# as the solution which catches all these cases on PAM-enabled systems.
+# Therefore the use of pam_umask is recommended as the solution which
+# catches all these cases on PAM-enabled systems.
 # 
 # This avoids the confusion created by having the umask set
 # in two different places -- in login.defs and shell rc files (i.e.
@@ -176,12 +176,18 @@ PASS_WARN_AGE	7
 #
 UID_MIN			 1000
 UID_MAX			60000
+# System accounts
+#SYS_UID_MIN		  100
+#SYS_UID_MAX		  999
 
 #
 # Min/max values for automatic gid selection in groupadd
 #
 GID_MIN			  100
 GID_MAX			60000
+# System accounts
+#SYS_GID_MIN		  100
+#SYS_GID_MAX		  999
 
 #
 # Max number of login retries if password is bad. This will most likely be
@@ -266,7 +272,37 @@ USERGROUPS_ENAB yes
 #
 # This variable is used by chpasswd, gpasswd and newusers.
 #
+# This variable is deprecated. You should use ENCRYPT_METHOD.
+#
 #MD5_CRYPT_ENAB	no
+
+#
+# If set to MD5 , MD5-based algorithm will be used for encrypting password
+# If set to SHA256, SHA256-based algorithm will be used for encrypting password
+# If set to SHA512, SHA512-based algorithm will be used for encrypting password
+# If set to DES, DES-based algorithm will be used for encrypting password (default)
+# Overrides the MD5_CRYPT_ENAB option
+#
+# Note: It is recommended to use a value consistent with
+# the PAM modules configuration.
+#
+#ENCRYPT_METHOD DES
+
+#
+# Only used if ENCRYPT_METHOD is set to SHA256 or SHA512.
+#
+# Define the number of SHA rounds.
+# With a lot of rounds, it is more difficult to brute forcing the password.
+# But note also that it more CPU resources will be needed to authenticate
+# users.
+#
+# If not specified, the libc will choose the default number of rounds (5000).
+# The values must be inside the 1000-999999999 range.
+# If only one of the MIN or MAX values is set, then this value will be used.
+# If MIN > MAX, the highest value will be used.
+#
+# SHA_CRYPT_MIN_ROUNDS 5000
+# SHA_CRYPT_MAX_ROUNDS 5000
 
 ################# OBSOLETED BY PAM ##############
 #						#

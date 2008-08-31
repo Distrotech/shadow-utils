@@ -5,7 +5,7 @@ Fix: FTBFS on kfreebsd (and probably The Hurd)
 
 Author: Mike Frysinger <vapier@gentoo.org>
 
-Status wrt upstream: reported by Mike, not applied yet
+Status wrt upstream: Fixed upstream.
 
 Index: shadow-4.1.0/configure.in
 ===================================================================

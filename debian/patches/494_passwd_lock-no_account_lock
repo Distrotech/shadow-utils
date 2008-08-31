@@ -1,0 +1,111 @@
+Goal: Restore the behavior of passwd -l / passwd -u to only touch the
+      password field, not the account expiry. Better document the
+      differences between locked password and locked account.
+
+Fixes: #492307 (and indirectly #412234).
+
+Status wrt upstream: Still not applied.
+
+Index: shadow-4.1.1/man/passwd.1.xml
+===================================================================
+--- shadow-4.1.1.orig/man/passwd.1.xml	2008-07-26 14:19:16.001439567 +0200
++++ shadow-4.1.1/man/passwd.1.xml	2008-07-26 16:08:30.562285434 +0200
+@@ -197,9 +197,21 @@
+ 	</term>
+ 	<listitem>
+ 	  <para>
+-	    Lock the named account. This option disables an account by changing
+-	    the password to a value which matches no possible encrypted value,
+-	    and by setting the account expiry field to 1.
++	    Lock the password of the named account. This option disables a password by changing
++	    it to a value which matches no possible encrypted value
++	    (it adds a '!' at the beginning of the password).
++	  </para>
++	  <para>
++	    Note that this does not disable the account. The user may
++	    still be able to login using another authentication token (e.g.
++	    an SSH key).
++	    To disable the account, administrators should use
++	    <command>usermod --expiredate 1</command> (this set the account's
++	    expire date to Jan 2, 1970).
++	  </para>
++	  <para>
++	    Users with a locked password are not allowed to change their
++	    password.
+ 	  </para>
+ 	</listitem>
+       </varlistentry>
+@@ -258,10 +270,9 @@
+ 	</term>
+ 	<listitem>
+ 	  <para>
+-	    Unlock the named account. This option re-enables an account by
+-	    changing the password back to its previous value (to value before
+-	    using <option>-l</option> option), and by resetting the account
+-	    expiry field.
++	    Unlock the password of the named account. This option re-enables a password by
++	    changing the password back to its previous value (to the value before
++	    using <option>-l</option> option, by removing the leading '!').
+ 	  </para>
+ 	</listitem>
+       </varlistentry>
+@@ -402,6 +413,9 @@
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
+       </citerefentry>.
+     </para>
+   </refsect1>
+Index: shadow-4.1.1/src/passwd.c
+===================================================================
+--- shadow-4.1.1.orig/src/passwd.c	2008-07-26 14:19:02.809439918 +0200
++++ shadow-4.1.1/src/passwd.c	2008-07-26 16:17:14.104439588 +0200
+@@ -76,11 +76,11 @@
+     eflg = 0,			/* -e - force password change */
+     iflg = 0,			/* -i - set inactive days */
+     kflg = 0,			/* -k - change only if expired */
+-    lflg = 0,			/* -l - lock account */
++    lflg = 0,			/* -l - lock the user's password */
+     nflg = 0,			/* -n - set minimum days */
+     qflg = 0,			/* -q - quiet mode */
+     Sflg = 0,			/* -S - show password status */
+-    uflg = 0,			/* -u - unlock account */
++    uflg = 0,			/* -u - unlock the user's password */
+     wflg = 0,			/* -w - set warning days */
+     xflg = 0;			/* -x - set maximum days */
+ 
+@@ -155,13 +155,13 @@
+ 	         "  -k, --keep-tokens             change password only if expired\n"
+ 	         "  -i, --inactive INACTIVE       set password inactive after expiration\n"
+ 	         "                                to INACTIVE\n"
+-	         "  -l, --lock                    lock the named account\n"
++	         "  -l, --lock                    lock the password of the named account\n"
+ 	         "  -n, --mindays MIN_DAYS        set minimum number of days before password\n"
+ 	         "                                change to MIN_DAYS\n"
+ 	         "  -q, --quiet                   quiet mode\n"
+ 	         "  -r, --repository REPOSITORY   change password in REPOSITORY repository\n"
+ 	         "  -S, --status                  report password status on the named account\n"
+-	         "  -u, --unlock                  unlock the named account\n"
++	         "  -u, --unlock                  unlock the password of the named account\n"
+ 	         "  -w, --warndays WARN_DAYS      set expiration warning days to WARN_DAYS\n"
+ 	         "  -x, --maxdays MAX_DAYS        set maximim number of days before password\n"
+ 	         "                                change to MAX_DAYS\n"
+@@ -570,15 +570,6 @@
+ 		nsp->sp_inact = (inact * DAY) / SCALE;
+ 	if (do_update_age)
+ 		nsp->sp_lstchg = time ((time_t *) 0) / SCALE;
+-	if (lflg) {
+-		/* Set the account expiry field to 1.
+-		 * Some PAM implementation consider zero as a non expired
+-		 * account.
+-		 */
+-		nsp->sp_expire = 1;
+-	}
+-	if (uflg)
+-		nsp->sp_expire = -1;
+ 
+ 	/*
+ 	 * Force change on next login, like SunOS 4.x passwd -e or Solaris

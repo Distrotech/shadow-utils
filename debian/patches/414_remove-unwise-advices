@@ -1,7 +1,7 @@
 Goal: Remove quite unwise password choice advices in passwd manpage
 Fixes: #386818
 
-Status wrt upstream: Forwarded without patch but ignored up to now
+Status wrt upstream: Applied upstream
 
 Note: 
 
@@ -9,14 +9,16 @@ Index: shadow-4.1.0/man/passwd.1.xml
 ===================================================================
 --- shadow-4.1.0.orig/man/passwd.1.xml
 +++ shadow-4.1.0/man/passwd.1.xml
-@@ -114,35 +114,9 @@
+@@ -113,36 +113,10 @@
+       </para>
  
        <para>
- 	Your password must be easily remembered so that you will not be forced
+-	Your password must be easily remembered so that you will not be forced
 -	to write it on a piece of paper. This can be accomplished by
 -	appending two small words together and separating each with a
 -	special character or digit. For example, Pass%word.
-+	to write it on a piece of paper.
++	You can find advices on how to choose a strong password on
++	http://en.wikipedia.org/wiki/Password_strength
        </para>
  
 -      <para>

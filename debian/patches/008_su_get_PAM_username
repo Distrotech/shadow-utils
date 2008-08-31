@@ -1,9 +1,22 @@
-Goal: ???
+Goal: Retrieve the PAM username in case a module changed the PAM_USER
+      item.
 
-Notes:
- * It still needs more investigation.
-   I don't know what this patch is used for. IMO, the user name is
-   already known before calling pam_get_item(pamh, PAM_USER, ...)
+According to Linux-PAM_ADG:
+ * Note, modules can change the values of PAM_USER and PAM_RUSER during
+   any of the pam_*() library calls. For this reason, the application
+   should take care to use the pam_get_item() every time it wishes to
+   establish who the authenticated user is (or will currently be).
+
+PAM_USER description:
+
+    The username of the entity under whose identity service will be given. That
+    is, following authentication, PAM_USER identifies the local entity that
+    gets to use the service. Note, this value can be mapped from something
+    (eg., "anonymous") to something else (eg. "guest119") by any module in the
+    PAM stack. As such an application should consult the value of PAM_USER
+    after each call to a PAM function.
+
+See also: https://www.redhat.com/archives/pam-list/2008-May/msg00009.html
 
 Index: shadow-4.1.0/src/su.c
 ===================================================================

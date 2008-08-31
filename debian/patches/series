@@ -28,3 +28,9 @@
 406_vipw_resume_properly
 414_remove-unwise-advices
 415_login_put-echoctl-back
+300_SHA_crypt_method
+301_manpages_missing_options
+302_vim_selinux_support
+200_Czech_binary_translation
+494_passwd_lock-no_account_lock
+302_remove_non_translated_polish_manpages

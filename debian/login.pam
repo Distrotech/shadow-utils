@@ -2,12 +2,24 @@
 # The PAM configuration file for the Shadow `login' service
 #
 
+# Enforce a minimal delay in case of failure (in microseconds).
+# (Replaces the `FAIL_DELAY' setting from login.defs)
+# Note that other modules may require another minimal delay. (for example,
+# to disable any delay, you should add the nodelay option to pam_unix)
+auth       optional   pam_faildelay.so  delay=3000000
+
 # Outputs an issue file prior to each login prompt (Replaces the
 # ISSUE_FILE option from login.defs). Uncomment for use
 # auth       required   pam_issue.so issue=/etc/issue
 
 # Disallows root logins except on tty's listed in /etc/securetty
 # (Replaces the `CONSOLE' setting from login.defs)
+# Note that it is included as a "requisite" module. No password prompts will
+# be displayed if this module fails to avoid having the root password
+# transmitted on unsecure ttys.
+# You can change it to a "required" module if you think it permits to
+# guess valid user names of your system (invalid user names are considered
+# as possibly being root).
 auth       requisite  pam_securetty.so
 
 # Disallows other than root logins when /etc/nologin exists
@@ -69,7 +81,7 @@ session    optional   pam_mail.so standard
 # SELinux needs to intervene at login time to ensure that the process
 # starts in the proper default security context.
 # Uncomment the following line to enable SELinux
-# session required pam_selinux.so multiple
+# session required pam_selinux.so select_context
 
 # Standard Un*x account and session
 @include common-account

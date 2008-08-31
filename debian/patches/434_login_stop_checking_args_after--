@@ -1,9 +1,7 @@
 Goal: terminate argument validation in login when it hits a '--'.
 Fixes: #66368
 
-Status wrt upstream: It could certainly be submitted to upstream.
-                     Upstream comment: "Better will be rewrite login
-                     for use getopt_long()."
+Status wrt upstream: Applied upstream.
 
 Index: shadow-4.1.0/src/login.c
 ===================================================================

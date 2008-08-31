@@ -19,6 +19,10 @@ ttyPSC3
 ttyPSC4
 ttyPSC5
 
+# PA-RISC mux ports
+ttyB0
+ttyB1
+
 # Standard hypervisor virtual console
 hvc0
 

@@ -2,7 +2,7 @@ Source: shadow
 Section: admin
 Priority: required
 Maintainer: Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
-Standards-Version: 3.7.3.0
+Standards-Version: 3.8.0
 Uploaders: Christian Perrier <bubulle@debian.org>, Martin Quinson <mquinson@debian.org>, Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>
 Build-Depends: autoconf, automake1.9, libtool, gettext, libpam0g-dev, debhelper (>= 5.0.0), quilt, dpkg-dev (>= 1.13.5), xsltproc, docbook-xsl, docbook-xml, libxml2-utils, cdbs, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64], gnome-doc-utils (>= 0.4.3-1)
 Vcs-Svn: svn://svn.debian.org/svn/pkg-shadow/debian/trunk

@@ -1,0 +1,59 @@
+Add SE Linux support to vipw/vigr
+
+Fixes: #491907
+
+Status wrt upsream: Still not applied.
+
+Index: shadow-4.1.1/src/vipw.c
+===================================================================
+--- shadow-4.1.1.orig/src/vipw.c	2008-07-26 01:00:51.095214653 +0200
++++ shadow-4.1.1/src/vipw.c	2008-07-26 01:12:49.295214798 +0200
+@@ -42,6 +42,10 @@
+ #include "sgroupio.h"
+ #include "shadowio.h"
+ 
++#ifdef WITH_SELINUX                                                            
++#include <selinux/selinux.h>                                                   
++#endif
++
+ #define MSG_WARN_EDIT_OTHER_FILE _( \
+ 	"You have modified %s.\n"\
+ 	"You may need to modify %s for consistency.\n"\
+@@ -167,6 +171,22 @@
+ 
+ 	if (access (file, F_OK))
+ 		vipwexit (file, 1, 1);
++#ifdef WITH_SELINUX
++	/* if SE Linux is enabled then set the context of all new files
++	   to be the context of the file we are editing */
++	if (is_selinux_enabled ()) {
++		security_context_t passwd_context=NULL;
++		int ret = 0;
++		if (getfilecon (file, &passwd_context) < 0) {
++			vipwexit (_("Couldn't get file context"), errno, 1);
++		}
++		ret = setfscreatecon (passwd_context);
++		freecon (passwd_context);
++		if (0 != ret) {
++			vipwexit (_("setfscreatecon () failed"), errno, 1);
++		}
++	}
++#endif
+ 	if (!file_lock ())
+ 		vipwexit (_("Couldn't lock file"), errno, 5);
+ 	filelocked = 1;
+@@ -236,6 +256,14 @@
+ 			 progname, file, strerror (errno), fileedit);
+ 		vipwexit (0, 0, 1);
+ 	}
++#ifdef WITH_SELINUX                                                            
++	/* unset the fscreatecon */                                             
++	if (is_selinux_enabled ()) {
++		if (setfscreatecon (NULL)) {
++			vipwexit (_("setfscreatecon() failed"), errno, 1);
++		}
++	}
++#endif
+ 
+ 	(*file_unlock) ();
+ }

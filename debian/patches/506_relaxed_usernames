@@ -1,6 +1,8 @@
 Goal: Relaxed usernames/groupnames checking patch.
 
 Status wrt upstream: Debian specific. Not to be used upstream
+                     The documentation of the username length restriction
+                     was added upstream
 
 Details:
  Allows any non-empty user/grounames that don't contain ':' and '\n'
@@ -60,7 +62,7 @@ Index: shadow-4.1.0/man/useradd.8.xml
  	  </para>
  	</listitem>
        </varlistentry>
-@@ -372,9 +373,13 @@
+@@ -372,9 +373,18 @@
      </para>
  
      <para>
@@ -71,9 +73,37 @@ Index: shadow-4.1.0/man/useradd.8.xml
 +      a lower case letter or an underscore, and are only followed by lower
 +      case letters, digits, underscores, dashes, and optionally terminated by
 +      a dollar sign. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
++    </para>
++    <para>
 +      On Debian, the only constraints are that usernames must neither start
 +      with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
 +      end of line: '\n', tabulation: '\t', etc.).
++    </para>
++    <para>
++      Usernames may only be up to 32 characters long.
      </para>
    </refsect1>
  
+Index: shadow-4.1.1/man/groupadd.8.xml
+===================================================================
+--- shadow-4.1.1.orig/man/groupadd.8.xml	2008-08-15 09:07:37.033120372 -0300
++++ shadow-4.1.1/man/groupadd.8.xml	2008-08-15 09:10:24.961112507 -0300
+@@ -170,9 +170,15 @@
+    <refsect1 id='caveats'>
+      <title>CAVEATS</title>
+      <para>
+-       Groupnames must begin with a lower case letter or an underscore,
+-       and only lower case letters, underscores, dashes, and dollar signs
+-       may follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]
++       It is usually recommended to only use usernames that begin with
++       a lower case letter or an underscore, and are only followed by lower
++       case letters, digits, underscores, dashes, and optionally terminated by
++       a dollar sign. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
++     </para>
++     <para>
++       On Debian, the only constraints are that usernames must neither start
++       with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
++       end of line: '\n', tabulation: '\t', etc.).
+      </para>
+      <para>
+        Groupnames may only be up to 16 characters long.

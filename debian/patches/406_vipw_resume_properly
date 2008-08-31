@@ -4,7 +4,7 @@ Fix: #414542
 
 Author: dean gaudet <dean@arctic.org>
 
-Status wrt upstream: should be forwarded
+Status wrt upstream: Fixed upstream
 
 Index: shadow-4.1.0/src/vipw.c
 ===================================================================

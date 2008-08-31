@@ -4,7 +4,7 @@ Goal: Be more verbose and indicate that the password was not changed when
 
 Fixes: #352137
 
-Status wrt upstream: not forwarded yet
+Status wrt upstream: Applied upstream.
 
 Index: shadow-4.1.0/libmisc/pam_pass.c
 ===================================================================

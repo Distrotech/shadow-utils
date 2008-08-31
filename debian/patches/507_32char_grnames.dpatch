@@ -49,3 +49,16 @@ Index: shadow-4.1.0/libmisc/chkname.c
  		return 0;
  
  	return good_name (name);
+Index: shadow-4.1.1/man/groupadd.8.xml
+===================================================================
+--- shadow-4.1.1.orig/man/groupadd.8.xml
++++ shadow-4.1.1/man/groupadd.8.xml
+@@ -175,7 +175,7 @@
+        may follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]
+      </para>
+      <para>
+-       Groupnames may only be up to 16 characters long.
++       Groupnames may only be up to 32 characters long.
+      </para>
+      <para>
+        You may not add a NIS or LDAP group. This must be performed on the
