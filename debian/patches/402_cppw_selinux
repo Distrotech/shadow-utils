@@ -1,0 +1,64 @@
+Goal: Add selinux support to cppw
+
+Fix:
+
+Status wrt upstream: cppw is not available upstream.
+                     The patch was made based on the
+                     302_vim_selinux_support patch. It needs to be
+                     reviewed by an SE-Linux aware person.
+
+Depends on 401_cppw_src.dpatch
+
+Index: shadow-4.1.2/src/cppw.c
+===================================================================
+--- shadow-4.1.2.orig/src/cppw.c	2008-09-12 01:22:46.328002759 +0200
++++ shadow-4.1.2/src/cppw.c	2008-09-12 01:34:43.212006991 +0200
+@@ -34,6 +34,9 @@
+ #include <sys/types.h>
+ #include <signal.h>
+ #include <utime.h>
++#ifdef WITH_SELINUX
++#include <selinux/selinux.h>
++#endif
+ #include "prototypes.h"
+ #include "pwio.h"
+ #include "shadowio.h"
+@@ -114,6 +117,22 @@
+   filenewname = filenew;
+   
+   if (access(file, F_OK)) cppwexit(file, 1, 1);
++#ifdef WITH_SELINUX
++  /* if SE Linux is enabled then set the context of all new files
++     to be the context of the file we are editing */
++  if (is_selinux_enabled ()) {
++    security_context_t passwd_context=NULL;
++    int ret = 0;
++    if (getfilecon (file, &passwd_context) < 0) {
++      cppwexit (_("Couldn't get file context"), errno, 1);
++    }
++    ret = setfscreatecon (passwd_context);
++    freecon (passwd_context);
++    if (0 != ret) {
++      cppwexit (_("setfscreatecon () failed"), errno, 1);
++    }
++  }
++#endif
+   if (!file_lock()) cppwexit("Couldn't lock file", errno, 5);
+   filelocked = 1;
+ 
+@@ -134,6 +153,15 @@
+     cppwexit(0,0,1);
+   }
+ 
++#ifdef WITH_SELINUX
++  /* unset the fscreatecon */
++  if (is_selinux_enabled ()) {
++    if (setfscreatecon (NULL)) {
++      cppwexit (_("setfscreatecon() failed"), errno, 1);
++    }
++  }
++#endif
++
+   (*file_unlock)();
+ }
+ 
