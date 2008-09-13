@@ -49,7 +49,7 @@ Index: shadow-4.1.0/src/login.c
 @@ -722,6 +731,8 @@
  #endif				/* WITH_AUDIT */
  
- 			  fprintf(stderr,"\nLogin incorrect\n");
+ 			  fprintf (stderr, "\nLogin incorrect\n");
 +			  if (pwd && getdef_bool("FAILLOG_ENAB"))
 +			    failure (pwent.pw_uid, tty, &faillog);
  			  if (getdef_str("FTMP_FILE") != NULL) {
@@ -60,16 +60,16 @@ Index: shadow-4.1.0/src/login.c
  #ifndef USE_PAM
  		motd ();	/* print the message of the day */
 +#endif
- 		if (getdef_bool ("FAILLOG_ENAB")
- 		    && faillog.fail_cnt != 0) {
+ 		if (   getdef_bool ("FAILLOG_ENAB")
+ 		    && (0 != faillog.fail_cnt)) {
  			failprint (&faillog);
 @@ -1112,6 +1124,7 @@
  					 username, (int) faillog.fail_cnt));
  			}
  		}
 +#ifndef USE_PAM
- 		if (getdef_bool ("LASTLOG_ENAB")
- 		    && lastlog.ll_time != 0) {
+ 		if (   getdef_bool ("LASTLOG_ENAB")
+ 		    && (0 != lastlog.ll_time)) {
  			time_t ll_time = lastlog.ll_time;
 Index: shadow-4.1.0/lib/getdef.c
 ===================================================================
