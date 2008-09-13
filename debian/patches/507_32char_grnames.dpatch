@@ -36,7 +36,7 @@ Index: shadow-4.1.0/libmisc/chkname.c
 --- shadow-4.1.0.orig/libmisc/chkname.c
 +++ shadow-4.1.0/libmisc/chkname.c
 @@ -70,10 +70,10 @@
- int check_group_name (const char *name)
+ bool is_valid_group_name (const char *name)
  {
  	/*
 -	 * Arbitrary limit for group names - max 16
@@ -44,9 +44,10 @@ Index: shadow-4.1.0/libmisc/chkname.c
 +	 * Arbitrary limit for group names - max 32
 +	 * same as linux UT_NAMESIZE
  	 */
--	if (strlen (name) > 16)
-+	if (strlen (name) > 32)
- 		return 0;
+-	if (strlen (name) > 16) {
++	if (strlen (name) > 32) {
+ 		return false;
+ 	}
  
  	return good_name (name);
 Index: shadow-4.1.1/man/groupadd.8.xml
