@@ -26,7 +26,6 @@
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
 415_login_put-echoctl-back
-301_manpages_missing_options
 302_vim_selinux_support
 200_Czech_binary_translation
 494_passwd_lock-no_account_lock
