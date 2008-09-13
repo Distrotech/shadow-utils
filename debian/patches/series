@@ -25,7 +25,6 @@
 403_fix_PATH-MAX_hurd
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
-406_vipw_resume_properly
 414_remove-unwise-advices
 415_login_put-echoctl-back
 300_SHA_crypt_method

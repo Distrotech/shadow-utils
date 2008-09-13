@@ -6,6 +6,7 @@ shadow (1:4.1.2-1) experimental; urgency=low
       + debian/patches/434_login_stop_checking_args_after--
       + debian/patches/491_configure.in_friendly_selinux_detection
       + debian/patches/487_passwd_chauthtok_failed_message
+      + debian/patches/406_vipw_resume_properly
     - Updated patches:
       + debian/patches/431_su_uid_0_not_root
       + debian/patches/463_login_delay_obeys_to_PAM
