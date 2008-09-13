@@ -20,9 +20,9 @@ Index: shadow-4.1.1/src/vipw.c
  	"You have modified %s.\n"\
  	"You may need to modify %s for consistency.\n"\
 @@ -167,6 +171,22 @@
- 
- 	if (access (file, F_OK))
+ 	if (access (file, F_OK) != 0) {
  		vipwexit (file, 1, 1);
+ 	}
 +#ifdef WITH_SELINUX
 +	/* if SE Linux is enabled then set the context of all new files
 +	   to be the context of the file we are editing */
@@ -39,9 +39,9 @@ Index: shadow-4.1.1/src/vipw.c
 +		}
 +	}
 +#endif
- 	if (!file_lock ())
+ 	if (file_lock () == 0) {
  		vipwexit (_("Couldn't lock file"), errno, 5);
- 	filelocked = 1;
+ 	}
 @@ -236,6 +256,14 @@
  			 progname, file, strerror (errno), fileedit);
  		vipwexit (0, 0, 1);
