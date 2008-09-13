@@ -51,21 +51,22 @@ Index: shadow-4.1.0/src/login.c
 -		retcode = pam_fail_delay (pamh, 1000000 * delay);
 -		PAM_FAIL_CHECK;
 -#endif
- 		/* if fflg == 1, then the user has already been authenticated */
+ 		/* if fflg, then the user has already been authenticated */
  		if (!fflg || (getuid () != 0)) {
  			int failcount = 0;
-@@ -645,8 +639,6 @@
+@@ -645,9 +639,6 @@
  			  failed = 0;
  
  			  failcount++;
--			  if (delay > 0)
+-			  if (delay > 0) {
 -			    retcode = pam_fail_delay(pamh, 1000000*delay);
+-			  }
  
  			  retcode = pam_authenticate (pamh, 0);
  
-@@ -956,13 +948,16 @@
- 		if (pwent.pw_passwd[0] == '\0')
+@@ -956,14 +948,17 @@
  			pw_auth ("!", username, reason, (char *) 0);
+ 		}
  
 +#ifndef USE_PAM
  		/*
@@ -74,8 +75,9 @@ Index: shadow-4.1.0/src/login.c
  		 * before the sleep() below completes, login will exit.
  		 */
 +		delay = getdef_num ("FAIL_DELAY", 1);
- 		if (delay > 0)
+ 		if (delay > 0) {
  			sleep (delay);
+		}
 +#endif
  
  		puts (_("Login incorrect"));
