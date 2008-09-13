@@ -8,6 +8,7 @@ shadow (1:4.1.2-1) experimental; urgency=low
       + debian/patches/487_passwd_chauthtok_failed_message
       + debian/patches/406_vipw_resume_properly
       + debian/patches/414_remove-unwise-advices
+      + debian/patches/300_SHA_crypt_method
     - Updated patches:
       + debian/patches/431_su_uid_0_not_root
       + debian/patches/463_login_delay_obeys_to_PAM
