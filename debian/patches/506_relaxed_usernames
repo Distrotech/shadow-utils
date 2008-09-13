@@ -55,13 +55,13 @@ Index: shadow-4.1.0/man/useradd.8.xml
 --- shadow-4.1.0.orig/man/useradd.8.xml
 +++ shadow-4.1.0/man/useradd.8.xml
 @@ -195,6 +195,7 @@
- 	    valid in conjunction with the <option>-m</option> option. The
  	    default is to not create the directory and to not copy any
  	    files.
-+	    This option may not function correctly if the username has a / in it.
  	  </para>
++	  <para>This option may not function correctly if the username has a / in it.</para>
  	</listitem>
        </varlistentry>
+       <varlistentry>
 @@ -372,9 +373,18 @@
      </para>
  
