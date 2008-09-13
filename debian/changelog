@@ -10,6 +10,7 @@ shadow (1:4.1.2-1) experimental; urgency=low
       + debian/patches/494_passwd_lock-no_account_lock
       + debian/patches/008_su_get_PAM_username
       + debian/patches/302_vim_selinux_support
+      + debian/patches/008_login_log_failure_in_FTMP
   * debian/patches/506_relaxed_usernames: Use an extra paragraph for the note
     on username with a '/'.
   * debian/patches/504_undef_USE_PAM.dpatch:

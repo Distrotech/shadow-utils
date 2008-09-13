@@ -11,7 +11,7 @@ Index: shadow-4.1.0/src/login.c
 @@ -722,6 +722,29 @@
  #endif				/* WITH_AUDIT */
  
- 			  fprintf(stderr,"\nLogin incorrect\n");
+ 			  fprintf (stderr, "\nLogin incorrect\n");
 +			  if (getdef_str("FTMP_FILE") != NULL) {
 +#if HAVE_UTMPX_H
 +			    failent = utxent;
