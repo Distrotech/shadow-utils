@@ -17,7 +17,7 @@ Index: shadow-4.1.0/src/su.c
  			argv[1] = command;
  		}
 +		/* On Debian, the arguments are concatenated and the
-+		 * resulted string is always given to the shell with its
++		 * resulting string is always given to the shell with its
 +		 * -c option.
 +		 */
 +		{
