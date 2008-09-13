@@ -2,7 +2,7 @@ Goal: Do not distribute the login.1 and su.1 Polish translations
 
 Fixes: #491460
 
-Status wrt upstream: Already applied
+Status wrt upstream: Already applied (4.1.3)
 
 Index: shadow-4.1.1/man/pl/Makefile.am
 ===================================================================
