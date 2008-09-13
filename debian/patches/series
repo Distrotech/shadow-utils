@@ -7,7 +7,6 @@
 008_su_no_sanitize_env
 008_su_get_PAM_username
 428_grpck_add_prune_option
-434_login_stop_checking_args_after--
 008_login_log_failure_in_FTMP
 429_login_FAILLOG_ENAB
 401_cppw_src.dpatch
