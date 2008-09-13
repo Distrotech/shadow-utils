@@ -4,7 +4,7 @@ Goal: Restore the behavior of passwd -l / passwd -u to only touch the
 
 Fixes: #492307 (and indirectly #412234).
 
-Status wrt upstream: Still not applied.
+Status wrt upstream: Applied upstream (for 4.1.3)
 
 Index: shadow-4.1.1/man/passwd.1.xml
 ===================================================================
@@ -64,18 +64,18 @@ Index: shadow-4.1.1/src/passwd.c
 --- shadow-4.1.1.orig/src/passwd.c	2008-07-26 14:19:02.809439918 +0200
 +++ shadow-4.1.1/src/passwd.c	2008-07-26 16:17:14.104439588 +0200
 @@ -76,11 +76,11 @@
-     eflg = 0,			/* -e - force password change */
-     iflg = 0,			/* -i - set inactive days */
-     kflg = 0,			/* -k - change only if expired */
--    lflg = 0,			/* -l - lock account */
-+    lflg = 0,			/* -l - lock the user's password */
-     nflg = 0,			/* -n - set minimum days */
-     qflg = 0,			/* -q - quiet mode */
-     Sflg = 0,			/* -S - show password status */
--    uflg = 0,			/* -u - unlock account */
-+    uflg = 0,			/* -u - unlock the user's password */
-     wflg = 0,			/* -w - set warning days */
-     xflg = 0;			/* -x - set maximum days */
+     eflg = false,			/* -e - force password change */
+     iflg = false,			/* -i - set inactive days */
+     kflg = false,			/* -k - change only if expired */
+-    lflg = false,			/* -l - lock account */
++    lflg = false,			/* -l - lock the user's password */
+     nflg = false,			/* -n - set minimum days */
+     qflg = false,			/* -q - quiet mode */
+     Sflg = false,			/* -S - show password status */
+-    uflg = false,			/* -u - unlock account */
++    uflg = false,			/* -u - unlock the user's password */
+     wflg = false,			/* -w - set warning days */
+     xflg = false;			/* -x - set maximum days */
  
 @@ -155,13 +155,13 @@
  	         "  -k, --keep-tokens             change password only if expired\n"
@@ -94,9 +94,9 @@ Index: shadow-4.1.1/src/passwd.c
  	         "  -x, --maxdays MAX_DAYS        set maximim number of days before password\n"
  	         "                                change to MAX_DAYS\n"
 @@ -570,15 +570,6 @@
- 		nsp->sp_inact = (inact * DAY) / SCALE;
- 	if (do_update_age)
+ 	if (do_update_age) {
  		nsp->sp_lstchg = time ((time_t *) 0) / SCALE;
+ 	}
 -	if (lflg) {
 -		/* Set the account expiry field to 1.
 -		 * Some PAM implementation consider zero as a non expired
