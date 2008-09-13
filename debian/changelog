@@ -9,6 +9,9 @@ shadow (1:4.1.2-1) experimental; urgency=low
       + debian/patches/200_Czech_binary_translation
   * debian/patches/506_relaxed_usernames: Use an extra paragraph for the note
     on username with a '/'.
+  * debian/patches/504_undef_USE_PAM.dpatch:
+    - USE_PAM needs to be undef after inclusion of "defines.h".
+    - Added note about current upstream status
   * debian/control: changed the "Replaces" on manpages-zh to a versioned
     one on 1.5.1-1
   * debian/control: drop all Replaces on manpages-* when the version is
