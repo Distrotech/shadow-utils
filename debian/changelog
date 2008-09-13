@@ -5,8 +5,6 @@ shadow (1:4.1.2-1) experimental; urgency=low
     one on 1.5.1-1
   * debian/control: drop all Replaces on manpages-* when the version is
     prior to Etch
-  * debian/patches/505_useradd_recommend_adduser: Fix typo: userdel is used to
-    remove an user, not to add one. Closes: #475795
   * Versioned Replaces on manpages-tr (<<1..5) as conflicting manpages have
     been removed in that package
 
