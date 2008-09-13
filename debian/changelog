@@ -28,6 +28,8 @@ shadow (1:4.1.2-1) experimental; urgency=low
   * Versioned Replaces on manpages-tr (<<1..5) as conflicting manpages have
     been removed in that package
   * debian/patches/402_cppw_selinux: Add SE Linux support for cppw / cpgr.
+  * debian/patches/900_testsuite_groupmems, debian/patches/901_testsuite_gcov:
+    Added patches, only intended to be used in the testsuite.
 
  -- Christian Perrier <bubulle@debian.org>  Mon, 07 Apr 2008 23:00:26 +0200
 

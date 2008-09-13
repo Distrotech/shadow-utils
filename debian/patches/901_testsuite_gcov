@@ -1,0 +1,39 @@
+Index: shadow-4.1.2/lib/Makefile.am
+===================================================================
+--- shadow-4.1.2.orig/lib/Makefile.am	2008-09-13 15:59:00.620008129 +0000
++++ shadow-4.1.2/lib/Makefile.am	2008-09-13 15:59:34.012007695 +0000
+@@ -1,6 +1,8 @@
+ 
+ AUTOMAKE_OPTIONS = 1.0 foreign
+ 
++CFLAGS += -fprofile-arcs -ftest-coverage
++
+ DEFS = 
+ 
+ noinst_LTLIBRARIES = libshadow.la
+Index: shadow-4.1.2/libmisc/Makefile.am
+===================================================================
+--- shadow-4.1.2.orig/libmisc/Makefile.am	2008-09-13 15:59:03.492007531 +0000
++++ shadow-4.1.2/libmisc/Makefile.am	2008-09-13 15:59:39.588002811 +0000
+@@ -1,6 +1,8 @@
+ 
+ EXTRA_DIST = .indent.pro xgetXXbyYY.c
+ 
++CFLAGS += -fprofile-arcs -ftest-coverage
++
+ INCLUDES = -I$(top_srcdir)/lib
+ 
+ noinst_LIBRARIES = libmisc.a
+Index: shadow-4.1.2/src/Makefile.am
+===================================================================
+--- shadow-4.1.2.orig/src/Makefile.am	2008-09-13 15:58:57.640009757 +0000
++++ shadow-4.1.2/src/Makefile.am	2008-09-13 15:59:46.948008401 +0000
+@@ -6,6 +6,8 @@
+ usbindir = ${prefix}/sbin
+ suidperms = 4755
+ 
++CFLAGS += -fprofile-arcs -ftest-coverage
++
+ INCLUDES = \
+ 	-I${top_srcdir}/lib \
+ 	-I$(top_srcdir)/libmisc
