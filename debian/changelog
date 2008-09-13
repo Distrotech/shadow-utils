@@ -1,6 +1,9 @@
 shadow (1:4.1.2-1) experimental; urgency=low
 
   * The "" release.
+  * New upstream release:
+    - Updated patches:
+      + debian/patches/431_su_uid_0_not_root
   * debian/control: changed the "Replaces" on manpages-zh to a versioned
     one on 1.5.1-1
   * debian/control: drop all Replaces on manpages-* when the version is

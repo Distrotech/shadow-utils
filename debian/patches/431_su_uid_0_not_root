@@ -10,19 +10,17 @@ Index: shadow-4.1.0/src/su.c
 ===================================================================
 --- shadow-4.1.0.orig/src/su.c
 +++ shadow-4.1.0/src/su.c
-@@ -449,7 +449,14 @@
+@@ -449,7 +449,12 @@
  			optind++;
  	}
- 	if (!name[0])		/* use default user ID */
+ 	if ('\0' == name[0]) {		/* use default user ID */
 -		(void) strcpy (name, "root");
-+	{
 +		struct passwd *root_pw = getpwuid(0);
 +		if (root_pw == NULL) {
 +			SYSLOG((LOG_CRIT, "There is no UID 0 user."));
 +			su_failure(tty);
 +		}
 +		strcpy(name, root_pw->pw_name);
-+	}
+ 	}
  
  	doshell = argc == optind;	/* any arguments remaining? */
- 	if (command)
