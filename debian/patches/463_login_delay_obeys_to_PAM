@@ -47,20 +47,22 @@ Index: shadow-4.1.0/src/login.c
  		PAM_FAIL_CHECK;
  		retcode = pam_set_item (pamh, PAM_TTY, tty);
  		PAM_FAIL_CHECK;
--#ifdef HAVE_PAM_FAIL_DELAY
+-#ifdef HAS_PAM_FAIL_DELAY
 -		retcode = pam_fail_delay (pamh, 1000000 * delay);
 -		PAM_FAIL_CHECK;
 -#endif
  		/* if fflg, then the user has already been authenticated */
  		if (!fflg || (getuid () != 0)) {
  			int failcount = 0;
-@@ -645,9 +639,6 @@
+@@ -645,11 +639,6 @@
  			  failed = 0;
  
  			  failcount++;
+-#ifdef HAS_PAM_FAIL_DELAY
 -			  if (delay > 0) {
 -			    retcode = pam_fail_delay(pamh, 1000000*delay);
 -			  }
+-#endif
  
  			  retcode = pam_authenticate (pamh, 0);
  

@@ -26,6 +26,9 @@ shadow (1:4.1.3-1) experimental; urgency=low
       + debian/patches/429_login_FAILLOG_ENAB
       + debian/patches/507_32char_grnames.dpatch
       + debian/patches/428_grpck_add_prune_option
+      + debian/patches/401_cppw_src.dpatch
+      + debian/patches/506_relaxed_usernames
+      + debian/patches/463_login_delay_obeys_to_PAM
   * debian/patches/454_userdel_no_MAIL_FILE: Patch removed. If MAIL_FILE is
     defined, the mailbox is not in MAIL_SPOOL_DIR.
   * debian/patches/506_relaxed_usernames: Use an extra paragraph for the note

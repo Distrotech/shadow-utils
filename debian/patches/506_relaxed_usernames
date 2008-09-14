@@ -62,13 +62,13 @@ Index: shadow-4.1.0/man/useradd.8.xml
  	</listitem>
        </varlistentry>
        <varlistentry>
-@@ -372,9 +373,18 @@
+@@ -372,9 +373,15 @@
      </para>
  
      <para>
 -      Usernames must begin with a lower case letter or an underscore, and
 -      only lower case letters, underscores, dashes, and dollar signs may
--      follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]
+-      follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
 +      It is usually recommended to only use usernames that begin with
 +      a lower case letter or an underscore, and are only followed by lower
 +      case letters, digits, underscores, dashes, and optionally terminated by
@@ -78,9 +78,6 @@ Index: shadow-4.1.0/man/useradd.8.xml
 +      On Debian, the only constraints are that usernames must neither start
 +      with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
 +      end of line: '\n', tabulation: '\t', etc.).
-+    </para>
-+    <para>
-+      Usernames may only be up to 32 characters long.
      </para>
    </refsect1>
  
@@ -94,7 +91,7 @@ Index: shadow-4.1.1/man/groupadd.8.xml
       <para>
 -       Groupnames must begin with a lower case letter or an underscore,
 -       and only lower case letters, underscores, dashes, and dollar signs
--       may follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]
+-       may follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
 +       It is usually recommended to only use usernames that begin with
 +       a lower case letter or an underscore, and are only followed by lower
 +       case letters, digits, underscores, dashes, and optionally terminated by
