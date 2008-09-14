@@ -1,1 +1,1 @@
-groupmod: unable to lock group file
+groupmod: cannot lock /etc/group; try again later.

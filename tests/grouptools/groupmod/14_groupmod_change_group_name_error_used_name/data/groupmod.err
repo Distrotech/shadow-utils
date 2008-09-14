@@ -1,1 +1,1 @@
-groupmod: bar is not a unique name
+groupmod: group 'bar' already exists

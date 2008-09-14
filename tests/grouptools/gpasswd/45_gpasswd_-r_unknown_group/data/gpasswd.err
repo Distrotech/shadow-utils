@@ -1,2 +1,2 @@
-unknown group: usersss
+gpasswd: group 'usersss' does not exist in /etc/group
 gpasswd: Permission denied.

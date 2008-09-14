@@ -1,1 +1,1 @@
-groupdel: group foo does not exist
+groupdel: group 'foo' does not exist

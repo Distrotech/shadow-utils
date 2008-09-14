@@ -1,1 +1,1 @@
-gpasswd: can't get shadow lock
+gpasswd: cannot lock /etc/gshadow; try again later.

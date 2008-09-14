@@ -1,1 +1,1 @@
-groupadd: unable to lock group file
+groupadd: cannot lock /etc/group; try again later.

@@ -1,1 +1,1 @@
-groupmod: unable to lock shadow group file
+groupmod: cannot lock /etc/gshadow; try again later.

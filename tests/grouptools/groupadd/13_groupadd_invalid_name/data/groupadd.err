@@ -1,1 +1,1 @@
-groupadd: foo:bar is not a valid group name
+groupadd: 'foo:bar' is not a valid group name

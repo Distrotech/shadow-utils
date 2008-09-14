@@ -1,1 +1,1 @@
-groupadd: GID 1000 is not unique
+groupadd: GID '1000' already exists

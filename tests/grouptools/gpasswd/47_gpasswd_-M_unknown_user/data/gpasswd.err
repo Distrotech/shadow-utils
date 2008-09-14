@@ -1,1 +1,1 @@
-gpasswd: unknown user foooo
+gpasswd: user 'foooo' does not exist

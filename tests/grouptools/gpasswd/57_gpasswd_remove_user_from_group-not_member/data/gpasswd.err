@@ -1,1 +1,1 @@
-gpasswd: unknown member foo
+gpasswd: user 'foo' is not a member of 'users'

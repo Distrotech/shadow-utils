@@ -1,1 +1,1 @@
-gpasswd: can't get lock
+gpasswd: cannot lock /etc/group; try again later.

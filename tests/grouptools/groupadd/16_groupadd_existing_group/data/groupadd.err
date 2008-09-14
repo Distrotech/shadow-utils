@@ -1,1 +1,1 @@
-groupadd: group foo exists
+groupadd: group 'foo' already exists
