@@ -105,8 +105,8 @@ run_test ./convtools/09_grpunconv_error_group_locked/grpunconv.test
 run_test ./convtools/10_grpunconv_error_gshadow_locked/grpunconv.test
 run_test ./convtools/11_pwconv_error_passwd_locked/pwconv.test
 run_test ./convtools/12_pwconv_error_shadow_locked/pwconv.test
-run_test ./convtools/14_pwunconv_error_shadow_locked/pwunconv.test
 run_test ./convtools/13_pwunconv_error_passwd_locked/pwunconv.test
+run_test ./convtools/14_pwunconv_error_shadow_locked/pwunconv.test
 run_test ./convtools/15_pwconv_remove_shadow_only_entries/pwconv.test
 run_test ./convtools/16_pwconv_copy_passwd/pwconv.test
 run_test ./convtools/17_pwunconv_no_shadow_file/pwunconv.test
