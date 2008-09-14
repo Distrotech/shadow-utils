@@ -1,1 +1,1 @@
-usermod: cannot lock shadow password file
+usermod: cannot lock /etc/shadow; try again later.

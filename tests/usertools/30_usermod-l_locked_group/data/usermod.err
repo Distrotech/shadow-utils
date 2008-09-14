@@ -1,1 +1,1 @@
-usermod: error locking group file
+usermod: cannot lock /etc/group; try again later.

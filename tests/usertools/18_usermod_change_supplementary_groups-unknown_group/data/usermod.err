@@ -1,1 +1,1 @@
-usermod: unknown group damon
+usermod: group 'damon' does not exist

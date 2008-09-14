@@ -1,1 +1,1 @@
-usermod: uid 1001 is not unique
+usermod: UID '1001' already exists

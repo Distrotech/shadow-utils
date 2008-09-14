@@ -1,1 +1,1 @@
-usermod: error locking shadow group file
+usermod: cannot lock /etc/gshadow; try again later.

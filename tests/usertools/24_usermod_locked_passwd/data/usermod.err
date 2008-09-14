@@ -1,1 +1,1 @@
-usermod: unable to lock password file
+usermod: cannot lock /etc/passwd; try again later.
