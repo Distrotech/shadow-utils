@@ -72,7 +72,7 @@ Index: shadow-4.1.2/debian/rules
  	chmod g+s debian/passwd/usr/bin/chage
  	chmod g+s debian/passwd/usr/bin/expiry
 +	chgrp groupmems debian/passwd/usr/sbin/groupmems
-+	chmod g+s debian/passwd/usr/sbin/groupmems
++	chmod u+s debian/passwd/usr/sbin/groupmems
 +	chmod o-x debian/passwd/usr/sbin/groupmems
 Index: shadow-4.1.2/debian/passwd.groupmems.pam
 ===================================================================
@@ -85,5 +85,5 @@ Index: shadow-4.1.2/debian/passwd.groupmems.pam
 +# This allows root to modify groups without being prompted for a password
 +auth		sufficient	pam_rootok.so
 +
-+# checks for account validity
-+account	required	pam_permit.so
++@include common-auth
++@include common-account
