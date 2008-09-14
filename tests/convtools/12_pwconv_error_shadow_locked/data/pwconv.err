@@ -1,1 +1,1 @@
-pwconv: can't lock shadow file
+pwconv: cannot lock /etc/shadow; try again later.

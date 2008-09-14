@@ -1,1 +1,1 @@
-grpconv: can't lock group file
+grpconv: cannot lock /etc/group; try again later.

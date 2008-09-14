@@ -1,1 +1,1 @@
-grpunconv: can't lock shadow group file
+grpunconv: cannot lock /etc/gshadow; try again later.

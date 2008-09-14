@@ -1,1 +1,1 @@
-pwconv: can't lock passwd file
+pwconv: cannot lock /etc/passwd; try again later.
