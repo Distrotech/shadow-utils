@@ -231,10 +231,8 @@
 /usr/share/man/man8/nologin.8.gz
 /usr/share/man/pl
 /usr/share/man/pl/man1
-/usr/share/man/pl/man1/login.1.gz
 /usr/share/man/pl/man1/newgrp.1.gz
 /usr/share/man/pl/man1/sg.1.gz
-/usr/share/man/pl/man1/su.1.gz
 /usr/share/man/pl/man5
 /usr/share/man/pl/man5/faillog.5.gz
 /usr/share/man/pl/man5/login.defs.5.gz
