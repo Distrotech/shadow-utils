@@ -45,6 +45,8 @@ shadow (1:4.1.3-1) experimental; urgency=low
   * debian/patches/402_cppw_selinux: Add SE Linux support for cppw / cpgr.
   * debian/patches/900_testsuite_groupmems, debian/patches/901_testsuite_gcov:
     Added patches, only intended to be used in the testsuite.
+  * debian/securetty.linux: Added ttyPZ0, ttyPZ1, ttyPZ2, ttyPZ3 for PowerMac
+    machines.  Closes: #511739
 
  -- Christian Perrier <bubulle@debian.org>  Mon, 07 Apr 2008 23:00:26 +0200
 

@@ -11,6 +11,12 @@ ttyUSB0
 ttyUSB1
 ttyUSB2
 
+# PowerMac
+ttyPZ0
+ttyPZ1
+ttyPZ2
+ttyPZ3
+
 # Embedded MPC platforms
 ttyPSC0
 ttyPSC1
