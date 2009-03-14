@@ -24,18 +24,18 @@ Index: shadow-4.1.0/src/login.c
  static void check_nologin (void);
  #endif
 @@ -673,6 +673,8 @@
- 			    SYSLOG ((LOG_NOTICE,
- 				    "TOO MANY LOGIN TRIES (%d)%s FOR `%s'",
- 				    failcount, fromhost, failent_user));
-+			    if (pwd && getdef_bool("FAILLOG_ENAB"))
-+			      failure (pwent.pw_uid, tty, &faillog);
- 			    fprintf(stderr,
- 				    _("Maximum number of tries exceeded (%d)\n"),
- 				    failcount);
+ 				SYSLOG ((LOG_NOTICE,
+ 				         "TOO MANY LOGIN TRIES (%d)%s FOR `%s'",
+ 				         failcount, fromhost, failent_user));
++				if (pwd && getdef_bool("FAILLOG_ENAB"))
++					failure (pwent.pw_uid, tty, &faillog);
+ 				fprintf(stderr,
+ 				        _("Maximum number of tries exceeded (%d)\n"),
+ 				        failcount);
 @@ -690,6 +692,13 @@
- 				   pam_strerror (pamh, retcode)));
- 			    failed = 1;
- 			  }
+ 				         pam_strerror (pamh, retcode)));
+ 				failed = true;
+ 			}
 +			  if (pwd && getdef_bool("FAILLOG_ENAB") &&
 +			      ! failcheck (pwent.pw_uid, &faillog, failed)) {
 +			    SYSLOG((LOG_CRIT,
@@ -44,14 +44,14 @@ Index: shadow-4.1.0/src/login.c
 +			    failed = 1;
 +			  }
  
- 			  if (!failed)
- 			    break;
-@@ -722,6 +731,8 @@
+ 			if (!failed) {
+ 				break;
+@@ -766,6 +731,8 @@
  #endif				/* WITH_AUDIT */
  
- 			  fprintf (stderr, "\nLogin incorrect\n");
-+			  if (pwd && getdef_bool("FAILLOG_ENAB"))
-+			    failure (pwent.pw_uid, tty, &faillog);
+ 			fprintf (stderr, "\nLogin incorrect\n");
++			if (pwd && getdef_bool("FAILLOG_ENAB"))
++				failure (pwent.pw_uid, tty, &faillog);
  			  if (getdef_str("FTMP_FILE") != NULL) {
  #if HAVE_UTMPX_H
  			    failent = utxent;

@@ -11,7 +11,7 @@ Index: shadow-4.1.0/src/login.c
 @@ -722,6 +722,29 @@
  #endif				/* WITH_AUDIT */
  
- 			  fprintf (stderr, "\nLogin incorrect\n");
+ 			fprintf (stderr, "\nLogin incorrect\n");
 +			  if (getdef_str("FTMP_FILE") != NULL) {
 +#if HAVE_UTMPX_H
 +			    failent = utxent;
@@ -36,8 +36,8 @@ Index: shadow-4.1.0/src/login.c
 +			    failtmp(&failent);
 +			  }
  
- 			  /* Let's give it another go around */
- 			  pam_set_item(pamh,PAM_USER,NULL);
+ 			/*
+ 			 * Let's give it another go around.
 Index: shadow-4.1.0/lib/getdef.c
 ===================================================================
 --- shadow-4.1.0.orig/lib/getdef.c

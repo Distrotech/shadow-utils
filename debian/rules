@@ -23,7 +23,7 @@ DEB_AUTO_UPDATE_AUTOCONF = 1.9
 DEB_AUTO_UPDATE_AUTOMAKE = 1.9
 
 # Adds extra options when calling the configure script:
-DEB_CONFIGURE_EXTRA_FLAGS := --disable-shared --without-libcrack --without-audit --mandir=/usr/share/man --with-libpam --enable-shadowgrp --enable-man
+DEB_CONFIGURE_EXTRA_FLAGS := --disable-shared --without-libcrack --without-audit --mandir=/usr/share/man --with-libpam --enable-shadowgrp --enable-man --disable-account-tools-setuid --with-group-name-max-length=32
 ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
   DEB_CONFIGURE_EXTRA_FLAGS += --host=$(DEB_HOST_GNU_TYPE)
 endif
