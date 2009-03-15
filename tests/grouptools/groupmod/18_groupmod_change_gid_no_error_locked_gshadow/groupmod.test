@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../../common/config.sh
 . ../../../common/log.sh
 
-log_start "$0" "groupmod checks if the gshadow file is locked"
+log_start "$0" "groupmod checks if the gshadow file is locked only if gshadow is changed"
 
 save_config
 
@@ -21,25 +21,12 @@ touch /etc/gshadow.lock
 echo "done"
 
 echo -n "Change GID of foo to 1001 (groupmod -g 1001 foo)..."
-groupmod -g 1001 foo 2>tmp/groupmod.err && exit || {
-	status=$?
-}
+groupmod -g 1001 foo
 echo "OK"
 
+echo -n "Delete lock file for /etc/gshadow..."
 rm -f /etc/gshadow.lock
-
-echo -n "Check returned status ($status)..."
-test "$status" = "10"
-echo "OK"
-
-echo "groupmod reported:"
-echo "======================================================================="
-cat tmp/groupmod.err
-echo "======================================================================="
-echo -n "Check that there were a failure message..."
-diff -au data/groupmod.err tmp/groupmod.err
-echo "error message OK."
-rm -f tmp/groupmod.err
+echo "done"
 
 echo -n "Check the passwd file..."
 ../../../common/compare_file.pl data/passwd /etc/passwd
