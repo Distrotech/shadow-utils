@@ -20,7 +20,7 @@ echo "remove the gshadow file"
 rm -f /etc/gshadow
 
 echo -n "Set the lists of admins to foo (gpasswd -A foo users)..."
-gpasswd -A foo users 2>tmp/gpasswd.err && exit || {
+gpasswd -A foo users 2>tmp/gpasswd.err && exit 1 || {
 	status=$?
 }
 echo "OK"

@@ -21,7 +21,7 @@ touch /etc/gshadow.lock
 echo "done"
 
 echo -n "Delete group foo (groupdel foo)..."
-groupdel foo 2>tmp/groupdel.err && exit || {
+groupdel foo 2>tmp/groupdel.err && exit 1 || {
 	status=$?
 }
 echo "OK"

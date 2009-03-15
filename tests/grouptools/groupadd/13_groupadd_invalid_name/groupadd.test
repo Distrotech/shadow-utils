@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Add group foo:bar (groupadd foo:bar)..."
-groupadd foo:bar 2>tmp/groupadd.err && exit || {
+groupadd foo:bar 2>tmp/groupadd.err && exit 1 || {
 	status=$?
 }
 echo "OK"

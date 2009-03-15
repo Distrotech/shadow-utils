@@ -21,7 +21,7 @@ touch /etc/gshadow.lock
 echo "done"
 
 echo -n "Add group foo (groupadd foo)..."
-groupadd foo 2>tmp/groupadd.err && exit || {
+groupadd foo 2>tmp/groupadd.err && exit 1 || {
 	status=$?
 }
 echo "OK"

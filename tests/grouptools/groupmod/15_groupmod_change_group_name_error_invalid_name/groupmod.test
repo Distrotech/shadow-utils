@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Rename group foo to to:to (groupmod --new-name to:to foo)..."
-groupmod --new-name to:to foo 2>tmp/groupmod.err && exit || {
+groupmod --new-name to:to foo 2>tmp/groupmod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

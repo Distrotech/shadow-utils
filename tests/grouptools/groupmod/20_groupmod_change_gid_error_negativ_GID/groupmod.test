@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Change GID of bar to -1001 (groupmod -g -1001 bar)..."
-groupmod -g -1001 bar 2>tmp/groupmod.err && exit || {
+groupmod -g -1001 bar 2>tmp/groupmod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

@@ -21,7 +21,7 @@ touch /etc/group.lock
 echo "done"
 
 echo -n "Change GID to 1001 (groupmod -g 1001)..."
-groupmod -g 1001 2>tmp/groupmod.err && exit || {
+groupmod -g 1001 2>tmp/groupmod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

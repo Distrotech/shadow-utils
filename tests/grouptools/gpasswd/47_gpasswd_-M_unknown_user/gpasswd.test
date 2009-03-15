@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Set members of users to root,foooo,bin (gpasswd -M root,foooo,bin users)..."
-gpasswd -M root,foooo,bin users 2>tmp/gpasswd.err && exit || {
+gpasswd -M root,foooo,bin users 2>tmp/gpasswd.err && exit 1 || {
 	status=$?
 }
 echo "OK"

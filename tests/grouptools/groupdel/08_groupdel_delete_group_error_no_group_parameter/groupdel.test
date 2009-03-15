@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Delete a group (groupdel)..."
-groupdel 2>tmp/groupdel.err && exit || {
+groupdel 2>tmp/groupdel.err && exit 1 || {
 	status=$?
 }
 echo "OK"
