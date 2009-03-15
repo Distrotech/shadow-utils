@@ -16,8 +16,9 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "remove the gshadow file"
+echo -n "remove the gshadow file..."
 rm -f /etc/gshadow
+echo "OK"
 
 echo -n "set the list of members to foo (gpasswd -M foo users)..."
 gpasswd -M foo users
