@@ -1,1 +1,1 @@
-groupadd: invalid numeric argument '1002a'
+groupadd: invalid group ID '1002a'
