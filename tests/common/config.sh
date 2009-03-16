@@ -7,7 +7,7 @@ set -e
 save_config ()
 {
 	[ ! -d tmp ] && mkdir tmp
-	find config -depth -type f | sed -e 's/config\///' |
+	find config -depth -path "*/.svn/*" -prune -o -type f -print | sed -e 's/config\///' |
 	while read file
 	do
 		mkdir -p "tmp/$(dirname "$file")"
@@ -18,7 +18,7 @@ save_config ()
 # Copy the config files from config to the system
 change_config ()
 {
-	find config -depth -type f | sed -e 's/config\///' |
+	find config -depth -path "*/.svn/*" -prune -o -type f -print | sed -e 's/config\///' |
 	while read file
 	do
 		cp -f "config/$file" "/$file"
@@ -29,7 +29,7 @@ change_config ()
 # The config files must be saved before with save_config ().
 restore_config ()
 {
-	find config -depth -type f | sed -e 's/config\///' |
+	find config -depth -path "*/.svn/*" -prune -o -type f -print | sed -e 's/config\///' |
 	while read file
 	do
 		[ -f "tmp/$file" ] && \
