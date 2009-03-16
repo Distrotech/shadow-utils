@@ -21,7 +21,7 @@ touch /etc/passwd.lock
 echo "done"
 
 echo -n "Convert the passwd files (pwconv)..."
-pwconv 2>tmp/pwconv.err && exit || {
+pwconv 2>tmp/pwconv.err && exit 1 || {
 	status=$?
 }
 echo "OK"

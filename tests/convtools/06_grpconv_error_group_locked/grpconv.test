@@ -21,7 +21,7 @@ touch /etc/group.lock
 echo "done"
 
 echo -n "Convert the group files (grpconv)..."
-grpconv 2>tmp/grpconv.err && exit || {
+grpconv 2>tmp/grpconv.err && exit 1 || {
 	status=$?
 }
 echo "OK"

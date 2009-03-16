@@ -21,7 +21,7 @@ touch /etc/gshadow.lock
 echo "done"
 
 echo -n "Convert the group files (grpunconv)..."
-grpunconv 2>tmp/grpunconv.err && exit || {
+grpunconv 2>tmp/grpunconv.err && exit 1 || {
 	status=$?
 }
 echo "OK"
