@@ -22,6 +22,10 @@ run_test()
 		echo -n "-"
 	fi
 	cat $1.log >> testsuite.log
+	[ -f /etc/passwd.lock ] && echo $1 /etc/passwd.lock || true
+	[ -f /etc/group.lock ] && echo $1 /etc/group.lock || true
+	[ -f /etc/shadow.lock ] && echo $1 /etc/shadow.lock || true
+	[ -f /etc/gshadow.lock ] && echo $1 /etc/gshadow.lock || true
 }
 
 echo "+: test passed"
@@ -256,7 +260,7 @@ run_test ./grouptools/groupmems/50_groupmems_user_del_user-gshadow_locked/groupm
 run_test ./grouptools/groupmems/51_groupmems_user_purge_user-group_locked/groupmems.test
 run_test ./grouptools/groupmems/52_groupmems_user_purge_user-gshadow_locked/groupmems.test
 run_test ./grouptools/groupmod/01_groupmod_change_gid/groupmod.test
-run_test ./grouptools/groupmod/02_groupmod_change_gid_keep_primary_group/groupmod.test
+run_test ./grouptools/groupmod/02_groupmod_change_gid_change_primary_group/groupmod.test
 run_test ./grouptools/groupmod/03_groupmod_change_gid_no_gshadow_group/groupmod.test
 run_test ./grouptools/groupmod/04_groupmod_change_gid_no_gshadow_file/groupmod.test
 run_test ./grouptools/groupmod/05_groupmod_change_gid_-o_override_used_GID/groupmod.test
@@ -272,10 +276,15 @@ run_test ./grouptools/groupmod/14_groupmod_change_group_name_error_used_name/gro
 run_test ./grouptools/groupmod/15_groupmod_change_group_name_error_invalid_name/groupmod.test
 run_test ./grouptools/groupmod/16_groupmod_change_group_name_no_changes/groupmod.test
 run_test ./grouptools/groupmod/17_groupmod_change_gid_error_locked_group/groupmod.test
-run_test ./grouptools/groupmod/18_groupmod_change_gid_error_locked_gshadow/groupmod.test
+run_test ./grouptools/groupmod/18_groupmod_change_gid_no_error_locked_gshadow/groupmod.test
 run_test ./grouptools/groupmod/19_groupmod_change_gid_error_invalid_GID/groupmod.test
 run_test ./grouptools/groupmod/20_groupmod_change_gid_error_negativ_GID/groupmod.test
 run_test ./grouptools/groupmod/21_groupmod_change_gid_error_no_group/groupmod.test
+run_test ./grouptools/groupmod/22_groupmod_change_gid_and_group_name/groupmod.test
+run_test ./grouptools/groupmod/23_groupmod_change_gid_and_group_name_and_password/groupmod.test
+run_test ./grouptools/groupmod/24_groupmod_change_gid_and_name_error_locked_gshadow/groupmod.test
+run_test ./grouptools/groupmod/25_groupmod_change_gid_change_primary_group_error_locked_passwd/groupmod.test
+run_test ./grouptools/groupmod/26_groupmod_change_group_name_no_error_locked_passwd/groupmod.test
 run_test ./usertools/01/01_useradd_add_user.test
 run_test ./usertools/01/01_userdel_delete_user.test
 run_test ./usertools/01/02_useradd_recreate_deleted_user.test
@@ -311,6 +320,8 @@ run_test ./usertools/01/21_usermod_change_and_move_homedir.test
 run_test ./usertools/01/22_usermod_new_groups.test
 run_test ./usertools/01/23_usermod_add_groups.test
 run_test ./usertools/01/24_usermod_new_groups_remove_old_groups.test
+run_test ./usertools/01/25_useradd_specified_large_UID2.test
+run_test ./usertools/01/26_useradd_UID_-1.test
 run_test ./usertools/02/useradd_default_default_values.test
 run_test ./usertools/02/useradd_get_default_values.test
 run_test ./usertools/02/useradd_change_default_INACTIVE.test
@@ -353,6 +364,23 @@ run_test ./usertools/33_usermod-u_existing_UID/usermod.test
 run_test ./usertools/34_usermod-u-o_existing_UID/usermod.test
 run_test ./usertools/35_usermod-u_invalid_UID/usermod.test
 run_test ./usertools/36_usermod_change_uid+move_homedir_other_device/usermod.test
+run_test ./usertools/37_Debian_Bug_470745/usermod.test
+run_test ./usertools/38_usermod_invalid_user/usermod.test
+run_test ./usertools/39_usermod_-c_invalid_comment/usermod.test
+run_test ./usertools/40_usermod_-d_invalid_homedir/usermod.test
+run_test ./usertools/41_usermod_-d_invalid_shell/usermod.test
+run_test ./usertools/42_usermod_-g_invalid_group_name/usermod.test
+run_test ./usertools/43_usermod_-g_invalid_group_ID/usermod.test
+run_test ./usertools/44_usermod-l_existing_username/usermod.test
+run_test ./usertools/45_usermod-l_existing_username_passwd/usermod.test
+run_test ./usertools/46_usermod-l_existing_username_shadow/usermod.test
+run_test ./usertools/47_usermod-l_no_shadow_file/usermod.test
+run_test ./usertools/48_userdel_keep_group_if_primary_other_user/userdel.test
+run_test ./usertools/49_userdel_delete_users_group/userdel.test
+run_test ./usertools/50_userdel_delete_users_group_no_gshadow_group/userdel.test
+run_test ./usertools/51_userdel_delete_users_group_no_gshadow_file/userdel.test
+run_test ./usertools/52_userdel_delete_user_no_shadow_entry/userdel.test
+run_test ./usertools/53_userdel_delete_user_no_shadow_file/userdel.test
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
@@ -409,6 +437,7 @@ run_test ./newusers/25_create_user_error_no_remaining_UID/newusers.test
 run_test ./newusers/26_create_user_error_no_remaining_GID/newusers.test
 run_test ./newusers/27_create_user_error_invalid_username/newusers.test
 run_test ./newusers/28_create_user_error_invalid_groupname/newusers.test
+run_test ./newusers/29_create_user_error_invalid_username/newusers.test
 run_test ./newusers/30_create_user_different_groupname/newusers.test
 run_test ./newusers/31_create_user_error_invalid_GID/newusers.test
 run_test ./newusers/32_create_user_error_gshadow_group_exists/newusers.test
@@ -430,6 +459,14 @@ run_test ./split_groups/07_useradd_split_group_already_split_user_in_both_lines/
 run_test ./split_groups/08_useradd_no_split_group_already_split/useradd.test
 run_test ./split_groups/09_groupdel_split_group_already_split/groupdel.test
 run_test ./split_groups/10_groupdel_no_split_group_already_split/groupdel.test
+run_test ./failures/groupmod/01_groupmod_change_group_name_gshadow_rename_failure/groupmod.test
+run_test ./failures/groupmod/02_groupmod_change_gid_change_primary_group_passwd_rename_failure/groupmod.test
+run_test ./failures/groupmod/03_groupmod_change_group_name_group_rename_failure/groupmod.test
+run_test ./failures/usermod/01_usermod_change_user_name_gshadow_rename_failure/usermod.test
+run_test ./failures/usermod/04_usermod_change_user_name_gshadow_rename_no_failure/usermod.test
+run_test ./failures/usermod/02_usermod_change_uid_passwd_rename_failure/usermod.test
+run_test ./failures/usermod/03_usermod_change_user_name_group_rename_failure/usermod.test
+run_test ./failures/usermod/05_usermod_change_uid_shadow_rename_failure/usermod.test
 
 echo
 echo "$succeded test(s) passed"
