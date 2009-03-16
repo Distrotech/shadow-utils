@@ -21,7 +21,7 @@ touch /etc/group.lock
 echo "done"
 
 echo -n "Change the user's list of supplementary groups (usermod -l foo2 foo)..."
-usermod -l foo2 foo 2>tmp/usermod.err && exit || {
+usermod -l foo2 foo 2>tmp/usermod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

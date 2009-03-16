@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Change the user's UID (usermod -u 100a1 foo)..."
-usermod -u 100a1 foo 2>tmp/usermod.err && exit || {
+usermod -u 100a1 foo 2>tmp/usermod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

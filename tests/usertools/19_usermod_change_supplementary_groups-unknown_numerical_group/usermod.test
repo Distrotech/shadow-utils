@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Change the user's list of supplementary groups (usermod -G bin,4242,daemon foo)..."
-usermod -G bin,4242,daemon foo 2>tmp/usermod.err && exit || {
+usermod -G bin,4242,daemon foo 2>tmp/usermod.err && exit 1 || {
 	status=$?
 }
 echo "OK"

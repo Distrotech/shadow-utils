@@ -23,7 +23,7 @@ chown -R foo:foo /var/mail/foo
 chown -R root:root /home/foo
 
 echo -n "Delete user foo (userdel -r foo)..."
-userdel -r foo 2>tmp/userdel.err && exit || {
+userdel -r foo 2>tmp/userdel.err && exit 1 || {
 	status=$?
 }
 echo "OK"
