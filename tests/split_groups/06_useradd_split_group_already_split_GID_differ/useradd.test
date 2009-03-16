@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Create user foo4, in group foo (useradd -G foo foo4)..."
-useradd -G foo foo4 2>tmp/useradd.err && exit || {
+useradd -G foo foo4 2>tmp/useradd.err && exit 1 || {
 	status=$?
 }
 echo "OK"
