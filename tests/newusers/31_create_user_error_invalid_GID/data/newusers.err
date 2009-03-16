@@ -1,3 +1,3 @@
-newusers: group ID '1foo' is not valid
+newusers: invalid group ID '1foo'
 newusers: line 1: can't create group
 newusers: error detected, changes ignored
