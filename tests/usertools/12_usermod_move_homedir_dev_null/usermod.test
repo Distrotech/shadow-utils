@@ -36,7 +36,7 @@ echo "OK"
 echo -n "Make sure /dev/null was not removed..."
 test -c /dev/null
 echo "OK"
-echo -n "Check the user's home directory was moved..."
+echo -n "Make sure the user's home directory was not removed..."
 test -d /home/foo2
 echo "OK"
 echo -n "Check content of /home/foo2/..."
