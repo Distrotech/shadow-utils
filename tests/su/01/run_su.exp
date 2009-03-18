@@ -59,7 +59,10 @@ expect {
 
 		expect {
 			-re "\\($user\\).*\\($user\\).*\\($user\\)" {
-				puts "PASS"
+				expect "$prompt"
+				send "exit\r"
+				expect "$ "
+				puts "\nPASS"
 				exit 0
 			}
 		}
