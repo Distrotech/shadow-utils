@@ -9,7 +9,7 @@ Index: shadow-4.1.0/src/cppw.c
 ===================================================================
 --- /dev/null
 +++ shadow-4.1.0/src/cppw.c
-@@ -0,0 +1,198 @@
+@@ -0,0 +1,199 @@
 +/*
 +  cppw, cpgr  copy with locking given file over the password or group file
 +  with -s will copy with locking given file over shadow or gshadow file
@@ -86,7 +86,8 @@ Index: shadow-4.1.0/src/cppw.c
 +    unlink(backup);
 +    return -1;
 +  }
-+  if (fclose(bkfp)) {
++  if (   (fsync (bkfp) != 0)
++      || (fclose(bkfp) != 0)) {
 +    unlink(backup);
 +    return -1;
 +  }
