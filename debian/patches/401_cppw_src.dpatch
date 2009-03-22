@@ -86,7 +86,7 @@ Index: shadow-4.1.0/src/cppw.c
 +    unlink(backup);
 +    return -1;
 +  }
-+  if (   (fsync (bkfp) != 0)
++  if (   (fsync (fileno (bkfp)) != 0)
 +      || (fclose(bkfp) != 0)) {
 +    unlink(backup);
 +    return -1;
