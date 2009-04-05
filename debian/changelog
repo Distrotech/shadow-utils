@@ -3,6 +3,10 @@ shadow (1:4.1.3-1) unstable; urgency=low
   * The "" release.
   * New upstream release:
     - Fix possible login DOS. Closes: #505071
+    - Fix gpasswd and username with 32 characters. Closes: #508785
+    - Fix typo in nologin(8). Closes: #513252
+    - Remove old features from passwd(1). Closes: #499578
+    - login: Close passwd while waiting for exit. Closes: #474318
     - Remove patches applied upstream (4.1.2):
       + debian/patches/434_login_stop_checking_args_after--
       + debian/patches/491_configure.in_friendly_selinux_detection
