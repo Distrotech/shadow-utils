@@ -1,0 +1,19 @@
+#!/usr/bin/expect
+
+set timeout 2
+expect_after default {puts "\nFAIL"; exit 1}
+
+spawn /bin/sh
+expect "# "
+
+send "passwd -u foo\r"
+expect "passwd: unlocking the password would result in a passwordless account."
+expect "You should set a password with usermod -p to unlock the password of this account."
+expect "Password changed."
+expect "# "
+send "echo \$?\r"
+expect "0"
+expect "# "
+send "exit\r"
+puts "OK\n"
+exit 0

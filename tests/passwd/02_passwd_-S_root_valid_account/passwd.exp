@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+set timeout 2
+expect_after default {puts "\nFAIL"; exit 1}
+
+spawn /bin/sh
+expect "# "
+
+send "passwd -S foo\r"
+expect "foo P 07/13/2005 0 99999 7 -1"
+expect "# "
+send "exit\r"
+puts "OK\n"
+exit 0

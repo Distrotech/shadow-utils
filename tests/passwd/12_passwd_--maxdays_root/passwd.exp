@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+
+set timeout 2
+expect_after default {puts "\nFAIL"; exit 1}
+
+spawn /bin/sh
+expect "# "
+
+send "passwd --maxdays 10 foo\r"
+expect "Password changed."
+expect "# "
+send "echo \$?\r"
+expect "0"
+expect "# "
+send "exit\r"
+puts "OK\n"
+exit 0
