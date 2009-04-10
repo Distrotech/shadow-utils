@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+
+set timeout 2
+expect_after default {puts "\nFAIL"; exit 1}
+
+spawn /bin/sh
+expect "# "
+
+send "expiry\r"
+expect "Usage: expiry {-f|-c}"
+expect "# "
+send "echo \$?\r"
+expect "10"
+expect "# "
+send "exit\r"
+puts "OK\n"
+exit 0
