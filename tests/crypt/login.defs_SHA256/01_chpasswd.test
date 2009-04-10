@@ -21,7 +21,6 @@ echo nobody:test | chpasswd
 echo "OK"
 
 echo -n "Check the passwd file..."
-cp  /etc/passwd 01_chpasswd/passwd.new
 ../../common/compare_file.pl 01_chpasswd/passwd /etc/passwd
 echo "OK"
 echo -n "Check the group file..."
