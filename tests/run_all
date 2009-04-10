@@ -401,11 +401,11 @@ run_test ./cktools/02_pwck_sort/pwck.test
 run_test ./cktools/03_grpck_sort/grpck.test
 run_test ./cktools/04_pwck_sort_missing_shadow_user/pwck.test
 run_test ./cktools/05_grpck_sort_missing_shadow_group/grpck.test
-run_test ./cktools/grpck/07_grpck_missing_field_gshadow_add/grpck.test
 run_test ./cktools/grpck/04_grpck_missing_field_group_delete/grpck.test
 run_test ./cktools/grpck/05_grpck_missing_field_group_keep/grpck.test
-run_test ./cktools/grpck/08_grpck_missing_field_gshadow_delete/grpck.test
 run_test ./cktools/grpck/06_grpck_missing_field_group_no_changes/grpck.test
+run_test ./cktools/grpck/07_grpck_missing_field_gshadow_add/grpck.test
+run_test ./cktools/grpck/08_grpck_missing_field_gshadow_delete/grpck.test
 run_test ./cktools/grpck/09_grpck_missing_field_gshadow_no_changes/grpck.test
 run_test ./cktools/grpck/10_grpck_missing_field_group_local/grpck.test
 run_test ./cktools/grpck/11_grpck_missing_field_gshadow_local/grpck.test
@@ -456,6 +456,9 @@ run_test ./crypt/login.defs_DES/11_chgpasswd-e.test
 run_test ./crypt/login.defs_DES/12_chgpasswd-m.test
 run_test ./crypt/login.defs_MD5/01_chpasswd.test
 run_test ./crypt/login.defs_MD5_CRYPT_ENAB/01_chpasswd.test
+run_test ./crypt/login.defs_SHA256-round-max/01_chpasswd.test
+run_test ./crypt/login.defs_SHA256-round-min-max/01_chpasswd.test
+run_test ./crypt/login.defs_SHA256-round-min/01_chpasswd.test
 run_test ./crypt/login.defs_SHA256/01_chpasswd.test
 run_test ./crypt/login.defs_SHA512/01_chpasswd.test
 run_test ./crypt/login.defs_none/01_chpasswd.test
@@ -513,9 +516,9 @@ run_test ./failures/groupmod/01_groupmod_change_group_name_gshadow_rename_failur
 run_test ./failures/groupmod/02_groupmod_change_gid_change_primary_group_passwd_rename_failure/groupmod.test
 run_test ./failures/groupmod/03_groupmod_change_group_name_group_rename_failure/groupmod.test
 run_test ./failures/usermod/01_usermod_change_user_name_gshadow_rename_failure/usermod.test
-run_test ./failures/usermod/04_usermod_change_user_name_gshadow_rename_no_failure/usermod.test
 run_test ./failures/usermod/02_usermod_change_uid_passwd_rename_failure/usermod.test
 run_test ./failures/usermod/03_usermod_change_user_name_group_rename_failure/usermod.test
+run_test ./failures/usermod/04_usermod_change_user_name_gshadow_rename_no_failure/usermod.test
 run_test ./failures/usermod/05_usermod_change_uid_shadow_rename_failure/usermod.test
 run_test ./expiry/01_expiry_-c_no_expiry/expiry.test
 run_test ./expiry/02_expiry_-c_expired/expiry.test
