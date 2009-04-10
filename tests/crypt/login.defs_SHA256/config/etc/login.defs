@@ -267,7 +267,7 @@ USERGROUPS_ENAB yes
 # This variable is used by chpasswd, gpasswd and newusers.
 #
 #MD5_CRYPT_ENAB	no
-ENCRYPT_METHOD DES
+ENCRYPT_METHOD SHA256
 #SHA_CRYPT_MIN_ROUNDS 5000
 #SHA_CRYPT_MAX_ROUNDS 5000
 
