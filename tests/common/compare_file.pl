@@ -48,6 +48,55 @@ while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_MD5 (.*)\@:(.*)$/s) {
 	}
 }
 
+$tmp = $template;
+while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_SHA256 (.*)\@:(.*)$/s) {
+	my $user = $2;
+	my $pass = $3;
+	$tmp = $4;
+	if ($file =~ m/^$user:/m) {
+		$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_SHA256 $pass\@:$2/m;
+		my $cryptpass = $1;
+		# Check the password
+		my $salt = $cryptpass;
+		$salt =~ s/^\$5\$//;
+		my $rounds = "";
+		if ($salt =~ s/rounds=([0-9]*)\$//) {
+			$rounds = "-R $1";
+		}
+
+		$salt =~ s/\$.*$//;
+		my $checkpass = qx!echo '$pass' | /usr/bin/mkpasswd -m sha-256 --salt '$salt' $rounds --stdin!;
+		chomp $checkpass;
+
+		die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
+			if ($checkpass ne $cryptpass);
+	} else {
+		die "No user '$user' in ".$ARGV[1].".\n";
+	}
+}
+
+$tmp = $template;
+while ($tmp =~ m/^(.*?)([^\n]*):\@PASS_SHA512 (.*)\@:(.*)$/s) {
+	my $user = $2;
+	my $pass = $3;
+	$tmp = $4;
+	if ($file =~ m/^$user:/m) {
+		$file =~ s/^$user:([^:]*):(.*)$/$user:\@PASS_SHA512 $pass\@:$2/m;
+		my $cryptpass = $1;
+		# Check the password
+		my $salt = $cryptpass;
+		$salt =~ s/^\$6\$//;
+		$salt =~ s/\$.*$//;
+		my $checkpass = qx!echo '$pass' | /usr/bin/mkpasswd -m sha-512 --salt '$salt' --stdin!;
+		chomp $checkpass;
+
+		die "Wrong password: '$cryptpass'. Expected password: '$checkpass'\n"
+			if ($checkpass ne $cryptpass);
+	} else {
+		die "No user '$user' in ".$ARGV[1].".\n";
+	}
+}
+
 
 exit 0 if ($file =~ m/^\Q$template\E$/s);
 
