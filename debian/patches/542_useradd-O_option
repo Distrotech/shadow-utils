@@ -25,15 +25,18 @@ Index: shadow-4.1.0/src/useradd.c
 ===================================================================
 --- shadow-4.1.0.orig/src/useradd.c
 +++ shadow-4.1.0/src/useradd.c
-@@ -1009,7 +1009,7 @@
- 			{NULL, 0, NULL, '\0'}
+@@ -1009,9 +1009,9 @@
  		};
- 		while ((c =
--			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:U",
-+			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:U",
- 				     long_options, NULL)) != -1) {
+ 		while ((c = getopt_long (argc, argv,
+ #ifdef WITH_SELINUX
+-		                         "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:UZ:",
++		                         "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:UZ:",
+ #else
+-		                         "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:U",
++		                         "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:U",
+ #endif
+ 		                         long_options, NULL)) != -1) {
  			switch (c) {
- 			case 'b':
 @@ -1125,6 +1125,7 @@
  				kflg++;
  				break;
