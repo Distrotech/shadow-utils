@@ -502,6 +502,8 @@ run_test ./newusers/37_create_user_encrypt_MD5/newusers.test
 run_test ./newusers/38_update_password_no_shadow_encrypted/newusers.test
 run_test ./newusers/39_update_password_no_shadow_password_encrypted/newusers.test
 run_test ./newusers/40_update_password_encrypted/newusers.test
+run_test ./newusers/41_create_user_encrypt_SHA256/newusers.test
+run_test ./newusers/42_create_user_encrypt_SHA512/newusers.test
 run_test ./split_groups/01_useradd_split_group/useradd.test
 run_test ./split_groups/02_useradd_no_split_group/useradd.test
 run_test ./split_groups/03_useradd_split_group_already_split/useradd.test
