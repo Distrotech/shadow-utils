@@ -3,7 +3,6 @@
 #901_testsuite_gcov
 
 503_shadowconfig.8
-431_su_uid_0_not_root
 008_su_no_sanitize_env
 008_su_get_PAM_username
 428_grpck_add_prune_option
