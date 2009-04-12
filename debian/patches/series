@@ -20,6 +20,5 @@
 403_fix_PATH-MAX_hurd
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
-415_login_put-echoctl-back
 302_vim_selinux_support
 402_cppw_selinux
