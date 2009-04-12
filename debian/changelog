@@ -39,6 +39,7 @@ shadow (1:4.1.3-1) unstable; urgency=low
     - Translations
       + New Kazakh translation. Closes: #517809
       + Updated Slovak translation. Closes: #523621
+      + Updated Norwegian Bokmål translation. Closes: #523798
   * debian/patches/454_userdel_no_MAIL_FILE: Patch removed. If MAIL_FILE is
     defined, the mailbox is not in MAIL_SPOOL_DIR.
   * debian/patches/506_relaxed_usernames: Use an extra paragraph for the note
