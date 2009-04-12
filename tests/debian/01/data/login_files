@@ -84,6 +84,9 @@
 /usr/share/locale/ja
 /usr/share/locale/ja/LC_MESSAGES
 /usr/share/locale/ja/LC_MESSAGES/shadow.mo
+/usr/share/locale/kk
+/usr/share/locale/kk/LC_MESSAGES
+/usr/share/locale/kk/LC_MESSAGES/shadow.mo
 /usr/share/locale/km
 /usr/share/locale/km/LC_MESSAGES
 /usr/share/locale/km/LC_MESSAGES/shadow.mo
@@ -159,11 +162,6 @@
 /usr/share/man/de/man1/login.1.gz
 /usr/share/man/de/man1/newgrp.1.gz
 /usr/share/man/de/man1/su.1.gz
-/usr/share/man/es
-/usr/share/man/es/man1
-/usr/share/man/es/man1/login.1.gz
-/usr/share/man/es/man1/newgrp.1.gz
-/usr/share/man/es/man1/su.1.gz
 /usr/share/man/fi
 /usr/share/man/fi/man1
 /usr/share/man/fi/man1/su.1.gz
