@@ -551,6 +551,9 @@ run_test ./passwd/13_passwd_--warndays_root/passwd.test
 run_test ./passwd/14_passwd_--inactive_root/passwd.test
 run_test ./passwd/15_passwd_--expire_root/passwd.test
 run_test ./passwd/16_passwd_-S-a_root/passwd.test
+run_test ./login/01_login_prompt/login.test
+run_test ./login/02_login_user/login.test
+run_test ./login/03_login_check_tty/login.test
 
 echo
 echo "$succeded test(s) passed"
