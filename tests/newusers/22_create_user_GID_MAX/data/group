@@ -40,4 +40,4 @@ nogroup:x:65534:
 crontab:x:101:
 Debian-exim:x:102:
 foo1:x:60000:
-foo2:x:103:
+foo2:x:1000:
