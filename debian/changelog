@@ -1,3 +1,17 @@
+shadow (1:4.1.3.1-1) unstable; urgency=low
+
+  * The "Le Puant Macéré" release.
+    Sorry for the lack of cheese name in 1:4.1.3-1. At least this one should
+    count for two.
+  * New upstream release:
+    - Fixed wrong parsing of octal permissions. This impacted login (permission
+      of the TTYs, UMASK, ERASECHAR or KILLCHAR) in release 1:4.1.3-1 only.
+      Closes: #524139
+    - removed debian/patches/200_bin_nb: Applied upstream.
+    - Fixed login segfault when called without a username. Closes: #524193
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Wed, 15 Apr 2009 23:52:04 +0200
+
 shadow (1:4.1.3-1) unstable; urgency=low
 
   * The "" release.
