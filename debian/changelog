@@ -1,3 +1,10 @@
+shadow (1:4.1.3.2-1) UNRELEASED; urgency=low
+
+  * New upstream release:
+     - Updated Czech translation. Closes: #525658
+
+ -- Christian Perrier <bubulle@debian.org>  Sun, 26 Apr 2009 14:26:36 +0200
+
 shadow (1:4.1.3.1-1) unstable; urgency=low
 
   * The "Le Puant Macéré" release.
