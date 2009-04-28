@@ -7,7 +7,7 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
      - Updated Czech translation. Closes: #525658
      - passwd: Report password properties changes if the password is not
        actually changed. Closes: #525967
-     - Fixed lastlog. 4.1.3 only reported empty logs. Closes: #52473 
+     - Fixed lastlog. 4.1.3 only reported empty logs. Closes: #524873 
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 28 Apr 2009 22:47:43 +0200
 
