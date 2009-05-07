@@ -8,8 +8,9 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
      - passwd: Report password properties changes if the password is not
        actually changed. Closes: #525967
      - Fixed lastlog. 4.1.3 only reported empty logs. Closes: #524873 
+  * debian/securetty.linux: Added Freescale i.MX ports. Closes: #527095
 
- -- Christian Perrier <bubulle@debian.org>  Tue, 28 Apr 2009 22:47:43 +0200
+ -- Christian Perrier <bubulle@debian.org>  Thu, 07 May 2009 19:20:57 +0200
 
 shadow (1:4.1.3.1-1) unstable; urgency=low
 

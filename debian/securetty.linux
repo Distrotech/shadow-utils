@@ -100,3 +100,10 @@ tty61
 tty62
 tty63
 
+# Embedded Freescale i.MX ports
+ttymxc0
+ttymxc1
+ttymxc2
+ttymxc3
+ttymxc4
+ttymxc5
