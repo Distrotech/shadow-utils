@@ -6,6 +6,7 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
      - Updated Portuguese translation. Closes: #525531
      - Updated Czech translation. Closes: #525658
      - Updated German translation. Closes: #527131
+     - Updated Russian translation. Closes: #527636
      - passwd: Report password properties changes if the password is not
        actually changed. Closes: #525967
      - Fixed lastlog. 4.1.3 only reported empty logs. Closes: #524873 
