@@ -21,10 +21,10 @@ echo nobody:test | chpasswd
 echo "OK"
 
 echo -n "Check the passwd file..."
-../../common/compare_file.pl 01_chpasswd/passwd /etc/passwd
+../../common/compare_file.pl config/etc/passwd /etc/passwd
 echo "OK"
 echo -n "Check the group file..."
-../../common/compare_file.pl 01_chpasswd/group /etc/group
+../../common/compare_file.pl config/etc/group /etc/group
 echo "OK"
 echo -n "Check the shadow file..."
 ../../common/compare_file.pl 01_chpasswd/shadow /etc/shadow
@@ -36,7 +36,7 @@ grep -q '^nobody:\$5\$rounds=7000\$' /etc/shadow || {
 }
 echo "OK"
 echo -n "Check the gshadow file..."
-../../common/compare_file.pl 01_chpasswd/gshadow /etc/gshadow
+../../common/compare_file.pl config/etc/gshadow /etc/gshadow
 echo "OK"
 
 log_status "$0" "SUCCESS"
