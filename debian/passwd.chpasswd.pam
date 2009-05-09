@@ -1,8 +1,5 @@
 # The PAM configuration file for the Shadow 'chpasswd' service
 #
 
-# This allows root to use chpasswd without being prompted for a password
-auth		sufficient	pam_rootok.so
+@include common-password
 
-# checks for account validity
-account	required	pam_permit.so

@@ -1,9 +1,5 @@
 # The PAM configuration file for the Shadow 'newusers' service
 #
 
-# This allows root to add users with a batch file without being 
-# prompted for a password
-auth		sufficient	pam_rootok.so
+@include common-password
 
-# checks for account validity
-account	required	pam_permit.so

@@ -55,10 +55,12 @@ binary-install/passwd::
 	install -c -m 444 man/pl/shadowconfig.8 debian/passwd/usr/share/man/pl/man8
 	install -c -m 444 man/fr/shadowconfig.8 debian/passwd/usr/share/man/fr/man8
 	# Distribute the pam.d files; unless for the commands with disabled PAM
-	# support (see patch 404_undef_USE_PAM.dpatch)
+	# support
 	dh_installpam -p passwd --name=passwd
 	dh_installpam -p passwd --name=chfn
 	dh_installpam -p passwd --name=chsh
+	dh_installpam -p passwd --name=chpasswd
+	dh_installpam -p passwd --name=newusers
 ifeq ($(DEB_HOST_ARCH_OS),hurd)
 # login is not built on The Hurd, but some utilities of passwd depends on
 # /etc/login.defs.
