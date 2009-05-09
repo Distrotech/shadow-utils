@@ -26,6 +26,12 @@ auth       requisite  pam_securetty.so
 # (Replaces the `NOLOGINS_FILE' option from login.defs)
 auth       requisite  pam_nologin.so
 
+# SELinux needs to be the first session rule. This ensures that any 
+# lingering context has been cleared. Without out this it is possible 
+# that a module could execute code in the wrong domain.  (When SELinux
+# is disabled, this returns success.)
+session    required   pam_selinux.so close
+
 # This module parses environment configuration file(s)
 # and also allows you to use an extended config
 # file /etc/security/pam_env.conf.
@@ -78,12 +84,13 @@ session    optional   pam_motd.so
 # See comments in /etc/login.defs
 session    optional   pam_mail.so standard
 
-# SELinux needs to intervene at login time to ensure that the process
-# starts in the proper default security context.
-# Uncomment the following line to enable SELinux
-# session required pam_selinux.so select_context
-
 # Standard Un*x account and session
 @include common-account
 @include common-session
 @include common-password
+
+# SELinux needs to intervene at login time to ensure that the process
+# starts in the proper default security context. Only sessions which are
+# intended to run in the user's context should be run after this.  (When
+# SELinux is disabled, this returns success.)
+session required pam_selinux.so open

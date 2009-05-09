@@ -24,8 +24,9 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
     Install the newusers and chpasswd PAM service configuration files.
     newusers and chpasswd now use PAM to update the passwords.
     Closes: #525153
+  * debian/login.pam: Updated support for SELinux. Closes: #527106
 
- -- Christian Perrier <bubulle@debian.org>  Sat, 09 May 2009 23:21:05 +0200
+ -- Christian Perrier <bubulle@debian.org>  Sat, 09 May 2009 23:28:08 +0200
 
 shadow (1:4.1.3.1-1) unstable; urgency=low
 
