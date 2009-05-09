@@ -26,7 +26,7 @@ gpasswd -A foo users 2>tmp/gpasswd.err && exit 1 || {
 echo "OK"
 
 echo -n "Check returned status ($status)..."
-test "$status" = "2"
+test "$status" = "17" # E_GSHADOW_NOTFOUND
 echo "OK"
 
 echo "gpasswd reported:"

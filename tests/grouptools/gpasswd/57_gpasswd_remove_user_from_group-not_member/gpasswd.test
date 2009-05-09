@@ -23,7 +23,7 @@ gpasswd -d foo users 2>tmp/gpasswd.err && exit 1 || {
 echo "OK"
 
 echo -n "Check returned status ($status)..."
-test "$status" = "1"
+test "$status" = "3" # E_BAD_ARG
 echo "OK"
 
 echo "gpasswd reported:"
