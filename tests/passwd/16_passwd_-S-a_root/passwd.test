@@ -23,9 +23,9 @@ echo "passwd reported:"
 echo "======================================================================="
 cat tmp/passwd.out
 echo "======================================================================="
-echo -n "Check that there were a failure message..."
+echo -n "Check the message..."
 diff -au data/passwd.out tmp/passwd.out
-echo "error message OK."
+echo "message OK."
 rm -f tmp/passwd.out
 
 echo -n "Check the passwd file..."

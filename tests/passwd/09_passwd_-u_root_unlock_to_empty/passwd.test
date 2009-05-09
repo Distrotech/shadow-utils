@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../common/config.sh
 . ../../common/log.sh
 
-log_start "$0" "passwd can report the status of an account to root"
+log_start "$0" "passwd -u cannot create a passwordless account"
 
 save_config
 
@@ -16,7 +16,24 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-./passwd.exp
+echo -n "Unlock foo's pasword (passwd -u foo)..."
+passwd -u foo 2> tmp/passwd.err && exit 1 || {
+        status=$?
+}
+echo "OK"
+
+echo -n "Check returned status ($status)..."
+test "$status" = "3"
+echo "OK"
+
+echo "passwd reported:"
+echo "======================================================================="
+cat tmp/passwd.err
+echo "======================================================================="
+echo -n "Check the error message..."
+diff -au data/passwd.err tmp/passwd.err
+echo "error message OK."
+rm -f tmp/passwd.err
 
 echo -n "Check the passwd file..."
 ../../common/compare_file.pl config/etc/passwd /etc/passwd
