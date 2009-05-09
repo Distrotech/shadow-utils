@@ -15,15 +15,15 @@ Index: shadow-4.1.0/src/login.c
  #if defined(HAVE_STRFTIME) && !defined(USE_PAM)
  	char ptime[80];
  #endif
--	int delay;
- 	int retries;
+-	unsigned int delay;
+ 	unsigned int retries;
  	bool failed;
  	bool subroot = false;
 @@ -354,6 +353,7 @@
  	char *pam_user;
  	char **ptr_pam_user = &pam_user;
  #else
-+	int delay;
++	unsigned int delay;
  	struct spwd *spwd = NULL;
  #endif
  	/*
@@ -31,17 +31,20 @@ Index: shadow-4.1.0/src/login.c
  	}
  
  	environ = newenvp;	/* make new environment active */
--	delay = getdef_num ("FAIL_DELAY", 1);
- 	retries = getdef_num ("LOGIN_RETRIES", RETRIES);
+-	delay   = getdef_unum ("FAIL_DELAY", 1);
+ 	retries = getdef_unum ("LOGIN_RETRIES", RETRIES);
  
  #ifdef USE_PAM
-@@ -594,17 +593,12 @@
+@@ -594,20 +593,15 @@
  
  	/*
  	 * hostname & tty are either set to NULL or their correct values,
 -	 * depending on how much we know. We also set PAM's fail delay to
 -	 * ours.
 +	 * depending on how much we know.
+ 	 *
+ 	 * PAM_RHOST and PAM_TTY are used for authentication, only use
+ 	 * information coming from login or from the caller (e.g. no utmp)
  	 */
  	retcode = pam_set_item (pamh, PAM_RHOST, hostname);
  	PAM_FAIL_CHECK;
@@ -68,8 +71,8 @@ Index: shadow-4.1.0/src/login.c
  			retcode = pam_authenticate (pamh, 0);
  
 @@ -956,14 +948,17 @@
- 			pw_auth ("!", username, reason, (char *) 0);
- 		}
+ 		free (username);
+ 		username = NULL;
  
 +#ifndef USE_PAM
  		/*
@@ -77,9 +80,9 @@ Index: shadow-4.1.0/src/login.c
  		 * to login the user again. If the earlier alarm occurs
  		 * before the sleep() below completes, login will exit.
  		 */
-+		delay = getdef_num ("FAIL_DELAY", 1);
++		delay = getdef_unum ("FAIL_DELAY", 1);
  		if (delay > 0) {
- 			sleep (delay);
+ 			(void) sleep (delay);
 		}
 +#endif
  

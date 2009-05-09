@@ -7,55 +7,58 @@ Fixes: #192849
 Note: It could be removed if pam_tally could report the number of failures
       preceding a successful login.
 
-Index: shadow-4.1.0/src/login.c
+Index: shadow-4.1.3.1/src/login.c
 ===================================================================
---- shadow-4.1.0.orig/src/login.c
-+++ shadow-4.1.0/src/login.c
-@@ -130,9 +130,9 @@
- static void setup_tty (void);
- static void check_flags (int, char *const *);
+--- shadow-4.1.3.1.orig/src/login.c	2009-05-04 19:38:24.668839562 +0200
++++ shadow-4.1.3.1/src/login.c	2009-05-04 19:50:43.360832944 +0200
+@@ -131,9 +131,9 @@
+                          const char *host,
+                          /*@null@*/const struct utmp *utent);
  
-+static struct faillog faillog;
-+
- #ifndef USE_PAM
--static struct faillog faillog;
--
+-#ifndef USE_PAM
+ static struct faillog faillog;
+ 
++#ifndef USE_PAM
  static void bad_time_notify (void);
- static void check_nologin (void);
- #endif
-@@ -673,6 +673,8 @@
+ static void check_nologin (bool login_to_root);
+ #else
+@@ -792,6 +792,9 @@
  				SYSLOG ((LOG_NOTICE,
- 				         "TOO MANY LOGIN TRIES (%d)%s FOR `%s'",
+ 				         "TOO MANY LOGIN TRIES (%d)%s FOR '%s'",
  				         failcount, fromhost, failent_user));
-+				if (pwd && getdef_bool("FAILLOG_ENAB"))
-+					failure (pwent.pw_uid, tty, &faillog);
++				if ((NULL != pwd) && getdef_bool("FAILLOG_ENAB")) {
++					failure (pwd->pw_uid, tty, &faillog);
++				}
  				fprintf(stderr,
  				        _("Maximum number of tries exceeded (%d)\n"),
  				        failcount);
-@@ -690,6 +692,13 @@
+@@ -809,6 +812,14 @@
  				         pam_strerror (pamh, retcode)));
  				failed = true;
  			}
-+			  if (pwd && getdef_bool("FAILLOG_ENAB") &&
-+			      ! failcheck (pwent.pw_uid, &faillog, failed)) {
-+			    SYSLOG((LOG_CRIT,
-+			           "exceeded failure limit for `%s' %s",
-+			           failent_user, fromhost));
-+			    failed = 1;
-+			  }
++			if (   (NULL != pwd)
++			    && getdef_bool("FAILLOG_ENAB")
++			    && ! failcheck (pwd->pw_uid, &faillog, failed)) {
++				SYSLOG((LOG_CRIT,
++				        "exceeded failure limit for `%s' %s",
++				        failent_user, fromhost));
++				failed = 1;
++			}
  
  			if (!failed) {
  				break;
-@@ -766,6 +731,8 @@
- #endif				/* WITH_AUDIT */
+@@ -832,6 +843,10 @@
+ 			(void) puts ("");
+ 			(void) puts (_("Login incorrect"));
  
- 			fprintf (stderr, "\nLogin incorrect\n");
-+			if (pwd && getdef_bool("FAILLOG_ENAB"))
-+				failure (pwent.pw_uid, tty, &faillog);
- 			  if (getdef_str("FTMP_FILE") != NULL) {
- #if HAVE_UTMPX_H
- 			    failent = utxent;
-@@ -1099,6 +1110,7 @@
++			if ((NULL != pwd) && getdef_bool("FAILLOG_ENAB")) {
++				failure (pwd->pw_uid, tty, &faillog);
++			}
++
+ 			if (getdef_str("FTMP_FILE") != NULL) {
+ #ifdef USE_UTMPX
+ 				struct utmpx *failent =
+@@ -1281,6 +1296,7 @@
  		 */
  #ifndef USE_PAM
  		motd ();	/* print the message of the day */
@@ -63,19 +66,19 @@ Index: shadow-4.1.0/src/login.c
  		if (   getdef_bool ("FAILLOG_ENAB")
  		    && (0 != faillog.fail_cnt)) {
  			failprint (&faillog);
-@@ -1112,6 +1124,7 @@
- 					 username, (int) faillog.fail_cnt));
+@@ -1293,6 +1309,7 @@
+ 				         username, (int) faillog.fail_cnt));
  			}
  		}
 +#ifndef USE_PAM
  		if (   getdef_bool ("LASTLOG_ENAB")
- 		    && (0 != lastlog.ll_time)) {
- 			time_t ll_time = lastlog.ll_time;
-Index: shadow-4.1.0/lib/getdef.c
+ 		    && (ll.ll_time != 0)) {
+ 			time_t ll_time = ll.ll_time;
+Index: shadow-4.1.3.1/lib/getdef.c
 ===================================================================
---- shadow-4.1.0.orig/lib/getdef.c
-+++ shadow-4.1.0/lib/getdef.c
-@@ -57,6 +57,7 @@
+--- shadow-4.1.3.1.orig/lib/getdef.c	2009-05-04 19:38:24.672844662 +0200
++++ shadow-4.1.3.1/lib/getdef.c	2009-05-04 19:50:14.720839237 +0200
+@@ -61,6 +61,7 @@
  	{"ENV_SUPATH", NULL},
  	{"ERASECHAR", NULL},
  	{"FAIL_DELAY", NULL},
@@ -83,7 +86,7 @@ Index: shadow-4.1.0/lib/getdef.c
  	{"FAKE_SHELL", NULL},
  	{"FTMP_FILE", NULL},
  	{"GID_MAX", NULL},
-@@ -93,7 +94,6 @@
+@@ -103,7 +104,6 @@
  	{"ENV_HZ", NULL},
  	{"ENVIRON_FILE", NULL},
  	{"ENV_TZ", NULL},

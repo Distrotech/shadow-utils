@@ -8,36 +8,31 @@ Index: shadow-4.1.0/src/login.c
 ===================================================================
 --- shadow-4.1.0.orig/src/login.c
 +++ shadow-4.1.0/src/login.c
-@@ -722,6 +722,29 @@
- #endif				/* WITH_AUDIT */
+@@ -722,6 +722,24 @@
+ 			(void) puts ("");
+ 			(void) puts (_("Login incorrect"));
  
- 			fprintf (stderr, "\nLogin incorrect\n");
-+			  if (getdef_str("FTMP_FILE") != NULL) {
-+#if HAVE_UTMPX_H
-+			    failent = utxent;
-+			    if (sizeof (failent.ut_tv) == sizeof (struct timeval))
-+				    gettimeofday((struct timeval *)
-+				                 &failent.ut_tv, NULL);
-+			    else {
-+				    struct timeval tv;
++			if (getdef_str("FTMP_FILE") != NULL) {
++#ifdef USE_UTMPX
++				struct utmpx *failent =
++					prepare_utmpx (failent_user,
++					               tty,
++					/* FIXME: or fromhost? */hostname,
++					               utent);
++#else				/* !USE_UTMPX */
++				struct utmp *failent =
++					prepare_utmp (failent_user,
++					              tty,
++					              hostname,
++					              utent);
++#endif				/* !USE_UTMPX */
++				failtmp (failent_user, failent);
++				free (failent);
++			}
 +
-+				    gettimeofday (&tv, NULL);
-+				    failent.ut_tv.tv_sec = tv.tv_sec;
-+				    failent.ut_tv.tv_usec = tv.tv_usec;
-+			    }
-+#else
-+			    failent = utent;
-+			    failent.ut_time = time(NULL);
-+#endif
-+			    strncpy(failent.ut_user, failent_user, sizeof(failent.ut_user));
-+#ifdef USER_PROCESS
-+			    failent.ut_type = USER_PROCESS;
-+#endif
-+			    failtmp(&failent);
-+			  }
- 
- 			/*
- 			 * Let's give it another go around.
+ 			if (failcount >= retries) {
+ 				SYSLOG ((LOG_NOTICE,
+ 				         "TOO MANY LOGIN TRIES (%d)%s FOR '%s'",
 Index: shadow-4.1.0/lib/getdef.c
 ===================================================================
 --- shadow-4.1.0.orig/lib/getdef.c
