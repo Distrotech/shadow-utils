@@ -9,6 +9,8 @@
 008_login_log_failure_in_FTMP
 429_login_FAILLOG_ENAB
 401_cppw_src.dpatch
+# 402 should be merged in 401, but should be reviewed by SE Linux experts first
+402_cppw_selinux
 506_relaxed_usernames
 542_useradd-O_option
 501_commonio_group_shadow
@@ -18,4 +20,3 @@
 483_su_fakelogin_wrong_arg0
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
-402_cppw_selinux
