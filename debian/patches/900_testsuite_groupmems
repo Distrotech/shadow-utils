@@ -1,7 +1,5 @@
-Index: shadow-4.1.2/debian/passwd.install
-===================================================================
---- shadow-4.1.2.orig/debian/passwd.install	2008-09-11 18:45:39.228009162 +0200
-+++ shadow-4.1.2/debian/passwd.install	2008-09-11 19:11:34.616009434 +0200
+--- a/debian/passwd.install
++++ b/debian/passwd.install
 @@ -9,6 +9,7 @@
  usr/sbin/cppw
  usr/sbin/groupadd
@@ -26,10 +24,8 @@ Index: shadow-4.1.2/debian/passwd.install
  usr/share/man/man8/groupmod.8
  usr/share/man/man8/grpck.8
  usr/share/man/man8/grpconv.8
-Index: shadow-4.1.2/debian/passwd.postinst
-===================================================================
---- shadow-4.1.2.orig/debian/passwd.postinst	2008-09-11 18:51:29.460008023 +0200
-+++ shadow-4.1.2/debian/passwd.postinst	2008-09-11 18:56:16.504010411 +0200
+--- a/debian/passwd.postinst
++++ b/debian/passwd.postinst
 @@ -31,6 +31,24 @@
      			exit 1
  		)
@@ -55,29 +51,25 @@ Index: shadow-4.1.2/debian/passwd.postinst
      ;;
  esac
  
-Index: shadow-4.1.2/debian/rules
-===================================================================
---- shadow-4.1.2.orig/debian/rules	2008-09-11 18:42:53.984006775 +0200
-+++ shadow-4.1.2/debian/rules	2008-09-11 19:06:32.904009108 +0200
-@@ -59,6 +59,7 @@
- 	dh_installpam -p passwd --name=passwd
- 	dh_installpam -p passwd --name=chfn
+--- a/debian/rules
++++ b/debian/rules
+@@ -61,6 +61,7 @@
  	dh_installpam -p passwd --name=chsh
+ 	dh_installpam -p passwd --name=chpasswd
+ 	dh_installpam -p passwd --name=newusers
 +	dh_installpam -p passwd --name=groupmems
  ifeq ($(DEB_HOST_ARCH_OS),hurd)
  # login is not built on The Hurd, but some utilities of passwd depends on
  # /etc/login.defs.
-@@ -89,3 +90,6 @@
+@@ -91,3 +92,6 @@
  	chgrp shadow debian/passwd/usr/bin/expiry
  	chmod g+s debian/passwd/usr/bin/chage
  	chmod g+s debian/passwd/usr/bin/expiry
 +	chgrp groupmems debian/passwd/usr/sbin/groupmems
 +	chmod u+s debian/passwd/usr/sbin/groupmems
 +	chmod o-x debian/passwd/usr/sbin/groupmems
-Index: shadow-4.1.2/debian/passwd.groupmems.pam
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ shadow-4.1.2/debian/passwd.groupmems.pam	2008-09-11 19:01:00.820006938 +0200
+--- /dev/null
++++ b/debian/passwd.groupmems.pam
 @@ -0,0 +1,8 @@
 +# The PAM configuration file for the Shadow 'groupmod' service
 +#
