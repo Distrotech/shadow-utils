@@ -6,6 +6,8 @@ export LC_ALL=C
 unset LANG
 unset LANGUAGE
 
+USE_PAM="yes"
+
 succeded=0
 failed=0
 failed_tests=""
@@ -183,6 +185,7 @@ run_test ./grouptools/gpasswd/56_gpasswd_add_user_to_group/gpasswd.test
 run_test ./grouptools/gpasswd/57_gpasswd_remove_user_from_group-not_member/gpasswd.test
 run_test ./grouptools/gpasswd/58_gpasswd_remove_user_from_group-not_gshadow_member/gpasswd.test
 run_test ./grouptools/gpasswd/59_gpasswd_remove_user_from_group-not_group_member/gpasswd.test
+run_test ./grouptools/gpasswd/60_gpasswd_add_long_user_to_group/gpasswd.test
 run_test ./grouptools/groupadd/01_groupadd_add_group/groupadd.test
 run_test ./grouptools/groupadd/02_groupadd_add_group_GID_MIN/groupadd.test
 run_test ./grouptools/groupadd/03_groupadd_add_group_-K_GID_MIN/groupadd.test
@@ -203,6 +206,7 @@ run_test ./grouptools/groupadd/17_groupadd_add_systemgroup/groupadd.test
 run_test ./grouptools/groupadd/18_groupadd_no_more_GID/groupadd.test
 run_test ./grouptools/groupadd/19_groupadd_-r_no_more_system_GID/groupadd.test
 run_test ./grouptools/groupadd/20_groupadd_add_existing_GID/groupadd.test
+run_test ./grouptools/groupadd/21_groupadd_invalid_GID_4294967295/groupadd.test
 run_test ./grouptools/groupdel/01_groupdel_delete_group/groupdel.test
 run_test ./grouptools/groupdel/02_groupdel_delete_group_no_gshadow_group/groupdel.test
 run_test ./grouptools/groupdel/03_groupdel_delete_group_no_gshadow_file/groupdel.test
@@ -290,6 +294,7 @@ run_test ./grouptools/groupmod/23_groupmod_change_gid_and_group_name_and_passwor
 run_test ./grouptools/groupmod/24_groupmod_change_gid_and_name_error_locked_gshadow/groupmod.test
 run_test ./grouptools/groupmod/25_groupmod_change_gid_change_primary_group_error_locked_passwd/groupmod.test
 run_test ./grouptools/groupmod/26_groupmod_change_group_name_no_error_locked_passwd/groupmod.test
+run_test ./grouptools/groupmod/27_groupmod_change_gid_error_GID_4294967295/groupmod.test
 run_test ./usertools/01/01_useradd_add_user.test
 run_test ./usertools/01/01_userdel_delete_user.test
 run_test ./usertools/01/02_useradd_recreate_deleted_user.test
@@ -386,11 +391,20 @@ run_test ./usertools/50_userdel_delete_users_group_no_gshadow_group/userdel.test
 run_test ./usertools/51_userdel_delete_users_group_no_gshadow_file/userdel.test
 run_test ./usertools/52_userdel_delete_user_no_shadow_entry/userdel.test
 run_test ./usertools/53_userdel_delete_user_no_shadow_file/userdel.test
-run_test ./usertools/chpasswd/01_chpasswd_invalid_user/chpasswd.test
-run_test ./usertools/chpasswd/02_chpasswd_multiple_users/chpasswd.test
-run_test ./usertools/chpasswd/03_chpasswd_no_shadow_file/chpasswd.test
-run_test ./usertools/chpasswd/04_chpasswd_no_shadow_entry/chpasswd.test
-run_test ./usertools/chpasswd/05_chpasswd_error_no_password/chpasswd.test
+run_test ./usertools/54_usermod-u_invalid_UID_4294967295/usermod.test
+if [ "$USE_PAM" = "yes" ]; then
+	run_test ./usertools/chpasswd-PAM/01_chpasswd_invalid_user/chpasswd.test
+	run_test ./usertools/chpasswd-PAM/02_chpasswd_multiple_users/chpasswd.test
+	run_test ./usertools/chpasswd-PAM/03_chpasswd_no_shadow_file/chpasswd.test
+	run_test ./usertools/chpasswd-PAM/04_chpasswd_no_shadow_entry/chpasswd.test
+	run_test ./usertools/chpasswd-PAM/05_chpasswd_error_no_password/chpasswd.test
+else
+	run_test ./usertools/chpasswd/01_chpasswd_invalid_user/chpasswd.test
+	run_test ./usertools/chpasswd/02_chpasswd_multiple_users/chpasswd.test
+	run_test ./usertools/chpasswd/03_chpasswd_no_shadow_file/chpasswd.test
+	run_test ./usertools/chpasswd/04_chpasswd_no_shadow_entry/chpasswd.test
+	run_test ./usertools/chpasswd/05_chpasswd_error_no_password/chpasswd.test
+fi
 run_test ./cptools/01/run1
 run_test ./cptools/01/run2
 run_test ./cptools/01/run3
@@ -441,27 +455,41 @@ run_test ./cktools/pwck/18_pwck_invalid_user_name/pwck.test
 run_test ./cktools/pwck/19_pwck_invalid_user_ID_-1/pwck.test
 run_test ./cktools/pwck/20_pwck_invalid_user_ID_4294967295/pwck.test
 run_test ./cktools/pwck/21_pwck_invalid_user_ID_4294967296/pwck.test
-run_test ./crypt/login.defs_DES-MD5_CRYPT_ENAB/01_chpasswd.test
-run_test ./crypt/login.defs_DES/01_chpasswd.test
-run_test ./crypt/login.defs_DES/02_chpasswd--crypt-method-MD5.test
-run_test ./crypt/login.defs_DES/03_chpasswd--crypt-method-DES.test
-run_test ./crypt/login.defs_DES/04_chpasswd--crypt-method-NONE.test
-run_test ./crypt/login.defs_DES/05_chpasswd-e.test
-run_test ./crypt/login.defs_DES/06_chpasswd-m.test
+if [ "$USE_PAM" != "yes" ]; then
+	run_test ./crypt/login.defs_DES-MD5_CRYPT_ENAB/01_chpasswd.test
+	run_test ./crypt/login.defs_DES/01_chpasswd.test
+	run_test ./crypt/login.defs_DES/02_chpasswd--crypt-method-MD5.test
+	run_test ./crypt/login.defs_DES/03_chpasswd--crypt-method-DES.test
+	run_test ./crypt/login.defs_DES/04_chpasswd--crypt-method-NONE.test
+	run_test ./crypt/login.defs_DES/05_chpasswd-e.test
+	run_test ./crypt/login.defs_DES/06_chpasswd-m.test
+fi
 run_test ./crypt/login.defs_DES/07_chgpasswd.test
 run_test ./crypt/login.defs_DES/08_chgpasswd--crypt-method-MD5.test
 run_test ./crypt/login.defs_DES/09_chgpasswd--crypt-method-DES.test
 run_test ./crypt/login.defs_DES/10_chgpasswd--crypt-method-NONE.test
 run_test ./crypt/login.defs_DES/11_chgpasswd-e.test
 run_test ./crypt/login.defs_DES/12_chgpasswd-m.test
-run_test ./crypt/login.defs_MD5/01_chpasswd.test
-run_test ./crypt/login.defs_MD5_CRYPT_ENAB/01_chpasswd.test
-run_test ./crypt/login.defs_SHA256-round-max/01_chpasswd.test
-run_test ./crypt/login.defs_SHA256-round-min-max/01_chpasswd.test
-run_test ./crypt/login.defs_SHA256-round-min/01_chpasswd.test
-run_test ./crypt/login.defs_SHA256/01_chpasswd.test
-run_test ./crypt/login.defs_SHA512/01_chpasswd.test
-run_test ./crypt/login.defs_none/01_chpasswd.test
+if [ "$USE_PAM" != "yes" ]; then
+	run_test ./crypt/login.defs_MD5/01_chpasswd.test
+	run_test ./crypt/login.defs_MD5_CRYPT_ENAB/01_chpasswd.test
+fi
+run_test ./crypt/login.defs_MD5/02_chgpasswd.test
+run_test ./crypt/login.defs_MD5_CRYPT_ENAB/02_chgpasswd.test
+if [ "$USE_PAM" != "yes" ]; then
+	run_test ./crypt/login.defs_SHA256-round-max/01_chpasswd.test
+	run_test ./crypt/login.defs_SHA256-round-min-max/01_chpasswd.test
+	run_test ./crypt/login.defs_SHA256-round-min/01_chpasswd.test
+	run_test ./crypt/login.defs_SHA256/01_chpasswd.test
+	run_test ./crypt/login.defs_SHA512/01_chpasswd.test
+	run_test ./crypt/login.defs_none/01_chpasswd.test
+fi
+run_test ./crypt/login.defs_SHA256-round-max/02_chgpasswd.test
+run_test ./crypt/login.defs_SHA256-round-min-max/02_chgpasswd.test
+run_test ./crypt/login.defs_SHA256-round-min/02_chgpasswd.test
+run_test ./crypt/login.defs_SHA256/02_chgpasswd.test
+run_test ./crypt/login.defs_SHA512/02_chgpasswd.test
+run_test ./crypt/login.defs_none/02_chgpasswd.test
 run_test ./newusers/01_create_user/newusers.test
 run_test ./newusers/02_update_password/newusers.test
 run_test ./newusers/03_no_update_pid/newusers.test
@@ -497,17 +525,34 @@ run_test ./newusers/32_create_user_error_gshadow_group_exists/newusers.test
 run_test ./newusers/33_update_password_no_shadow_password/newusers.test
 run_test ./newusers/34_update_password_no_shadow/newusers.test
 run_test ./newusers/35_read_from_stdin/newusers.test
-run_test ./newusers/36_create_user_encrypted/newusers.test
-run_test ./newusers/37_create_user_encrypt_MD5/newusers.test
-run_test ./newusers/38_update_password_no_shadow_encrypted/newusers.test
-run_test ./newusers/39_update_password_no_shadow_password_encrypted/newusers.test
-run_test ./newusers/40_update_password_encrypted/newusers.test
-run_test ./newusers/41_create_user_encrypt_SHA256/newusers.test
-run_test ./newusers/42_create_user_encrypt_SHA512/newusers.test
-run_test ./newusers/43_create_user_encrypt_SHA256_rounds_3000/newusers.test
-run_test ./newusers/44_create_user_encrypt_SHA256_rounds_300/newusers.test
-run_test ./newusers/45_create_user_encrypt_rounds_3000/newusers.test
-run_test ./newusers/46_create_user_encrypt_MD5_ignore_rounds_3000/newusers.test
+if [ "$USE_PAM" != "yes" ]; then
+	run_test ./newusers/36_create_user_encrypted/newusers.test
+	run_test ./newusers/37_create_user_encrypt_MD5/newusers.test
+	run_test ./newusers/38_update_password_no_shadow_encrypted/newusers.test
+	run_test ./newusers/39_update_password_no_shadow_password_encrypted/newusers.test
+	run_test ./newusers/40_update_password_encrypted/newusers.test
+	run_test ./newusers/41_create_user_encrypt_SHA256/newusers.test
+	run_test ./newusers/42_create_user_encrypt_SHA512/newusers.test
+	run_test ./newusers/43_create_user_encrypt_SHA256_rounds_3000/newusers.test
+	run_test ./newusers/44_create_user_encrypt_SHA256_rounds_300/newusers.test
+	run_test ./newusers/45_create_user_encrypt_rounds_3000/newusers.test
+	run_test ./newusers/46_create_user_encrypt_MD5_ignore_rounds_3000/newusers.test
+else
+
+	run_test ./newusers/37_create_user_encrypt_MD5-PAM/newusers.test
+
+
+
+	run_test ./newusers/41_create_user_encrypt_SHA256-PAM/newusers.test
+	run_test ./newusers/42_create_user_encrypt_SHA512-PAM/newusers.test
+	run_test ./newusers/43_create_user_encrypt_SHA256_rounds_3000-PAM/newusers.test
+	run_test ./newusers/44_create_user_encrypt_SHA256_rounds_300-PAM/newusers.test
+
+
+fi
+run_test ./newusers/47_create_user_error_UID_4294967295/newusers.test
+run_test ./newusers/48_create_user_error_GID_4294967295/newusers.test
+run_test ./newusers/49_multiple_system_users/newusers.test
 run_test ./split_groups/01_useradd_split_group/useradd.test
 run_test ./split_groups/02_useradd_no_split_group/useradd.test
 run_test ./split_groups/03_useradd_split_group_already_split/useradd.test
@@ -551,6 +596,11 @@ run_test ./passwd/13_passwd_--warndays_root/passwd.test
 run_test ./passwd/14_passwd_--inactive_root/passwd.test
 run_test ./passwd/15_passwd_--expire_root/passwd.test
 run_test ./passwd/16_passwd_-S-a_root/passwd.test
+run_test ./passwd/17_passwd_root_change_password/passwd.test
+run_test ./passwd/18_passwd_root_change_password_user/passwd.test
+run_test ./passwd/19_passwd_user_change_password/passwd.test
+run_test ./passwd/20_passwd_user_change_password_same_user/passwd.test
+run_test ./passwd/21_passwd_user_change_password_other_user/passwd.test
 run_test ./login/01_login_prompt/login.test
 run_test ./login/02_login_user/login.test
 run_test ./login/03_login_check_tty/login.test
