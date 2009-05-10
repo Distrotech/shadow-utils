@@ -10,6 +10,8 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
      - passwd: Report password properties changes if the password is not
        actually changed. Closes: #525967
      - Fixed lastlog. 4.1.3 only reported empty logs. Closes: #524873 
+     - Remove patches applied upstream:
+        + debian/patches/403_fix_PATH-MAX_hurd
      - Updated patches:
         + debian/patches/008_login_log_failure_in_FTMP
         + debian/patches/401_cppw_src.dpatch
@@ -26,7 +28,7 @@ shadow (1:4.1.3.1-1) UNRELEASED; urgency=low
     Closes: #525153
   * debian/login.pam: Updated support for SELinux. Closes: #527106
 
- -- Christian Perrier <bubulle@debian.org>  Sat, 09 May 2009 23:28:08 +0200
+ -- Christian Perrier <bubulle@debian.org>  Sun, 10 May 2009 16:07:16 +0200
 
 shadow (1:4.1.3.1-1) unstable; urgency=low
 
