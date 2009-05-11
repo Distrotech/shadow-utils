@@ -45,9 +45,7 @@ binary-install/login::
 	dh_installpam -p login --name=su
 	install -c -m 444 debian/login.defs debian/login/etc/login.defs
 	install -c -m 444 debian/securetty.$(DEB_HOST_ARCH_OS) debian/login/etc/securetty
-	# Lintian and Linda overrides
-	install -c -m 444  debian/login.lintian-overrides debian/login/usr/share/lintian/overrides/login
-	install -c -m 444  debian/login.linda-overrides debian/login/usr/share/linda/overrides/login
+	dh_lintian -p login
 
 binary-install/passwd::
 	install -c -m 444 man/shadowconfig.8 debian/passwd/usr/share/man/man8
@@ -71,10 +69,7 @@ endif
 	install -c -m 555 debian/shadowconfig.sh debian/passwd/sbin/shadowconfig
 	install -c -m 444 debian/cpgr.8 debian/passwd/usr/share/man/man8
 	install -c -m 444 debian/cppw.8 debian/passwd/usr/share/man/man8
-	# Lintian overrides files
-	install -c -m 444  debian/passwd.lintian-overrides debian/passwd/usr/share/lintian/overrides/passwd
-	# Linda overrides files
-	install -c -m 444  debian/passwd.linda-overrides debian/passwd/usr/share/linda/overrides/passwd
+	dh_lintian -p passwd
 
 binary-predeb/login::
 	# No real need for login to be setuid root

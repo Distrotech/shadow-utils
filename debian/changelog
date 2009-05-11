@@ -1,3 +1,11 @@
+shadow (1:4.1.4-2) unstable; urgency=low
+
+  * The "Banon" release.
+  * debian/rules, debian/passwd.linda-overrides, debian/login.linda-overrides:
+    Removed linda-overrides files.
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 11 May 2009 22:29:12 +0200
+
 shadow (1:4.1.4-1) unstable; urgency=low
 
   * The "Chambérat" release.
