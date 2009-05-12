@@ -3,8 +3,11 @@ shadow (1:4.1.4-2) unstable; urgency=low
   * The "Banon" release.
   * debian/rules, debian/passwd.linda-overrides, debian/login.linda-overrides:
     Removed linda-overrides files.
+  * debian/login.postinst: Install /var/log/faillog during initial installs
+    only. This permits admins to disable failed logins recording.
+    Closes: #488420
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 11 May 2009 22:29:12 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 11 May 2009 22:39:07 +0200
 
 shadow (1:4.1.4-1) unstable; urgency=low
 

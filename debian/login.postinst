@@ -14,10 +14,14 @@ then
 fi
 rm -f /etc/pam.d/login.pre-upgrade 2>/dev/null
 
-if [ ! -f /var/log/faillog ] ; then
-    touch /var/log/faillog
-    chown root:root /var/log/faillog
-    chmod 644 /var/log/faillog
+if [ "$1" = "configure" ] && [ "$2" = "" ]
+then
+	# Install faillog during initial installs only
+	if [ ! -f /var/log/faillog ] ; then
+		touch /var/log/faillog
+		chown root:root /var/log/faillog
+		chmod 644 /var/log/faillog
+	fi
 fi
 
 #DEBHELPER#
