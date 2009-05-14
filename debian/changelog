@@ -3,6 +3,9 @@ shadow (1:4.1.4-2) unstable; urgency=low
   * The "Banon" release.
   * debian/rules, debian/passwd.linda-overrides, debian/login.linda-overrides:
     Removed linda-overrides files.
+  * debian/rules: Install the lintian overrides with dh_lintian.
+  * debian/control: Raised dependency on debhelper (>= 6.0.7~) for dh_lintian.
+  * debian/compat: Raised to 6
   * debian/login.postinst: Install /var/log/faillog during initial installs
     only. This permits admins to disable failed logins recording.
     Closes: #488420
@@ -10,7 +13,7 @@ shadow (1:4.1.4-2) unstable; urgency=low
     exist. A required pam_selinux.so makes login fail when the module does not
     exist (e.g. on architecture without SE Linux support). Closes: #528673
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 14 May 2009 21:08:09 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 14 May 2009 22:36:34 +0200
 
 shadow (1:4.1.4-1) unstable; urgency=low
 
