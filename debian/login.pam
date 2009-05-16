@@ -93,6 +93,6 @@ session    optional   pam_mail.so standard
 # SELinux needs to intervene at login time to ensure that the process
 # starts in the proper default security context. Only sessions which are
 # intended to run in the user's context should be run after this.
-session required pam_selinux.so open
+session [success=ok ignore=ignore module_unknown=ignore default=bad] pam_selinux.so open
 # When the module is present, "required" would be sufficient (When SELinux
 # is disabled, this returns success.)

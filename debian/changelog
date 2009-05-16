@@ -1,3 +1,11 @@
+shadow (1:4.1.4-3) unstable; urgency=low
+
+  * The "Banonet" release.
+  * debian/login.pam: Really ignore pam_selinux.so failures when the module do
+    not exist. Closes: #528673
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 16 May 2009 12:11:15 +0200
+
 shadow (1:4.1.4-2) unstable; urgency=low
 
   * The "Banon" release.
