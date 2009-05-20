@@ -394,6 +394,9 @@ run_test ./usertools/53_userdel_delete_user_no_shadow_file/userdel.test
 run_test ./usertools/54_usermod-u_invalid_UID_4294967295/usermod.test
 run_test ./usertools/55_userdel_busy_user/userdel.test
 run_test ./usertools/56_userdel_locked_passwd/userdel.test
+run_test ./usertools/57_userdel_locked_group/userdel.test
+run_test ./usertools/58_userdel_locked_shadow/userdel.test
+run_test ./usertools/59_userdel_locked_gshadow/userdel.test
 if [ "$USE_PAM" = "yes" ]; then
 	run_test ./usertools/chpasswd-PAM/01_chpasswd_invalid_user/chpasswd.test
 	run_test ./usertools/chpasswd-PAM/02_chpasswd_multiple_users/chpasswd.test
