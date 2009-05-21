@@ -1,8 +1,6 @@
 Goal: Relaxed usernames/groupnames checking patch.
 
 Status wrt upstream: Debian specific. Not to be used upstream
-                     The documentation of the username length restriction
-                     was added upstream
 
 Details:
  Allows any non-empty user/grounames that don't contain ':' and '\n'
@@ -50,15 +48,7 @@ Details:
  }
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -197,6 +197,7 @@
- 	    <option>INACTIVE</option> variable in
- 	    <filename>/etc/default/useradd</filename>, or -1 by default.
- 	  </para>
-+	  <para>This option may not function correctly if the username has a / in it.</para>
- 	</listitem>
-       </varlistentry>
-       <varlistentry>
-@@ -607,12 +608,17 @@
+@@ -607,12 +607,19 @@
      </para>
  
      <para>
@@ -70,8 +60,10 @@ Details:
      </para>
      <para>
 +      On Debian, the only constraints are that usernames must neither start
-+      with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
-+      end of line: '\n', tabulation: '\t', etc.).
++      with a dash ('-') nor contain a colon (':') or a whitespace (space: ' ',
++      end of line: '\n', tabulation: '\t', etc.). Note that using a slash
++      ('/') may break the default algorithm for the definition of the
++      user's home directory.
 +    </para>
 +    <para>
        Usernames may only be up to 32 characters long.

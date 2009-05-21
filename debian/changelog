@@ -13,8 +13,10 @@ shadow (1:4.1.4.1-1) unstable; urgency=low
   * debian/login.defs: Removed comment about MD5_CRYPT. MD5_CRYPT_ENAB is no
     more used by chpasswd and newusers. 
   * debian/patches/*: Updated patches to the new quilt and shadow versions.
+  * debian/patches/506_relaxed_usernames: usernames with a slash will not only
+    break one option. Move to the discussion on the usernames.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:29:42 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:54:22 +0200
 
 shadow (1:4.1.4-3) unstable; urgency=low
 
