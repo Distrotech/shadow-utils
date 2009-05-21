@@ -10,8 +10,10 @@ shadow (1:4.1.4.1-1) unstable; urgency=low
        mis-detection of logged-in users. Closes: #528060
      - Updated patches:
         + debian/patches/506_relaxed_usernames
+  * debian/login.defs: Removed comment about MD5_CRYPT. MD5_CRYPT_ENAB is no
+    more used by chpasswd and newusers. 
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:15:40 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:18:02 +0200
 
 shadow (1:4.1.4-3) unstable; urgency=low
 
