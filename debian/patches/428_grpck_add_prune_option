@@ -5,19 +5,17 @@ Fixes: #103385
 
 Status wrt upstream: It could certainly be submitted to upstream.
 
-Index: shadow-4.1.0/src/grpck.c
-===================================================================
---- shadow-4.1.0.orig/src/grpck.c
-+++ shadow-4.1.0/src/grpck.c
-@@ -139,6 +139,7 @@
+--- a/src/grpck.c
++++ b/src/grpck.c
+@@ -79,6 +79,7 @@
  /* Options */
  static bool read_only = false;
  static bool sort_mode = false;
 +static bool prune = false;
  
  /* local function prototypes */
- static void usage (void);
-@@ -163,7 +164,7 @@
+ static void fail_exit (int status);
+@@ -178,7 +179,7 @@
  	/*
  	 * Parse the command line arguments
  	 */
@@ -26,7 +24,7 @@ Index: shadow-4.1.0/src/grpck.c
  		switch (arg) {
  		case 'q':
  			/* quiet - ignored for now */
-@@ -174,6 +175,9 @@
+@@ -189,6 +190,9 @@
  		case 's':
  			sort_mode = true;
  			break;
@@ -36,7 +34,7 @@ Index: shadow-4.1.0/src/grpck.c
  		default:
  			usage ();
  		}
-@@ -296,9 +300,14 @@
+@@ -474,7 +478,12 @@
  			/*
  			 * prompt the user to delete the entry or not
  			 */
@@ -50,5 +48,3 @@ Index: shadow-4.1.0/src/grpck.c
  				continue;
  			}
  
- 			/*
- 			 * All group file deletions wind up here. This code

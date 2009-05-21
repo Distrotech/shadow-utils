@@ -1,13 +1,11 @@
-Index: shadow-4.1.0/src/su.c
-===================================================================
---- shadow-4.1.0.orig/src/su.c
-+++ shadow-4.1.0/src/su.c
-@@ -326,7 +326,7 @@
+--- a/src/su.c
++++ b/src/su.c
+@@ -342,7 +342,7 @@
  #endif
  #endif				/* !USE_PAM */
  
 -	sanitize_env ();
 +	/* sanitize_env (); */
  
- 	setlocale (LC_ALL, "");
- 	bindtextdomain (PACKAGE, LOCALEDIR);
+ 	(void) setlocale (LC_ALL, "");
+ 	(void) bindtextdomain (PACKAGE, LOCALEDIR);

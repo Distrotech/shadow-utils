@@ -18,11 +18,9 @@ PAM_USER description:
 
 See also: https://www.redhat.com/archives/pam-list/2008-May/msg00009.html
 
-Index: shadow-4.1.0/src/su.c
-===================================================================
---- shadow-4.1.0.orig/src/su.c
-+++ shadow-4.1.0/src/su.c
-@@ -309,6 +309,8 @@
+--- a/src/su.c
++++ b/src/su.c
+@@ -325,6 +325,8 @@
  	char **envp = environ;
  	char *shellstr = NULL;
  	char *command = NULL;
@@ -31,7 +29,7 @@ Index: shadow-4.1.0/src/su.c
  
  #ifdef USE_PAM
  	char **envcp;
-@@ -674,6 +676,14 @@
+@@ -728,6 +730,14 @@
  			su_failure (tty);
  		}
  	}

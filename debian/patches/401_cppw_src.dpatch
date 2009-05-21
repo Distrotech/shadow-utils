@@ -5,10 +5,8 @@
 ## DP: Add cppw / cpgr
 
 @DPATCH@
-Index: shadow-4.1.0/src/cppw.c
-===================================================================
 --- /dev/null
-+++ shadow-4.1.0/src/cppw.c
++++ b/src/cppw.c
 @@ -0,0 +1,199 @@
 +/*
 +  cppw, cpgr  copy with locking given file over the password or group file
@@ -209,10 +207,8 @@ Index: shadow-4.1.0/src/cppw.c
 +
 +  return 0;
 +}
-Index: shadow-4.1.0/src/Makefile.am
-===================================================================
---- shadow-4.1.0.orig/src/Makefile.am
-+++ shadow-4.1.0/src/Makefile.am
+--- a/src/Makefile.am
++++ b/src/Makefile.am
 @@ -25,6 +25,7 @@
  sbin_PROGRAMS  = nologin
  ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
@@ -221,19 +217,17 @@ Index: shadow-4.1.0/src/Makefile.am
  	chgpasswd \
  	chpasswd \
  	groupadd \
-@@ -59,6 +60,7 @@
+@@ -75,6 +76,7 @@
  chgpasswd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBSELINUX) $(LIBCRYPT)
- chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT) $(LIBSKEY) $(LIBMD)
+ chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)
  chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
 +cppw_LDADD     = $(LDADD) $(LIBSELINUX)
  gpasswd_LDADD  = $(LDADD) $(LIBAUDIT) $(LIBSELINUX) $(LIBCRYPT)
  groupadd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
  groupdel_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
-Index: shadow-4.1.0/po/POTFILES.in
-===================================================================
---- shadow-4.1.0.orig/po/POTFILES.in
-+++ shadow-4.1.0/po/POTFILES.in
-@@ -61,6 +61,7 @@
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -79,6 +79,7 @@
  src/chgpasswd.c
  src/chpasswd.c
  src/chsh.c

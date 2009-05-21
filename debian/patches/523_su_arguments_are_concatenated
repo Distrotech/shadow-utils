@@ -8,11 +8,9 @@ Status wrt upstream: This is a Debian specific patch.
 Note: the fix of the man page is still missing.
       (to be taken from the trunk)
 
-Index: shadow-4.1.0/src/su.c
-===================================================================
---- shadow-4.1.0.orig/src/su.c
-+++ shadow-4.1.0/src/su.c
-@@ -887,6 +887,35 @@
+--- a/src/su.c
++++ b/src/su.c
+@@ -953,6 +953,35 @@
  			argv[0] = "-c";
  			argv[1] = command;
  		}

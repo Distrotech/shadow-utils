@@ -7,11 +7,9 @@ Status wrt upstream: Forwarded but not applied yet
 
 Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
 
-Index: shadow-4.1.0/src/login.c
-===================================================================
---- shadow-4.1.0.orig/src/login.c
-+++ shadow-4.1.0/src/login.c
-@@ -331,7 +331,6 @@
+--- a/src/login.c
++++ b/src/login.c
+@@ -525,7 +525,6 @@
  #if defined(HAVE_STRFTIME) && !defined(USE_PAM)
  	char ptime[80];
  #endif
@@ -19,15 +17,15 @@ Index: shadow-4.1.0/src/login.c
  	unsigned int retries;
  	bool failed;
  	bool subroot = false;
-@@ -354,6 +353,7 @@
- 	char *pam_user;
- 	char **ptr_pam_user = &pam_user;
+@@ -546,6 +545,7 @@
+ 	pid_t child;
+ 	char *pam_user = NULL;
  #else
 +	unsigned int delay;
  	struct spwd *spwd = NULL;
  #endif
  	/*
-@@ -578,7 +578,6 @@
+@@ -706,7 +706,6 @@
  	}
  
  	environ = newenvp;	/* make new environment active */
@@ -35,7 +33,7 @@ Index: shadow-4.1.0/src/login.c
  	retries = getdef_unum ("LOGIN_RETRIES", RETRIES);
  
  #ifdef USE_PAM
-@@ -594,20 +593,15 @@
+@@ -722,8 +721,7 @@
  
  	/*
  	 * hostname & tty are either set to NULL or their correct values,
@@ -45,8 +43,7 @@ Index: shadow-4.1.0/src/login.c
  	 *
  	 * PAM_RHOST and PAM_TTY are used for authentication, only use
  	 * information coming from login or from the caller (e.g. no utmp)
- 	 */
- 	retcode = pam_set_item (pamh, PAM_RHOST, hostname);
+@@ -732,10 +730,6 @@
  	PAM_FAIL_CHECK;
  	retcode = pam_set_item (pamh, PAM_TTY, tty);
  	PAM_FAIL_CHECK;
@@ -55,9 +52,9 @@ Index: shadow-4.1.0/src/login.c
 -	PAM_FAIL_CHECK;
 -#endif
  	/* if fflg, then the user has already been authenticated */
- 	if (!fflg || (getuid () != 0)) {
- 		int failcount = 0;
-@@ -645,12 +639,6 @@
+ 	if (!fflg) {
+ 		unsigned int failcount = 0;
+@@ -776,12 +770,6 @@
  			failed = false;
  
  			failcount++;
@@ -70,7 +67,7 @@ Index: shadow-4.1.0/src/login.c
  
  			retcode = pam_authenticate (pamh, 0);
  
-@@ -956,14 +948,17 @@
+@@ -1100,14 +1088,17 @@
  		free (username);
  		username = NULL;
  
@@ -83,16 +80,14 @@ Index: shadow-4.1.0/src/login.c
 +		delay = getdef_unum ("FAIL_DELAY", 1);
  		if (delay > 0) {
  			(void) sleep (delay);
-		}
+ 		}
 +#endif
  
- 		puts (_("Login incorrect"));
+ 		(void) puts (_("Login incorrect"));
  
-Index: shadow-4.1.0/lib/getdef.c
-===================================================================
---- shadow-4.1.0.orig/lib/getdef.c
-+++ shadow-4.1.0/lib/getdef.c
-@@ -56,7 +56,6 @@
+--- a/lib/getdef.c
++++ b/lib/getdef.c
+@@ -60,7 +60,6 @@
  	{"ENV_PATH", NULL},
  	{"ENV_SUPATH", NULL},
  	{"ERASECHAR", NULL},
@@ -100,7 +95,7 @@ Index: shadow-4.1.0/lib/getdef.c
  	{"FAILLOG_ENAB", NULL},
  	{"FAKE_SHELL", NULL},
  	{"FTMP_FILE", NULL},
-@@ -94,6 +93,7 @@
+@@ -104,6 +103,7 @@
  	{"ENV_HZ", NULL},
  	{"ENVIRON_FILE", NULL},
  	{"ENV_TZ", NULL},

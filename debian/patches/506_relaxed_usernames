@@ -17,21 +17,19 @@ Details:
  than '-' as the leading character).  Thus, the maintenance tools don't
  anymore.  closes: #79682, #166798, #171179
 
-Index: shadow-4.1.0/libmisc/chkname.c
-===================================================================
---- shadow-4.1.0.orig/libmisc/chkname.c
-+++ shadow-4.1.0/libmisc/chkname.c
-@@ -17,6 +17,7 @@
- #endif
- static int good_name (const char *name)
+--- a/libmisc/chkname.c
++++ b/libmisc/chkname.c
+@@ -48,6 +48,7 @@
+ 
+ static bool is_valid_name (const char *name)
  {
 +#if 0
  	/*
  	 * User/group names must match [a-z_][a-z0-9_-]*[$]
  	 */
-@@ -30,6 +31,20 @@
- 		      (*name == '$' && *(name + 1) == '\0')))
- 			return 0;
+@@ -66,6 +67,20 @@
+ 			return false;
+ 		}
  	}
 +#endif
 +	/*
@@ -48,21 +46,19 @@ Index: shadow-4.1.0/libmisc/chkname.c
 +			return 0;
 +	while (*++name);
  
- 	return 1;
+ 	return true;
  }
-Index: shadow-4.1.0/man/useradd.8.xml
-===================================================================
---- shadow-4.1.0.orig/man/useradd.8.xml
-+++ shadow-4.1.0/man/useradd.8.xml
-@@ -195,6 +195,7 @@
- 	    default is to not create the directory and to not copy any
- 	    files.
+--- a/man/useradd.8.xml
++++ b/man/useradd.8.xml
+@@ -197,6 +197,7 @@
+ 	    <option>INACTIVE</option> variable in
+ 	    <filename>/etc/default/useradd</filename>, or -1 by default.
  	  </para>
 +	  <para>This option may not function correctly if the username has a / in it.</para>
  	</listitem>
        </varlistentry>
        <varlistentry>
-@@ -372,10 +373,15 @@
+@@ -607,12 +608,17 @@
      </para>
  
      <para>
@@ -71,19 +67,19 @@ Index: shadow-4.1.0/man/useradd.8.xml
        followed by lower case letters, digits, underscores, or dashes.
        They can end with a dollar sign.
        In regular expression terms: [a-z_][a-z0-9_-]*[$]?
-+    </para>
-+    <para>
+     </para>
+     <para>
 +      On Debian, the only constraints are that usernames must neither start
 +      with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
 +      end of line: '\n', tabulation: '\t', etc.).
++    </para>
++    <para>
+       Usernames may only be up to 32 characters long.
      </para>
    </refsect1>
- 
-Index: shadow-4.1.1/man/groupadd.8.xml
-===================================================================
---- shadow-4.1.1.orig/man/groupadd.8.xml	2008-08-15 09:07:37.033120372 -0300
-+++ shadow-4.1.1/man/groupadd.8.xml	2008-08-15 09:10:24.961112507 -0300
-@@ -170,10 +170,15 @@
+--- a/man/groupadd.8.xml
++++ b/man/groupadd.8.xml
+@@ -223,12 +223,17 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>
@@ -92,11 +88,13 @@ Index: shadow-4.1.1/man/groupadd.8.xml
         followed by lower case letters, digits, underscores, or dashes.
         They can end with a dollar sign.
         In regular expression terms: [a-z_][a-z0-9_-]*[$]?
-+     </para>
-+     <para>
+      </para>
+      <para>
 +       On Debian, the only constraints are that usernames must neither start
 +       with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
 +       end of line: '\n', tabulation: '\t', etc.).
++     </para>
++     <para>
+        Groupnames may only be up to &GROUP_NAME_MAX_LENGTH; characters long.
       </para>
       <para>
-        Groupnames may only be up to 16 characters long.

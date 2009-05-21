@@ -2,11 +2,9 @@ Goal: shell's name must be -su when a su fakes a login
 
 Status wrt upstream: not reported yet
 
-Index: shadow-4.1.0/src/su.c
-===================================================================
---- shadow-4.1.0.orig/src/su.c
-+++ shadow-4.1.0/src/su.c
-@@ -924,7 +924,7 @@
+--- a/src/su.c
++++ b/src/su.c
+@@ -1001,7 +1001,7 @@
  		 * Use the shell and create an argv
  		 * with the rest of the command line included.
  		 */

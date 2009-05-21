@@ -1,7 +1,5 @@
-Index: shadow-4.1.0/src/Makefile.am
-===================================================================
---- shadow-4.1.0.orig/src/Makefile.am
-+++ shadow-4.1.0/src/Makefile.am
+--- a/src/Makefile.am
++++ b/src/Makefile.am
 @@ -22,7 +22,6 @@
  # $prefix/bin and $prefix/sbin, no install-data hacks...)
  

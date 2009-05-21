@@ -2,11 +2,9 @@ Goal: save the [g]shadow files with the 'shadow' group and mode 0440
 
 Fixes: #166793
 
-Index: shadow-4.1.0/lib/commonio.c
-===================================================================
---- shadow-4.1.0.orig/lib/commonio.c
-+++ shadow-4.1.0/lib/commonio.c
-@@ -13,6 +13,7 @@
+--- a/lib/commonio.c
++++ b/lib/commonio.c
+@@ -44,6 +44,7 @@
  #include <errno.h>
  #include <stdio.h>
  #include <signal.h>
@@ -14,7 +12,7 @@ Index: shadow-4.1.0/lib/commonio.c
  #include "nscd.h"
  #ifdef WITH_SELINUX
  #include <selinux/selinux.h>
-@@ -712,13 +713,20 @@
+@@ -868,13 +869,20 @@
  			goto fail;
  		}
  	} else {

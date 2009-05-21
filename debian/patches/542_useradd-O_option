@@ -5,11 +5,9 @@ Note: useradd.8 needs to be regenerated.
 Status wrt upstream: not included as this is just specific 
                      backward compatibility for Debian
 
-Index: shadow-4.1.0/man/useradd.8.xml
-===================================================================
---- shadow-4.1.0.orig/man/useradd.8.xml
-+++ shadow-4.1.0/man/useradd.8.xml
-@@ -224,6 +224,11 @@
+--- a/man/useradd.8.xml
++++ b/man/useradd.8.xml
+@@ -300,6 +300,11 @@
  	    <replaceable>UID_MIN</replaceable>=<replaceable>10</replaceable>,<replaceable>UID_MAX</replaceable>=<replaceable>499</replaceable>
  	    doesn't work yet.
  	  </para>
@@ -21,11 +19,9 @@ Index: shadow-4.1.0/man/useradd.8.xml
  	</listitem>
        </varlistentry>
        <varlistentry>
-Index: shadow-4.1.0/src/useradd.c
-===================================================================
---- shadow-4.1.0.orig/src/useradd.c
-+++ shadow-4.1.0/src/useradd.c
-@@ -1009,9 +1009,9 @@
+--- a/src/useradd.c
++++ b/src/useradd.c
+@@ -996,9 +996,9 @@
  		};
  		while ((c = getopt_long (argc, argv,
  #ifdef WITH_SELINUX
@@ -37,8 +33,8 @@ Index: shadow-4.1.0/src/useradd.c
  #endif
  		                         long_options, NULL)) != -1) {
  			switch (c) {
-@@ -1125,6 +1125,7 @@
- 				kflg++;
+@@ -1120,6 +1120,7 @@
+ 				kflg = true;
  				break;
  			case 'K':
 +			case 'O': /* compatibility with previous Debian useradd */
