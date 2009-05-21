@@ -8,8 +8,10 @@ shadow (1:4.1.4.1-1) unstable; urgency=low
        Otherwise, it still check with utmp if the user is logged in and check
        if the process indicated by utmp is still running to avoid
        mis-detection of logged-in users. Closes: #528060
+     - Updated patches:
+        + debian/patches/506_relaxed_usernames
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 18 May 2009 18:00:33 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:15:40 +0200
 
 shadow (1:4.1.4-3) unstable; urgency=low
 

@@ -62,17 +62,15 @@ Index: shadow-4.1.0/man/useradd.8.xml
  	</listitem>
        </varlistentry>
        <varlistentry>
-@@ -372,9 +373,15 @@
+@@ -372,10 +373,15 @@
      </para>
  
      <para>
--      Usernames must begin with a lower case letter or an underscore, and
--      only lower case letters, underscores, dashes, and dollar signs may
--      follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
-+      It is usually recommended to only use usernames that begin with
-+      a lower case letter or an underscore, and are only followed by lower
-+      case letters, digits, underscores, dashes, and optionally terminated by
-+      a dollar sign. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
+-      Usernames must start with a lower case letter or an underscore,
++      It is usually recommended to only use usernames that begin with a lower case letter or an underscore,
+       followed by lower case letters, digits, underscores, or dashes.
+       They can end with a dollar sign.
+       In regular expression terms: [a-z_][a-z0-9_-]*[$]?
 +    </para>
 +    <para>
 +      On Debian, the only constraints are that usernames must neither start
@@ -85,17 +83,15 @@ Index: shadow-4.1.1/man/groupadd.8.xml
 ===================================================================
 --- shadow-4.1.1.orig/man/groupadd.8.xml	2008-08-15 09:07:37.033120372 -0300
 +++ shadow-4.1.1/man/groupadd.8.xml	2008-08-15 09:10:24.961112507 -0300
-@@ -170,9 +170,15 @@
+@@ -170,10 +170,15 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>
--       Groupnames must begin with a lower case letter or an underscore,
--       and only lower case letters, underscores, dashes, and dollar signs
--       may follow. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
-+       It is usually recommended to only use usernames that begin with
-+       a lower case letter or an underscore, and are only followed by lower
-+       case letters, digits, underscores, dashes, and optionally terminated by
-+       a dollar sign. In regular expression terms: [a-z_][a-z0-9_-]*[$]?
+-       Groupnames must start with a lower case letter or an underscore,
++       It is usually recommended to only use groupnames that begin with a lower case letter or an underscore,
+        followed by lower case letters, digits, underscores, or dashes.
+        They can end with a dollar sign.
+        In regular expression terms: [a-z_][a-z0-9_-]*[$]?
 +     </para>
 +     <para>
 +       On Debian, the only constraints are that usernames must neither start
