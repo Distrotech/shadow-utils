@@ -24,7 +24,7 @@ echo -n "Looking for 'FAILED su for myuser by testsuite' in /var/log/auth.log...
 grep -q "FAILED su for myuser by testsuite" /var/log/auth.log
 echo "OK"
 echo -n "Looking for '- pts/[0-9]+ testsuite:myuser' in /var/log/auth.log..."
-grep -q -E "\- pts/[0-9]+ testsuite:myuser" /var/log/auth.log
+grep -q -E "\- /dev/pts/[0-9]+ testsuite:myuser" /var/log/auth.log
 echo "OK"
 
 log_status "$0" "SUCCESS"

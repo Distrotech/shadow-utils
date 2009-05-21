@@ -23,7 +23,7 @@ echo -n "Looking for 'Successful su for myuser by testsuite' in /var/log/auth.lo
 grep -q "Successful su for myuser by testsuite" /var/log/auth.log
 echo "OK"
 echo -n "Looking for '+ pts/[0-9]+ tstsuite:myuser' in /var/log/auth.log..."
-grep -q -E "\+ pts/[0-9]+ testsuite:myuser" /var/log/auth.log
+grep -q -E "\+ /dev/pts/[0-9]+ testsuite:myuser" /var/log/auth.log
 echo "OK"
 
 log_status "$0" "SUCCESS"
