@@ -1,3 +1,16 @@
+shadow (1:4.1.4.1-1) unstable; urgency=low
+
+  * The "Chevrotin" release.
+  * New upstream release:
+     - Fixed typo in the French vipw usage. Closes: #528486
+     - Fixed failure to delete an user (wrongly detected as still logged in).
+       On Linux, userdel checks if the user has some running processes.
+       Otherwise, it still check with utmp if the user is logged in and check
+       if the process indicated by utmp is still running to avoid
+       mis-detection of logged-in users. Closes: #528060
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 18 May 2009 18:00:33 +0200
+
 shadow (1:4.1.4-3) unstable; urgency=low
 
   * The "Banonet" release.
