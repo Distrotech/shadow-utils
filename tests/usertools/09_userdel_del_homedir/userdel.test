@@ -12,13 +12,15 @@ log_start "$0" "userdel can delete the user's home directory"
 save_config
 
 # restore the files on exit
-trap 'log_status "$0" "FAILURE"; restore_config; rm -rf /var/mail/foo /home/foo' 0
+trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
 mkdir /home/foo
+trap 'log_status "$0" "FAILURE"; restore_config; rm -rf /home/foo' 0
 echo toto > /home/foo/toto
 touch /var/mail/foo
+trap 'log_status "$0" "FAILURE"; restore_config; rm -rf /var/mail/foo /home/foo' 0
 chown -R foo:foo /var/mail/foo /home/foo
 
 echo -n "Delete user foo (userdel -r foo)..."
