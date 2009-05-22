@@ -8,6 +8,7 @@ shadow (1:4.1.4.1-1) unstable; urgency=low
        Otherwise, it still check with utmp if the user is logged in and check
        if the process indicated by utmp is still running to avoid
        mis-detection of logged-in users. Closes: #528060
+     - newgrp and sg return the exit status of their child. Closes: #529897
      - Updated patches:
         + debian/patches/506_relaxed_usernames
   * debian/login.defs: Removed comment about MD5_CRYPT. MD5_CRYPT_ENAB is no
