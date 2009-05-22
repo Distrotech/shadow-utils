@@ -17,7 +17,7 @@ shadow (1:4.1.4.1-1) unstable; urgency=low
   * debian/patches/506_relaxed_usernames: usernames with a slash will not only
     break one option. Move to the discussion on the usernames.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 21 May 2009 17:54:22 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 22 May 2009 16:29:58 +0200
 
 shadow (1:4.1.4-3) unstable; urgency=low
 
