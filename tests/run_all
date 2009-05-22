@@ -99,6 +99,8 @@ run_test ./su/08/env_special-options_
 run_test ./su/08/env_special_root-options_
 run_test ./su/09/env_special-options_
 run_test ./su/09/env_special_root-options_
+run_test ./su/10_su_sulog_success/su.test
+run_test ./su/11_su_sulog_failure/su.test
 run_test ./convtools/01/run
 run_test ./convtools/02_grpconv_remove_gshadow_only_entries/grpconv.test
 run_test ./convtools/03_grpconv_copy_passwd/grpconv.test
@@ -397,6 +399,8 @@ run_test ./usertools/56_userdel_locked_passwd/userdel.test
 run_test ./usertools/57_userdel_locked_group/userdel.test
 run_test ./usertools/58_userdel_locked_shadow/userdel.test
 run_test ./usertools/59_userdel_locked_gshadow/userdel.test
+run_test ./usertools/60_userdel_invalid_user/userdel.test
+run_test ./usertools/61_userdel_del_homedir_with_symlinks/userdel.test
 if [ "$USE_PAM" = "yes" ]; then
 	run_test ./usertools/chpasswd-PAM/01_chpasswd_invalid_user/chpasswd.test
 	run_test ./usertools/chpasswd-PAM/02_chpasswd_multiple_users/chpasswd.test
@@ -571,6 +575,13 @@ run_test ./split_groups/10_groupdel_no_split_group_already_split/groupdel.test
 run_test ./failures/groupmod/01_groupmod_change_group_name_gshadow_rename_failure/groupmod.test
 run_test ./failures/groupmod/02_groupmod_change_gid_change_primary_group_passwd_rename_failure/groupmod.test
 run_test ./failures/groupmod/03_groupmod_change_group_name_group_rename_failure/groupmod.test
+run_test ./failures/userdel/01_userdel_gshadow_rename_failure/userdel.test
+run_test ./failures/userdel/02_userdel_group_rename_failure/userdel.test
+run_test ./failures/userdel/03_userdel_shadow_rename_failure/userdel.test
+run_test ./failures/userdel/04_userdel_passwd_rename_failure/userdel.test
+run_test ./failures/userdel/05_userdel_failure_remove_mailbox/userdel.test
+run_test ./failures/userdel/06_userdel_failure_remove_file_homedir/userdel.test
+run_test ./failures/userdel/07_userdel_failure_remove_homedir/userdel.test
 run_test ./failures/usermod/01_usermod_change_user_name_gshadow_rename_failure/usermod.test
 run_test ./failures/usermod/02_usermod_change_uid_passwd_rename_failure/usermod.test
 run_test ./failures/usermod/03_usermod_change_user_name_group_rename_failure/usermod.test
