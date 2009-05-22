@@ -1,0 +1,2 @@
+unlink FAILURE /home/foo/bar/baz
+userdel: error removing directory /home/foo
