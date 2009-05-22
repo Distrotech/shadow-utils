@@ -12,13 +12,16 @@ log_start "$0" "userdel accepts when the user is not is shadow"
 save_config
 
 # restore the files on exit
-trap 'log_status "$0" "FAILURE"; restore_config' 0
+trap 'log_status "$0" "FAILURE"; restore_config; kill %1' 0
 
 change_config
 
 echo -n "Create a process for foo (su -l foo -c \"sleep 10\")..."
-su -l foo -c "sleep 10" &
+su -l foo -c "sleep 10" 2>/dev/null &
 echo "OK"
+
+# Make sure su was started.
+sleep 1
 
 echo -n "Delete user foo (userdel foo)..."
 userdel foo 2>tmp/userdel.err && exit 1 || {
