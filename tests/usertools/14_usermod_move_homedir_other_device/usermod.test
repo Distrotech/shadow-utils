@@ -27,7 +27,7 @@ chown -R foo:foo /home/foo
 mkdir /tmp/home
 mount --bind /home /tmp/home
 
-echo -n "Change the user's home directory (usermod -m -d /home/foo2 foo)..."
+echo -n "Change the user's home directory (usermod -m -d /tmp/home/foo2 foo)..."
 usermod -m -d /tmp/home/foo2 foo
 echo "OK"
 
@@ -49,14 +49,14 @@ echo "OK"
 echo -n "Check the user's home directory was moved..."
 test -d /home/foo2
 echo "OK"
-echo -n "Check content of /home/foo2/..."
-stat --printf "%A %U:%G %N\n" /home/foo2/* /home/foo2/.* 2>/dev/null | sort > tmp/home_ls-a
+echo -n "Check content of /tmp/home/foo2/..."
+stat --printf "%A %U:%G %N\n" /tmp/home/foo2/* /tmp/home/foo2/.* 2>/dev/null | sort > tmp/home_ls-a
 diff -rauN data/home_ls-a tmp/home_ls-a
 echo "OK"
 rm -f tmp/home_ls-a
 
 echo -n "Remove the new home directory..."
-rm -rf /home/foo2
+rm -rf /tmp/home/foo2
 echo "done"
 
 umount /tmp/home
