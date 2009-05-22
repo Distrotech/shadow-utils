@@ -11,7 +11,7 @@ save_config ()
 	while read file
 	do
 		mkdir -p "tmp/$(dirname "$file")"
-		[ -f "/$file" ] && cp -dp "/$file" "tmp/$file"
+		[ -f "/$file" ] && cp -dp "/$file" "tmp/$file" || true
 	done
 }
 
@@ -32,9 +32,12 @@ restore_config ()
 	find config -depth -path "*/.svn/*" -prune -o -type f -print | sed -e 's/config\///' |
 	while read file
 	do
-		[ -f "tmp/$file" ] && \
-			cp -dp "tmp/$file" "/$file" && \
+		if [ -f "tmp/$file" ]; then
+			cp -dp "tmp/$file" "/$file"
 			rm "tmp/$file"
+		else
+			rm "/$file"
+		fi
 		d="$(dirname "tmp/$file")"
 		while [ -n "$d" ] && [ "$d" != "." ]
 		do
