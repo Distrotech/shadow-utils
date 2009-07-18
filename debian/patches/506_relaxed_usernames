@@ -82,7 +82,7 @@ Details:
         In regular expression terms: [a-z_][a-z0-9_-]*[$]?
       </para>
       <para>
-+       On Debian, the only constraints are that usernames must neither start
++       On Debian, the only constraints are that groupnames must neither start
 +       with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
 +       end of line: '\n', tabulation: '\t', etc.).
 +     </para>
