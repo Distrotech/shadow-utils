@@ -1,3 +1,19 @@
+shadow (1:4.1.4.2-1) unstable; urgency=low
+
+  * The "Tome des Bauges" release.
+  * New upstream release:
+     - Updated Basque translation. Closes: #535553
+     - Fixed some translatable string. Closes: #525726
+     - Fixed documentation of the short option for --mindays in passwd(1).
+       Closes: #531983
+  * debian/securetty.linux: Added Embedded Renesas SuperH ports.
+    Closes: #535927
+  * debian/securetty.linux: Added ttyS2 to ttyS5. Some extension card provide
+    more serial ports, but that should be sufficient until there is a support
+    for regular expressions. Closes: #534244
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 18 Jul 2009 19:20:30 +0200
+
 shadow (1:4.1.4.1-1) unstable; urgency=low
 
   * The "Chevrotin" release.

@@ -5,6 +5,10 @@ console
 # Standard serial ports
 ttyS0
 ttyS1
+ttyS2
+ttyS3
+ttyS4
+ttyS5
 
 # USB dongles
 ttyUSB0
@@ -121,3 +125,13 @@ ttymxc2
 ttymxc3
 ttymxc4
 ttymxc5
+
+# Embedded Renesas SuperH ports
+ttySC0
+ttySC1
+ttySC2
+ttySC3
+ttySC4
+ttySC5
+
+
