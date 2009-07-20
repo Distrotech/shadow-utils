@@ -6,13 +6,15 @@ shadow (1:4.1.4.2-1) unstable; urgency=low
      - Fixed some translatable string. Closes: #525726
      - Fixed documentation of the short option for --mindays in passwd(1).
        Closes: #531983
+     - Added support for shells being shell scripts without a shebang.
+       Closes: #479406
   * debian/securetty.linux: Added Embedded Renesas SuperH ports.
     Closes: #535927
   * debian/securetty.linux: Added ttyS2 to ttyS5. Some extension card provide
     more serial ports, but that should be sufficient until there is a support
     for regular expressions. Closes: #534244
   * debian/patches/506_relaxed_usernames: Fixed typo. groupadd(8) should
-    document therestriction on groupnames, not usernames.
+    document the restriction on groupnames, not usernames.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 18 Jul 2009 19:20:30 +0200
 
