@@ -4,32 +4,26 @@
 set -e
 
 shadowon () {
-bash<<- EOF
     set -e
     pwck -q
     grpck -p
     pwconv
     grpconv
-    cd /etc
-    chown root:root passwd group
-    chmod 644 passwd group
-    chown root:shadow shadow gshadow
-    chmod 640 shadow gshadow
-EOF
+    chown root:root /etc/passwd /etc/group
+    chmod 644 /etc/passwd /etc/group
+    chown root:shadow /etc/shadow /etc/gshadow
+    chmod 640 /etc/shadow /etc/gshadow
 }
 
 shadowoff () {
-bash<<- EOF
     set -e
     pwck -q
     grpck -p
     pwunconv
     grpunconv
-    cd /etc
     # sometimes the passwd perms get munged
-    chown root:root passwd group
-    chmod 644 passwd group
-EOF
+    chown root:root /etc/passwd /etc/group
+    chmod 644 /etc/passwd /etc/group
 }
 
 case "$1" in

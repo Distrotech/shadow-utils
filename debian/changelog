@@ -17,8 +17,11 @@ shadow (1:4.1.4.2-1) unstable; urgency=low
     document the restriction on groupnames, not usernames.
   * debian/login.pam: pam_securetty included as a required module instead of
     requisite to avoid leak of user name information. Closes: #531341
+  * debian/shadowconfig.sh: Do not run shadowoff() and shadowon() in subshell.
+    This also remove a dependency on bash (even though /bin/sh would have been
+    sufficient). Thanks to Luk for spotting this.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 23 Jul 2009 22:55:12 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 23 Jul 2009 22:56:42 +0200
 
 shadow (1:4.1.4.1-1) unstable; urgency=low
 
