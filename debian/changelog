@@ -15,8 +15,10 @@ shadow (1:4.1.4.2-1) unstable; urgency=low
     for regular expressions. Closes: #534244
   * debian/patches/506_relaxed_usernames: Fixed typo. groupadd(8) should
     document the restriction on groupnames, not usernames.
+  * debian/login.pam: pam_securetty included as a required module instead of
+    requisite to avoid leak of user name information. Closes: #531341
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 18 Jul 2009 19:20:30 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 23 Jul 2009 22:55:12 +0200
 
 shadow (1:4.1.4.1-1) unstable; urgency=low
 
