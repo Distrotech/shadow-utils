@@ -21,8 +21,9 @@ shadow (1:4.1.4.2-1) unstable; urgency=low
     This also remove a dependency on bash (even though /bin/sh would have been
     sufficient). Thanks to Luk for spotting this.
   * debian/login.dirs, debian/passwd.dirs: Removed usr/share/linda/overrides.
+  * debian/control: Standards-Version: bumped to 3.8.2. No changes.
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 24 Jul 2009 04:02:48 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 24 Jul 2009 05:03:23 +0200
 
 shadow (1:4.1.4.1-1) unstable; urgency=low
 
