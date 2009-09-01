@@ -3,7 +3,8 @@
 console
 
 # for people with serial port consoles
-cuaa0
+ttyd0
+ttyd1
 
 # Standard consoles
 ttyv0

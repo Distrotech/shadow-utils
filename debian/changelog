@@ -3,8 +3,10 @@ shadow (1:4.1.4.3-1) unstable; urgency=low
   * The "Bleu de Gex" release
   * New upstream release:
      - Fix formatting of the login.defs.5 manpage. Closes: #542804
+  * debian/securetty.kfreebsd: On GNU/kFreeBSD the serial devices have change
+    from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 21 Aug 2009 17:15:45 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Tue, 01 Sep 2009 15:29:01 +0200
 
 shadow (1:4.1.4.2-1) unstable; urgency=low
 
