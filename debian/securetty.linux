@@ -134,4 +134,9 @@ ttySC3
 ttySC4
 ttySC5
 
+# Embedded ARM AMBA PL011 ports (e.g. emulated by QEMU)
+ttyama0
+ttyama1
+ttyama2
+ttyama3
 
