@@ -1,6 +1,7 @@
 shadow (1:4.1.4.4-1) UNRELEASED; urgency=low
 
   * New upstream release:
+    - Updated Czech translation. Closes: #548407
     - Updated Vietnamese translation. Closes: #548065
 
  -- Christian Perrier <bubulle@debian.org>  Thu, 24 Sep 2009 22:21:39 +0200
