@@ -11,6 +11,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
     from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
   * debian/securetty.linux: Added support for embedded ARM AMBA PL011 ports
     (e.g. emulated by QEMU). Closes: #544184
+  * debian/control: Removed Martin Quinson from the Uploaders, on his request.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Jan 2010 18:28:33 +0100
 
