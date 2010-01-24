@@ -1,3 +1,4 @@
+Status wrt upstream: Also applied upstream in shadow-4.1.4.3
 --- a/src/su.c
 +++ b/src/su.c
 @@ -342,7 +342,7 @@
