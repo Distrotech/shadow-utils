@@ -21,6 +21,7 @@ include /usr/share/cdbs/1/class/autotools.mk
 DEB_AUTO_UPDATE_ACLOCAL  = 1.9
 DEB_AUTO_UPDATE_AUTOCONF = 1.9
 DEB_AUTO_UPDATE_AUTOMAKE = 1.9
+DEB_AUTO_UPDATE_LIBTOOL = pre
 
 # Adds extra options when calling the configure script:
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-shared --without-libcrack --without-audit --mandir=/usr/share/man --with-libpam --enable-shadowgrp --enable-man --disable-account-tools-setuid --with-group-name-max-length=32

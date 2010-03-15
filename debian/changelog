@@ -16,6 +16,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
   * debian/control: Removed Martin Quinson from the Uploaders, on his request.
   * debian/login.defs: Improve documentation of USERGROUPS_ENAB.
     Closes: #572687
+  * debian/rules: Added DEB_AUTO_UPDATE_LIBTOOL = pre. Closes: #560633
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Jan 2010 18:28:33 +0100
 
