@@ -3,7 +3,6 @@
 #901_testsuite_gcov
 
 503_shadowconfig.8
-008_su_no_sanitize_env
 008_su_get_PAM_username
 428_grpck_add_prune_option
 008_login_log_failure_in_FTMP
