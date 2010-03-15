@@ -224,10 +224,12 @@ DEFAULT_HOME	yes
 #USERDEL_CMD	/usr/sbin/userdel_local
 
 #
-# This enables userdel to remove user groups if no members exist.
+# If set to yes, userdel will remove the user´s group if it contains no
+# more members, and useradd will create by default a group with the name
+# of the user.
 #
 # Other former uses of this variable such as setting the umask when
-# user==primary group are not used in PAM environments, thus in Debian
+# user==primary group are not used in PAM environments, such as Debian
 #
 USERGROUPS_ENAB yes
 
