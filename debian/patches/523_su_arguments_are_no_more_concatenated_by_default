@@ -36,9 +36,9 @@ Status wrt upstream: This patch is Debian specific.
  
 +	old_debian_behavior = (getenv("SU_NO_SHELL_ARGS") != NULL);
 +
- 	/* sanitize_env (); */
- 
  	(void) setlocale (LC_ALL, "");
+ 	(void) bindtextdomain (PACKAGE, LOCALEDIR);
+ 	(void) textdomain (PACKAGE);
 @@ -957,7 +972,7 @@
  		 * resulting string is always given to the shell with its
  		 * -c option.
