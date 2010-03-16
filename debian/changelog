@@ -21,6 +21,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
     PAM module. It's more important to avoid root logins over insecure
     terminals than having a very hypothetical attack based on sniffing
     incorrect usernames, followed by a brute force attack.
+    Closes: #574082
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Jan 2010 18:28:33 +0100
 
