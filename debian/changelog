@@ -17,6 +17,10 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
   * debian/login.defs: Improve documentation of USERGROUPS_ENAB.
     Closes: #572687
   * debian/rules: Added DEB_AUTO_UPDATE_LIBTOOL = pre. Closes: #560633
+  * debian/login.pam: return back to "requisite" for the pam_securetty
+    PAM module. It's more important to avoid root logins over insecure
+    terminals than having a very hypothetical attack based on sniffing
+    incorrect usernames, followed by a brute force attack.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Jan 2010 18:28:33 +0100
 
