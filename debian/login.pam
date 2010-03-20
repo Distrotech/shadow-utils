@@ -14,13 +14,22 @@ auth       optional   pam_faildelay.so  delay=3000000
 
 # Disallows root logins except on tty's listed in /etc/securetty
 # (Replaces the `CONSOLE' setting from login.defs)
-# Note that it is included as a "requisite" module. No password prompts will
-# be displayed if this module fails to avoid having the root password
-# transmitted on unsecure ttys.
+#
+# With the default control of this module:
+#   [success=ok new_authtok_reqd=ok ignore=ignore user_unknown=bad default=die]
+# root will not be prompted for a pasword on insecure lines.
+# if an invalid username is entered, a password is prompted (but login
+# will eventually be rejected)
+#
+# You can change it to a "requisite" module if you think root may mis-type
+# her login and should not be prompted for a password in that case. But
+# this will leave the system as vulnerable to user enumeration attacks.
+#
 # You can change it to a "required" module if you think it permits to
 # guess valid user names of your system (invalid user names are considered
-# as possibly being root).
-auth       requisite  pam_securetty.so
+# as possibly being root on insecure lines), but root passwords may be
+# communicated over insecure lines.
+auth [success=ok new_authtok_reqd=ok ignore=ignore user_unknown=bad default=die] pam_securetty.so
 
 # Disallows other than root logins when /etc/nologin exists
 # (Replaces the `NOLOGINS_FILE' option from login.defs)
