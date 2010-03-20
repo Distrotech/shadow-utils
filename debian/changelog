@@ -9,6 +9,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
       + debian/patches/008_su_no_sanitize_env
     - Updated patches:
       + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
+      + debian/patches/542_useradd-O_option
     - Added support for dates already specified as a number of days since
       Epoch in useradd, usermod and chage. Closes: #562221
     - This also allows, in the chage interactive mode, to specify -1 as the

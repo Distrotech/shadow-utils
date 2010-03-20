@@ -25,11 +25,11 @@ Status wrt upstream: not included as this is just specific
  		};
  		while ((c = getopt_long (argc, argv,
  #ifdef WITH_SELINUX
--		                         "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:UZ:",
-+		                         "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:UZ:",
+-		                         "b:c:d:De:f:g:G:hk:K:lmMNop:rs:u:UZ:",
++		                         "b:c:d:De:f:g:G:hk:O:K:lmMNop:rs:u:UZ:",
  #else
--		                         "b:c:d:De:f:g:G:k:K:lmMNop:rs:u:U",
-+		                         "b:c:d:De:f:g:G:k:O:K:lmMNop:rs:u:U",
+-		                         "b:c:d:De:f:g:G:hk:K:lmMNop:rs:u:U",
++		                         "b:c:d:De:f:g:G:hk:O:K:lmMNop:rs:u:U",
  #endif
  		                         long_options, NULL)) != -1) {
  			switch (c) {
