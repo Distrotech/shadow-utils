@@ -17,6 +17,8 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
       expiration date to disable it. Closes: #573018
     - Fixed parsing of gshadow. This fix password support in newgrp.
       Closes: #569899
+    - pwck and grpck stop sorting at the first line which begins with a '+'.
+      This will avoid messing up with NIS entries. Closes: #567836
   * debian/securetty.kfreebsd: On GNU/kFreeBSD the serial devices have change
     from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
   * debian/securetty.linux: Added support for embedded ARM AMBA PL011 ports
