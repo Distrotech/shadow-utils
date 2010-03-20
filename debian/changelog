@@ -7,6 +7,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
     - Updated Vietnamese translation. Closes: #548065
     - Remove patches applied upstream:
       + debian/patches/008_su_no_sanitize_env
+      + debian/patches/483_su_fakelogin_wrong_arg0
     - Updated patches:
       + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
       + debian/patches/542_useradd-O_option

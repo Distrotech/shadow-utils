@@ -16,6 +16,5 @@
 463_login_delay_obeys_to_PAM
 523_su_arguments_are_concatenated
 523_su_arguments_are_no_more_concatenated_by_default
-483_su_fakelogin_wrong_arg0
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
