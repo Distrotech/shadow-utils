@@ -31,6 +31,9 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
     protect against mis-typed root login can use "requisite", but will be
     vulnerable to user enumeration attacks on insecure lines, and should use
     pam 1.1.0-4 at least. Closes: #574082, #531341
+  * debian/passwd.cron.daily: Handle the backups of the user and group
+    databases so that it can be removed from the standard daily cron job.
+    Closes: #554170
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 24 Jan 2010 18:28:33 +0100
 
