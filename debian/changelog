@@ -1,4 +1,4 @@
-shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
+shadow (1:4.1.5-1) UNRELEASED; urgency=low
 
   * The "Bleu de Gex" release.
   * New upstream release:
@@ -19,6 +19,7 @@ shadow (1:4.1.4.3-1) UNRELEASED; urgency=low
       Closes: #569899
     - pwck and grpck stop sorting at the first line which begins with a '+'.
       This will avoid messing up with NIS entries. Closes: #567836
+    - Fix interruption of su, newgrp, vipw with Ctrl-Z. Closes: 530231
   * debian/securetty.kfreebsd: On GNU/kFreeBSD the serial devices have change
     from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
   * debian/securetty.linux: Added support for embedded ARM AMBA PL011 ports
