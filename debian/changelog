@@ -20,6 +20,10 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
     - pwck and grpck stop sorting at the first line which begins with a '+'.
       This will avoid messing up with NIS entries. Closes: #567836
     - Fix interruption of su, newgrp, vipw with Ctrl-Z. Closes: 530231
+    - mail checking is no more mentioned in login(1) since it is done by PAM.
+      Closes: #470059
+    - The -e (and -c and -m) option was restored in chpasswd (which still uses
+      PAM by default).  Closes: #539354
   * debian/securetty.kfreebsd: On GNU/kFreeBSD the serial devices have change
     from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
   * debian/securetty.linux: Added support for embedded ARM AMBA PL011 ports
