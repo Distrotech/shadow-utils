@@ -53,6 +53,8 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
   * debian/control: Standards-Version: bumped to 3.8.4. No changes.
   * debian/passwd.lintian-overrides: Remove old entries relevant for
     passwd.config.
+  * debian/control: Do not repeat the Section and Priority fields for the
+    binary packages.
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 03 Apr 2010 01:42:37 +0200
 
