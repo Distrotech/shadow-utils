@@ -24,6 +24,7 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
       Closes: #470059
     - The -e (and -c and -m) option was restored in chpasswd (which still uses
       PAM by default).  Closes: #539354
+    - Kazakh translation updated. Closes: #586994
   * debian/securetty.kfreebsd: On GNU/kFreeBSD the serial devices have change
     from /dev/cuuaX to /dev/ttydX in kernel 6.0. Closes: #544523
   * debian/securetty.linux: Added support for embedded ARM AMBA PL011 ports
