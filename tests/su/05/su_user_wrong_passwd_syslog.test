@@ -20,6 +20,13 @@ change_config
 
 echo
 
+echo "auth.log contains:"
+echo "======================================================================="
+cat /var/log/auth.log
+echo "======================================================================="
+echo "Syncing disks..."
+sync
+echo "OK"
 echo -n "Looking for 'FAILED su for myuser by testsuite' in /var/log/auth.log..."
 grep -q "FAILED su for myuser by testsuite" /var/log/auth.log
 echo "OK"
