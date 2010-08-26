@@ -101,6 +101,8 @@ run_test ./su/09/env_special-options_
 run_test ./su/09/env_special_root-options_
 run_test ./su/10_su_sulog_success/su.test
 run_test ./su/11_su_sulog_failure/su.test
+run_test ./su/12_su_child_failure/su.test
+run_test ./su/13_su_child_success/su.test
 run_test ./convtools/01/run
 run_test ./convtools/02_grpconv_remove_gshadow_only_entries/grpconv.test
 run_test ./convtools/03_grpconv_copy_passwd/grpconv.test
