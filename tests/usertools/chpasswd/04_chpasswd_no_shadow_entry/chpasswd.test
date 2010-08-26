@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../../common/config.sh
 . ../../../common/log.sh
 
-log_start "$0" "chpasswd chanegs the passwd entry if there are no shadow entries"
+log_start "$0" "chpasswd changes the passwd entry if there are no shadow entries"
 
 save_config
 
