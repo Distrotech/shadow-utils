@@ -40,7 +40,10 @@ save
 # restore the files on exit
 trap 'if [ "$?" != "0" ]; then echo "FAIL"; fi; restore' 0
 
-cp data/{passwd,group,shadow,gshadow,shells} /etc/
+for i in passwd group shadow gshadow shells
+do
+	cp data/$i /etc
+done
 
 echo -n "changing to a restricted shell, by root..."
 cp /bin/bash tmp/shell

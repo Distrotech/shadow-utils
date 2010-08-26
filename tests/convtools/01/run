@@ -48,8 +48,14 @@ save
 # restore the files on exit
 trap 'restore' 0
 
-rm -f /etc/{passwd,shadow,group,gshadow}
-cp data/1/{passwd,group} /etc/
+for i in passwd group shadow gshadow
+do
+	rm -f /etc/$i
+done
+for i in passwd group
+do
+	cp data/1/$i /etc
+done
 
 echo -n "pwconv "
 pwconv

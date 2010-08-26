@@ -32,7 +32,10 @@ save
 # restore the files on exit
 trap 'restore' 0
 
-cp data/{passwd,shadow,group,gshadow} /etc/
+for i in passwd group shadow gshadow
+do
+	cp data/$i /etc
+done
 
 lines_passwd=$(wc -l /etc/passwd | cut -f1 -d" ")
 lines_shadow=$(wc -l /etc/shadow | cut -f1 -d" ")
