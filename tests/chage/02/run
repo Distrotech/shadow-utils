@@ -39,7 +39,10 @@ save
 # restore the files on exit
 trap 'if [ "$?" != "0" ]; then echo "FAIL"; fi; restore' 0
 
-cp data/{passwd,group,shadow,gshadow} /etc/
+for i in passwd group shadow gshadow
+do
+	cp data/$i /etc
+done
 
 echo "interractive test"
 ./run.exp $(date "+%Y-%m-%d")
