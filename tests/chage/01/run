@@ -39,7 +39,10 @@ save
 # restore the files on exit
 trap 'if [ "$?" != "0" ]; then echo "FAIL"; fi; restore' 0
 
-cp data/{passwd,group,shadow,gshadow} /etc/
+for i in passwd group shadow gshadow
+do
+	cp data/$i /etc
+done
 
 echo -n "testing option -l"
 chage -l myuser1 > tmp/out
@@ -195,7 +198,7 @@ chage -l myuser7 > tmp/out
 diff -au data/chage7b tmp/out
 
 echo "usage"
-chage -h 2> tmp/out || {
+chage -h > tmp/out || {
 	if [ "$?" != "2" ]; then false; fi
 }
 diff -au data/usage tmp/out
