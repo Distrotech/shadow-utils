@@ -426,6 +426,8 @@ run_test ./cktools/02_pwck_sort/pwck.test
 run_test ./cktools/03_grpck_sort/grpck.test
 run_test ./cktools/04_pwck_sort_missing_shadow_user/pwck.test
 run_test ./cktools/05_grpck_sort_missing_shadow_group/grpck.test
+run_test ./cktools/06_pwck_sort_NIS_server/pwck.test
+run_test ./cktools/07_pwck_sort_NIS_client/pwck.test
 run_test ./cktools/grpck/04_grpck_missing_field_group_delete/grpck.test
 run_test ./cktools/grpck/05_grpck_missing_field_group_keep/grpck.test
 run_test ./cktools/grpck/06_grpck_missing_field_group_no_changes/grpck.test
