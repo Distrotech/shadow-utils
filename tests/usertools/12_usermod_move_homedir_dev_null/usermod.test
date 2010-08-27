@@ -18,7 +18,24 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Change the user's home directory (usermod -m -d /home/foo2 foo)..."
-usermod -m -d /home/foo2 foo
+usermod -m -d /home/foo2 foo 2>tmp/usermod.err && exit 1 || {
+	status=$?
+}
+echo "OK"
+
+echo -n "Check returned status ($status)..."
+test "$status" = "12"
+echo "OK"
+
+echo "usermod reported:"
+echo "======================================================================="
+cat tmp/usermod.err
+echo "======================================================================="
+echo -n "Check that there were a failure message..."
+diff -au data/usermod.err tmp/usermod.err
+echo "error message OK."
+rm -f tmp/usermod.err
+
 echo "OK"
 
 echo -n "Check the passwd file..."
@@ -37,15 +54,8 @@ echo -n "Make sure /dev/null was not removed..."
 test -c /dev/null
 echo "OK"
 echo -n "Make sure the user's home directory was not removed..."
-test -d /home/foo2
+test ! -e /home/foo2
 echo "OK"
-echo -n "Check content of /home/foo2/..."
-stat --printf "%A %U:%G %N\n" /home/foo2/* /home/foo2/.* 2>/dev/null | sort > tmp/home_ls-a
-diff -rauN data/home_ls-a tmp/home_ls-a
-echo "OK"
-echo -n "Remove the new home directory..."
-rm -rf /home/foo2
-echo "done"
 
 log_status "$0" "SUCCESS"
 restore_config
