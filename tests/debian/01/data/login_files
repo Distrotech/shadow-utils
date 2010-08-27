@@ -22,13 +22,10 @@
 /usr/share/doc/login/NEWS.Debian.gz
 /usr/share/doc/login/NEWS.gz
 /usr/share/doc/login/README
-/usr/share/doc/login/TODO
+/usr/share/doc/login/TODO.gz
 /usr/share/doc/login/changelog.Debian.gz
 /usr/share/doc/login/changelog.gz
 /usr/share/doc/login/copyright
-/usr/share/linda
-/usr/share/linda/overrides
-/usr/share/linda/overrides/login
 /usr/share/lintian
 /usr/share/lintian/overrides
 /usr/share/lintian/overrides/login
