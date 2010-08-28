@@ -35,12 +35,12 @@ send "id\n"
 expect "uid=0(root) gid=0(root) groups=0(root)\r"
 expect "# "
 
-send_user "\n# PATH should be '/bin:/usr/bin'"
+send_user "\n# PATH should be '/sbin:/bin:/usr/sbin:/usr/bin'"
 send "\r"
 expect "# "
 
 send "echo \"PATH=\\\"\$PATH\\\"\"\r"
-expect "PATH=\"/bin:/usr/bin\"\r"
+expect "PATH=\"/sbin:/bin:/usr/sbin:/usr/bin\"\r"
 expect "# "
 
 send "echo \"'\$HOME'\$USER'\$LOGNAME'\$SHELL'\"\r"
