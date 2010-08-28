@@ -35,12 +35,12 @@ send "id\n"
 expect "uid=424242(myuser) gid=424242(myuser) groups=424242(myuser)\r"
 expect "$ "
 
-send_user "\n# PATH should be '/usr/local/bin:/usr/bin:/bin:/usr/games'"
+send_user "\n# Even with -p, PATH is reset"
 send "\r"
 expect "$ "
 
 send "echo \"PATH=\\\"\$PATH\\\"\"\r"
-expect "PATH=\"/usr/local/bin:/usr/bin:/bin:/usr/games\"\r"
+expect "PATH=\"/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games\"\r"
 expect "$ "
 
 send "echo \"'\$HOME'\$USER'\$LOGNAME'\$SHELL'\"\r"

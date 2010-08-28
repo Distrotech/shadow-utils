@@ -36,7 +36,7 @@ send "id\n"
 expect "uid=0(root) gid=0(root) groups=0(root)\r"
 expect "# "
 
-send_user "\n# PATH should be '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'"
+send_user "\n# Even with -p, PATH is reset"
 send "\r"
 expect "# "
 

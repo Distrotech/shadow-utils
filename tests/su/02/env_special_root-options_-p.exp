@@ -36,12 +36,12 @@ send "id\n"
 expect "uid=0(root) gid=0(root) groups=0(root)\r"
 expect "# "
 
-send_user "\n# PATH should be '$PATH'"
+send_user "\n# Even with -p, PATH is reset"
 send "\r"
 expect "# "
 
 send "echo \"PATH=\\\"\$PATH\\\"\"\r"
-expect "PATH=\"$PATH\"\r"
+expect "PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"\r"
 expect "# "
 
 send "echo \"'\$HOME'\$USER'\$LOGNAME'\$SHELL'\"\r"
