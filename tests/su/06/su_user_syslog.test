@@ -19,6 +19,13 @@ change_config
 ./run_su.exp myuser myuserF00barbaz '$ '
 
 echo
+echo -n "Syncing disks..."
+sync
+echo "OK"
+echo "auth.log contains:"
+echo "======================================================================="
+cat /var/log/auth.log
+echo "======================================================================="
 echo -n "Looking for 'Successful su for myuser by testsuite' in /var/log/auth.log..."
 grep -q "Successful su for myuser by testsuite" /var/log/auth.log
 echo "OK"
