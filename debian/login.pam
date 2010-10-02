@@ -17,7 +17,7 @@ auth       optional   pam_faildelay.so  delay=3000000
 #
 # With the default control of this module:
 #   [success=ok new_authtok_reqd=ok ignore=ignore user_unknown=bad default=die]
-# root will not be prompted for a pasword on insecure lines.
+# root will not be prompted for a password on insecure lines.
 # if an invalid username is entered, a password is prompted (but login
 # will eventually be rejected)
 #

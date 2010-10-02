@@ -1,3 +1,10 @@
+shadow (1:4.1.4.2+svn3283-3) UNRELEASED; urgency=low
+
+  * Fix typo in /etc/pam.d/login comments. Thanks to Ferenc Wagner.
+    Closes: #598717
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 02 Oct 2010 13:30:08 +0200
+
 shadow (1:4.1.4.2+svn3283-2) unstable; urgency=low
 
   * The "Bleu du Vercors-Sassenage" release.
