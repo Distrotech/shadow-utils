@@ -2,6 +2,8 @@ shadow (1:4.1.4.2+svn3283-3) UNRELEASED; urgency=low
 
   * Fix typo in /etc/pam.d/login comments. Thanks to Ferenc Wagner.
     Closes: #598717
+  * Japanese translation update (Closes: #620978)
+  * Kazakh translation update (Closes: #620930)
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 02 Oct 2010 13:30:08 +0200
 
