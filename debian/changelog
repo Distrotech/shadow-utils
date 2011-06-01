@@ -14,6 +14,7 @@ shadow (1:4.1.4.2+svn3283-3) UNRELEASED; urgency=low
   * French translation update (Closes: #623608)
   * Portuguese translation update (Closes: #623722)
   * Catalan translation update (Closes: #627526)
+  * German manpages translation update (Closes: #628777)
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 02 Oct 2010 13:30:08 +0200
 
