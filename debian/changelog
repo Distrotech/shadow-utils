@@ -1,7 +1,5 @@
-shadow (1:4.1.4.2+svn3283-3) UNRELEASED; urgency=low
+shadow (1:4.1.4.2+svn3283-4) unstable; urgency=low
 
-  * Fix typo in /etc/pam.d/login comments. Thanks to Ferenc Wagner.
-    Closes: #598717
   * Fix several typos in manpages. Thanks to Simon Brandmair
     (Closes: #628776)
   * Japanese translation update (Closes: #620978)
@@ -16,7 +14,17 @@ shadow (1:4.1.4.2+svn3283-3) UNRELEASED; urgency=low
   * Catalan translation update (Closes: #627526)
   * German manpages translation update (Closes: #628777)
 
- -- Christian Perrier <bubulle@debian.org>  Sat, 02 Oct 2010 13:30:08 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 04 Jun 2011 09:39:38 +0200
+
+shadow (1:4.1.4.2+svn3283-3) unstable; urgency=high
+
+  * The "Trappe d'Echourgnac" release.
+  * Fix typo in /etc/pam.d/login comments. Thanks to Ferenc Wagner.
+    Closes: #598717
+  * debian/patches/300_CVE-2011-0721: Fix insufficient input sanitation
+    leading to possible user or group creation in NIS environments.
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 13 Feb 2011 23:20:05 +0100
 
 shadow (1:4.1.4.2+svn3283-2) unstable; urgency=low
 

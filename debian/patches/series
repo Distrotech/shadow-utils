@@ -18,3 +18,4 @@
 523_su_arguments_are_no_more_concatenated_by_default
 508_nologin_in_usr_sbin
 505_useradd_recommend_adduser
+300_CVE-2011-0721
