@@ -13,6 +13,7 @@ shadow (1:4.1.4.2+svn3283-4) unstable; urgency=low
   * Portuguese translation update (Closes: #623722)
   * Catalan translation update (Closes: #627526)
   * German manpages translation update (Closes: #628777)
+  * French manpages translation update (Closes: #630250)
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 04 Jun 2011 09:39:38 +0200
 
