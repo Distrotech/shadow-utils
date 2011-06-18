@@ -1,19 +1,24 @@
-shadow (1:4.1.4.2+svn3283-4) unstable; urgency=low
+shadow (1:4.1.4.2+svnXXXX-1) unstable; urgency=low
 
-  * Fix several typos in manpages. Thanks to Simon Brandmair
-    (Closes: #628776)
-  * Japanese translation update (Closes: #620978)
-  * Kazakh translation update (Closes: #620930)
-  * Danish translation update (Closes: #621330)
-  * Swedish translation update (Closes: #621126)
-  * Russian translation update (Closes: #622106)
-  * Brazilian Portuguese translation update (Closes: #622834)
-  * German translation update (Closes: #622908)
-  * French translation update (Closes: #623608)
-  * Portuguese translation update (Closes: #623722)
-  * Catalan translation update (Closes: #627526)
-  * German manpages translation update (Closes: #628777)
-  * French manpages translation update (Closes: #630250)
+  * New upstream version
+  * Upstream fixes:
+    - Fix several typos in manpages. Thanks to Simon Brandmair
+      (Closes: #628776)
+  * Upstream translation updates from Debian BTS:
+    - Japanese (Closes: #620978)
+    - Kazakh (Closes: #620930)
+    - Danish (Closes: #621330)
+    - Swedish (Closes: #621126)
+    - Russian (Closes: #622106)
+    - Brazilian Portuguese (Closes: #622834)
+    - German (Closes: #622908)
+    - French (Closes: #623608)
+    - Portuguese (Closes: #623722)
+    - Catalan (Closes: #627526)
+    - Spanish (Closes: #630618)
+  * Upstream manpages translation updates from Debian BTS:
+    - French (Closes: #630250)
+    - German (Closes: #628777)
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 04 Jun 2011 09:39:38 +0200
 
