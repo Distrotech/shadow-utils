@@ -1,26 +1,55 @@
-shadow (1:4.1.4.2+svnXXXX-1) unstable; urgency=low
+shadow (1:4.1.5-1) unstable; urgency=low
 
-  * New upstream version
-  * Upstream fixes:
-    - Fix several typos in manpages. Thanks to Simon Brandmair
-      (Closes: #628776)
-  * Upstream translation updates from Debian BTS:
-    - Japanese (Closes: #620978)
-    - Kazakh (Closes: #620930)
-    - Danish (Closes: #621330)
-    - Swedish (Closes: #621126)
-    - Russian (Closes: #622106)
-    - Brazilian Portuguese (Closes: #622834)
-    - German (Closes: #622908)
-    - French (Closes: #623608)
-    - Portuguese (Closes: #623722)
-    - Catalan (Closes: #627526)
-    - Spanish (Closes: #630618)
-  * Upstream manpages translation updates from Debian BTS:
-    - French (Closes: #630250)
-    - German (Closes: #628777)
+  * The "Charolais" release.
+  * New upstream release:
+    - userdel: Check the existence of the user's mail spool before trying to
+      remove it. If it does not exist, a warning is issued, but no failure.
+      Closes: #617295
+    - userdel: Do not remove a group with the same name as the user
+      (usergroup) if this group isn't the user's primary group.
+      Closes: #584868
+    - su: Fix possible tty hijacking by drop the controlling terminal when
+      executing a command. Closes: #628843
+    - su: Close the PAM session as root (fix issues with pam_mount and
+      pam_systemd). Closes: #580434
+    - Fix several typos in manpages. Thanks to Simon Brandmair.
+      Closes: #628776
+    - Updated patches
+      + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
+      + debian/patches/505_useradd_recommend_adduser
+      + debian/patches/463_login_delay_obeys_to_PAM
+      + debian/patches/008_login_log_failure_in_FTMP
+      + debian/patches/501_commonio_group_shadow
+      + debian/patches/429_login_FAILLOG_ENAB
+      + debian/patches/508_nologin_in_usr_sbin
+      + debian/patches/506_relaxed_usernames
+      + debian/patches/523_su_arguments_are_concatenated
+      + debian/patches/542_useradd-O_option
+      + debian/patches/401_cppw_src.dpatch
+    - debian/patches/008_su_get_PAM_username: Removed, feature supported
+      upstream.
+    - debian/patches/300_CVE-2011-0721: Removed, applied upstream.
+    - Upstream translation updates from Debian BTS:
+      + Brazilian Portuguese. Closes: #622834
+      + Catalan. Closes: #627526
+      + Danish. Closes: #621330
+      + German. Closes: #622908
+      + French. Closes: #623608
+      + Japanese. Closes: #620978
+      + Kazakh. Closes: #620930
+      + Portuguese. Closes: #623722
+      + Russian. Closes: #622106
+      + Spanish (Closes: #630618)
+      + Swedish. Closes: #621126
+    - Upstream manpages translation updates from Debian BTS:
+      + French. Closes: #630250
+      + German. Closes: #628777
+  * debian/control: mark passwd as 'Multi-Arch: foreign'. Closes: #614321
+  * debian/securetty.linux: Add IBM pSeries console ports. Closes: #597661
+  * debian/securetty.linux: Add serial Console for MIPS Swarm.
+    (http://lists.debian.org/debian-release/2011/02/msg00320.html)
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sat, 04 Jun 2011 09:39:38 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 24 Jun 2011 23:43:56 +0200
 
 shadow (1:4.1.4.2+svn3283-3) unstable; urgency=high
 

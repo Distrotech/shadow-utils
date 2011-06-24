@@ -209,7 +209,7 @@
 +}
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -25,6 +25,7 @@
+@@ -26,6 +26,7 @@
  sbin_PROGRAMS  = nologin
  ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
  usbin_PROGRAMS = \
@@ -217,7 +217,7 @@
  	chgpasswd \
  	chpasswd \
  	groupadd \
-@@ -75,6 +76,7 @@
+@@ -82,6 +83,7 @@
  chgpasswd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBSELINUX) $(LIBCRYPT)
  chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)
  chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
@@ -227,7 +227,7 @@
  groupdel_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -79,6 +79,7 @@
+@@ -81,6 +81,7 @@
  src/chgpasswd.c
  src/chpasswd.c
  src/chsh.c

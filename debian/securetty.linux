@@ -355,6 +355,10 @@ ttyY1
 hvc0
 hvc1
 #...
+#IBM pSeries console ports
+hvsi0
+hvsi1
+hvsi2
 
 # Equinox SST multi-port serial boards
 ttyEQ0
@@ -381,3 +385,6 @@ ttyama1
 ttyama2
 ttyama3
 
+# Serial Console for MIPS Swarm
+duart0
+duart1

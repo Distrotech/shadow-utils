@@ -7,9 +7,9 @@ Status wrt upstream: not included as this is just specific
 
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -300,6 +300,11 @@
- 	    <replaceable>UID_MIN</replaceable>=<replaceable>10</replaceable>,<replaceable>UID_MAX</replaceable>=<replaceable>499</replaceable>
- 	    doesn't work yet.
+@@ -318,6 +318,11 @@
+ 	    databases are resetted to avoid reusing the entry from a previously
+ 	    deleted user.
  	  </para>
 +          <para>
 +            For the compatibility with previous Debian's
@@ -21,7 +21,7 @@ Status wrt upstream: not included as this is just specific
        <varlistentry>
 --- a/src/useradd.c
 +++ b/src/useradd.c
-@@ -996,9 +996,9 @@
+@@ -1000,9 +1000,9 @@
  		};
  		while ((c = getopt_long (argc, argv,
  #ifdef WITH_SELINUX
@@ -33,7 +33,7 @@ Status wrt upstream: not included as this is just specific
  #endif
  		                         long_options, NULL)) != -1) {
  			switch (c) {
-@@ -1120,6 +1120,7 @@
+@@ -1124,6 +1124,7 @@
  				kflg = true;
  				break;
  			case 'K':

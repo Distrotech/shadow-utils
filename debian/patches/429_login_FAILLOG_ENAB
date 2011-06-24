@@ -20,7 +20,7 @@ Note: It could be removed if pam_tally could report the number of failures
  static void bad_time_notify (void);
  static void check_nologin (bool login_to_root);
  #else
-@@ -792,6 +792,9 @@
+@@ -791,6 +791,9 @@
  				SYSLOG ((LOG_NOTICE,
  				         "TOO MANY LOGIN TRIES (%u)%s FOR '%s'",
  				         failcount, fromhost, failent_user));
@@ -30,7 +30,7 @@ Note: It could be removed if pam_tally could report the number of failures
  				fprintf(stderr,
  				        _("Maximum number of tries exceeded (%u)\n"),
  				        failcount);
-@@ -809,6 +812,14 @@
+@@ -808,6 +811,14 @@
  				         pam_strerror (pamh, retcode)));
  				failed = true;
  			}
@@ -45,7 +45,7 @@ Note: It could be removed if pam_tally could report the number of failures
  
  			if (!failed) {
  				break;
-@@ -832,6 +843,10 @@
+@@ -831,6 +842,10 @@
  			(void) puts ("");
  			(void) puts (_("Login incorrect"));
  

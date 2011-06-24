@@ -13,6 +13,7 @@ Package: passwd
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpam-modules, debianutils (>= 2.15.2)
 Replaces: manpages-tr (<<1.0.5), manpages-zh (<<1.5.1-1)
+Multi-Arch: foreign
 Description: change and administer password and group data
  This package includes passwd, chsh, chfn, and many other programs to
  maintain password and group data.

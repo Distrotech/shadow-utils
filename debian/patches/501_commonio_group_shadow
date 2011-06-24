@@ -12,7 +12,7 @@ Fixes: #166793
  #include "nscd.h"
  #ifdef WITH_SELINUX
  #include <selinux/selinux.h>
-@@ -868,13 +869,20 @@
+@@ -925,13 +926,20 @@
  			goto fail;
  		}
  	} else {

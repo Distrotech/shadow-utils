@@ -10,9 +10,9 @@ Status wrt upstream: This patch is Debian specific.
 
 --- a/src/su.c
 +++ b/src/su.c
-@@ -86,6 +86,19 @@
+@@ -104,6 +104,19 @@
  /* If nonzero, change some environment vars to indicate the user su'd to. */
- static bool change_environment;
+ static bool change_environment = true;
  
 +/*
 + * If nonzero, keep the old Debian behavior:
@@ -29,17 +29,17 @@ Status wrt upstream: This patch is Debian specific.
 +
  #ifdef USE_PAM
  static pam_handle_t *pamh = NULL;
- static bool caught = false;
-@@ -344,6 +357,8 @@
- #endif
- #endif				/* !USE_PAM */
+ static int caught = 0;
+@@ -937,6 +950,8 @@
+ 	int ret;
+ #endif				/* USE_PAM */
  
 +	old_debian_behavior = (getenv("SU_NO_SHELL_ARGS") != NULL);
 +
  	(void) setlocale (LC_ALL, "");
  	(void) bindtextdomain (PACKAGE, LOCALEDIR);
  	(void) textdomain (PACKAGE);
-@@ -957,7 +972,7 @@
+@@ -1141,7 +1156,7 @@
  		 * resulting string is always given to the shell with its
  		 * -c option.
  		 */
