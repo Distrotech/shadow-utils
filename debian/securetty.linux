@@ -230,6 +230,12 @@ ttyAM13
 ttyAM14
 ttyAM15
 
+# Embedded ARM AMBA PL011 ports (e.g. emulated by QEMU)
+ttyAMA0
+ttyAMA1
+ttyAMA2
+ttyAMA3
+
 # DataBooster serial ports
 ttyDB0
 ttyDB1
@@ -378,12 +384,6 @@ ttymxc2
 ttymxc3
 ttymxc4
 ttymxc5
-
-# Embedded ARM AMBA PL011 ports (e.g. emulated by QEMU)
-ttyama0
-ttyama1
-ttyama2
-ttyama3
 
 # Serial Console for MIPS Swarm
 duart0
