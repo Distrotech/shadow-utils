@@ -28,7 +28,17 @@ ln -s /home/baz /home/foo/baz
 chown -R foo:foo /home/foo /home/bar /home/baz
 
 echo -n "Delete user foo (userdel -r foo)..."
-userdel -r foo
+userdel -r foo 2>tmp/userdel.err
+echo "OK"
+
+echo "userdel reported:"
+echo "======================================================================="
+cat tmp/userdel.err
+echo "======================================================================="
+echo -n "Check the userdel message..."
+diff -au data/userdel.err tmp/userdel.err
+echo "userdel message OK."
+rm -f tmp/userdel.err
 echo "OK"
 
 echo -n "Check the passwd file..."

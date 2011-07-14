@@ -29,7 +29,17 @@ echo -n "test if the old homedir was removed..."
 test ! -d /home/test1
 echo "OK"
 echo -n "Delete user test1 (userdel test1)..."
-userdel test1 --remove
+userdel test1 --remove 2>tmp/userdel.err
+echo "OK"
+
+echo "userdel reported:"
+echo "======================================================================="
+cat tmp/userdel.err
+echo "======================================================================="
+echo -n "Check the userdel message..."
+diff -au 18_userdel_remove_homedir/userdel.err tmp/userdel.err
+echo "userdel message OK."
+rm -f tmp/userdel.err
 echo "OK"
 
 echo -n "Check the passwd file..."
