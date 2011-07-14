@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config; rm -f /etc/group.lock' 0
 change_config
 
 echo -n "Create lock file for /etc/group..."
-touch /etc/group.lock
+echo -n $$ > /etc/group.lock
 echo "done"
 
 echo -n "Convert the group files (grpconv)..."
@@ -39,6 +39,7 @@ echo "======================================================================="
 cat tmp/grpconv.err
 echo "======================================================================="
 echo -n "Check that there were a failure message..."
+sed -i -e "s/$$/<PID>/" tmp/grpconv.err
 diff -au data/grpconv.err tmp/grpconv.err
 echo "error message OK."
 rm -f tmp/grpconv.err
