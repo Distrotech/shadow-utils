@@ -40,6 +40,7 @@ echo "======================================================================="
 cat tmp/userdel.err
 echo "======================================================================="
 echo -n "Check that there were a failure message..."
+sed -i -e "s/ [0-9]*$/ <PID>/" tmp/userdel.err
 diff -au data/userdel.err tmp/userdel.err
 echo "error message OK."
 rm -f tmp/userdel.err
