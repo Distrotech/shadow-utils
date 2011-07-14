@@ -1,0 +1,2 @@
+grpck: invalid option -- 'h'
+Usage: grpck [-r] [-s] [group [gshadow]]
