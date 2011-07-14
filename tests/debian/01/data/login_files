@@ -266,8 +266,16 @@
 /usr/share/man/tr/man1/su.1.gz
 /usr/share/man/zh_CN
 /usr/share/man/zh_CN/man1
+/usr/share/man/zh_CN/man1/login.1.gz
 /usr/share/man/zh_CN/man1/newgrp.1.gz
+/usr/share/man/zh_CN/man1/sg.1.gz
 /usr/share/man/zh_CN/man1/su.1.gz
+/usr/share/man/zh_CN/man5
+/usr/share/man/zh_CN/man5/faillog.5.gz
+/usr/share/man/zh_CN/man5/login.defs.5.gz
+/usr/share/man/zh_CN/man8
+/usr/share/man/zh_CN/man8/faillog.8.gz
+/usr/share/man/zh_CN/man8/lastlog.8.gz
 /usr/share/man/zh_TW
 /usr/share/man/zh_TW/man1
 /usr/share/man/zh_TW/man1/newgrp.1.gz
