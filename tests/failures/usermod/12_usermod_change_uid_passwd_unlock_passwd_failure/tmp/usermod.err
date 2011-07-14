@@ -1,0 +1,3 @@
+unlink FAILURE /etc/passwd.lock
+usermod: cannot get lock /etc/passwd.lock: Device or resource busy
+usermod: cannot lock /etc/passwd; try again later.
