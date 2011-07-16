@@ -18,7 +18,7 @@ change_config
 
 echo -n "Change passwords (chpasswd -e)..."
 echo 'nobody:test
-lp:test2' | LD_PRELOAD=../../../common/time_0.so chpasswd -e
+lp:test2' | LD_PRELOAD=../../../common/time_0.so chpasswd -e 2>/dev/null
 echo "OK"
 
 echo -n "Check the passwd file..."

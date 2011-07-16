@@ -17,7 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Change the user's password (usermod -p foopass foo)..."
-LD_PRELOAD=../../../common/time_0.so usermod -p foopass foo
+LD_PRELOAD=../../../common/time_0.so usermod -p foopass foo 2>/dev/null
 echo "OK"
 
 echo -n "Check the passwd file..."
