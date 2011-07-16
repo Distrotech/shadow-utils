@@ -30,6 +30,7 @@ echo "faillog :"
 echo "======================================================================="
 cat tmp/faillog.out
 echo "======================================================================="
+rm -f tmp/faillog.out
 
 echo -n "Manually delete the user foo (to keep the faillog entry)..."
 sed -e '/^foo:/d' -i /etc/passwd
