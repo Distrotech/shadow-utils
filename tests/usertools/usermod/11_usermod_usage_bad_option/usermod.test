@@ -16,7 +16,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "Get usermod usage (usermod -h)..."
+echo -n "Get usermod usage (usermod --foo)..."
 usermod --foo 2>tmp/usage.out && exit 1 || {
 	status=$?
 }
