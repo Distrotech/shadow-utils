@@ -23,7 +23,7 @@ echo -n "Check the passwd file..."
 ../../common/compare_file.pl data/passwd /etc/passwd 
 echo "OK" 
 echo -n "Check the group file..." 
-../../common/compare_file.pl data/group /etc/group 
+../../common/compare_file.pl config/etc/group /etc/group 
 echo "OK" 
 echo -n "Check the shadow file..." 
 test ! -f /etc/shadow

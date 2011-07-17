@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../../common/config.sh
 . ../../../common/log.sh
 
-log_start "$0" "groupmod can set the password of a group (no gshadow group)"
+log_start "$0" "grpck check that user are uniq"
 
 save_config
 
@@ -16,12 +16,10 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "Change GID of foo to 1001 (groupmod -p foopassw foo)..."
-groupmod -p foopassw foo
-echo "OK"
+./pwck.exp
 
 echo -n "Check the passwd file..."
-../../../common/compare_file.pl config/etc/passwd /etc/passwd
+../../../common/compare_file.pl data/passwd /etc/passwd
 echo "OK"
 echo -n "Check the group file..."
 ../../../common/compare_file.pl config/etc/group /etc/group
@@ -30,7 +28,7 @@ echo -n "Check the shadow file..."
 ../../../common/compare_file.pl config/etc/shadow /etc/shadow
 echo "OK"
 echo -n "Check the gshadow file..."
-../../../common/compare_file.pl data/gshadow /etc/gshadow
+../../../common/compare_file.pl config/etc/gshadow /etc/gshadow
 echo "OK"
 
 log_status "$0" "SUCCESS"
