@@ -60,7 +60,7 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
 
   [ Christian Perrier ]
   * Use "linux-any" instead of a negated list of architectures in
-    Build-Depends
+    Build-Depends. Closes: #634465
 
  -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 24 Jun 2011 23:43:56 +0200
 
