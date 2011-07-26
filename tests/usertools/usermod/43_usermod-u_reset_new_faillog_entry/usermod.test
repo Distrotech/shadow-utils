@@ -67,6 +67,7 @@ echo -n "Check the faillog message..."
 c=$(cat tmp/faillog.out2 | wc -c)
 test $c = "0"
 echo "empty faillog OK."
+rm -f tmp/faillog.out2
 
 log_status "$0" "SUCCESS"
 restore_config
