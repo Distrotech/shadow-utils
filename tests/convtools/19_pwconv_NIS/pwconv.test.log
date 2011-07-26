@@ -1,0 +1,20 @@
+
+###############################################################################
+#
+# Test: ./convtools/16_pwconv_copy_passwd/pwconv.test
+#
+###############################################################################
+#
+# Rationale: pwconv removes the shadow only entries
+#
+###############################################################################
+Convert the passwd files (pwconv)...OK
+Check the passwd file...OK
+Check the group file...OK
+Check the shadow file...OK
+Check the gshadow file...OK
+###############################################################################
+#
+# Status of test ./convtools/16_pwconv_copy_passwd/pwconv.test: SUCCESS
+#
+###############################################################################
