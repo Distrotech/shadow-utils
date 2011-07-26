@@ -22,8 +22,13 @@ echo "OK"
 
 cp data/lastlog.out tmp/lastlog.out1
 cp data/lastlog.out tmp/lastlog.out2
-TTY=$(ls /dev/pts | sort -n|tail -1)
-TTY=$((TTY+1))
+TTY=0
+while true
+do
+	[ ! -e /dev/pts/$TTY ] && break
+	TTY=$((TTY+1))
+done
+	
 
 DATE=$(LC_ALL=C date +"%a %b %e %H:%M:%S %z %Y")
 printf "%-16s %-8.8s %-16.16s %s\n" foo "pts/$TTY" "" "$DATE" >> tmp/lastlog.out1
