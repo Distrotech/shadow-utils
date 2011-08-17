@@ -40,10 +40,6 @@ else
 endif
 export CFLAGS
 
-common-build-arch::
-	# Waiting for http://bugs.debian.org/507673
-	sed -i -f debian/man.insert.sed man/*.[0-9] man/*/*.[0-9]
-
 # Add extras to the install process:
 binary-install/login::
 	dh_installpam -p login

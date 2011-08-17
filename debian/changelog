@@ -1,7 +1,8 @@
 shadow (1:4.1.5-1) UNRELEASED; urgency=low
 
-  [ Nicolas FRANCOIS (Nekral) ]
   * The "Charolais" release.
+
+  [ Nicolas FRANCOIS (Nekral) ]
   * New upstream release:
     - userdel: Check the existence of the user's mail spool before trying to
       remove it. If it does not exist, a warning is issued, but no failure.
@@ -65,12 +66,15 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
   * debian/securetty.linux: Add serial Console for MIPS Swarm.
     (http://lists.debian.org/debian-release/2011/02/msg00320.html)
   * debian/securetty.linux: Fixed typo: ttyama -> ttyAMA. Closes: #544184
+  * debian/rules, debian/man.insert, debian/man.insert.sed: Bug #507673 has
+    been closed. It is no more needed to patch the generated manpages. This
+    also fix failures to build twice is a row. Closes: #636047
 
   [ Christian Perrier ]
   * Use "linux-any" instead of a negated list of architectures in
     Build-Depends. Closes: #634465
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 24 Jun 2011 23:43:56 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 29 Jul 2011 15:29:02 +0200
 
 shadow (1:4.1.4.2+svn3283-3) unstable; urgency=high
 

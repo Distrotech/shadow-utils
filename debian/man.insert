@@ -1,3 +1,0 @@
-.\" http://bugs.debian.org/507673
-.ie \n(.g .ds Aq \(aq
-.el       .ds Aq '
