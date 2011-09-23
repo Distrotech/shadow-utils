@@ -43,6 +43,7 @@ send "\r"			;# restore the prompt for the logs
 send "gpasswd $group\r"		;# Change the password
 expect "gpasswd: Permission denied."	;# Not an admin
 
+send_user "\n"
 send_user "# expect prompt '$user_prompt'\n"
 
 expect {
