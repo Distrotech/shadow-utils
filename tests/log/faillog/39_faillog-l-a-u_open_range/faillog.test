@@ -58,8 +58,8 @@ echo -n "Check the list of users with failures..."
 cut -c-28 tmp/faillog.out > tmp/faillog.list
 diff -au data/faillog.list tmp/faillog.list
 echo "OK"
-echo "There should be 3 or 4 secondes remaining for bar..."
-grep "^bar .* \[[34]s left\]$" tmp/faillog.out
+echo "There should be between 2 and 4 secondes remaining for bar..."
+grep "^bar .* \[[234]s left\]$" tmp/faillog.out
 echo "OK"
 echo "The lock is displayed as 10s for foo..."
 grep "^foo .* \[10s lock\]$" tmp/faillog.out

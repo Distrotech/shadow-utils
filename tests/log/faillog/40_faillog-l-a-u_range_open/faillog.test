@@ -61,8 +61,8 @@ echo "OK"
 echo "There should be 6 or 7 secondes remaining for baz..."
 grep "^baz .* \[[67]s left\]$" tmp/faillog.out
 echo "OK"
-echo "There should be 3 or 4 secondes remaining for bar..."
-grep "^bar .* \[[34]s left\]$" tmp/faillog.out
+echo "There should be between 2 and 4 secondes remaining for bar..."
+grep "^bar .* \[[2-4]s left\]$" tmp/faillog.out
 echo "OK."
 
 rm -f tmp/faillog.out tmp/faillog.list
