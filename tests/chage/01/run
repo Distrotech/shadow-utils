@@ -116,7 +116,7 @@ chage -I -1 myuser7
 ent=$(getent shadow myuser7)
 [ "$ent" = 'myuser7:$1$yQnIAZWV$gDAMB2IkqaONgrQiRdo4y.:15280:0:99999:7::18294:' ] || exit 1
 echo "testing option -I 0"
-# NOTE: We should check that this is the expected bahavior
+# NOTE: We should check that this is the expected behavior
 chage -I 0 myuser7
 ent=$(getent shadow myuser7)
 [ "$ent" = 'myuser7:$1$yQnIAZWV$gDAMB2IkqaONgrQiRdo4y.:15280:0:99999:7:0:18294:' ] || exit 1
