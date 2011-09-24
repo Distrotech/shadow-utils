@@ -1,4 +1,4 @@
-Usage: chage [options] [LOGIN]
+Usage: chage [options] LOGIN
 
 Options:
   -d, --lastday LAST_DAY        set date of last password change to LAST_DAY
