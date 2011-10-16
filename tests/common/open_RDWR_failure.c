@@ -18,16 +18,16 @@
 
 
 typedef int (*open_type) (const char *pathname, int flag, ...);
-static open_type next_open;
+static open_type next_open64;
 
 static const char *failure_path = NULL;
 
 int open64 (const char *pathname, int flag, ...)
 {
-	if (NULL == next_open)
+	if (NULL == next_open64)
 	{
-		next_open = dlsym (RTLD_NEXT, "open64");
-		assert (NULL != next_open);
+		next_open64 = dlsym (RTLD_NEXT, "open64");
+		assert (NULL != next_open64);
 	}
 	if (NULL == failure_path) {
 		failure_path = getenv ("FAILURE_PATH");
@@ -37,7 +37,7 @@ int open64 (const char *pathname, int flag, ...)
 	}
 
 	if (   (NULL != pathname)
-	    && (flag & O_RDWR)
+	    && ((flag & O_ACCMODE) == O_RDWR)
 	    && (NULL != failure_path)
 	    && (strcmp (pathname, failure_path) == 0))
 	{
@@ -46,6 +46,6 @@ int open64 (const char *pathname, int flag, ...)
 		return -1;
 	}
 
-	return next_open (pathname, flag);
+	return next_open64 (pathname, flag);
 }
 
