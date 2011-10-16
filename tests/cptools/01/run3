@@ -55,7 +55,3 @@ diff -au /etc/group data/group
 diff -au /etc/gshadow data/gshadow
 diff -au /etc/passwd data/passwd
 echo "  OK"
-echo passwd:
-cat /etc/passwd
-echo shadow:
-cat /etc/shadow
