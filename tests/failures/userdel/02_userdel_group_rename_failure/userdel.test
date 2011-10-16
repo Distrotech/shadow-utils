@@ -16,7 +16,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "delete group foo (groupdel foo)..."
+echo -n "delete user foo (userdel foo)..."
 LD_PRELOAD=../../../common/rename_failure.so FAILURE_PATH=/etc/group userdel foo 2>tmp/userdel.err && exit 1 || {
 	status=$?
 }
