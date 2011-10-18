@@ -6,7 +6,7 @@ Status wrt upstream: Debian specific patch.
 
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -81,6 +81,12 @@
+@@ -84,6 +84,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
        <para>
@@ -21,7 +21,7 @@ Status wrt upstream: Debian specific patch.
  	the values specified on the command line plus the default values from
 --- a/man/userdel.8.xml
 +++ b/man/userdel.8.xml
-@@ -61,6 +61,12 @@
+@@ -64,6 +64,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
      <para>

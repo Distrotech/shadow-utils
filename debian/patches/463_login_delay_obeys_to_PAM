@@ -9,7 +9,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
 
 --- a/src/login.c
 +++ b/src/login.c
-@@ -525,7 +525,6 @@
+@@ -529,7 +529,6 @@
  #if defined(HAVE_STRFTIME) && !defined(USE_PAM)
  	char ptime[80];
  #endif
@@ -17,7 +17,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  	unsigned int retries;
  	bool subroot = false;
  #ifndef USE_PAM
-@@ -545,6 +544,7 @@
+@@ -549,6 +548,7 @@
  	pid_t child;
  	char *pam_user = NULL;
  #else
@@ -25,7 +25,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  	struct spwd *spwd = NULL;
  #endif
  	/*
-@@ -705,7 +705,6 @@
+@@ -709,7 +709,6 @@
  	}
  
  	environ = newenvp;	/* make new environment active */
@@ -33,7 +33,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  	retries = getdef_unum ("LOGIN_RETRIES", RETRIES);
  
  #ifdef USE_PAM
-@@ -721,8 +720,7 @@
+@@ -725,8 +724,7 @@
  
  	/*
  	 * hostname & tty are either set to NULL or their correct values,
@@ -43,7 +43,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  	 *
  	 * PAM_RHOST and PAM_TTY are used for authentication, only use
  	 * information coming from login or from the caller (e.g. no utmp)
-@@ -731,10 +729,6 @@
+@@ -735,10 +733,6 @@
  	PAM_FAIL_CHECK;
  	retcode = pam_set_item (pamh, PAM_TTY, tty);
  	PAM_FAIL_CHECK;
@@ -54,7 +54,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  	/* if fflg, then the user has already been authenticated */
  	if (!fflg) {
  		unsigned int failcount = 0;
-@@ -775,12 +769,6 @@
+@@ -779,12 +773,6 @@
  			bool failed = false;
  
  			failcount++;
@@ -67,7 +67,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  
  			retcode = pam_authenticate (pamh, 0);
  
-@@ -1100,14 +1088,17 @@
+@@ -1104,14 +1092,17 @@
  		free (username);
  		username = NULL;
  

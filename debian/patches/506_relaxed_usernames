@@ -48,7 +48,7 @@ Details:
  }
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -615,12 +615,19 @@
+@@ -618,12 +618,19 @@
      </para>
  
      <para>
@@ -71,7 +71,7 @@ Details:
    </refsect1>
 --- a/man/groupadd.8.xml
 +++ b/man/groupadd.8.xml
-@@ -222,12 +222,17 @@
+@@ -224,12 +224,17 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>
