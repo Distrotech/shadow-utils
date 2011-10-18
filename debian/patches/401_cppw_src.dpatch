@@ -7,7 +7,7 @@
 @DPATCH@
 --- /dev/null
 +++ b/src/cppw.c
-@@ -0,0 +1,199 @@
+@@ -0,0 +1,201 @@
 +/*
 +  cppw, cpgr  copy with locking given file over the password or group file
 +  with -s will copy with locking given file over shadow or gshadow file
@@ -51,18 +51,20 @@
 +#include "sgroupio.h"
 +
 +
-+static const char *progname, *filename, *filenewname;
++const char *Prog;
++
++const char *filename, *filenewname;
 +static int filelocked = 0;
 +static int (*unlock)();
 +
 +/* local function prototypes */
-+static int create_backup_file (FILE *, const char *, struct stat *);
++static int create_copy (FILE *, const char *, struct stat *);
 +static void cppwexit (const char *, int, int);
 +static void cppwcopy (const char *, const char *, int (*) (void), int (*) (void));
 +int main (int, char **);
 +
 +static int
-+create_backup_file(FILE *fp, const char *backup, struct stat *sb)
++create_copy (FILE *fp, const char *dest, struct stat *sb)
 +{
 +  struct utimbuf ub;
 +  FILE *bkfp;
@@ -70,7 +72,7 @@
 +  mode_t mask;
 +
 +  mask = umask(077);
-+  bkfp = fopen(backup, "w");
++  bkfp = fopen(dest, "w");
 +  umask(mask);
 +  if (!bkfp) return -1;
 +
@@ -81,21 +83,21 @@
 +
 +  if (c != EOF || fflush(bkfp)) {
 +    fclose(bkfp);
-+    unlink(backup);
++    unlink(dest);
 +    return -1;
 +  }
 +  if (   (fsync (fileno (bkfp)) != 0)
 +      || (fclose(bkfp) != 0)) {
-+    unlink(backup);
++    unlink(dest);
 +    return -1;
 +  }
 +
 +  ub.actime = sb->st_atime;
 +  ub.modtime = sb->st_mtime;
-+  if (utime(backup, &ub) ||
-+      chmod(backup, sb->st_mode) ||
-+      chown(backup, sb->st_uid, sb->st_gid)) {
-+    unlink(backup);
++  if (utime(dest, &ub) ||
++      chmod(dest, sb->st_mode) ||
++      chown(dest, sb->st_uid, sb->st_gid)) {
++    unlink(dest);
 +    return -1;
 +  }
 +  return 0;
@@ -106,9 +108,9 @@
 +{
 +  int err = errno;
 +  if (filelocked) (*unlock)();
-+  if (msg) fprintf(stderr, "%s: %s", progname, msg);
++  if (msg) fprintf(stderr, "%s: %s", Prog, msg);
 +  if (syserr) fprintf(stderr, ": %s", strerror(err));
-+  fprintf(stderr, "\n%s: %s is unchanged\n", progname, filename);
++  fprintf(stderr, "\n%s: %s is unchanged\n", Prog, filename);
 +  exit(ret);
 +}
 +
@@ -125,14 +127,14 @@
 +  filenewname = filenew;
 +  
 +  if (access(file, F_OK)) cppwexit(file, 1, 1);
-+  if (!file_lock()) cppwexit("Couldn't lock file", errno, 5);
++  if (!file_lock()) cppwexit("Couldn't lock file", 0, 5);
 +  filelocked = 1;
 +
 +  /* file to copy has same owners, perm */
 +  if (stat(file, &st1)) cppwexit(file, 1, 1);
-+  if (!(f = fopen(in_file, "r"))) cppwexit(file, 1, 1);
-+  if (create_backup_file(f, filenew, &st1))
-+    cppwexit("Couldn't make backup", errno, 1);
++  if (!(f = fopen(in_file, "r"))) cppwexit(in_file, 1, 1);
++  if (create_copy(f, filenew, &st1))
++    cppwexit("Couldn't make copy", errno, 1);
 +  
 +  /* XXX - here we should check filenew for errors; if there are any,
 +     fail w/ an appropriate error code and let the user manually fix
@@ -141,7 +143,7 @@
 +
 +  if (rename(filenew, file) == -1) {
 +    fprintf(stderr, "%s: can't copy %s: %s)\n",
-+	    progname, filenew, strerror(errno));
++	    Prog, filenew, strerror(errno));
 +    cppwexit(0,0,1);
 +  }
 +
@@ -159,8 +161,8 @@
 +  int e = 1;
 +  int do_cppw;
 +
-+  progname = ((c = strrchr(*argv, '/')) ? c+1 : *argv);
-+  do_cppw = (strcmp(progname, "cpgr") != 0);
++  Prog = ((c = strrchr(*argv, '/')) ? c+1 : *argv);
++  do_cppw = (strcmp(Prog, "cpgr") != 0);
 +
 +  while ((flag = getopt(argc, argv, "ghps")) != EOF) {
 +    switch (flag) {

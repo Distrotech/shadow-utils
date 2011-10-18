@@ -21,14 +21,14 @@ Depends on 401_cppw_src.dpatch
  #include "prototypes.h"
  #include "pwio.h"
  #include "shadowio.h"
-@@ -115,6 +118,22 @@
+@@ -117,6 +120,22 @@
    filenewname = filenew;
    
    if (access(file, F_OK)) cppwexit(file, 1, 1);
 +#ifdef WITH_SELINUX
 +  /* if SE Linux is enabled then set the context of all new files
 +     to be the context of the file we are editing */
-+  if (is_selinux_enabled ()) {
++  if (is_selinux_enabled () > 0) {
 +    security_context_t passwd_context=NULL;
 +    int ret = 0;
 +    if (getfilecon (file, &passwd_context) < 0) {
@@ -41,16 +41,16 @@ Depends on 401_cppw_src.dpatch
 +    }
 +  }
 +#endif
-   if (!file_lock()) cppwexit("Couldn't lock file", errno, 5);
+   if (!file_lock()) cppwexit("Couldn't lock file", 0, 5);
    filelocked = 1;
  
-@@ -135,6 +154,15 @@
+@@ -137,6 +156,15 @@
      cppwexit(0,0,1);
    }
  
 +#ifdef WITH_SELINUX
 +  /* unset the fscreatecon */
-+  if (is_selinux_enabled ()) {
++  if (is_selinux_enabled () > 0) {
 +    if (setfscreatecon (NULL)) {
 +      cppwexit (_("setfscreatecon() failed"), errno, 1);
 +    }

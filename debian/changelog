@@ -1,4 +1,4 @@
-shadow (1:4.1.5-1) UNRELEASED; urgency=low
+shadow (1:4.1.5-1) unstable; urgency=low
 
   * The "Charolais" release.
 
@@ -45,6 +45,11 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
     - debian/patches/008_su_get_PAM_username: Removed, feature supported
       upstream.
     - debian/patches/300_CVE-2011-0721: Removed, applied upstream.
+    - debian/patches/402_cppw_selinux: Avoid implicit conversion between
+      integer and boolean.
+    - debian/patches/401_cppw_src.dpatch: Replace progname by Prog. Rename
+      create_backup_file to create_copy. The lock functions do not ser errno.
+      Do not report the error string on cppwexit.
     - Upstream translation updates from Debian BTS:
       + Brazilian Portuguese. Closes: #622834
       + Catalan. Closes: #627526
@@ -74,7 +79,7 @@ shadow (1:4.1.5-1) UNRELEASED; urgency=low
   * Use "linux-any" instead of a negated list of architectures in
     Build-Depends. Closes: #634465
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 29 Jul 2011 15:29:02 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Tue, 18 Oct 2011 22:43:04 +0200
 
 shadow (1:4.1.4.2+svn3283-3) unstable; urgency=high
 
