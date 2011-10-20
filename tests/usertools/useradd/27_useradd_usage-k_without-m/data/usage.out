@@ -1,5 +1,7 @@
 useradd: -k flag is only allowed with the -m flag
 Usage: useradd [options] LOGIN
+       useradd -D
+       useradd -D [options]
 
 Options:
   -b, --base-dir BASE_DIR       base directory for the home directory of the

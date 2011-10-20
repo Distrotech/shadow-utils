@@ -1,5 +1,7 @@
 useradd: options -m and -M conflict
 Usage: useradd [options] LOGIN
+       useradd -D
+       useradd -D [options]
 
 Options:
   -b, --base-dir BASE_DIR       base directory for the home directory of the
