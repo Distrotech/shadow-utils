@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../common/config.sh
 . ../../common/log.sh
 
-log_start "$0" "cppw reports an error if no files are provided"
+log_start "$0" "cppw checks if the password file is locked"
 
 save_config
 

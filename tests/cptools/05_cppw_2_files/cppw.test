@@ -16,7 +16,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "Use cppw with 2 users (cppw data/passwd data/passwd)..."
+echo -n "Use cppw with 2 files (cppw data/passwd data/passwd)..."
 cppw data/passwd data/passwd 2>tmp/usage.out && exit 1 || {
 	status=$?
 }
