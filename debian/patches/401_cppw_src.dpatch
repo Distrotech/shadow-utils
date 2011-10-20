@@ -7,11 +7,11 @@
 @DPATCH@
 --- /dev/null
 +++ b/src/cppw.c
-@@ -0,0 +1,229 @@
+@@ -0,0 +1,238 @@
 +/*
 +  cppw, cpgr  copy with locking given file over the password or group file
 +  with -s will copy with locking given file over shadow or gshadow file
-+ 
++
 +  Copyright (C) 1999 Stephen Frost <sfrost@snowman.net>
 +
 +  Based on vipw, vigr by:
@@ -118,11 +118,16 @@
 +	}
 +	if (NULL != msg) {
 +		fprintf (stderr, "%s: %s", Prog, msg);
++		if (0 != syserr) {
++			fprintf (stderr, ": %s", strerror (err));
++		}
++		(void) fputs ("\n", stderr);
 +	}
-+	if (0 != syserr) {
-+		fprintf (stderr, ": %s", strerror (err));
++	if (NULL != filename) {
++		fprintf (stderr, _("%s: %s is unchanged\n"), Prog, filename);
++	} else {
++		fprintf (stderr, _("%s: no changes\n"), Prog);
 +	}
-+	fprintf (stderr, "\n%s: %s is unchanged\n", Prog, filename);
 +
 +	exit (ret);
 +}
@@ -140,12 +145,12 @@
 +	unlock = file_unlock;
 +	filename = file;
 +	filenewname = filenew;
-+  
++
 +	if (access (file, F_OK) != 0) {
 +		cppwexit (file, 1, 1);
 +	}
 +	if (file_lock () == 0) {
-+		cppwexit ("Couldn't lock file", 0, 5);
++		cppwexit (_("Couldn't lock file"), 0, 5);
 +	}
 +	filelocked = true;
 +
@@ -158,18 +163,18 @@
 +		cppwexit (in_file, 1, 1);
 +	}
 +	if (create_copy (f, filenew, &st1) != 0) {
-+		cppwexit ("Couldn't make copy", errno, 1);
++		cppwexit (_("Couldn't make copy"), errno, 1);
 +	}
-+  
++
 +	/* XXX - here we should check filenew for errors; if there are any,
 +	 * fail w/ an appropriate error code and let the user manually fix
 +	 * it. Use pwck or grpck to do the check.  - Stephen (Shamelessly
 +	 * stolen from '--marekm's comment) */
 +
 +	if (rename (filenew, file) != 0) {
-+		fprintf (stderr, "%s: can't copy %s: %s)\n",
++		fprintf (stderr, _("%s: can't copy %s: %s)\n"),
 +                         Prog, filenew, strerror (errno));
-+		cppwexit (0,0,1);
++		cppwexit (NULL,0,1);
 +	}
 +
 +	(*file_unlock) ();
@@ -182,6 +187,10 @@
 +	char *in_file;
 +	int e = E_USAGE;
 +	bool do_cppw = true;
++
++	(void) setlocale (LC_ALL, "");
++	(void) bindtextdomain (PACKAGE, LOCALEDIR);
++	(void) textdomain (PACKAGE);
 +
 +	Prog = Basename (argv[0]);
 +	if (strcmp (Prog, "cpgr") != 0) {
@@ -203,16 +212,16 @@
 +			e = E_SUCCESS;
 +			/*pass through*/
 +		default:
-+			(void) fputs ("Usage:\n\
++			(void) fputs (_("Usage:\n\
 +`cppw <file>' copys over /etc/passwd   `cppw -s <file>' copys over /etc/shadow\n\
 +`cpgr <file>' copys over /etc/group    `cpgr -s <file>' copys over /etc/gshadow\n\
-+", (E_SUCCESS != e) ? stderr : stdout);
++"), (E_SUCCESS != e) ? stderr : stdout);
 +			exit (e);
 +		}
 +	}
 +
 +	if (optind >= argc) {
-+		cppwexit ("missing file argument, -h for usage",0,1);
++		cppwexit (_("missing file argument, -h for usage"),0,1);
 +	}
 +
 +	in_file = argv[argc - 1];
