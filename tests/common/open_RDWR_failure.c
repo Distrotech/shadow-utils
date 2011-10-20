@@ -41,7 +41,7 @@ int open64 (const char *pathname, int flag, ...)
 	    && (NULL != failure_path)
 	    && (strcmp (pathname, failure_path) == 0))
 	{
-		fprintf (stderr, "open FAILURE %s %x ...\n", pathname, flag);
+		fprintf (stderr, "open FAILURE %s %x ...\n", pathname, flag&O_ACCMODE);
 		errno = EIO;
 		return -1;
 	}
