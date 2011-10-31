@@ -4,8 +4,8 @@ Status wrt upstream: Debian specific. Not to be used upstream
 
 Details:
  Allows any non-empty user/grounames that don't contain ':' and '\n'
- characters and don't start with '-'. This patch is more restrictive
- than original Karl's version. closes: #264879
+ characters and don't start with '-', '+', or '~'. This patch is more
+ restrictive than original Karl's version. closes: #264879
  Also closes: #377844
  
  Comments from Karl Ramm (shadow 1:4.0.3-9, 20 Aug 2003 02:06:50 -0400):
@@ -25,30 +25,36 @@ Details:
  	/*
  	 * User/group names must match [a-z_][a-z0-9_-]*[$]
  	 */
-@@ -66,6 +67,20 @@
+@@ -66,6 +67,26 @@
  			return false;
  		}
  	}
 +#endif
 +	/*
-+     * POSIX indicate that usernames are composed of characters from the
-+     * portable filename character set [A-Za-z0-9._-], and that the hyphen
-+     * should not be used as the first character of a portable user name.
-+     *
-+	 * Allow more relaxed user/group names in Debian -- ^[^-:\s][^:\s]*$
++	 * POSIX indicate that usernames are composed of characters from the
++	 * portable filename character set [A-Za-z0-9._-], and that the hyphen
++	 * should not be used as the first character of a portable user name.
++	 *
++	 * Allow more relaxed user/group names in Debian -- ^[^-+:~\s][^:\s]*$
 +	 */
-+	if (!*name || isspace(*name))
-+		return 0;
-+	do
-+		if (*name == ':' || isspace(*name))
-+			return 0;
-+	while (*++name);
++	if (   ('\0' == *name)
++	    || ('-'  == *name)
++	    || ('~'  == *name)
++	    || ('+'  == *name)) {
++		return false;
++	}
++	do {
++		if (*name == ':' || isspace(*name)) {
++			return false;
++		}
++		name++;
++	} while ('\0' != *name);
  
  	return true;
  }
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -618,12 +618,19 @@
+@@ -618,12 +618,20 @@
      </para>
  
      <para>
@@ -60,7 +66,8 @@ Details:
      </para>
      <para>
 +      On Debian, the only constraints are that usernames must neither start
-+      with a dash ('-') nor contain a colon (':') or a whitespace (space: ' ',
++      with a dash ('-') nor plus ('+') nor tilde ('~') nor contain a
++      colon (':') or a whitespace (space: ' ',
 +      end of line: '\n', tabulation: '\t', etc.). Note that using a slash
 +      ('/') may break the default algorithm for the definition of the
 +      user's home directory.
@@ -71,7 +78,7 @@ Details:
    </refsect1>
 --- a/man/groupadd.8.xml
 +++ b/man/groupadd.8.xml
-@@ -224,12 +224,17 @@
+@@ -224,12 +224,18 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>
@@ -83,7 +90,8 @@ Details:
       </para>
       <para>
 +       On Debian, the only constraints are that groupnames must neither start
-+       with a dash ('-') nor contain a colon (':') or a whitespace (space:' ',
++       with a dash ('-') nor plus ('+') nor tilde ('~') nor contain a
++       colon (':') or a whitespace (space:' ',
 +       end of line: '\n', tabulation: '\t', etc.).
 +     </para>
 +     <para>
