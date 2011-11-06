@@ -30,6 +30,8 @@ shadow (1:4.1.5-1) unstable; urgency=low
     - grpck/pwck: NIS entries were dropped by -s (sort). Closes: #622765
     - login does not log into utmp(x) and wtmp. This is already done by
       pam_lastlog. Closes: #605329
+    - groupmod: document that /etc/passwd can be modified by groupmod -g.
+      Closes: #647308
     - Updated patches
       + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
       + debian/patches/505_useradd_recommend_adduser
@@ -82,7 +84,7 @@ shadow (1:4.1.5-1) unstable; urgency=low
   * Use "linux-any" instead of a negated list of architectures in
     Build-Depends. Closes: #634465
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Mon, 31 Oct 2011 23:54:06 +0100
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Sun, 06 Nov 2011 20:02:00 +0100
 
 shadow (1:4.1.4.2+svn3283-3) unstable; urgency=high
 
