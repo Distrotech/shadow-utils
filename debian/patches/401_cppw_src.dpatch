@@ -193,7 +193,7 @@
 +	(void) textdomain (PACKAGE);
 +
 +	Prog = Basename (argv[0]);
-+	if (strcmp (Prog, "cpgr") != 0) {
++	if (strcmp (Prog, "cpgr") == 0) {
 +		do_cppw = false;
 +	}
 +
