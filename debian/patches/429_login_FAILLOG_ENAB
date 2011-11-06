@@ -27,9 +27,9 @@ Note: It could be removed if pam_tally could report the number of failures
 +				if ((NULL != pwd) && getdef_bool("FAILLOG_ENAB")) {
 +					failure (pwd->pw_uid, tty, &faillog);
 +				}
- 				fprintf(stderr,
- 				        _("Maximum number of tries exceeded (%u)\n"),
- 				        failcount);
+ 				fprintf (stderr,
+ 				         _("Maximum number of tries exceeded (%u)\n"),
+ 				         failcount);
 @@ -812,6 +815,14 @@
  				         pam_strerror (pamh, retcode)));
  				failed = true;

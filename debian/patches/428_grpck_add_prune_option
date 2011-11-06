@@ -19,11 +19,12 @@ Status wrt upstream: It could certainly be submitted to upstream.
  	/*
  	 * Parse the command line arguments
  	 */
--	while ((arg = getopt (argc, argv, "qrs")) != EOF) {
-+	while ((arg = getopt (argc, argv, "qprs")) != EOF) {
- 		switch (arg) {
- 		case 'q':
- 			/* quiet - ignored for now */
+-	while ((c = getopt_long (argc, argv, "hqrR:s",
++	while ((c = getopt_long (argc, argv, "hqprR:s",
+	                         long_options, NULL)) != -1) {
+ 		switch (c) {
+ 		case 'h':
+ 			usage (E_SUCCESS);
 @@ -189,6 +190,9 @@
  		case 's':
  			sort_mode = true;
