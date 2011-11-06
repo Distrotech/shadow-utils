@@ -75,6 +75,7 @@ shadow (1:4.1.5-1) unstable; urgency=low
   * debian/securetty.linux: Add IBM pSeries console ports. Closes: #597661
   * debian/securetty.linux: Add serial Console for MIPS Swarm.
     (http://lists.debian.org/debian-release/2011/02/msg00320.html)
+  * debian/securetty.linux: Add s390/s390x ports ttysclp0. Closes: #647469
   * debian/securetty.linux: Fixed typo: ttyama -> ttyAMA. Closes: #544184
   * debian/rules, debian/man.insert, debian/man.insert.sed: Bug #507673 has
     been closed. It is no more needed to patch the generated manpages. This

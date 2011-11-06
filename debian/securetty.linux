@@ -373,7 +373,7 @@ ttyEQ1
 
 # ==========================================================
 #
-# Not in Documentation/Devicess.txt
+# Not in Documentation/Devices.txt
 #
 # ==========================================================
 
@@ -388,3 +388,6 @@ ttymxc5
 # Serial Console for MIPS Swarm
 duart0
 duart1
+
+# s390 and s390x ports in LPAR mode
+ttysclp0
