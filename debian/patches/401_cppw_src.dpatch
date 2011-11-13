@@ -220,11 +220,11 @@
 +		}
 +	}
 +
-+	if (optind >= argc) {
-+		cppwexit (_("missing file argument, -h for usage"),0,1);
++	if (argc != optind + 1) {
++		cppwexit (_("wrong number of arguments, -h for usage"),0,1);
 +	}
 +
-+	in_file = argv[argc - 1];
++	in_file = argv[optind];
 +
 +	if (do_cppw) {
 +		if (cpshadow) {
