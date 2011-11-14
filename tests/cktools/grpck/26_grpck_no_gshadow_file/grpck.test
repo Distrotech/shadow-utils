@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../../common/config.sh
 . ../../../common/log.sh
 
-log_start "$0" "grpck can sort the group entries"
+log_start "$0" "grpck can check the group entries when there are no gshadow file"
 
 save_config
 
