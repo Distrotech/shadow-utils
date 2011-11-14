@@ -16,7 +16,7 @@ if {$argc == 2} {
 
 expect "Password: "
 send "wrong pass\r"
-expect "chsh: PAM authentication failed\r\n"
+expect "chsh: PAM: Authentication failure\r\n"
 expect {
 	eof {
 		if ([string compare $expect_out(buffer) ""]) {
