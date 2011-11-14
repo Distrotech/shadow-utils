@@ -1,4 +1,6 @@
 Usage: useradd [options] LOGIN
+       useradd -D
+       useradd -D [options]
 
 Options:
   -b, --base-dir BASE_DIR       base directory for the home directory of the
@@ -25,6 +27,7 @@ Options:
                                 (non-unique) UID
   -p, --password PASSWORD       encrypted password of the new account
   -r, --system                  create a system account
+  -R, --root CHROOT_DIR         directory to chroot into
   -s, --shell SHELL             login shell of the new account
   -u, --uid UID                 user ID of the new account
   -U, --user-group              create a group with the same name as the user
