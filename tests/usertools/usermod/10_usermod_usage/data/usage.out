@@ -18,6 +18,7 @@ Options:
                                 new location (use only with -d)
   -o, --non-unique              allow using duplicate (non-unique) UID
   -p, --password PASSWORD       use encrypted password for the new password
+  -R, --root CHROOT_DIR         directory to chroot into
   -s, --shell SHELL             new login shell for the user account
   -u, --uid UID                 new UID for the user account
   -U, --unlock                  unlock the user account

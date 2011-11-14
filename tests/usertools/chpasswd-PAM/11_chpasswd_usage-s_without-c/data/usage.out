@@ -7,6 +7,7 @@ Options:
   -h, --help                    display this help message and exit
   -m, --md5                     encrypt the clear text password using
                                 the MD5 algorithm
+  -R, --root CHROOT_DIR         directory to chroot into
   -s, --sha-rounds              number of SHA rounds for the SHA*
                                 crypt algorithms
 
