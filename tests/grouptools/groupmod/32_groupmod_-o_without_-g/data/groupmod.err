@@ -7,4 +7,5 @@ Options:
   -o, --non-unique              allow to use a duplicate (non-unique) GID
   -p, --password PASSWORD       change the password to this (encrypted)
                                 PASSWORD
+  -R, --root CHROOT_DIR         directory to chroot into
 
