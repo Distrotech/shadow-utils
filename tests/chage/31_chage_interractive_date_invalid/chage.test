@@ -12,7 +12,7 @@ log_start "$0" "chage creates a shadow entry if there were none"
 save_config
 
 # restore the files on exit
-trap 'log_status "$0" "FAILURE"; restore_config' 0
+trap 'log_status "$0" "FAILURE"; restore_config; rm -f /etc/passwd.lock /etc/shadow.lock' 0
 
 change_config
 
