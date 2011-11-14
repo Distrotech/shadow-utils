@@ -17,14 +17,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 change_config
 
 echo -n "Get grpck usage (grpck -h)..."
-grpck -h 2>tmp/usage.out && exit 1 || {
-	status=$?
-}
-echo "OK"
-
-echo -n "Check returned status ($status)..."
-test "$status" = "1"
-echo "OK"
+grpck -h >tmp/usage.out
 
 echo "grpck reported:"
 echo "======================================================================="
