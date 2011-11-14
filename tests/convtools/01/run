@@ -16,8 +16,8 @@ save()
 	[ ! -d tmp ] && mkdir tmp
 	for i in passwd group shadow gshadow
 	do
-		[ -f /etc/$i  ] && cp /etc/$i  tmp/$i
-		[ -f /etc/$i- ] && cp /etc/$i- tmp/$i-
+		[ -f /etc/$i  ] && cp -dp /etc/$i  tmp/$i
+		[ -f /etc/$i- ] && cp -dp /etc/$i- tmp/$i-
 	done
 	DATE=$(date '+%s')
 	DATE=$(( DATE/3600/24 ))
@@ -36,8 +36,8 @@ restore()
 {
 	for i in passwd group shadow gshadow
 	do
-		[ -f tmp/$i  ] && cp tmp/$i  /etc/$i  && rm tmp/$i
-		[ -f tmp/$i- ] && cp tmp/$i- /etc/$i- && rm tmp/$i-
+		[ -f tmp/$i  ] && cp -dp tmp/$i  /etc/$i  && rm tmp/$i
+		[ -f tmp/$i- ] && cp -dp tmp/$i- /etc/$i- && rm tmp/$i-
 	done
 	rm tmp/shadow.2
 	rmdir tmp
@@ -54,7 +54,7 @@ do
 done
 for i in passwd group
 do
-	cp data/1/$i /etc
+	cp -f data/1/$i /etc/
 done
 
 echo -n "pwconv "
