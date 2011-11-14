@@ -1,2 +1,2 @@
-cppw: missing file argument, -h for usage
-cppw: /etc/passwd is unchanged
+cppw: wrong number of arguments, -h for usage
+cppw: no changes
