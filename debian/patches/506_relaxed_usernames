@@ -3,7 +3,7 @@ Goal: Relaxed usernames/groupnames checking patch.
 Status wrt upstream: Debian specific. Not to be used upstream
 
 Details:
- Allows any non-empty user/grounames that don't contain ':' and '\n'
+ Allows any non-empty user/grounames that don't contain ':', ',' or '\n'
  characters and don't start with '-', '+', or '~'. This patch is more
  restrictive than original Karl's version. closes: #264879
  Also closes: #377844
@@ -35,7 +35,7 @@ Details:
 +	 * portable filename character set [A-Za-z0-9._-], and that the hyphen
 +	 * should not be used as the first character of a portable user name.
 +	 *
-+	 * Allow more relaxed user/group names in Debian -- ^[^-+:~\s][^:\s]*$
++	 * Allow more relaxed user/group names in Debian -- ^[^-~+:,\s][^:,\s]*$
 +	 */
 +	if (   ('\0' == *name)
 +	    || ('-'  == *name)
@@ -44,7 +44,7 @@ Details:
 +		return false;
 +	}
 +	do {
-+		if (*name == ':' || isspace(*name)) {
++		if ((':' == *name) || (',' == *name) || isspace(*name)) {
 +			return false;
 +		}
 +		name++;
@@ -54,7 +54,7 @@ Details:
  }
 --- a/man/useradd.8.xml
 +++ b/man/useradd.8.xml
-@@ -618,12 +618,20 @@
+@@ -631,12 +631,20 @@
      </para>
  
      <para>
@@ -67,7 +67,7 @@ Details:
      <para>
 +      On Debian, the only constraints are that usernames must neither start
 +      with a dash ('-') nor plus ('+') nor tilde ('~') nor contain a
-+      colon (':') or a whitespace (space: ' ',
++      colon (':'), a comma (','), or a whitespace (space: ' ',
 +      end of line: '\n', tabulation: '\t', etc.). Note that using a slash
 +      ('/') may break the default algorithm for the definition of the
 +      user's home directory.
@@ -78,7 +78,7 @@ Details:
    </refsect1>
 --- a/man/groupadd.8.xml
 +++ b/man/groupadd.8.xml
-@@ -224,12 +224,18 @@
+@@ -237,12 +237,18 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>
@@ -91,7 +91,7 @@ Details:
       <para>
 +       On Debian, the only constraints are that groupnames must neither start
 +       with a dash ('-') nor plus ('+') nor tilde ('~') nor contain a
-+       colon (':') or a whitespace (space:' ',
++       colon (':'), a comma (','), or a whitespace (space:' ',
 +       end of line: '\n', tabulation: '\t', etc.).
 +     </para>
 +     <para>
