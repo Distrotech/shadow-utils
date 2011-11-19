@@ -56,7 +56,7 @@ Note: It could be removed if pam_tally could report the number of failures
  			if (getdef_str("FTMP_FILE") != NULL) {
  #ifdef USE_UTMPX
  				struct utmpx *failent =
-@@ -1288,6 +1303,7 @@
+@@ -1291,6 +1306,7 @@
  		 */
  #ifndef USE_PAM
  		motd ();	/* print the message of the day */
@@ -64,7 +64,7 @@ Note: It could be removed if pam_tally could report the number of failures
  		if (   getdef_bool ("FAILLOG_ENAB")
  		    && (0 != faillog.fail_cnt)) {
  			failprint (&faillog);
-@@ -1300,6 +1316,7 @@
+@@ -1303,6 +1319,7 @@
  				         username, (int) faillog.fail_cnt));
  			}
  		}

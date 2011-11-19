@@ -21,7 +21,7 @@ Status wrt upstream: not included as this is just specific
        <varlistentry>
 --- a/src/useradd.c
 +++ b/src/useradd.c
-@@ -1007,9 +1007,9 @@
+@@ -1009,9 +1009,9 @@
  		};
  		while ((c = getopt_long (argc, argv,
  #ifdef WITH_SELINUX
@@ -33,7 +33,7 @@ Status wrt upstream: not included as this is just specific
  #endif
  		                         long_options, NULL)) != -1) {
  			switch (c) {
-@@ -1132,6 +1132,7 @@
+@@ -1134,6 +1134,7 @@
  				kflg = true;
  				break;
  			case 'K':

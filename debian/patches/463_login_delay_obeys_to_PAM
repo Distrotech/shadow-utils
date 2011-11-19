@@ -67,7 +67,7 @@ Note: If removed, FAIL_DELAY must be re-added to /etc/login.defs
  
  			retcode = pam_authenticate (pamh, 0);
  
-@@ -1104,14 +1092,17 @@
+@@ -1107,14 +1095,17 @@
  		free (username);
  		username = NULL;
  

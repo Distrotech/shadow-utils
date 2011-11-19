@@ -33,17 +33,20 @@ shadow (1:4.1.5-1) unstable; urgency=low
     - groupmod: document that /etc/passwd can be modified by groupmod -g.
       Closes: #647308
     - Updated patches
-      + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
-      + debian/patches/505_useradd_recommend_adduser
-      + debian/patches/463_login_delay_obeys_to_PAM
       + debian/patches/008_login_log_failure_in_FTMP
-      + debian/patches/501_commonio_group_shadow
-      + debian/patches/429_login_FAILLOG_ENAB
-      + debian/patches/508_nologin_in_usr_sbin
-      + debian/patches/506_relaxed_usernames
-      + debian/patches/523_su_arguments_are_concatenated
-      + debian/patches/542_useradd-O_option
+      + debian/patches/401_cppw_src.dpatch
+      + debian/patches/402_cppw_selinux
       + debian/patches/428_grpck_add_prune_option
+      + debian/patches/429_login_FAILLOG_ENAB
+      + debian/patches/463_login_delay_obeys_to_PAM
+      + debian/patches/501_commonio_group_shadow
+      + debian/patches/505_useradd_recommend_adduser
+      + debian/patches/506_relaxed_usernames
+      + debian/patches/508_nologin_in_usr_sbin
+      + debian/patches/523_su_arguments_are_concatenated
+      + debian/patches/523_su_arguments_are_no_more_concatenated_by_default
+      + debian/patches/542_useradd-O_option
+      + debian/patches/900_testsuite_groupmems
     - debian/patches/008_su_get_PAM_username: Removed, feature supported
       upstream.
     - debian/patches/300_CVE-2011-0721: Removed, applied upstream.

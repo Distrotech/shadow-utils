@@ -10,7 +10,7 @@ Note: the fix of the man page is still missing.
 
 --- a/src/su.c
 +++ b/src/su.c
-@@ -1151,6 +1151,35 @@
+@@ -1150,6 +1150,35 @@
  			argv[0] = "-c";
  			argv[1] = command;
  		}

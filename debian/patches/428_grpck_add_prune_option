@@ -7,7 +7,7 @@ Status wrt upstream: It could certainly be submitted to upstream.
 
 --- a/src/grpck.c
 +++ b/src/grpck.c
-@@ -79,6 +79,7 @@
+@@ -81,6 +81,7 @@
  /* Options */
  static bool read_only = false;
  static bool sort_mode = false;
@@ -15,37 +15,12 @@ Status wrt upstream: It could certainly be submitted to upstream.
  
  /* local function prototypes */
  static void fail_exit (int status);
-@@ -178,7 +179,7 @@
+@@ -203,7 +204,7 @@
  	/*
  	 * Parse the command line arguments
  	 */
 -	while ((c = getopt_long (argc, argv, "hqrR:s",
 +	while ((c = getopt_long (argc, argv, "hqprR:s",
-	                         long_options, NULL)) != -1) {
+ 	                         long_options, NULL)) != -1) {
  		switch (c) {
  		case 'h':
- 			usage (E_SUCCESS);
-@@ -189,6 +190,9 @@
- 		case 's':
- 			sort_mode = true;
- 			break;
-+		case 'p':
-+			prune = true;
-+			break;
- 		default:
- 			usage ();
- 		}
-@@ -474,7 +478,12 @@
- 			/*
- 			 * prompt the user to delete the entry or not
- 			 */
--			if (!yes_or_no (read_only)) {
-+			if (!prune) {
-+			        if (!yes_or_no (read_only)) {
-+				        continue;
-+				}
-+			} else {
-+				puts (_("Yes"));
- 				continue;
- 			}
- 

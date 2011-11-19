@@ -53,7 +53,7 @@
  
 --- a/debian/rules
 +++ b/debian/rules
-@@ -61,6 +61,7 @@
+@@ -60,6 +60,7 @@
  	dh_installpam -p passwd --name=chsh
  	dh_installpam -p passwd --name=chpasswd
  	dh_installpam -p passwd --name=newusers
@@ -61,7 +61,7 @@
  ifeq ($(DEB_HOST_ARCH_OS),hurd)
  # login is not built on The Hurd, but some utilities of passwd depends on
  # /etc/login.defs.
-@@ -91,3 +92,6 @@
+@@ -87,3 +88,6 @@
  	chgrp shadow debian/passwd/usr/bin/expiry
  	chmod g+s debian/passwd/usr/bin/chage
  	chmod g+s debian/passwd/usr/bin/expiry
