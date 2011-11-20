@@ -51,6 +51,8 @@ echo -n "Check the gshadow file..."
 ../../../common/compare_file.pl config/etc/gshadow /etc/gshadow
 echo "OK"
 
+rm -f tmp/passwd tmp/passwd+ tmp/passwd-
+
 log_status "$0" "SUCCESS"
 restore_config
 trap '' 0
