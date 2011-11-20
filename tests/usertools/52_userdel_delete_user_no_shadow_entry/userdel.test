@@ -7,7 +7,7 @@ cd $(dirname $0)
 . ../../common/config.sh
 . ../../common/log.sh
 
-log_start "$0" "userdel accepts when the user is not is shadow"
+log_start "$0" "userdel accepts when the user has no shadow entry"
 
 save_config
 
@@ -16,7 +16,7 @@ trap 'log_status "$0" "FAILURE"; restore_config' 0
 
 change_config
 
-echo -n "Delete user test1 (userdel foo)..."
+echo -n "Delete user foo (userdel foo)..."
 userdel foo
 echo "OK"
 
