@@ -22,5 +22,5 @@ Options:
   -s, --shell SHELL             new login shell for the user account
   -u, --uid UID                 new UID for the user account
   -U, --unlock                  unlock the user account
-  -Z, --selinux-user            new SELinux user mapping for the user account
+  -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
 
