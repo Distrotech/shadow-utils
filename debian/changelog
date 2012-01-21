@@ -58,7 +58,7 @@ shadow (1:4.1.5-1) unstable; urgency=low
       + French. Closes: #623608
       + Japanese. Closes: #620978
       + Kazakh. Closes: #620930
-      + Portuguese. Closes: #623722
+      + Portuguese. Closes: #623722, #656686
       + Russian. Closes: #622106, #655194
       + Spanish (Closes: #630618)
       + Swedish. Closes: #621126
