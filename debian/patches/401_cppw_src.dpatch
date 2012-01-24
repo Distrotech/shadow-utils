@@ -266,7 +266,7 @@
  groupdel_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -83,6 +83,7 @@
+@@ -85,6 +85,7 @@
  src/chgpasswd.c
  src/chpasswd.c
  src/chsh.c

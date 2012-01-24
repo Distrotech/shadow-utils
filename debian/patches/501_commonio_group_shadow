@@ -10,9 +10,9 @@ Fixes: #166793
  #include <signal.h>
 +#include <grp.h>
  #include "nscd.h"
- #ifdef WITH_SELINUX
- #include <selinux/selinux.h>
-@@ -988,13 +989,20 @@
+ #ifdef WITH_TCB
+ #include <tcb.h>
+@@ -966,13 +967,20 @@
  			goto fail;
  		}
  	} else {
