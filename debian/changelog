@@ -67,6 +67,7 @@ shadow (1:4.1.5-1) unstable; urgency=low
       + French. Closes: #630250
       + German. Closes: #628777
       + Simplified Chinese. Closes: #602264, #655858
+      + Danish added. Closes: #657516
   * debian/control: mark passwd as 'Multi-Arch: foreign'. Closes: #614321
   * debian/securetty.linux: Add IBM pSeries console ports. Closes: #597661
   * debian/securetty.linux: Add serial Console for MIPS Swarm.
