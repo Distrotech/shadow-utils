@@ -54,6 +54,7 @@ prepare_chroot ()
 {
 	mkdir tmp/root
 	cp -rfdp config_chroot/* tmp/root/
+	find tmp/root/ -name .svn -type d -print0 | xargs -0 rm -rf
 
 	lists=/root/tests/common/config_chroot.list
 	[ -f config_chroot.list ] && lists="$lists config_chroot.list"
@@ -114,7 +115,7 @@ clean_chroot ()
 	find config_chroot -depth -type d | while read d
 	do
 		d=${d#config_chroot}
-		rmdir tmp/root$d
+		[ -d "tmp/root$d" ] && rmdir tmp/root$d
 	done
 }
 
