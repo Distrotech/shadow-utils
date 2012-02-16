@@ -1,3 +1,17 @@
+shadow (1:4.1.5.1-1) unstable; urgency=low
+
+  * The "Gruyère" release.
+
+  * New upstream release:
+    - 
+  * debian/patches/428_grpck_add_prune_option: removed -p option. The option
+    was not documented and was meant to fix consequences of a bug now fixed
+    more than 10 years ago.
+  * debian/shadowconfig.sh: Display issues, but dot not prompt interactively
+    to fix passwd/group/shadow/gshadow issues. Closes: #638263
+
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Thu, 16 Feb 2012 20:58:49 +0100
+
 shadow (1:4.1.5-1) unstable; urgency=low
 
   * The "Charolais" release.
