@@ -1,6 +1,11 @@
 shadow (1:4.1.5.1-2) UNRELEASED; urgency=low
 
+  [ Christian Perrier ]
   * Complete Polish translation of logoutd(8. Closes: #668880
+
+  [ Roger Leigh ]
+  * Separation of static and dynamic motd components in login PAM module
+    Closes: #669698
 
  -- Christian Perrier <bubulle@debian.org>  Sun, 15 Apr 2012 12:54:24 +0200
 

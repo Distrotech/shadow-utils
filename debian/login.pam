@@ -80,8 +80,11 @@ session    required   pam_limits.so
 # (Replaces the `LASTLOG_ENAB' option from login.defs)
 session    optional   pam_lastlog.so
 
-# Prints the motd upon succesful login
+# Prints the message of the day upon succesful login.
 # (Replaces the `MOTD_FILE' option in login.defs)
+# This includes a dynamically generated part from /run/motd.dynamic
+# and a static (admin-editable) part from /etc/motd.
+session    optional   pam_motd.so  motd=/run/motd.dynamic
 session    optional   pam_motd.so
 
 # Prints the status of the user's mailbox upon succesful login
