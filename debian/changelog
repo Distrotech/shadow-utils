@@ -16,12 +16,13 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
 
   [ Christian Perrier ]
   * Complete Polish translation of logoutd(8). Closes: #668880
+  * German translation of manpages completed. Closes: #673234
 
   [ Roger Leigh ]
   * Separation of static and dynamic motd components in login PAM module
     Closes: #669698
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 18 May 2012 20:47:24 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 18 May 2012 21:24:05 +0200
 
 shadow (1:4.1.5-1) unstable; urgency=low
 
