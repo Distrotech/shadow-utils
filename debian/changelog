@@ -6,6 +6,8 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
   * New upstream release:
     - login: log into utmp(x) but not into wtmp (this is done by pam_lastlog).
       Log to utmp(x) was broken by the fix for #605329. Closes: 659957
+    - userdel: Fix segfault when userdel removes the user's group.
+      Closes: #660406
   * debian/patches/428_grpck_add_prune_option: removed -p option. The option
     was not documented and was meant to fix consequences of a bug now fixed
     more than 10 years ago.
@@ -19,7 +21,7 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
   * Separation of static and dynamic motd components in login PAM module
     Closes: #669698
 
- -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 18 May 2012 19:48:53 +0200
+ -- Nicolas FRANCOIS (Nekral) <nicolas.francois@centraliens.net>  Fri, 18 May 2012 20:47:24 +0200
 
 shadow (1:4.1.5-1) unstable; urgency=low
 
