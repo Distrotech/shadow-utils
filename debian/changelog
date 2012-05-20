@@ -10,6 +10,7 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
       Closes: #660406
     - manpages: .so links point to paths relative to the top-level manual
       hierarchy. Closes: #661025
+    - useradd(8): Return code 13 no more documented. Closes: #661802
   * debian/patches/series, debian/patches/428_grpck_add_prune_option: Removed.
     The -p option was not documented and was meant to fix consequences of a
     bug now fixed more than 10 years ago.
