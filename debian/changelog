@@ -16,6 +16,10 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
     bug now fixed more than 10 years ago.
   * debian/shadowconfig.sh: Display issues, but dot not prompt interactively
     to fix passwd/group/shadow/gshadow issues. Closes: #638263
+  * debian/control: Bump Standards-Version to 3.9.3 (no changes needed).
+  * debian/rules: Simplify setting of hardening flags. cdbs 0.4.103 needed to
+    get hardened version of shadow-utils. Restore previous requirement on
+    dpkg-dev to 1.13.5.
 
   [ Christian Perrier ]
   * Complete Polish translation of logoutd(8). Closes: #668880
