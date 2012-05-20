@@ -3,7 +3,6 @@
 #901_testsuite_gcov
 
 503_shadowconfig.8
-428_grpck_add_prune_option
 008_login_log_failure_in_FTMP
 429_login_FAILLOG_ENAB
 401_cppw_src.dpatch
