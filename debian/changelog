@@ -8,6 +8,8 @@ shadow (1:4.1.5.1-1) unstable; urgency=low
       Log to utmp(x) was broken by the fix for #605329. Closes: 659957
     - userdel: Fix segfault when userdel removes the user's group.
       Closes: #660406
+    - manpages: .so links point to paths relative to the top-level manual
+      hierarchy. Closes: #661025
   * debian/patches/428_grpck_add_prune_option: removed -p option. The option
     was not documented and was meant to fix consequences of a bug now fixed
     more than 10 years ago.
