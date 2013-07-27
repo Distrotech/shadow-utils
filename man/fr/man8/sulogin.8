@@ -1,0 +1,116 @@
+'\" t
+.\"     Title: sulogin
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 25/05/2012
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.1.5.1
+.\"  Language: French
+.\"
+.TH "SULOGIN" "8" "25/05/2012" "shadow\-utils 4\&.1\&.5\&.1" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+sulogin \- Single\-user login
+.SH "SYNTAX"
+.PP
+\fBsulogin\fR
+[\fItty\-device\fR]
+.SH "DESCRIPTION"
+.PP
+The
+\fBsulogin\fR
+command is invoked by
+\fBinit\fR
+prior to allowing the user access to the system when in single user mode\&. This feature may only be available on certain systems where
+\fBinit\fR
+has been modified accordingly, or where the
+/etc/inittab
+has an entry for a single user login\&.
+.PP
+The user is prompted
+.PP
+Type control\-d to proceed with normal startup, (or give root password for system maintenance):
+.PP
+Input and output will be performed with the standard file descriptors unless the optional device name argument is provided\&.
+.PP
+If the user enters the correct root password, a login session is initiated\&. When
+\fIEOF\fR
+is pressed instead, the system enters multi\-user mode\&.
+.PP
+After the user exits the single\-user shell, or presses
+\fIEOF\fR, the system begins the initialization process required to enter multi\-user mode\&.
+.SH "AVERTISSEMENTS"
+.PP
+This command can only be used if
+\fBinit\fR
+has been modified to call
+\fBsulogin\fR
+instead of
+/bin/sh, or if the user has set the
+\fIinittab\fR
+to support a single user login\&. For example, the line:
+.PP
+co:s:respawn:/etc/sulogin /dev/console
+.PP
+should execute the sulogin command in single user mode\&.
+.PP
+As complete an environment as possible is created\&. However, various devices may be unmounted or uninitialized and many of the user commands may be unavailable or nonfunctional as a result\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBENV_HZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement HZ lorsqu\*(Aqun utilisateur se connecte\&. La valeur doit \(^etre pr\('ec\('ed\('ee par
+\fIHZ=\fR\&. Une valeur commune sur Linux est
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement TZ quand un utilisateur se connecte\&. La valeur peut \(^etre le nom d\*(Aqun fuseau horaire pr\('ec\('ed\('e par
+\fITZ=\fR
+(par exemple
+\fITZ=CST6CDT\fR), ou le chemin complet vers le fichier contenant la sp\('ecification du fuseau horaire (par exemple
+/etc/tzname)\&.
+.sp
+Si un chemin complet est sp\('ecifi\('e mais que le fichier n\*(Aqexiste pas ou ne peut pas \(^etre lu, la valeur par d\('efaut utilis\('ee est
+\fITZ=CST6CDT\fR\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+
+\fBlogin\fR(1),
+\fBsh\fR(1),
+\fBinit\fR(8)\&.

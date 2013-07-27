@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 1993       , The Regents of the University of California
+   Copyright (c) 2006 - 2008, Nicolas François
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. The name of the copyright holders or contributors may not be used to
+      endorse or promote products derived from this software without
+      specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!-- SHADOW-CONFIG-HERE -->
+]>
+<refentry id='nologin.8'>
+  <!-- $Id: nologin.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <refentryinfo>
+    <author>
+      <firstname>Nicolas</firstname>
+      <surname>François</surname>
+      <email>nicolas.francois@centraliens.net</email>
+      <contrib>shadow-utils maintainer, 2007 - now</contrib>
+    </author>
+  </refentryinfo>
+  <refmeta>
+    <refentrytitle>nologin</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class="sectdesc">System Management Commands</refmiscinfo>
+    <refmiscinfo class="source">shadow-utils</refmiscinfo>
+    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
+  </refmeta>
+  <refnamediv id='name'>
+    <refname>nologin</refname>
+    <refpurpose>politely refuse a login</refpurpose>
+  </refnamediv>
+  <!-- body begins here -->
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>nologin</command>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>
+      The <command>nologin</command> command displays a message that an account
+      is not available and exits non-zero. It is intended as a replacement shell
+      field for accounts that have been disabled.
+    </para>
+    <para>
+      To disable all logins, investigate
+      <citerefentry><refentrytitle>nologin</refentrytitle><manvolnum>5</manvolnum>
+      </citerefentry>.
+    </para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry>
+	<refentrytitle>login</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>nologin</refentrytitle><manvolnum>5</manvolnum>
+      </citerefentry>.
+    </para>
+  </refsect1>
+
+  <refsect1 id='history'>
+    <title>HISTORY</title>
+    <para>
+      The <command>nologin</command> command appearred in BSD 4.4.
+    </para>
+  </refsect1>
+</refentry>

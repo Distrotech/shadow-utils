@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 1991 - 1993, Julianne Frances Haugh
+   Copyright (c) 2007 - 2011, Nicolas François
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. The name of the copyright holders or contributors may not be used to
+      endorse or promote products derived from this software without
+      specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY MAX_MEMBERS_PER_GROUP SYSTEM "login.defs.d/MAX_MEMBERS_PER_GROUP.xml">
+<!-- SHADOW-CONFIG-HERE -->
+]>
+<refentry id='groupdel.8'>
+  <!-- $Id: groupdel.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <refentryinfo>
+    <author>
+      <firstname>Julianne Frances</firstname>
+      <surname>Haugh</surname>
+      <contrib>Creation, 1991</contrib>
+    </author>
+    <author>
+      <firstname>Thomas</firstname>
+      <surname>Kłoczko</surname>
+      <email>kloczek@pld.org.pl</email>
+      <contrib>shadow-utils maintainer, 2000 - 2007</contrib>
+    </author>
+    <author>
+      <firstname>Nicolas</firstname>
+      <surname>François</surname>
+      <email>nicolas.francois@centraliens.net</email>
+      <contrib>shadow-utils maintainer, 2007 - now</contrib>
+    </author>
+  </refentryinfo>
+  <refmeta>
+    <refentrytitle>groupdel</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class="sectdesc">System Management Commands</refmiscinfo>
+    <refmiscinfo class="source">shadow-utils</refmiscinfo>
+    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
+  </refmeta>
+  <refnamediv id='name'>
+    <refname>groupdel</refname>
+    <refpurpose>delete a group</refpurpose>
+  </refnamediv>
+  <!-- body begins here -->
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>groupdel</command>
+      <arg choice='opt'>
+        <replaceable>options</replaceable>
+      </arg>
+      <arg choice='plain'><replaceable>GROUP</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para> The <command>groupdel</command> command modifies the system
+      account files, deleting all entries that refer to
+      <replaceable>GROUP</replaceable>. The named group must exist.
+    </para>
+  </refsect1>
+
+  <refsect1 id='options'>
+    <title>OPTIONS</title>
+    <para>
+      The options which apply to the <command>groupdel</command> command
+      are:
+    </para>
+    <variablelist remap='IP'>
+      <varlistentry>
+	<term><option>-h</option>, <option>--help</option></term>
+	<listitem>
+	  <para>Display help message and exit.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-R</option>, <option>--root</option>
+	  <replaceable>CHROOT_DIR</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Apply changes in the <replaceable>CHROOT_DIR</replaceable>
+	    directory and use the configuration files from the
+	    <replaceable>CHROOT_DIR</replaceable> directory.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='caveats'>
+    <title>CAVEATS</title>
+    <para>
+      You may not remove the primary group of any existing user. You
+      must remove the user before you remove the group.
+    </para>
+    <para>
+      You should manually check all file systems to ensure that no files
+      remain owned by this group.
+    </para>
+  </refsect1>
+
+  <refsect1 id='configuration'>
+    <title>CONFIGURATION</title>
+    <para>
+      The following configuration variables in
+      <filename>/etc/login.defs</filename> change the behavior of this
+      tool:
+    </para>
+    <variablelist>
+      &MAX_MEMBERS_PER_GROUP;
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='files'>
+    <title>FILES</title>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/group</filename></term>
+	<listitem>
+	  <para>Group account information.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="gshadow">
+	<term><filename>/etc/gshadow</filename></term>
+	<listitem>
+	  <para>Secure group account information.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='exit_values'>
+    <title>EXIT VALUES</title>
+    <para>
+      The <command>groupdel</command> command exits with the following values:
+      <variablelist>
+	<varlistentry>
+	  <term><replaceable>0</replaceable></term>
+	  <listitem>
+	    <para>success</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><replaceable>2</replaceable></term>
+	  <listitem>
+	    <para>invalid command syntax</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><replaceable>6</replaceable></term>
+	  <listitem>
+	    <para>specified group doesn't exist</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><replaceable>8</replaceable></term>
+	  <listitem>
+	    <para>can't remove user's primary group</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><replaceable>10</replaceable></term>
+	  <listitem>
+	    <para>can't update group file</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry>
+	<refentrytitle>chfn</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>chsh</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>passwd</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>gpasswd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>groupadd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>groupmod</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>userdel</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>.
+    </para>
+  </refsect1>
+</refentry>
