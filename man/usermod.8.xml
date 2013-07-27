@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 1991 - 1994, Julianne Frances Haugh
+   Copyright (c) 2007 - 2011, Nicolas François
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. The name of the copyright holders or contributors may not be used to
+      endorse or promote products derived from this software without
+      specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY MAIL_DIR              SYSTEM "login.defs.d/MAIL_DIR.xml">
+<!ENTITY MAX_MEMBERS_PER_GROUP SYSTEM "login.defs.d/MAX_MEMBERS_PER_GROUP.xml">
+<!ENTITY TCB_SYMLINKS          SYSTEM "login.defs.d/TCB_SYMLINKS.xml">
+<!ENTITY USE_TCB               SYSTEM "login.defs.d/USE_TCB.xml">
+<!-- SHADOW-CONFIG-HERE -->
+]>
+<refentry id='usermod.8'>
+  <!--  $Id: usermod.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $  -->
+  <refentryinfo>
+    <author>
+      <firstname>Julianne Frances</firstname>
+      <surname>Haugh</surname>
+      <contrib>Creation, 1991</contrib>
+    </author>
+    <author>
+      <firstname>Thomas</firstname>
+      <surname>Kłoczko</surname>
+      <email>kloczek@pld.org.pl</email>
+      <contrib>shadow-utils maintainer, 2000 - 2007</contrib>
+    </author>
+    <author>
+      <firstname>Nicolas</firstname>
+      <surname>François</surname>
+      <email>nicolas.francois@centraliens.net</email>
+      <contrib>shadow-utils maintainer, 2007 - now</contrib>
+    </author>
+  </refentryinfo>
+  <refmeta>
+    <refentrytitle>usermod</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class="sectdesc">System Management Commands</refmiscinfo>
+    <refmiscinfo class="source">shadow-utils</refmiscinfo>
+    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
+  </refmeta>
+  <refnamediv id='name'>
+    <refname>usermod</refname>
+    <refpurpose>modify a user account</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>usermod</command>
+      <arg choice='opt'>
+	<replaceable>options</replaceable>
+      </arg>
+      <arg choice='plain'><replaceable>LOGIN</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>
+      The <command>usermod</command> command modifies the system account
+      files to reflect the changes that are specified on the command line.
+    </para>
+  </refsect1>
+
+  <refsect1 id='options'>
+    <title>OPTIONS</title>
+    <para>
+      The options which apply to the <command>usermod</command> command
+      are:
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term>
+	  <option>-a</option>, <option>--append</option>
+	</term>
+	<listitem>
+	  <para>
+	    Add the user to the supplementary group(s). Use only with the
+	    <option>-G</option> option.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-c</option>, <option>--comment</option>
+	  <replaceable>COMMENT</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The new value of the user's password file comment field. It is
+	    normally modified using the <citerefentry>
+	    <refentrytitle>chfn</refentrytitle><manvolnum>1</manvolnum>
+	    </citerefentry> utility.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-d</option>, <option>--home</option>
+	  <replaceable>HOME_DIR</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The user's new login directory.
+	  </para>
+	  <para>
+	    If the <option>-m</option>
+	    option is given, the contents of the current home directory will
+	    be moved to the new home directory, which is created if it does
+	    not already exist.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-e</option>, <option>--expiredate</option>
+	  <replaceable>EXPIRE_DATE</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The date on which the user account will be disabled. The date is
+	    specified in the format <emphasis remap='I'>YYYY-MM-DD</emphasis>.
+	  </para>
+	  <para>
+	    An empty <replaceable>EXPIRE_DATE</replaceable> argument will
+	    disable the expiration of the account.
+	  </para>
+	  <para>
+	    This option requires a <filename>/etc/shadow</filename> file.
+	    A <filename>/etc/shadow</filename> entry will be created if
+	    there were none.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-f</option>, <option>--inactive</option>
+	  <replaceable>INACTIVE</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The number of days after a password expires until the account is
+	    permanently disabled.
+	  </para>
+	  <para>
+	    A value of 0 disables the account as soon
+	    as the password has expired, and a value of -1 disables the
+	    feature.
+	  </para>
+	  <para>
+	    This option requires a <filename>/etc/shadow</filename> file.
+	    A <filename>/etc/shadow</filename> entry will be created if
+	    there were none.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-g</option>, <option>--gid</option>
+	  <replaceable>GROUP</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The group name or number of the user's new initial login group.
+	    The group must exist.
+	  </para>
+	  <para>
+	    Any file from the user's home directory owned by the previous
+	    primary group of the user will be owned by this new group.
+	  </para>
+	  <para>
+	    The group ownership of files outside of the user's home directory
+	    must be fixed manually.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-G</option>, <option>--groups</option>
+	  <replaceable>GROUP1</replaceable>[<emphasis remap='I'>,GROUP2,...</emphasis>[<emphasis remap='I'>,GROUPN</emphasis>]]]
+	</term>
+	<listitem>
+	  <para>
+	    A list of supplementary groups which the user is also a member
+	    of. Each group is separated from the next by a comma, with no
+	    intervening whitespace. The groups are subject to the same
+	    restrictions as the group given with the <option>-g</option>
+	    option.
+	  </para>
+	  <para>
+	    If the user is currently a member of a group which is
+	    not listed, the user will be removed from the group. This
+	    behaviour can be changed via the <option>-a</option> option, which
+	    appends the user to the current supplementary group list.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-l</option>, <option>--login</option>
+	  <replaceable>NEW_LOGIN</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The name of the user will be changed from
+	    <replaceable>LOGIN</replaceable> to
+	    <replaceable>NEW_LOGIN</replaceable>. Nothing else is changed. In
+	    particular, the user's home directory or mail spool should
+	    probably be renamed manually to reflect the new login name.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-L</option>, <option>--lock</option>
+	</term>
+	<listitem>
+	  <para>
+	    Lock a user's password. This puts a '!' in front of the
+	    encrypted password, effectively disabling the password. You
+	    can't use this option with <option>-p</option> or
+	    <option>-U</option>.
+	  </para>
+	  <para>
+	    Note: if you wish to lock the account (not only access with a
+	    password), you should also set the
+	    <replaceable>EXPIRE_DATE</replaceable> to
+	    <replaceable>1</replaceable>.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-m</option>, <option>--move-home</option>
+	</term>
+	<listitem>
+	  <para>
+	    Move the content of the user's home directory to the new
+	    location.
+	  </para>
+	  <para>
+	    This option is only valid in combination with the
+	    <option>-d</option> (or <option>--home</option>) option.
+	  </para>
+	  <para>
+	    <command>usermod</command> will try to adapt the ownership of the
+	    files and to copy the modes, ACL and extended attributes, but
+	    manual changes might be needed afterwards.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-o</option>, <option>--non-unique</option>
+	</term>
+	<listitem>
+	  <para>
+	    When used with the <option>-u</option> option, this option
+	    allows to change the user ID to a non-unique value.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-p</option>, <option>--password</option>
+	  <replaceable>PASSWORD</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The encrypted password, as returned by <citerefentry>
+	    <refentrytitle>crypt</refentrytitle><manvolnum>3</manvolnum>
+	    </citerefentry>.
+	  </para>
+	  <para>
+	    <emphasis role="bold">Note:</emphasis> This option is not
+	    recommended because the password (or encrypted password) will
+	    be visible by users listing the processes.
+	  </para>
+	  <para condition="pam">
+	    The password will be written in the local
+	    <filename>/etc/passwd</filename> or
+	    <filename>/etc/shadow</filename> file. This might differ from the
+	    password database configured in your PAM configuration.
+	  </para>
+	  <para>
+	    You should make sure the password respects the system's
+	    password policy.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-R</option>, <option>--root</option>
+	  <replaceable>CHROOT_DIR</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Apply changes in the <replaceable>CHROOT_DIR</replaceable>
+	    directory and use the configuration files from the
+	    <replaceable>CHROOT_DIR</replaceable> directory.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-s</option>, <option>--shell</option>
+	  <replaceable>SHELL</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The name of the user's new login shell. Setting this field to
+	    blank causes the system to select the default login shell.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-u</option>, <option>--uid</option>
+	  <replaceable>UID</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The new numerical value of the user's ID.
+	  </para>
+	  <para>
+	    This value must be unique,
+	    unless the <option>-o</option> option is used. The value must be
+	    non-negative.
+	  </para>
+	  <para>
+	    The user's mailbox, and any files which the user owns and which are
+	    located in the user's home
+	    directory will have the file user ID changed automatically.
+	  </para>
+	  <para>
+	    The ownership of files outside of the user's home directory
+	    must be fixed manually.
+	  </para>
+	  <para>
+	    No checks will be performed with regard to the
+	    <option>UID_MIN</option>, <option>UID_MAX</option>,
+	    <option>SYS_UID_MIN</option>, or <option>SYS_UID_MAX</option>
+	    from <filename>/etc/login.defs</filename>.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-U</option>, <option>--unlock</option>
+	</term>
+	<listitem>
+	  <para>
+	    Unlock a user's password. This removes the '!' in front of the
+	    encrypted password. You can't use this option with
+	    <option>-p</option> or <option>-L</option>.
+	  </para>
+	  <para>
+	    Note: if you wish to unlock the account (not only access with a
+	    password), you should also set the
+	    <replaceable>EXPIRE_DATE</replaceable> (for example to
+	    <replaceable>99999</replaceable>, or to the
+	    <option>EXPIRE</option> value from
+	    <filename>/etc/default/useradd</filename>).
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <option>-Z</option>, <option>--selinux-user</option>
+	  <replaceable>SEUSER</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    The new SELinux user for the user's login.
+	  </para>
+	  <para>
+	    A blank <replaceable>SEUSER</replaceable> will remove the
+	    SELinux user mapping for user <replaceable>LOGIN</replaceable>
+	    (if any).
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='caveats'>
+    <title>CAVEATS</title>
+    <para>
+      You must make certain that the named user is
+      not executing any processes when this command is being executed if the
+      user's numerical user ID, the user's name, or the user's home
+      directory is being changed. <command>usermod</command> checks this
+      on Linux, but only check if the user is logged in according to utmp
+      on other architectures.
+    </para>
+    <para>
+      You must change the owner of any <command>crontab</command> files or
+      <command>at</command> jobs manually.
+    </para>
+    <para>
+      You must make any changes involving NIS on the NIS server.
+    </para>
+  </refsect1>
+
+  <refsect1 id='configuration'>
+    <title>CONFIGURATION</title>
+    <para>
+      The following configuration variables in
+      <filename>/etc/login.defs</filename> change the behavior of this
+      tool:
+    </para>
+    <variablelist>
+      &MAIL_DIR; <!-- documents also MAIL_FILE -->
+      &MAX_MEMBERS_PER_GROUP;
+      &TCB_SYMLINKS;
+      &USE_TCB;
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='files'>
+    <title>FILES</title>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/group</filename></term>
+	<listitem>
+	  <para>Group account information.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="gshadow">
+	<term><filename>/etc/gshadow</filename></term>
+	<listitem>
+	  <para>Secure group account information.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/etc/login.defs</filename></term>
+	<listitem>
+	  <para>Shadow password suite configuration.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/etc/passwd</filename></term>
+	<listitem>
+	  <para>User account information.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/etc/shadow</filename></term>
+	<listitem>
+	  <para>Secure user account information.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry>
+	<refentrytitle>chfn</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>chsh</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>passwd</refentrytitle><manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>crypt</refentrytitle><manvolnum>3</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>gpasswd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>groupadd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>groupdel</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>groupmod</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>userdel</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>.
+    </para>
+  </refsect1>
+</refentry>

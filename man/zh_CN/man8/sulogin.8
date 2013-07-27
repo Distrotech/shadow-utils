@@ -1,0 +1,117 @@
+'\" t
+.\"     Title: sulogin
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 2012-05-25
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.1.5.1
+.\"  Language: Chinese Simplified
+.\"
+.TH "SULOGIN" "8" "2012-05-25" "shadow\-utils 4\&.1\&.5\&.1" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+sulogin \- Single\-user login
+.SH "SYNTAX"
+.PP
+\fBsulogin\fR
+[\fItty\-device\fR]
+.SH "描述"
+.PP
+The
+\fBsulogin\fR
+command is invoked by
+\fBinit\fR
+prior to allowing the user access to the system when in single user mode\&. This feature may only be available on certain systems where
+\fBinit\fR
+has been modified accordingly, or where the
+/etc/inittab
+has an entry for a single user login\&.
+.PP
+The user is prompted
+.PP
+Type control\-d to proceed with normal startup, (or give root password for system maintenance):
+.PP
+Input and output will be performed with the standard file descriptors unless the optional device name argument is provided\&.
+.PP
+If the user enters the correct root password, a login session is initiated\&. When
+\fIEOF\fR
+is pressed instead, the system enters multi\-user mode\&.
+.PP
+After the user exits the single\-user shell, or presses
+\fIEOF\fR, the system begins the initialization process required to enter multi\-user mode\&.
+.SH "CAVEATS"
+.PP
+This command can only be used if
+\fBinit\fR
+has been modified to call
+\fBsulogin\fR
+instead of
+/bin/sh, or if the user has set the
+\fIinittab\fR
+to support a single user login\&. For example, the line:
+.PP
+co:s:respawn:/etc/sulogin /dev/console
+.PP
+should execute the sulogin command in single user mode\&.
+.PP
+As complete an environment as possible is created\&. However, various devices may be unmounted or uninitialized and many of the user commands may be unavailable or nonfunctional as a result\&.
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBENV_HZ\fR (string)
+.RS 4
+如果设置了，将会用于在用户登录时定义 HZ 环境变量。值必须以
+\fIHZ=\fR
+开头。Linux 上的常用值是
+\fIHZ=100\fR。
+.RE
+.PP
+\fBENV_TZ\fR (string)
+.RS 4
+如果设置了，它将用于在用户登录时定义 TZ 环境变量。此值可以是以
+\fITZ=\fR
+开头的时区名(例如
+\fITZ=CST6CDT\fR)，或者是包含时区规则的文件完整路径(例如
+/etc/tzname)。
+.sp
+如果将完整路径指定为了一个不存在或不可读的文件，则默认使用
+\fITZ=CST6CDT\fR。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.SH "参见"
+.PP
+
+\fBlogin\fR(1),
+\fBsh\fR(1),
+\fBinit\fR(8)\&.

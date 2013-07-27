@@ -1,0 +1,60 @@
+<!--
+   Copyright (c) 1991 - 1993, Julianne Frances Haugh
+   Copyright (c) 1991 - 1993, Chip Rosenthal
+   Copyright (c) 2007 - 2008, Nicolas François
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. The name of the copyright holders or contributors may not be used to
+      endorse or promote products derived from this software without
+      specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<varlistentry>
+  <term><option>MD5_CRYPT_ENAB</option> (boolean)</term>
+  <listitem>
+    <para>
+      Indicate if passwords must be encrypted using the MD5-based
+      algorithm. If set to <replaceable>yes</replaceable>, new passwords
+      will be encrypted using the MD5-based algorithm compatible with the
+      one used by recent releases of FreeBSD. It supports passwords of
+      unlimited length and longer salt strings. Set to
+      <replaceable>no</replaceable> if you need to copy encrypted
+      passwords to other systems which don't understand the new algorithm.
+      Default is <replaceable>no</replaceable>.
+    </para>
+    <para>
+      This variable is superseded by the <option>ENCRYPT_METHOD</option>
+      variable or by any command line option used to configure the
+      encryption algorithm.
+    </para>
+    <para>
+      This variable is deprecated. You should use
+      <option>ENCRYPT_METHOD</option>.
+    </para>
+    <para condition="pam">
+      Note: This only affect the generation of group passwords.
+      The generation of user passwords is done by PAM and subject to the
+      PAM configuration. It is recommended to set this variable
+      consistently with the PAM configuration.
+    </para>
+  </listitem>
+</varlistentry>

@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: groups
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 25/05/2012
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.1.5.1
+.\"  Language: Italian
+.\"
+.TH "GROUPS" "1" "25/05/2012" "shadow\-utils 4\&.1\&.5\&.1" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+groups \- mostra i nomi dei gruppi correnti
+.SH "SINOSSI"
+.HP \w'\fBgroups\fR\ 'u
+\fBgroups\fR [\fIutente\fR]
+.SH "DESCRIZIONE"
+.PP
+Per ciascuno dei gruppi correnti, il comando
+\fBgroups\fR
+mostra i nomi o i valori ID\&. Se un valore non ha nessuna voce corrispondente in
+/etc/group, esso viene mostrato in forma numerica\&. Se viene specificato un
+\fIutente\fR, vengono mostrati i gruppi a cui appartiene quel determinato
+\fIutente\fR\&.
+.SH "NOTA"
+.PP
+Sui sistemi che non supportano l\*(Aqappartenenza contemporanea a pi\(`u gruppi, vengono riportate le informazioni da
+/etc/group\&. L\*(Aqutente deve usare
+\fBnewgrp\fR
+o
+\fBsg\fR
+per cambiare gli ID reale ed effettivo del gruppo\&.
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBnewgrp\fR(1),
+\fBgetgid\fR(2),
+\fBgetgroups\fR(2),
+\fBgetuid\fR(2)\&.
