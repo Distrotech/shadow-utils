@@ -1,6 +1,0 @@
-Usage: pwunconv [options]
-
-Options:
-  -h, --help                    display this help message and exit
-  -R, --root CHROOT_DIR         directory to chroot into
-

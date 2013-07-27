@@ -1,2 +1,0 @@
-group foo with an empty password in group
-group foo not in gshadow

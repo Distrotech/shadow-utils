@@ -1,2 +1,0 @@
-unlink FAILURE /etc/shadow
-pwunconv: cannot delete /etc/shadow

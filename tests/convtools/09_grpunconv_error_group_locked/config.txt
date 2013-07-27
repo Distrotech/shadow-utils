@@ -1,1 +1,0 @@
-group foo with a password, not in gshadow

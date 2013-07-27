@@ -1,2 +1,0 @@
-group foo
-user foo with typo in passwd

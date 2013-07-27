@@ -1,2 +1,0 @@
-pwconv: existing lock file /etc/passwd.lock without a PID
-pwconv: cannot lock /etc/passwd; try again later.

@@ -1,2 +1,0 @@
-chgpasswd: existing lock file /etc/group.lock without a PID
-chgpasswd: cannot lock /etc/group; try again later.

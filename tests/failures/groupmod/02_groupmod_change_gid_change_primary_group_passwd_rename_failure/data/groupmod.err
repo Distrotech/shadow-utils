@@ -1,2 +1,0 @@
-rename FAILURE /etc/passwd+ /etc/passwd
-groupmod: failure while writing changes to /etc/passwd

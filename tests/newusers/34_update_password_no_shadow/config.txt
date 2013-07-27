@@ -1,2 +1,0 @@
-User foo exists, with password fooPass
-/etc/shadow will be destroyed

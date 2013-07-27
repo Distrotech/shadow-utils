@@ -1,2 +1,0 @@
-grpconv: lock /etc/group.lock already used by PID <PID>
-grpconv: cannot lock /etc/group; try again later.

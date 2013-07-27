@@ -1,1 +1,0 @@
-user foo with a password, not in shadow

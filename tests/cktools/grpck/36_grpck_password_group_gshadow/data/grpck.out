@@ -1,2 +1,0 @@
-group foo has an entry in /etc/gshadow, but its password field in /etc/group is not set to 'x'
-grpck: no changes

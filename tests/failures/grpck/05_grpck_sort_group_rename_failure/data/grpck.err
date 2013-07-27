@@ -1,2 +1,0 @@
-rename FAILURE /etc/group+ /etc/group
-grpck: failure while writing changes to /etc/group

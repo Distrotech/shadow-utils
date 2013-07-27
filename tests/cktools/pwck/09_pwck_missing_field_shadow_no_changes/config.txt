@@ -1,2 +1,0 @@
-user foo
-group foo with typo in gshadow

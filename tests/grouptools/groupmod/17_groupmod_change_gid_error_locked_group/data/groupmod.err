@@ -1,2 +1,0 @@
-groupmod: existing lock file /etc/group.lock without a PID
-groupmod: cannot lock /etc/group; try again later.

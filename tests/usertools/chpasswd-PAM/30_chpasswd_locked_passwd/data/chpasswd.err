@@ -1,2 +1,0 @@
-chpasswd: existing lock file /etc/passwd.lock without a PID
-chpasswd: cannot lock /etc/passwd; try again later.

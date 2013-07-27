@@ -1,2 +1,0 @@
-useradd: group '3000' does not exist
-useradd: the GROUP= configuration in /etc/default/useradd will be ignored

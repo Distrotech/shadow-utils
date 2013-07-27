@@ -1,2 +1,0 @@
-User foo exists, with password fooPass
-No user foo in shadow

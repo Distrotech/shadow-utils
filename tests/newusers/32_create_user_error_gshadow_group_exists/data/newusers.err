@@ -1,3 +1,0 @@
-newusers: group 'bar' is a shadow group, but does not exist in /etc/group
-newusers: line 1: can't create group
-newusers: error detected, changes ignored

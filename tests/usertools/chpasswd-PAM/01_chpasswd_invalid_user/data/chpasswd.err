@@ -1,3 +1,0 @@
-chpasswd: (user foooo) pam_chauthtok() failed, error:
-Authentication token manipulation error
-chpasswd: (line 3, user foooo) password not changed
