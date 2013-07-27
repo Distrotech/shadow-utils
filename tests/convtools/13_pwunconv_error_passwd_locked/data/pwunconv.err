@@ -1,2 +1,0 @@
-pwunconv: existing lock file /etc/passwd.lock without a PID
-pwunconv: cannot lock /etc/passwd; try again later.

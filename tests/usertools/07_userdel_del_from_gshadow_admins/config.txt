@@ -1,2 +1,0 @@
-user foo, admin of group users according to /etc/gshadow
-user foo in group users according to /etc/group

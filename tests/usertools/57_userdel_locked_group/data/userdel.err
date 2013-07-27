@@ -1,2 +1,0 @@
-userdel: existing lock file /etc/group.lock without a PID
-userdel: cannot lock /etc/group; try again later.

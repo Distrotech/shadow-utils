@@ -1,2 +1,0 @@
-chgpasswd: existing lock file /etc/gshadow.lock without a PID
-chgpasswd: cannot lock /etc/gshadow; try again later.

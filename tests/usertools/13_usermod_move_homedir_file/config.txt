@@ -1,1 +1,0 @@
-user foo's home directory is /home/foo, which will be created by usermod.test as a regular file.

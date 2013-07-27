@@ -1,2 +1,0 @@
-Multiple entries named 'foo' in /etc/group. Please fix this with pwck or grpck.
-groupdel: cannot remove entry 'foo' from /etc/group

@@ -1,2 +1,0 @@
-newusers: existing lock file /etc/group.lock without a PID
-newusers: cannot lock /etc/group; try again later.

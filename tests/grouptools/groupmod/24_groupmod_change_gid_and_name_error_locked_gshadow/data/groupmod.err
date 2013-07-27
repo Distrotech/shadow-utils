@@ -1,2 +1,0 @@
-groupmod: existing lock file /etc/gshadow.lock without a PID
-groupmod: cannot lock /etc/gshadow; try again later.

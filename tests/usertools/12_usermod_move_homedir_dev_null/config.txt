@@ -1,1 +1,0 @@
-user foo's home directory is /dev/null

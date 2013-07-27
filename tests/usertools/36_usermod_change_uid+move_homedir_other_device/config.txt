@@ -1,1 +1,0 @@
-user foo exists, UID 1000, home directory: /home/foo

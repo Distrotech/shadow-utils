@@ -1,1 +1,0 @@
-User foo exists, with password fooPass

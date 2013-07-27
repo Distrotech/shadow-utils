@@ -1,2 +1,0 @@
-usermod: existing lock file /etc/gshadow.lock without a PID
-usermod: cannot lock /etc/gshadow; try again later.

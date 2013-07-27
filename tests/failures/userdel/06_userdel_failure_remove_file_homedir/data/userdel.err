@@ -1,3 +1,0 @@
-userdel: foo mail spool (/var/mail/foo) not found
-unlink FAILURE /home/foo/bar/baz
-userdel: error removing directory /home/foo

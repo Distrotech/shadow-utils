@@ -1,2 +1,0 @@
-rename FAILURE tmp/passwd+ tmp/passwd
-pwck: failure while writing changes to tmp/passwd

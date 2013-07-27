@@ -1,2 +1,0 @@
-rename FAILURE /etc/group+ /etc/group
-newusers: failure while writing changes to /etc/group

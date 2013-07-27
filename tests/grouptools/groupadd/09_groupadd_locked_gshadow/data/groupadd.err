@@ -1,2 +1,0 @@
-groupadd: existing lock file /etc/gshadow.lock without a PID
-groupadd: cannot lock /etc/gshadow; try again later.
