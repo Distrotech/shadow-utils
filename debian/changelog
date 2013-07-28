@@ -8,10 +8,12 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
       longer starts a controlling terminal when not running an
       interactive shell. Thanks to Colin Watson for the patch.
       Closes: #713979
+    - German manpages translation update. Closes: #679152
+    - Improve login.defs (typographic errors and better format).
+      Closes: #685415
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
   * Add pam_loginuid to login PAM sattings. Closes: #677441
-  * German manpages translation update. Closes: #679152
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
