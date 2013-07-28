@@ -1,5 +1,8 @@
-shadow (1:4.1.5.1-3) UNRELEASED; urgency=low
+shadow (1:4.2-1) UNRELEASED; urgency=low
 
+  * New upstream release. Fixes:
+    - Invalid free() in su fixed by using strdup(). Thanks to Serge
+      Hallyin for the patch. Closes: #691459
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
 
