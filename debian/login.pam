@@ -52,9 +52,6 @@ session       required   pam_env.so readenv=1
 # reading this file *in addition to /etc/environment* does not hurt
 session       required   pam_env.so readenv=1 envfile=/etc/default/locale
 
-# Record user's login uid to the process attribute
-session required pam_loginuid.so
-
 # Standard Un*x authentication.
 @include common-auth
 
@@ -99,6 +96,9 @@ session    optional   pam_motd.so
 # also removes the user's mail spool file.
 # See comments in /etc/login.defs
 session    optional   pam_mail.so standard
+
+# Sets the loginuid process attribute
+session    required     pam_loginuid.so
 
 # Standard Un*x account and session
 @include common-account
