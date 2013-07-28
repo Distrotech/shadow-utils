@@ -2,7 +2,12 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
 
   * New upstream release. Fixes:
     - Invalid free() in su fixed by using strdup(). Thanks to Serge
-      Hallyin for the patch. Closes: #691459
+      Hallyn for the patch. Closes: #691459
+    - Kill the child process group, rather than just the
+      immediate child; this is needed now that su no
+      longer starts a controlling terminal when not running an
+      interactive shell. Thanks to Colin Watson for the patch.
+      Closes: #713979
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
 
