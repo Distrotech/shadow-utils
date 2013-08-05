@@ -12,9 +12,10 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
     - Improve login.defs (typographic errors and better format).
       Closes: #685415
     - Russian translation update. Closes: #718356
+    - Do not asume random() is limited by RAND_MAX.  Closes: #677275
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
-  * Add pam_loginuid to login PAM sattings. Closes: #677441
+  * Add pam_loginuid to login PAM settings. Closes: #677441
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
