@@ -12,7 +12,9 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
     - Improve login.defs (typographic errors and better format).
       Closes: #685415
     - Russian translation update. Closes: #718356
-    - Do not asume random() is limited by RAND_MAX.  Closes: #677275
+    - Do not assume random() is limited by RAND_MAX.  Closes: #677275
+    - Support C libraries with unknown fields in struct passwd.
+      Closes: #675824
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
   * Add pam_loginuid to login PAM settings. Closes: #677441
