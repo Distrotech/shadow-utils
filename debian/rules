@@ -67,6 +67,10 @@ endif
 	install -c -m 444 debian/cppw.8 debian/passwd/usr/share/man/man8
 	dh_lintian -p passwd
 
+binary-predeb/uidmap::
+	chmod u+s debian/uidmap/usr/bin/newuidmap
+	chmod u+s debian/uidmap/usr/bin/newgidmap
+
 binary-predeb/login::
 	# No real need for login to be setuid root
 	# chmod u+s debian/login/bin/login

@@ -18,6 +18,9 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
   * Add pam_loginuid to login PAM settings. Closes: #677441
+  * passwd.install: add new subuid.5 and subgid.5 manpages
+  * debian/rules, debian/control, debian/uidmap.install: create new uidmap
+    package containing the new setuid-root binaries newuidmap and newgidmap 
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 

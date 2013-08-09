@@ -33,3 +33,9 @@ Description: system login tools
  workgroup type situations). The su program allows changing your effective
  user ID (useful being able to execute commands as another user).
 
+Package: uidmap
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Architecture: any
+Description: programs to help use subuids
+ These programs help unprivileged users to create uid and gid mappings in
+ user namespaces.
