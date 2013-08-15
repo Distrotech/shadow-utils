@@ -1,9 +1,4 @@
 Things that should be done:
- * the patches directory can be cleaned
-   + It would be nice to have the program and man page correction in the
-     same patch
- * other queries on debian-devel:
-   + should PAM session be closed as root?
  * Verify the files left in debian/tmp
    + e.g. /etc/default/adduser should be installed
  * Check the build system: rebuilding the package twoce in the same tree
@@ -22,11 +17,3 @@ Other points (not related to the release of a syncronized shadow):
    variables used in Debian/for each tools.
  * verify all the patches around (I've found patches for at least RedHat,
    OWL, LFS, Mandriva, Gentoo; are they already applied?)
- * make a testsuite
-   + all options could be tested
-   + by reading the man page and writing some small tests for each
-     functionnality (and testing the limit cases, we can probably find
-     a lot of small/documentation bugs)
-     e.g. test chage with some fields set to 0
-          test chage with a date argument instead of a number of days
-
