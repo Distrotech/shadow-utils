@@ -6,8 +6,8 @@
  bin_PROGRAMS   = groups login su
 -sbin_PROGRAMS  = nologin
  ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
- usbin_PROGRAMS = \
- 	cppw \
+ if ENABLE_SUBIDS
+ ubin_PROGRAMS += newgidmap newuidmap
 @@ -38,6 +37,7 @@
  	grpunconv \
  	logoutd \
