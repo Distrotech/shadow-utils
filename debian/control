@@ -34,6 +34,7 @@ Description: system login tools
  user ID (useful being able to execute commands as another user).
 
 Package: uidmap
+Priority: optional
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Architecture: any
 Description: programs to help use subuids
