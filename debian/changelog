@@ -15,6 +15,10 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
     - Do not assume random() is limited by RAND_MAX.  Closes: #677275
     - Support C libraries with unknown fields in struct passwd.
       Closes: #675824
+    - su: child cleanup is performed before terminating PAM sessions. This
+      avoids anoying "...terminated" messages when PAM module send signal to
+      su during session close. Closes: #670132
+    - vipw/vigr is checking arguments provided after options. Closes: #677812
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
   * Add pam_loginuid to login PAM settings. Closes: #677441
