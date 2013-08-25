@@ -32,6 +32,9 @@ ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
   DEB_CONFIGURE_EXTRA_FLAGS += --host=$(DEB_HOST_GNU_TYPE)
 endif
 
+# Set the default editor for vipw/vigr
+CFLAGS += -DDEFAULT_EDITOR=\\\"sensible-editor\\\"
+
 # Automatically controls patching at build time:
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
