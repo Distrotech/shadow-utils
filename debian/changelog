@@ -20,6 +20,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
       su during session close. Closes: #670132
     - vipw/vigr is checking arguments provided after options. Closes: #677812
     - Updated Japanese translation. Closes: #720004
+    - vipw: Fix error reporting when editor fails. Closes: #688260
   * Moved to git: replace Vcs-Git in place of Vcs-Svn and adapt
     Vcs-Browser.
   * Add pam_loginuid to login PAM settings. Closes: #677441
