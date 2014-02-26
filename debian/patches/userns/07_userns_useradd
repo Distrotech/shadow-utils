@@ -1,0 +1,285 @@
+From ebiederm@xmission.com  Tue Jan 22 09:19:29 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id 61652C80DB; Tue, 22 Jan 2013 09:19:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=8.0 tests=BAD_ENC_HEADER,BAYES_00
+	autolearn=no version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id E0ABBC80F4
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:19:23 +0000 (UTC)
+Received: from out03.mta.xmission.com ([166.70.13.233])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZzB-0008QG-Kq; Tue, 22 Jan 2013 02:17:41 -0700
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out03.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZz7-0005Ui-1H; Tue, 22 Jan 2013 02:17:37 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZz4-0004tF-BP; Tue, 22 Jan 2013 02:17:36 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:17:30 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <8738xtr2z9.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1/Jm5H2PcjgcLXEyKh9YL3DVs2WZBJhDB8=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 07/11] useradd: Add support for subordinate user identifiers
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2077                                                  
+Status: RO
+Content-Length: 6886
+Lines: 235
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ src/useradd.c |  141 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 140 insertions(+), 1 deletions(-)
+
+Index: shadow/src/useradd.c
+===================================================================
+--- shadow.orig/src/useradd.c	2013-02-01 15:27:52.668080362 -0600
++++ shadow/src/useradd.c	2013-02-01 15:27:52.660080362 -0600
+@@ -65,6 +65,7 @@
+ #include "sgroupio.h"
+ #endif
+ #include "shadowio.h"
++#include "subordinateio.h"
+ #ifdef WITH_TCB
+ #include "tcbfuncs.h"
+ #endif
+@@ -121,12 +122,20 @@
+ static bool is_shadow_grp;
+ static bool sgr_locked = false;
+ #endif
++static bool is_sub_uid = false;
++static bool is_sub_gid = false;
+ static bool pw_locked = false;
+ static bool gr_locked = false;
+ static bool spw_locked = false;
++static bool sub_uid_locked = false;
++static bool sub_gid_locked = false;
+ static char **user_groups;	/* NULL-terminated list */
+ static long sys_ngroups;
+ static bool do_grp_update = false;	/* group files need to be updated */
++static uid_t sub_uid_start;	/* New subordinate uid range */
++static unsigned long sub_uid_count;
++static gid_t sub_gid_start;	/* New subordinate gid range */
++static unsigned long sub_gid_count;
+ 
+ static bool
+     bflg = false,		/* new default root of home directory */
+@@ -168,6 +177,8 @@
+ #define E_GRP_UPDATE	10	/* can't update group file */
+ #define E_HOMEDIR	12	/* can't create home directory */
+ #define E_SE_UPDATE	14	/* can't update SELinux user mapping */
++#define E_SUB_UID_UPDATE 16	/* can't update the subordinate uid file */
++#define E_SUB_GID_UPDATE 18	/* can't update the subordinate gid file */
+ 
+ #define DGROUP			"GROUP="
+ #define DHOME			"HOME="
+@@ -268,6 +279,32 @@
+ 		}
+ 	}
+ #endif
++	if (sub_uid_locked) {
++		if (sub_uid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
++#ifdef WITH_AUDIT
++			audit_logger (AUDIT_ADD_USER, Prog,
++			              "unlocking subodinate user file",
++			              user_name, AUDIT_NO_ID,
++			              SHADOW_AUDIT_FAILURE);
++#endif
++			/* continue */
++		}
++	}
++	if (sub_gid_locked) {
++		if (sub_gid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
++#ifdef WITH_AUDIT
++			audit_logger (AUDIT_ADD_USER, Prog,
++			              "unlocking subodinate group file",
++			              user_name, AUDIT_NO_ID,
++			              SHADOW_AUDIT_FAILURE);
++#endif
++			/* continue */
++		}
++	}
+ 
+ #ifdef WITH_AUDIT
+ 	audit_logger (AUDIT_ADD_USER, Prog,
+@@ -1379,6 +1416,18 @@
+ 		}
+ #endif
+ 	}
++	if (is_sub_uid  && (sub_uid_close () == 0)) {
++		fprintf (stderr,
++		         _("%s: failure while writing changes to %s\n"), Prog, sub_uid_dbname ());
++		SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_uid_dbname ()));
++		fail_exit (E_SUB_UID_UPDATE);
++	}
++	if (is_sub_gid  && (sub_gid_close () == 0)) {
++		fprintf (stderr,
++		         _("%s: failure while writing changes to %s\n"), Prog, sub_gid_dbname ());
++		SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_gid_dbname ()));
++		fail_exit (E_SUB_GID_UPDATE);
++	}
+ 	if (is_shadow_pwd) {
+ 		if (spw_unlock () == 0) {
+ 			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, spw_dbname ());
+@@ -1433,6 +1482,34 @@
+ 		sgr_locked = false;
+ 	}
+ #endif
++	if (is_sub_uid) {
++		if (sub_uid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
++#ifdef WITH_AUDIT
++			audit_logger (AUDIT_ADD_USER, Prog,
++				"unlocking subordinate user file",
++				user_name, AUDIT_NO_ID,
++				SHADOW_AUDIT_FAILURE);
++#endif
++			/* continue */
++		}
++		sub_uid_locked = false;
++	}
++	if (is_sub_gid) {
++		if (sub_gid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
++#ifdef WITH_AUDIT
++			audit_logger (AUDIT_ADD_USER, Prog,
++				"unlocking subordinate group file",
++				user_name, AUDIT_NO_ID,
++				SHADOW_AUDIT_FAILURE);
++#endif
++			/* continue */
++		}
++		sub_gid_locked = false;
++	}
+ }
+ 
+ /*
+@@ -1487,6 +1564,36 @@
+ 		}
+ 	}
+ #endif
++	if (is_sub_uid) {
++		if (sub_uid_lock () == 0) {
++			fprintf (stderr,
++			         _("%s: cannot lock %s; try again later.\n"),
++			         Prog, sub_uid_dbname ());
++			fail_exit (E_SUB_UID_UPDATE);
++		}
++		sub_uid_locked = true;
++		if (sub_uid_open (O_RDWR) == 0) {
++			fprintf (stderr,
++			         _("%s: cannot open %s\n"),
++			         Prog, sub_uid_dbname ());
++			fail_exit (E_SUB_UID_UPDATE);
++		}
++	}
++	if (is_sub_gid) {
++		if (sub_gid_lock () == 0) {
++			fprintf (stderr,
++			         _("%s: cannot lock %s; try again later.\n"),
++			         Prog, sub_gid_dbname ());
++			fail_exit (E_SUB_GID_UPDATE);
++		}
++		sub_gid_locked = true;
++		if (sub_gid_open (O_RDWR) == 0) {
++			fprintf (stderr,
++			         _("%s: cannot open %s\n"),
++			         Prog, sub_gid_dbname ());
++			fail_exit (E_SUB_GID_UPDATE);
++		}
++	}
+ }
+ 
+ static void open_shadow (void)
+@@ -1733,13 +1840,27 @@
+ #endif
+ 		fail_exit (E_PW_UPDATE);
+ 	}
++	if (is_sub_uid &&
++	    (sub_uid_add(user_name, sub_uid_start, sub_uid_count) == 0)) {
++		fprintf (stderr,
++		         _("%s: failed to prepare the new %s entry\n"),
++		         Prog, sub_uid_dbname ());
++		fail_exit (E_SUB_UID_UPDATE);
++	}
++	if (is_sub_gid &&
++	    (sub_gid_add(user_name, sub_gid_start, sub_gid_count) == 0)) {
++		fprintf (stderr,
++		         _("%s: failed to prepare the new %s entry\n"),
++		         Prog, sub_uid_dbname ());
++		fail_exit (E_SUB_GID_UPDATE);
++	}
++
+ #ifdef WITH_AUDIT
+ 	audit_logger (AUDIT_ADD_USER, Prog,
+ 	              "adding user",
+ 	              user_name, (unsigned int) user_id,
+ 	              SHADOW_AUDIT_SUCCESS);
+ #endif
+-
+ 	/*
+ 	 * Do any group file updates for this user.
+ 	 */
+@@ -1885,6 +2006,8 @@
+ #ifdef SHADOWGRP
+ 	is_shadow_grp = sgr_file_present ();
+ #endif
++	is_sub_uid = sub_uid_file_present ();
++	is_sub_gid = sub_gid_file_present ();
+ 
+ 	get_defaults ();
+ 
+@@ -2035,6 +2158,22 @@
+ 		grp_add ();
+ 	}
+ 
++	if (is_sub_uid) {
++		if (find_new_sub_uids(user_name, &sub_uid_start, &sub_uid_count) < 0) {
++			fprintf (stderr,
++				_("%s: can't find subordinate user range\n"),
++				Prog);
++			fail_exit(E_SUB_UID_UPDATE);
++		}
++	}
++	if (is_sub_gid) {
++		if (find_new_sub_gids(user_name, &sub_gid_start, &sub_gid_count) < 0) {
++			fprintf (stderr,
++				_("%s: can't find subordinate group range\n"),
++				Prog);
++			fail_exit(E_SUB_GID_UPDATE);
++		}
++	}
+ 	usr_update ();
+ 
+ 	if (mflg) {

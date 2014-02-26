@@ -1,0 +1,24 @@
+Index: shadow-userns/src/usermod.c
+===================================================================
+--- shadow-userns.orig/src/usermod.c	2013-02-05 16:35:10.608485591 +0000
++++ shadow-userns/src/usermod.c	2013-02-05 17:16:20.540485591 +0000
+@@ -993,9 +993,9 @@
+ 		};
+ 		while ((c = getopt_long (argc, argv,
+ #ifdef WITH_SELINUX
+-			                 "ac:d:e:f:g:G:hl:Lmop:R:s:u:UZ:",
++			                 "ac:d:e:f:g:G:hl:Lmop:R:s:u:UZ:v:w:V:W:",
+ #else				/* !WITH_SELINUX */
+-			                 "ac:d:e:f:g:G:hl:Lmop:R:s:u:U",
++			                 "ac:d:e:f:g:G:hl:Lmop:R:s:u:Uv:w:V:W:",
+ #endif				/* !WITH_SELINUX */
+ 			                 long_options, NULL)) != -1) {
+ 			switch (c) {
+@@ -1141,6 +1141,7 @@
+ 					exit(E_BAD_ARG);
+ 				}
+ 				wflg = true;
++                break;
+ 			case 'W':
+ 				if (prepend_range (optarg, &del_sub_gids) == 0) {
+ 					fprintf (stderr,

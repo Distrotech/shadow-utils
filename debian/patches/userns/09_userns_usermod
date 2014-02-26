@@ -1,0 +1,536 @@
+From ebiederm@xmission.com  Tue Jan 22 09:20:27 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id 8625BC80F4; Tue, 22 Jan 2013 09:20:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=8.0 tests=BAD_ENC_HEADER,BAYES_00
+	autolearn=no version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id 69CACC80D1
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:20:23 +0000 (UTC)
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1Txa08-0000JL-Uo; Tue, 22 Jan 2013 02:18:41 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZzw-0004wm-8g; Tue, 22 Jan 2013 02:18:40 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:18:24 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <87sj5tpodb.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1/EkNiL4owL54HOscHbdbK8RucFTofOBo8=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 09/11] usermod: Add support for subordinate uids and gids.
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2079                                        
+Status: O
+Content-Length: 15455
+Lines: 491
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ man/usermod.8.xml |   80 +++++++++++++++++
+ src/usermod.c     |  255 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 332 insertions(+), 3 deletions(-)
+
+Index: shadow/man/usermod.8.xml
+===================================================================
+--- shadow.orig/man/usermod.8.xml	2013-02-01 15:27:53.240080352 -0600
++++ shadow/man/usermod.8.xml	2013-02-01 15:27:53.232080353 -0600
+@@ -391,6 +391,86 @@
+       </varlistentry>
+       <varlistentry>
+ 	<term>
++	  <option>-v</option>, <option>--add-sub-uids</option>
++	  <replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
++	</term>
++	<listitem>
++	  <para>
++	    Add a range of subordinate uids to the users account. 
++	  </para>
++	  <para>
++	    This option may be specified multiple times to add multiple ranges to a users account.
++	  </para>
++	  <para>
++	     No checks will be performed with regard to
++	     <option>SUB_UID_MIN</option>, <option>SUB_UID_MAX</option>, or
++	     <option>SUB_UID_COUNT</option> from /etc/login.defs.
++	  </para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term>
++	  <option>-V</option>, <option>--del-sub-uids</option>
++	  <replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
++	</term>
++	<listitem>
++	  <para>
++	    Remove a range of subordinate uids from the users account.
++	  </para>
++	  <para>
++	    This option may be specified multiple times to remove multiple ranges to a users account.
++	    When both <option>--del-sub-uids</option> and <option>--add-sub-uids</option> are specified
++	    remove of all subordinate uid ranges happens before any subordinate uid ranges are added.
++	  </para>
++	  <para>
++	     No checks will be performed with regard to
++	     <option>SUB_UID_MIN</option>, <option>SUB_UID_MAX</option>, or
++	     <option>SUB_UID_COUNT</option> from /etc/login.defs.
++	  </para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term>
++	  <option>-w</option>, <option>--add-sub-gids</option>
++	  <replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
++	</term>
++	<listitem>
++	  <para>
++	    Add a range of subordinate gids to the users account.
++	  </para>
++	  <para>
++	    This option may be specified multiple times to add multiple ranges to a users account.
++	  </para>
++	  <para>
++	     No checks will be performed with regard to
++	     <option>SUB_GID_MIN</option>, <option>SUB_GID_MAX</option>, or
++	     <option>SUB_GID_COUNT</option> from /etc/login.defs.
++	  </para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term>
++	  <option>-W</option>, <option>--del-sub-gids</option>
++	  <replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
++	</term>
++	<listitem>
++	  <para>
++	    Remove a range of subordinate gids from the users account.
++	  </para>
++	  <para>
++	    This option may be specified multiple times to remove multiple ranges to a users account.
++	    When both <option>--del-sub-gids</option> and <option>--add-sub-gids</option> are specified
++	    remove of all subordinate gid ranges happens before any subordinate gid ranges are added.
++	  </para>
++	  <para>
++	     No checks will be performed with regard to
++	     <option>SUB_GID_MIN</option>, <option>SUB_GID_MAX</option>, or
++	     <option>SUB_GID_COUNT</option> from /etc/login.defs.
++	  </para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term>
+ 	  <option>-Z</option>, <option>--selinux-user</option>
+ 	  <replaceable>SEUSER</replaceable>
+ 	</term>
+Index: shadow/src/usermod.c
+===================================================================
+--- shadow.orig/src/usermod.c	2013-02-01 15:27:53.240080352 -0600
++++ shadow/src/usermod.c	2013-02-01 15:27:53.236080353 -0600
+@@ -63,6 +63,7 @@
+ #include "sgroupio.h"
+ #endif
+ #include "shadowio.h"
++#include "subordinateio.h"
+ #ifdef WITH_TCB
+ #include "tcbfuncs.h"
+ #endif
+@@ -86,6 +87,8 @@
+ /* #define E_NOSPACE	11	   insufficient space to move home dir */
+ #define E_HOMEDIR	12	/* unable to complete home dir move */
+ #define E_SE_UPDATE	13	/* can't update SELinux user mapping */
++#define E_SUB_UID_UPDATE 16	/* can't update the subordinate uid file */
++#define E_SUB_GID_UPDATE 18	/* can't update the subordinate gid file */
+ #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
+ /*
+  * Global variables
+@@ -133,7 +136,11 @@
+     Zflg = false,		/* new selinux user */
+ #endif
+     uflg = false,		/* specify new user ID */
+-    Uflg = false;		/* unlock the password */
++    Uflg = false,		/* unlock the password */
++    vflg = false,		/*    add subordinate uids */
++    Vflg = false,		/* delete subordinate uids */
++    wflg = false,		/*    add subordinate gids */
++    Wflg = false;		/* delete subordinate gids */
+ 
+ static bool is_shadow_pwd;
+ 
+@@ -141,12 +148,17 @@
+ static bool is_shadow_grp;
+ #endif
+ 
++static bool is_sub_uid = false;
++static bool is_sub_gid = false;
++
+ static bool pw_locked  = false;
+ static bool spw_locked = false;
+ static bool gr_locked  = false;
+ #ifdef SHADOWGRP
+ static bool sgr_locked = false;
+ #endif
++static bool sub_uid_locked = false;
++static bool sub_gid_locked = false;
+ 
+ 
+ /* local function prototypes */
+@@ -302,6 +314,69 @@
+ 	return 0;
+ }
+ 
++struct ulong_range
++{
++	unsigned long first;
++	unsigned long last;
++};
++
++static struct ulong_range getulong_range(const char *str)
++{
++	struct ulong_range result = { .first = ULONG_MAX, .last = 0 };
++	unsigned long long first, last;
++	char *pos;
++
++	errno = 0;
++	first = strtoll(str, &pos, 10);
++	if (('\0' == *str) || ('-' != *pos ) || (ERANGE == errno) ||
++	    (first != (unsigned long int)first))
++		goto out;
++
++	errno = 0;
++	last = strtoul(pos + 1, &pos, 10);
++	if (('\0' != *pos ) || (ERANGE == errno) ||
++	    (last != (unsigned long int)last))
++		goto out;
++
++	if (first > last)
++		goto out;
++
++	result.first = (unsigned long int)first;
++	result.last = (unsigned long int)last;
++out:
++	return result;
++	
++}
++
++struct ulong_range_list_entry {
++	struct ulong_range_list_entry *next;
++	struct ulong_range range;
++};
++
++static struct ulong_range_list_entry *add_sub_uids = NULL, *del_sub_uids = NULL;
++static struct ulong_range_list_entry *add_sub_gids = NULL, *del_sub_gids = NULL;
++
++static int prepend_range(const char *str, struct ulong_range_list_entry **head)
++{
++	struct ulong_range range;
++	struct ulong_range_list_entry *entry;
++	range = getulong_range(str);
++	if (range.first > range.last)
++		return 0;
++
++	entry = malloc(sizeof(*entry));
++	if (!entry) {
++		fprintf (stderr,
++			_("%s: failed to allocate memory: %s\n"),
++			Prog, strerror (errno));
++		return 0;
++	}
++	entry->next = *head;
++	entry->range = range;
++	*head = entry;
++	return 1;
++}
++
+ /*
+  * usage - display usage message and exit
+  */
+@@ -334,6 +409,10 @@
+ 	(void) fputs (_("  -s, --shell SHELL             new login shell for the user account\n"), usageout);
+ 	(void) fputs (_("  -u, --uid UID                 new UID for the user account\n"), usageout);
+ 	(void) fputs (_("  -U, --unlock                  unlock the user account\n"), usageout);
++	(void) fputs (_("  -v, --add-subuids FIRST-LAST  add range of subordinate uids\n"), usageout);
++	(void) fputs (_("  -V, --del-subuids FIRST-LAST  remvoe range of subordinate uids\n"), usageout);
++	(void) fputs (_("  -w, --add-subgids FIRST-LAST  add range of subordinate gids\n"), usageout);
++	(void) fputs (_("  -W, --del-subgids FIRST-LAST  remvoe range of subordinate gids\n"), usageout);
+ #ifdef WITH_SELINUX
+ 	(void) fputs (_("  -Z, --selinux-user SEUSER     new SELinux user mapping for the user account\n"), usageout);
+ #endif				/* WITH_SELINUX */
+@@ -590,6 +669,20 @@
+ 			/* continue */
+ 		}
+ 	}
++	if (sub_uid_locked) {
++		if (sub_uid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
++			/* continue */
++		}
++	}
++	if (sub_gid_locked) {
++		if (sub_gid_unlock () == 0) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
++			/* continue */
++		}
++	}
+ 
+ #ifdef WITH_AUDIT
+ 	audit_logger (AUDIT_USER_CHAUTHTOK, Prog,
+@@ -889,6 +982,10 @@
+ 			{"shell",        required_argument, NULL, 's'},
+ 			{"uid",          required_argument, NULL, 'u'},
+ 			{"unlock",       no_argument,       NULL, 'U'},
++			{"add-subuids",  required_argument, NULL, 'v'},
++			{"del-subuids",  required_argument, NULL, 'V'},
++ 			{"add-subgids",  required_argument, NULL, 'w'},
++ 			{"del-subgids",  required_argument, NULL, 'W'},
+ #ifdef WITH_SELINUX
+ 			{"selinux-user", required_argument, NULL, 'Z'},
+ #endif				/* WITH_SELINUX */
+@@ -1018,6 +1115,41 @@
+ 			case 'U':
+ 				Uflg = true;
+ 				break;
++			case 'v':
++				if (prepend_range (optarg, &add_sub_uids) == 0) {
++					fprintf (stderr,
++						_("%s: invalid subordinate uid range '%s'\n"),
++						Prog, optarg);
++					exit(E_BAD_ARG);
++				}
++				vflg = true;
++				break;
++			case 'V':
++				if (prepend_range (optarg, &del_sub_uids) == 0) {
++					fprintf (stderr,
++						_("%s: invalid subordinate uid range '%s'\n"),
++						Prog, optarg);
++					exit(E_BAD_ARG);
++				}
++				Vflg = true;
++				break;
++			case 'w':
++				if (prepend_range (optarg, &add_sub_gids) == 0) {
++					fprintf (stderr,
++						_("%s: invalid subordinate gid range '%s'\n"),
++						Prog, optarg);
++					exit(E_BAD_ARG);
++				}
++				wflg = true;
++			case 'W':
++				if (prepend_range (optarg, &del_sub_gids) == 0) {
++					fprintf (stderr,
++						_("%s: invalid subordinate gid range '%s'\n"),
++						Prog, optarg);
++					exit(E_BAD_ARG);
++				}
++				Wflg = true;
++				break;
+ #ifdef WITH_SELINUX
+ 			case 'Z':
+ 				if (is_selinux_enabled () > 0) {
+@@ -1170,6 +1302,7 @@
+ 
+ 	if (!(Uflg || uflg || sflg || pflg || mflg || Lflg ||
+ 	      lflg || Gflg || gflg || fflg || eflg || dflg || cflg
++	      || vflg || Vflg || wflg || Wflg
+ #ifdef WITH_SELINUX
+ 	      || Zflg
+ #endif				/* WITH_SELINUX */
+@@ -1200,6 +1333,7 @@
+ 		         Prog, (unsigned long) user_newid);
+ 		exit (E_UID_IN_USE);
+ 	}
++
+ }
+ 
+ /*
+@@ -1248,6 +1382,10 @@
+ 				         sgr_dbname ()));
+ 				fail_exit (E_GRP_UPDATE);
+ 			}
++		}
++#endif
++#ifdef SHADOWGRP
++		if (is_shadow_grp) {
+ 			if (sgr_unlock () == 0) {
+ 				fprintf (stderr,
+ 				         _("%s: failed to unlock %s\n"),
+@@ -1296,6 +1434,33 @@
+ 	sgr_locked = false;
+ #endif
+ 
++	if (vflg || Vflg) {
++		if (!is_sub_uid || (sub_uid_close () == 0)) {
++			fprintf (stderr, _("%s: failure while writing changes to %s\n"), Prog, sub_uid_dbname ());
++			SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_uid_dbname ()));
++			fail_exit (E_SUB_UID_UPDATE);
++		}
++		if (!is_sub_uid || (sub_uid_unlock () == 0)) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
++			/* continue */
++		}
++		sub_uid_locked = false;
++	}
++	if (wflg || Wflg) {
++		if (!is_sub_gid || (sub_gid_close () == 0)) {
++			fprintf (stderr, _("%s: failure while writing changes to %s\n"), Prog, sub_gid_dbname ());
++			SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_gid_dbname ()));
++			fail_exit (E_SUB_GID_UPDATE);
++		}
++		if (!is_sub_gid || (sub_gid_unlock () == 0)) {
++			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
++			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
++			/* continue */
++		}
++		sub_gid_locked = false;
++	}
++
+ 	/*
+ 	 * Close the DBM and/or flat files
+ 	 */
+@@ -1375,6 +1540,36 @@
+ 		}
+ #endif
+ 	}
++	if (vflg || Vflg) {
++		if (!is_sub_uid || (sub_uid_lock () == 0)) {
++			fprintf (stderr,
++			         _("%s: cannot lock %s; try again later.\n"),
++			         Prog, sub_uid_dbname ());
++			fail_exit (E_SUB_UID_UPDATE);
++		}
++		sub_uid_locked = true;
++		if (!is_sub_uid || (sub_uid_open (O_RDWR) == 0)) {
++			fprintf (stderr,
++			         _("%s: cannot open %s\n"),
++			         Prog, sub_uid_dbname ());
++			fail_exit (E_SUB_UID_UPDATE);
++		}
++	}
++	if (wflg || Wflg) {
++		if (!is_sub_gid || (sub_gid_lock () == 0)) {
++			fprintf (stderr,
++			         _("%s: cannot lock %s; try again later.\n"),
++			         Prog, sub_gid_dbname ());
++			fail_exit (E_SUB_GID_UPDATE);
++		}
++		sub_gid_locked = true;
++		if (!is_sub_gid || (sub_gid_open (O_RDWR) == 0)) {
++			fprintf (stderr,
++			         _("%s: cannot open %s\n"),
++			         Prog, sub_gid_dbname ());
++			fail_exit (E_SUB_GID_UPDATE);
++		}
++	}
+ }
+ 
+ /*
+@@ -1476,6 +1671,58 @@
+ 			fail_exit (E_PW_UPDATE);
+ 		}
+ 	}
++	if (Vflg) {
++		struct ulong_range_list_entry *ptr;
++		for (ptr = del_sub_uids; ptr != NULL; ptr = ptr->next) {
++			unsigned long count = ptr->range.last - ptr->range.first + 1;
++			if (sub_uid_remove(user_name, ptr->range.first, count) == 0) {
++				fprintf (stderr,
++					_("%s: failed to remove uid range %lu-%lu from '%s'\n"),
++					Prog, ptr->range.first, ptr->range.last, 
++					sub_uid_dbname ());
++				fail_exit (E_SUB_UID_UPDATE);
++			}
++		}
++	}
++	if (vflg) {
++		struct ulong_range_list_entry *ptr;
++		for (ptr = add_sub_uids; ptr != NULL; ptr = ptr->next) {
++			unsigned long count = ptr->range.last - ptr->range.first + 1;
++			if (sub_uid_add(user_name, ptr->range.first, count) == 0) {
++				fprintf (stderr,
++					_("%s: failed to add uid range %lu-%lu from '%s'\n"),
++					Prog, ptr->range.first, ptr->range.last, 
++					sub_uid_dbname ());
++				fail_exit (E_SUB_UID_UPDATE);
++			}
++		}
++	}
++	if (Wflg) {
++		struct ulong_range_list_entry *ptr;
++		for (ptr = del_sub_gids; ptr != NULL; ptr = ptr->next) {
++			unsigned long count = ptr->range.last - ptr->range.first + 1;
++			if (sub_gid_remove(user_name, ptr->range.first, count) == 0) {
++				fprintf (stderr,
++					_("%s: failed to remove gid range %lu-%lu from '%s'\n"),
++					Prog, ptr->range.first, ptr->range.last, 
++					sub_gid_dbname ());
++				fail_exit (E_SUB_GID_UPDATE);
++			}
++		}
++	}
++	if (wflg) {
++		struct ulong_range_list_entry *ptr;
++		for (ptr = add_sub_gids; ptr != NULL; ptr = ptr->next) {
++			unsigned long count = ptr->range.last - ptr->range.first + 1;
++			if (sub_gid_add(user_name, ptr->range.first, count) == 0) {
++				fprintf (stderr,
++					_("%s: failed to add gid range %lu-%lu from '%s'\n"),
++					Prog, ptr->range.first, ptr->range.last, 
++					sub_gid_dbname ());
++				fail_exit (E_SUB_GID_UPDATE);
++			}
++		}
++	}
+ }
+ 
+ /*
+@@ -1811,6 +2058,8 @@
+ #ifdef SHADOWGRP
+ 	is_shadow_grp = sgr_file_present ();
+ #endif
++	is_sub_uid = sub_uid_file_present ();
++	is_sub_gid = sub_gid_file_present ();
+ 
+ 	process_flags (argc, argv);
+ 
+@@ -1818,7 +2067,7 @@
+ 	 * The home directory, the username and the user's UID should not
+ 	 * be changed while the user is logged in.
+ 	 */
+-	if (   (uflg || lflg || dflg)
++	if (   (uflg || lflg || dflg || Vflg || Wflg)
+ 	    && (user_busy (user_name, user_id) != 0)) {
+ 		exit (E_USER_BUSY);
+ 	}
+@@ -1871,7 +2120,7 @@
+ 	 */
+ 	open_files ();
+ 	if (   cflg || dflg || eflg || fflg || gflg || Lflg || lflg || pflg
+-	    || sflg || uflg || Uflg) {
++	    || sflg || uflg || Uflg || vflg || Vflg || wflg || Wflg) {
+ 		usr_update ();
+ 	}
+ 	if (Gflg || lflg) {

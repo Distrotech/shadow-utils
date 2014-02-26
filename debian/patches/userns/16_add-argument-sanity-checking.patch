@@ -1,0 +1,80 @@
+From df3c8c1f7f47ceff607595067458f1d8e53eaab8 Mon Sep 17 00:00:00 2001
+From: Serge Hallyn <serge.hallyn@ubuntu.com>
+Date: Fri, 21 Jun 2013 11:47:36 -0500
+Subject: [PATCH 1/1] userns: add argument sanity checking
+
+In find_new_sub_{u,g}ids, check for min, count and max values.
+
+In idmapping.c:get_map_ranges(), make sure that the value passed
+in for ranges did not overflow.  Couldn't happen with the current
+code, but this is a sanity check for any future potential mis-uses.
+
+Signed-off-by: Serge Hallyn <serge.hallyn@ubuntu.com>
+---
+ libmisc/find_new_sub_gids.c |  8 ++++++++
+ libmisc/find_new_sub_uids.c |  8 ++++++++
+ libmisc/idmapping.c         | 10 ++++++++++
+ 3 files changed, 26 insertions(+)
+
+diff --git a/libmisc/find_new_sub_gids.c b/libmisc/find_new_sub_gids.c
+index 68046ac..fd44978 100644
+--- a/libmisc/find_new_sub_gids.c
++++ b/libmisc/find_new_sub_gids.c
+@@ -58,6 +58,14 @@ int find_new_sub_gids (const char *owner,
+ 	max = getdef_ulong ("SUB_GID_MAX", 600100000UL);
+ 	count = getdef_ulong ("SUB_GID_COUNT", 10000);
+ 
++	if (min >= max || count >= max || (min + count) >= max) {
++		(void) fprintf (stderr,
++				_("%s: Invalid configuration: SUB_GID_MIN (%lu),"
++				  " SUB_GID_MAX (%lu), SUB_GID_COUNT (%lu)\n"),
++			Prog, min, max, count);
++		return -1;
++	}
++
+ 	/* Is there a preferred range that works? */
+ 	if ((*range_count != 0) &&
+ 	    (*range_start >= min) &&
+diff --git a/libmisc/find_new_sub_uids.c b/libmisc/find_new_sub_uids.c
+index f1720f9..b608c59 100644
+--- a/libmisc/find_new_sub_uids.c
++++ b/libmisc/find_new_sub_uids.c
+@@ -58,6 +58,14 @@ int find_new_sub_uids (const char *owner,
+ 	max = getdef_ulong ("SUB_UID_MAX", 600100000UL);
+ 	count = getdef_ulong ("SUB_UID_COUNT", 10000);
+ 
++	if (min >= max || count >= max || (min + count) >= max) {
++		(void) fprintf (stderr,
++				_("%s: Invalid configuration: SUB_UID_MIN (%lu),"
++				  " SUB_UID_MAX (%lu), SUB_UID_COUNT (%lu)\n"),
++			Prog, min, max, count);
++		return -1;
++	}
++
+ 	/* Is there a preferred range that works? */
+ 	if ((*range_count != 0) &&
+ 	    (*range_start >= min) &&
+diff --git a/libmisc/idmapping.c b/libmisc/idmapping.c
+index cb9e898..4147796 100644
+--- a/libmisc/idmapping.c
++++ b/libmisc/idmapping.c
+@@ -41,6 +41,16 @@ struct map_range *get_map_ranges(int ranges, int argc, char **argv)
+ 	struct map_range *mappings, *mapping;
+ 	int idx, argidx;
+ 
++	if (ranges < 0 || argc < 0) {
++		fprintf(stderr, "%s: error calculating number of arguments\n", Prog);
++		return NULL;
++	}
++
++	if (ranges != ((argc - 2) + 2) / 3) {
++		fprintf(stderr, "%s: ranges: %u is wrong for argc: %d\n", Prog, ranges, argc);
++		return NULL;
++	}
++
+ 	if ((ranges * 3) > argc) {
+ 		fprintf(stderr, "ranges: %u argc: %d\n",
+ 			ranges, argc);
+-- 
+1.8.1.2
+

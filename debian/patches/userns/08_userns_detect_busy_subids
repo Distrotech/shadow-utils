@@ -1,0 +1,133 @@
+From ebiederm@xmission.com  Tue Jan 22 09:19:49 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id E0EA3C80F4; Tue, 22 Jan 2013 09:19:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.2 required=8.0 tests=BAD_ENC_HEADER,BAYES_00,
+	RCVD_IN_DNSWL_MED autolearn=ham version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id 1A2C7C80D1
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:19:46 +0000 (UTC)
+Received: from out03.mta.xmission.com ([166.70.13.233])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZzX-00006D-G7; Tue, 22 Jan 2013 02:18:03 -0700
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out03.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZzV-0005Zh-Qq; Tue, 22 Jan 2013 02:18:02 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZzN-0004ul-H6; Tue, 22 Jan 2013 02:18:01 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:17:50 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <87y5flpoe9.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1/ZWJZMWIVV2ekPIrRQjHLl4Oh/kdyWJUw=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 08/11] Add support for detecting busy subordinate user ids
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2078                                        
+Status: RO
+Content-Length: 2655
+Lines: 83
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ libmisc/user_busy.c |   18 +++++++++++++-----
+ 1 files changed, 13 insertions(+), 5 deletions(-)
+
+Index: shadow/libmisc/user_busy.c
+===================================================================
+--- shadow.orig/libmisc/user_busy.c	2013-02-01 15:27:52.952080357 -0600
++++ shadow/libmisc/user_busy.c	2013-02-01 15:27:52.948080357 -0600
+@@ -38,11 +38,13 @@
+ #include <stdio.h>
+ #include <sys/types.h>
+ #include <dirent.h>
++#include <fcntl.h>
+ #include "defines.h"
+ #include "prototypes.h"
++#include "subordinateio.h"
+ 
+ #ifdef __linux__
+-static int check_status (const char *sname, uid_t uid);
++static int check_status (const char *name, const char *sname, uid_t uid);
+ static int user_busy_processes (const char *name, uid_t uid);
+ #else				/* !__linux__ */
+ static int user_busy_utmp (const char *name);
+@@ -102,7 +104,7 @@
+ #endif				/* !__linux__ */
+ 
+ #ifdef __linux__
+-static int check_status (const char *sname, uid_t uid)
++static int check_status (const char *name, const char *sname, uid_t uid)
+ {
+ 	/* 40: /proc/xxxxxxxxxx/task/xxxxxxxxxx/status + \0 */
+ 	char status[40];
+@@ -125,7 +127,10 @@
+ 			            &ruid, &euid, &suid) == 3) {
+ 				if (   (ruid == (unsigned long) uid)
+ 				    || (euid == (unsigned long) uid)
+-				    || (suid == (unsigned long) uid)) {
++				    || (suid == (unsigned long) uid)
++				    || have_sub_uids(name, ruid, 1)
++				    || have_sub_uids(name, euid, 1)
++				    || have_sub_uids(name, suid, 1)) {
+ 					(void) fclose (sfile);
+ 					return 1;
+ 				}
+@@ -153,6 +158,8 @@
+ 	struct stat sbroot;
+ 	struct stat sbroot_process;
+ 
++	sub_uid_open (O_RDONLY);
++
+ 	proc = opendir ("/proc");
+ 	if (proc == NULL) {
+ 		perror ("opendir /proc");
+@@ -196,7 +203,7 @@
+ 			continue;
+ 		}
+ 
+-		if (check_status (tmp_d_name, uid) != 0) {
++		if (check_status (name, tmp_d_name, uid) != 0) {
+ 			(void) closedir (proc);
+ 			fprintf (stderr,
+ 			         _("%s: user %s is currently used by process %d\n"),
+@@ -216,7 +223,7 @@
+ 				if (tid == pid) {
+ 					continue;
+ 				}
+-				if (check_status (task_path+6, uid) != 0) {
++				if (check_status (name, task_path+6, uid) != 0) {
+ 					(void) closedir (proc);
+ 					fprintf (stderr,
+ 					         _("%s: user %s is currently used by process %d\n"),
+@@ -231,6 +238,7 @@
+ 	}
+ 
+ 	(void) closedir (proc);
++	sub_uid_close();
+ 	return 0;
+ }
+ #endif				/* __linux__ */

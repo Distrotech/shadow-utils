@@ -1,0 +1,1004 @@
+From ebiederm@xmission.com  Tue Jan 22 09:22:07 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id E5D16C80F4; Tue, 22 Jan 2013 09:22:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=8.0 tests=BAD_ENC_HEADER,BAYES_00,
+	LONGWORDS,RCVD_IN_DNSWL_MED autolearn=no version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id 2E206C80D1
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:22:03 +0000 (UTC)
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1Txa1k-0000xE-Ix; Tue, 22 Jan 2013 02:20:20 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1Txa1b-00059T-Lu; Tue, 22 Jan 2013 02:20:20 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:20:07 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <87ehhdpoag.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX1/nox3f5bDq7zL9eOiGra/HoCkv7o07HDs=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 11/11] newuidmap,newgidmap: New suid helpers for using subordinate uids and gids
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2081                                                  
+Status: RO
+Content-Length: 31344
+Lines: 965
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ libmisc/Makefile.am |    2 +
+ libmisc/idmapping.c |  126 +++++++++++++++++++++++++++++++++++
+ libmisc/idmapping.h |   44 ++++++++++++
+ man/Makefile.am     |    4 +
+ man/newgidmap.1.xml |  157 +++++++++++++++++++++++++++++++++++++++++++
+ man/newuidmap.1.xml |  154 +++++++++++++++++++++++++++++++++++++++++++
+ src/Makefile.am     |    5 +-
+ src/newgidmap.c     |  183 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/newuidmap.c     |  183 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 856 insertions(+), 2 deletions(-)
+ create mode 100644 libmisc/idmapping.c
+ create mode 100644 libmisc/idmapping.h
+ create mode 100644 man/newgidmap.1.xml
+ create mode 100644 man/newuidmap.1.xml
+ create mode 100644 src/newgidmap.c
+ create mode 100644 src/newuidmap.c
+
+Index: shadow/libmisc/Makefile.am
+===================================================================
+--- shadow.orig/libmisc/Makefile.am	2013-02-01 15:27:53.836080342 -0600
++++ shadow/libmisc/Makefile.am	2013-02-01 15:27:53.828080343 -0600
+@@ -32,6 +32,8 @@
+ 	getgr_nam_gid.c \
+ 	getrange.c \
+ 	hushed.c \
++	idmapping.h \
++	idmapping.c \
+ 	isexpired.c \
+ 	limits.c \
+ 	list.c log.c \
+Index: shadow/libmisc/idmapping.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/libmisc/idmapping.c	2013-02-01 15:27:53.828080343 -0600
+@@ -0,0 +1,126 @@
++/*
++ * Copyright (c) 2013 Eric Biederman
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. The name of the copyright holders or contributors may not be used to
++ *    endorse or promote products derived from this software without
++ *    specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++ * PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++ * HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include <config.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <limits.h>
++#include <stdlib.h>
++#include "prototypes.h"
++#include "idmapping.h"
++
++struct map_range *get_map_ranges(int ranges, int argc, char **argv)
++{
++	struct map_range *mappings, *mapping;
++	int idx, argidx;
++
++	if ((ranges * 3) > argc) {
++		fprintf(stderr, "ranges: %u argc: %d\n",
++			ranges, argc);
++		fprintf(stderr,
++			_( "%s: Not enough arguments to form %u mappings\n"),
++			Prog, ranges);
++		return NULL;
++	}
++
++	mappings = calloc(ranges, sizeof(*mappings));
++	if (!mappings) {
++		fprintf(stderr, _( "%s: Memory allocation failure\n"),
++			Prog);
++		exit(EXIT_FAILURE);
++	}
++
++	/* Gather up the ranges from the command line */
++	mapping = mappings;
++	for (idx = 0; idx < ranges; idx++, argidx += 3, mapping++) {
++		if (!getulong(argv[argidx + 0], &mapping->upper))
++			return NULL;
++		if (!getulong(argv[argidx + 1], &mapping->lower))
++			return NULL;
++		if (!getulong(argv[argidx + 2], &mapping->count))
++			return NULL;
++	}
++	return mappings;
++}
++
++/* Number of ascii digits needed to print any unsigned long in decimal.
++ * There are approximately 10 bits for every 3 decimal digits.
++ * So from bits to digits the formula is roundup((Number of bits)/10) * 3.
++ * For common sizes of integers this works out to:
++ *  2bytes -->  6 ascii estimate  -> 65536  (5 real)
++ *  4bytes --> 12 ascii estimated -> 4294967296 (10 real)
++ *  8bytes --> 21 ascii estimated -> 18446744073709551616 (20 real)
++ * 16bytes --> 39 ascii estimated -> 340282366920938463463374607431768211456 (39 real)
++ */
++#define ULONG_DIGITS ((((sizeof(unsigned long) * CHAR_BIT) + 9)/10)*3)
++
++
++void write_mapping(int proc_dir_fd, int ranges, struct map_range *mappings,
++	const char *map_file)
++{
++	int idx;
++	struct map_range *mapping;
++	size_t bufsize;
++	char *buf, *pos;
++	int fd;
++
++	bufsize = ranges * ((ULONG_DIGITS  + 1) * 3);
++	pos = buf = xmalloc(bufsize);
++
++	/* Build the mapping command */
++	mapping = mappings;
++	for (idx = 0; idx < ranges; idx++, mapping++) {
++		/* Append this range to the string that will be written */
++		int written = snprintf(pos, bufsize - (pos - buf),
++			"%lu %lu %lu\n",
++			mapping->upper,
++			mapping->lower,
++			mapping->count);
++		if ((written <= 0) || (written >= (bufsize - (pos - buf)))) {
++			fprintf(stderr, _("%s: snprintf failed!\n"), Prog);
++			exit(EXIT_FAILURE);
++		}
++		pos += written;
++	}
++
++	/* Write the mapping to the maping file */
++	fd = openat(proc_dir_fd, map_file, O_WRONLY);
++	if (fd < 0) {
++		fprintf(stderr, _("%s: open of %s failed: %s\n"),
++			Prog, map_file, strerror(errno));
++		exit(EXIT_FAILURE);
++	}
++	if (write(fd, buf, pos - buf) != (pos - buf)) {
++		fprintf(stderr, _("%s: write to %s failed: %s\n"),
++			Prog, map_file, strerror(errno));
++		exit(EXIT_FAILURE);
++	}
++	close(fd);
++}
+Index: shadow/libmisc/idmapping.h
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/libmisc/idmapping.h	2013-02-01 15:27:53.828080343 -0600
+@@ -0,0 +1,44 @@
++/*
++ * Copyright (c) 2013 Eric Biederman
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. The name of the copyright holders or contributors may not be used to
++ *    endorse or promote products derived from this software without
++ *    specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++ * PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++ * HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#ifndef _IDMAPPING_H_
++#define _IDMAPPING_H_
++
++struct map_range {
++	unsigned long upper;
++	unsigned long lower;
++	unsigned long count;
++};
++
++extern struct map_range *get_map_ranges(int ranges, int argc, char **argv);
++extern void write_mapping(int proc_dir_fd, int ranges,
++	struct map_range *mappings, const char *map_file);
++
++#endif /* _ID_MAPPING_H_ */
++
+Index: shadow/man/Makefile.am
+===================================================================
+--- shadow.orig/man/Makefile.am	2013-02-01 15:27:53.836080342 -0600
++++ shadow/man/Makefile.am	2013-02-01 15:27:53.828080343 -0600
+@@ -30,7 +30,9 @@
+ 	man1/login.1 \
+ 	man5/login.defs.5 \
+ 	man8/logoutd.8 \
++	man1/newgidmap.1 \
+ 	man1/newgrp.1 \
++	man1/newuidmap.1 \
+ 	man8/newusers.8 \
+ 	man8/nologin.8 \
+ 	man1/passwd.1 \
+@@ -83,7 +85,9 @@
+ 	login.access.5.xml \
+ 	login.defs.5.xml \
+ 	logoutd.8.xml \
++	newgidmap.1.xml \
+ 	newgrp.1.xml \
++	newuidmap.1.xml \
+ 	newusers.8.xml \
+ 	nologin.8.xml \
+ 	passwd.1.xml \
+Index: shadow/man/newgidmap.1.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/newgidmap.1.xml	2013-02-01 15:27:53.828080343 -0600
+@@ -0,0 +1,157 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++   Copyright (c) 2013 Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
++  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
++<!-- SHADOW-CONFIG-HERE -->
++]>
++
++<refentry id='newgidmap.1'>
++  <refmeta>
++    <refentrytitle>newgidmap</refentrytitle>
++    <manvolnum>1</manvolnum>
++    <refmiscinfo class="sectdesc">User Commands</refmiscinfo>
++    <refmiscinfo class="source">shadow-utils</refmiscinfo>
++    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
++  </refmeta>
++  <refnamediv id='name'>
++    <refname>newgidmap</refname>
++    <refpurpose>set the gid mapping of a user namespace</refpurpose>
++  </refnamediv>
++
++  <refsynopsisdiv id='synopsis'>
++    <cmdsynopsis>
++      <command>newgidmap</command>
++      <arg choice='plain'>
++	<replaceable>pid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>gid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>lowergid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>count</replaceable>
++      </arg>
++      <arg choice='opt'>
++	<arg choice='plain'>
++	  <replaceable>pid</replaceable>
++	</arg>
++	<arg choice='plain'>
++	  <replaceable>gid</replaceable>
++	</arg>
++	<arg choice='plain'>
++	  <replaceable>lowergid</replaceable>
++	</arg>
++	<arg choice='plain'>
++	  <replaceable>count</replaceable>
++	</arg>
++	<arg choice='opt'>
++	  <replaceable>...</replaceable>
++	</arg>
++      </arg>
++    </cmdsynopsis>
++  </refsynopsisdiv>
++
++  <refsect1 id='description'>
++    <title>DESCRIPTION</title>
++    <para>
++      The <command>newgidmap</command> sets <filename>/proc/[pid]/gid_map</filename> based on it's
++      command line arguments and the gids allowed in <filename>/etc/subgid</filename>.
++    </para>
++
++  </refsect1>
++
++  <refsect1 id='options'>
++    <title>OPTIONS</title>
++    <para>
++      There currently are no options to the <command>newgidmap</command> command.
++    </para>
++    <variablelist remap='IP'>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='note'>
++    <title>NOTE</title>
++    <para>
++      The only restriction placed on the login shell is that the command
++      name must be listed in <filename>/etc/shells</filename>, unless the
++      invoker is the superuser, and then any value may be added. An
++      account with a restricted login shell may not change her login shell.
++      For this reason, placing <filename>/bin/rsh</filename> in
++      <filename>/etc/shells</filename> is discouraged since accidentally
++      changing to a restricted shell would prevent the user from ever
++      changing her login shell back to its original value.
++    </para>
++  </refsect1>
++
++
++  <refsect1 id='files'>
++    <title>FILES</title>
++    <variablelist>
++      <varlistentry>
++	<term><filename>/etc/subgid</filename></term>
++	<listitem>
++	  <para>List of users subordinate user IDs.</para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term><filename>/proc/[pid]/gid_map</filename></term>
++	<listitem>
++	  <para>Mapping of gids from one between user namespaces.</para>
++	</listitem>
++      </varlistentry>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='see_also'>
++    <title>SEE ALSO</title>
++    <para>
++      <citerefentry>
++	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newusers</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>userdel</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>subgid</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>.
++    </para>
++  </refsect1>
++</refentry>
+Index: shadow/man/newuidmap.1.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/newuidmap.1.xml	2013-02-01 15:27:53.828080343 -0600
+@@ -0,0 +1,154 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++   Copyright (c) 2013 Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
++  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
++<!-- SHADOW-CONFIG-HERE -->
++]>
++
++<refentry id='newuidmap.1'>
++  <refmeta>
++    <refentrytitle>newuidmap</refentrytitle>
++    <manvolnum>1</manvolnum>
++    <refmiscinfo class="sectdesc">User Commands</refmiscinfo>
++    <refmiscinfo class="source">shadow-utils</refmiscinfo>
++    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
++  </refmeta>
++  <refnamediv id='name'>
++    <refname>newuidmap</refname>
++    <refpurpose>set the uid mapping of a user namespace</refpurpose>
++  </refnamediv>
++
++  <refsynopsisdiv id='synopsis'>
++    <cmdsynopsis>
++      <command>newuidmap</command>
++      <arg choice='plain'>
++	<replaceable>pid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>uid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>loweruid</replaceable>
++      </arg>
++      <arg choice='plain'>
++	<replaceable>count</replaceable>
++      </arg>
++      <arg choice='opt'>
++	<arg choice='plain'>
++	  <replaceable>uid</replaceable>
++	</arg>
++	<arg choice='plain'>
++	  <replaceable>loweruid</replaceable>
++	</arg>
++	<arg choice='plain'>
++	  <replaceable>count</replaceable>
++	</arg>
++	<arg choice='opt'>
++	  <replaceable>...</replaceable>
++	</arg>
++      </arg>
++    </cmdsynopsis>
++  </refsynopsisdiv>
++
++  <refsect1 id='description'>
++    <title>DESCRIPTION</title>
++    <para>
++      The <command>newuidmap</command> sets <filename>/proc/[pid]/uid_map</filename> based on it's
++      command line arguments and the uids allowed in <filename>/etc/subuid</filename>.
++    </para>
++
++  </refsect1>
++
++  <refsect1 id='options'>
++    <title>OPTIONS</title>
++    <para>
++      There currently are no options to the <command>newuidmap</command> command.
++    </para>
++    <variablelist remap='IP'>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='note'>
++    <title>NOTE</title>
++    <para>
++      The only restriction placed on the login shell is that the command
++      name must be listed in <filename>/etc/shells</filename>, unless the
++      invoker is the superuser, and then any value may be added. An
++      account with a restricted login shell may not change her login shell.
++      For this reason, placing <filename>/bin/rsh</filename> in
++      <filename>/etc/shells</filename> is discouraged since accidentally
++      changing to a restricted shell would prevent the user from ever
++      changing her login shell back to its original value.
++    </para>
++  </refsect1>
++
++
++  <refsect1 id='files'>
++    <title>FILES</title>
++    <variablelist>
++      <varlistentry>
++	<term><filename>/etc/subuid</filename></term>
++	<listitem>
++	  <para>List of users subordinate user IDs.</para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term><filename>/proc/[pid]/uid_map</filename></term>
++	<listitem>
++	  <para>Mapping of uids from one between user namespaces.</para>
++	</listitem>
++      </varlistentry>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='see_also'>
++    <title>SEE ALSO</title>
++    <para>
++      <citerefentry>
++	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newusers</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>userdel</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>subuid</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>.
++    </para>
++  </refsect1>
++</refentry>
+Index: shadow/src/Makefile.am
+===================================================================
+--- shadow.orig/src/Makefile.am	2013-02-01 15:27:53.836080342 -0600
++++ shadow/src/Makefile.am	2013-02-01 15:27:53.832080342 -0600
+@@ -23,7 +23,8 @@
+ # $prefix/bin and $prefix/sbin, no install-data hacks...)
+ 
+ bin_PROGRAMS   = groups login su
+-ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
++ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd \
++	newgidmap newuidmap
+ usbin_PROGRAMS = \
+ 	cppw \
+ 	chgpasswd \
+@@ -50,7 +51,7 @@
+ noinst_PROGRAMS = id sulogin
+ 
+ suidbins       = su
+-suidubins      = chage chfn chsh expiry gpasswd newgrp passwd
++suidubins      = chage chfn chsh expiry gpasswd newgrp passwd newuidmap newgidmap
+ if ACCT_TOOLS_SETUID
+ 	suidubins += chage chgpasswd chpasswd groupadd groupdel groupmod newusers useradd userdel usermod
+ endif
+Index: shadow/src/newgidmap.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/src/newgidmap.c	2013-02-01 15:27:53.832080342 -0600
+@@ -0,0 +1,183 @@
++/*
++ * Copyright (c) 2013 Eric Biederman
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. The name of the copyright holders or contributors may not be used to
++ *    endorse or promote products derived from this software without
++ *    specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++ * PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++ * HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include <config.h>
++#include <stdio.h>
++#include <string.h>
++#include <errno.h>
++#include <stdbool.h>
++#include <stdlib.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include "defines.h"
++#include "prototypes.h"
++#include "subordinateio.h"
++#include "idmapping.h"
++
++/*
++ * Global variables
++ */
++const char *Prog;
++
++static bool verify_range(struct passwd *pw, struct map_range *range)
++{
++	/* An empty range is invalid */
++	if (range->count == 0)
++		return false;
++
++	/* Test /etc/subgid */
++	if (have_sub_gids(pw->pw_name, range->lower, range->count))
++		return true;
++
++	/* Allow a process to map it's own gid */
++	if ((range->count == 1) && (pw->pw_gid == range->lower))
++		return true;
++
++	return false;
++}
++
++static void verify_ranges(struct passwd *pw, int ranges,
++	struct map_range *mappings)
++{
++	struct map_range *mapping;
++	int idx;
++
++	mapping = mappings;
++	for (idx = 0; idx < ranges; idx++, mapping++) {
++		if (!verify_range(pw, mapping)) {
++			fprintf(stderr, _( "%s: gid range [%lu-%lu) -> [%lu-%lu) not allowed\n"),
++				Prog,
++				mapping->upper,
++				mapping->upper + mapping->count,
++				mapping->lower,
++				mapping->lower + mapping->count);
++			exit(EXIT_FAILURE);
++		}
++	}
++}
++
++static void usage(void)
++{
++	fprintf(stderr, _("usage: %s <pid> <gid> <lowergid> <count> [ <gid> <lowergid> <count> ] ... \n"), Prog);
++	exit(EXIT_FAILURE);
++}
++
++/*
++ * newgidmap - Set the gid_map for the specified process
++ */
++int main(int argc, char **argv)
++{
++	char proc_dir_name[PATH_MAX];
++	char *target_str;
++	pid_t target, parent;
++	int proc_dir_fd;
++	int ranges;
++	struct map_range *mappings;
++	struct stat st;
++	struct passwd *pw;
++	int written;
++
++	Prog = Basename (argv[0]);
++
++	/*
++	 * The valid syntax are
++	 * newgidmap target_pid
++	 */
++	if (argc < 2)
++		usage();
++
++	/* Find the process that needs it's user namespace
++	 * gid mapping set.
++	 */
++	target_str = argv[1];
++	if (!get_pid(target_str, &target))
++		usage();
++
++	written = snprintf(proc_dir_name, sizeof(proc_dir_name), "/proc/%u/",
++		target);
++	if ((written <= 0) || (written >= sizeof(proc_dir_name))) {
++		fprintf(stderr, "%s: snprintf of proc path failed: %s\n",
++			Prog, strerror(errno));
++	}
++
++	proc_dir_fd = open(proc_dir_name, O_DIRECTORY);
++	if (proc_dir_fd < 0) {
++		fprintf(stderr, _("%s: Could not open proc directory for target %u\n"),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	/* Who am i? */
++	pw = get_my_pwent ();
++	if (NULL == pw) {
++		fprintf (stderr,
++			_("%s: Cannot determine your user name.\n"),
++			Prog);
++		SYSLOG ((LOG_WARN, "Cannot determine the user name of the caller (UID %lu)",
++				(unsigned long) getuid ()));
++		return EXIT_FAILURE;
++	}
++	
++	/* Get the effective uid and effective gid of the target process */
++	if (fstat(proc_dir_fd, &st) < 0) {
++		fprintf(stderr, _("%s: Could not stat directory for target %u\n"),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	/* Verify real user and real group matches the password entry
++	 * and the effective user and group of the program whose
++	 * mappings we have been asked to set.
++	 */
++	if ((getuid() != pw->pw_uid) ||
++	    (getgid() != pw->pw_gid) ||
++	    (pw->pw_uid != st.st_uid) ||
++	    (pw->pw_gid != st.st_gid)) {
++		fprintf(stderr, _( "%s: Target %u is owned by a different user\n" ),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	if (!sub_gid_open(O_RDONLY)) {
++		return EXIT_FAILURE;
++	}
++
++	ranges = ((argc - 2) + 2) / 3;
++	mappings = get_map_ranges(ranges, argc - 2, argv + 2);
++	if (!mappings)
++		usage();
++
++	verify_ranges(pw, ranges, mappings);
++
++	write_mapping(proc_dir_fd, ranges, mappings, "gid_map");
++	sub_gid_close();
++
++	return EXIT_SUCCESS;
++}
+Index: shadow/src/newuidmap.c
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/src/newuidmap.c	2013-02-01 15:27:53.832080342 -0600
+@@ -0,0 +1,183 @@
++/*
++ * Copyright (c) 2013 Eric Biederman
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. The name of the copyright holders or contributors may not be used to
++ *    endorse or promote products derived from this software without
++ *    specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++ * PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++ * HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include <config.h>
++#include <stdio.h>
++#include <string.h>
++#include <errno.h>
++#include <stdbool.h>
++#include <stdlib.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include "defines.h"
++#include "prototypes.h"
++#include "subordinateio.h"
++#include "idmapping.h"
++
++/*
++ * Global variables
++ */
++const char *Prog;
++
++static bool verify_range(struct passwd *pw, struct map_range *range)
++{
++	/* An empty range is invalid */
++	if (range->count == 0)
++		return false;
++
++	/* Test /etc/subuid */
++	if (have_sub_uids(pw->pw_name, range->lower, range->count))
++		return true;
++
++	/* Allow a process to map it's own uid */
++	if ((range->count == 1) && (pw->pw_uid == range->lower))
++		return true;
++
++	return false;
++}
++
++static void verify_ranges(struct passwd *pw, int ranges,
++	struct map_range *mappings)
++{
++	struct map_range *mapping;
++	int idx;
++
++	mapping = mappings;
++	for (idx = 0; idx < ranges; idx++, mapping++) {
++		if (!verify_range(pw, mapping)) {
++			fprintf(stderr, _( "%s: uid range [%lu-%lu) -> [%lu-%lu) not allowed\n"),
++				Prog,
++				mapping->upper,
++				mapping->upper + mapping->count,
++				mapping->lower,
++				mapping->lower + mapping->count);
++			exit(EXIT_FAILURE);
++		}
++	}
++}
++
++void usage(void)
++{
++	fprintf(stderr, _("usage: %s <pid> <uid> <loweruid> <count> [ <uid> <loweruid> <count> ] ... \n"), Prog);
++	exit(EXIT_FAILURE);
++}
++
++/*
++ * newuidmap - Set the uid_map for the specified process
++ */
++int main(int argc, char **argv)
++{
++	char proc_dir_name[PATH_MAX];
++	char *target_str;
++	pid_t target, parent;
++	int proc_dir_fd;
++	int ranges;
++	struct map_range *mappings;
++	struct stat st;
++	struct passwd *pw;
++	int written;
++
++	Prog = Basename (argv[0]);
++
++	/*
++	 * The valid syntax are
++	 * newuidmap target_pid
++	 */
++	if (argc < 2)
++		usage();
++
++	/* Find the process that needs it's user namespace
++	 * uid mapping set.
++	 */
++	target_str = argv[1];
++	if (!get_pid(target_str, &target))
++		usage();
++
++	written = snprintf(proc_dir_name, sizeof(proc_dir_name), "/proc/%u/",
++		target);
++	if ((written <= 0) || (written >= sizeof(proc_dir_name))) {
++		fprintf(stderr, "%s: snprintf of proc path failed: %s\n",
++			Prog, strerror(errno));
++	}
++
++	proc_dir_fd = open(proc_dir_name, O_DIRECTORY);
++	if (proc_dir_fd < 0) {
++		fprintf(stderr, _("%s: Could not open proc directory for target %u\n"),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	/* Who am i? */
++	pw = get_my_pwent ();
++	if (NULL == pw) {
++		fprintf (stderr,
++			_("%s: Cannot determine your user name.\n"),
++			Prog);
++		SYSLOG ((LOG_WARN, "Cannot determine the user name of the caller (UID %lu)",
++				(unsigned long) getuid ()));
++		return EXIT_FAILURE;
++	}
++	
++	/* Get the effective uid and effective gid of the target process */
++	if (fstat(proc_dir_fd, &st) < 0) {
++		fprintf(stderr, _("%s: Could not stat directory for target %u\n"),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	/* Verify real user and real group matches the password entry
++	 * and the effective user and group of the program whose
++	 * mappings we have been asked to set.
++	 */
++	if ((getuid() != pw->pw_uid) ||
++	    (getgid() != pw->pw_gid) ||
++	    (pw->pw_uid != st.st_uid) ||
++	    (pw->pw_gid != st.st_gid)) {
++		fprintf(stderr, _( "%s: Target %u is owned by a different user\n" ),
++			Prog, target);
++		return EXIT_FAILURE;
++	}
++
++	if (!sub_uid_open(O_RDONLY)) {
++		return EXIT_FAILURE;
++	}
++
++	ranges = ((argc - 2) + 2) / 3;
++	mappings = get_map_ranges(ranges, argc - 2, argv + 2);
++	if (!mappings)
++		usage();
++
++	verify_ranges(pw, ranges, mappings);
++
++	write_mapping(proc_dir_fd, ranges, mappings, "uid_map");
++	sub_uid_close();
++
++	return EXIT_SUCCESS;
++}

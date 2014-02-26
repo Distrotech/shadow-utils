@@ -1,0 +1,334 @@
+From ebiederm@xmission.com  Tue Jan 22 09:14:18 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id DAC33C80F4; Tue, 22 Jan 2013 09:14:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=8.0 tests=BAD_ENC_HEADER,BAYES_00
+	autolearn=no version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id 274ACC80D1
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:14:14 +0000 (UTC)
+Received: from out01.mta.xmission.com ([166.70.13.231])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZuB-0006Xm-N5; Tue, 22 Jan 2013 02:12:31 -0700
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out01.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZuA-0005NR-BQ; Tue, 22 Jan 2013 02:12:30 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZu7-0004Pj-Ec; Tue, 22 Jan 2013 02:12:30 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:12:23 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <877gn5shs8.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX18YouPWtKNAX3LovSW2+p/ONbuCHMFEQpM=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 01/11] Documentation for /etc/subuid and /etc/subgid
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2071                                                  
+Status: RO
+Content-Length: 9835
+Lines: 286
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ man/Makefile.am  |    4 ++
+ man/subgid.5.xml |  120 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ man/subuid.5.xml |  120 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 244 insertions(+), 0 deletions(-)
+ create mode 100644 man/subgid.5.xml
+ create mode 100644 man/subuid.5.xml
+
+Index: shadow/man/Makefile.am
+===================================================================
+--- shadow.orig/man/Makefile.am	2013-02-01 15:26:14.428082026 -0600
++++ shadow/man/Makefile.am	2013-02-01 15:27:37.000000000 -0600
+@@ -43,6 +43,8 @@
+ 	man5/shadow.5 \
+ 	man1/su.1 \
+ 	man5/suauth.5 \
++	man5/subgid.5 \
++	man5/subuid.5 \
+ 	man8/useradd.8 \
+ 	man8/userdel.8 \
+ 	man8/usermod.8 \
+@@ -94,6 +96,8 @@
+ 	sg.1.xml \
+ 	su.1.xml \
+ 	suauth.5.xml \
++	subgid.5.xml \
++	subuid.5.xml \
+ 	useradd.8.xml \
+ 	userdel.8.xml \
+ 	usermod.8.xml \
+Index: shadow/man/subgid.5.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/subgid.5.xml	2013-02-01 15:26:14.424082026 -0600
+@@ -0,0 +1,120 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++   Copyright (c) 2013 Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
++  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
++<!-- SHADOW-CONFIG-HERE -->
++]>
++<refentry id='subgid.5'>
++  <refmeta>
++    <refentrytitle>subgid</refentrytitle>
++    <manvolnum>5</manvolnum>
++    <refmiscinfo class="sectdesc">File Formats and Conversions</refmiscinfo>
++    <refmiscinfo class="source">shadow-utils</refmiscinfo>
++    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
++  </refmeta>
++  <refnamediv id='name'>
++    <refname>subgid</refname>
++    <refpurpose>the subordinate gid file</refpurpose>
++  </refnamediv>
++
++  <refsect1 id='description'>
++    <title>DESCRIPTION</title>
++    <para>
++      Each line in <filename>/etc/subgid</filename> contains
++      a user id and a range of suboridinate user ids that user
++      is allowed to use.
++
++      This is specified with three fields delimited by colons
++      (<quote>:</quote>).
++      These fields are:
++    </para>
++    <itemizedlist mark='bullet'>
++      <listitem>
++	<para>login name</para>
++      </listitem>
++      <listitem>
++	<para>numerical subordinate user ID</para>
++      </listitem>
++      <listitem>
++	<para>numerical subordinate user ID count</para>
++      </listitem>
++    </itemizedlist>
++
++    <para>
++      This file specifies the group IDs to be that each user may use
++      with the <command>newgidmap</command> command that ordinary users can use to
++      configure gid mapping in a user namespace.
++    </para>
++
++    <para>
++      Multiple ranges may be specified per user ID.
++    </para>
++
++  </refsect1>
++
++  <refsect1 id='files'>
++    <title>FILES</title>
++    <variablelist>
++      <varlistentry>
++	<term><filename>/etc/subgid</filename></term>
++	<listitem>
++	  <para>Per user subordinate group IDs.</para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term><filename>/etc/subgid-</filename></term>
++	<listitem>
++	  <para>Backup file for /etc/subgid.</para>
++	</listitem>
++      </varlistentry>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='see_also'>
++    <title>SEE ALSO</title>
++    <para>
++      <citerefentry>
++	<refentrytitle>subuid</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>logindefs</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newuidmap</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newgidmap</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++    </para>
++  </refsect1>
++</refentry>
+Index: shadow/man/subuid.5.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/subuid.5.xml	2013-02-01 15:26:14.424082026 -0600
+@@ -0,0 +1,120 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++   Copyright (c) 2013 Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
++  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
++<!-- SHADOW-CONFIG-HERE -->
++]>
++<refentry id='subuid.5'>
++  <refmeta>
++    <refentrytitle>subuid</refentrytitle>
++    <manvolnum>5</manvolnum>
++    <refmiscinfo class="sectdesc">File Formats and Conversions</refmiscinfo>
++    <refmiscinfo class="source">shadow-utils</refmiscinfo>
++    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
++  </refmeta>
++  <refnamediv id='name'>
++    <refname>subuid</refname>
++    <refpurpose>the subordinate uid file</refpurpose>
++  </refnamediv>
++
++  <refsect1 id='description'>
++    <title>DESCRIPTION</title>
++    <para>
++      Each line in <filename>/etc/subuid</filename> contains
++      a user id and a range of suboridinate user ids that user
++      is allowed to use.
++
++      This is specified with three fields delimited by colons
++      (<quote>:</quote>).
++      These fields are:
++    </para>
++    <itemizedlist mark='bullet'>
++      <listitem>
++	<para>login name</para>
++      </listitem>
++      <listitem>
++	<para>numerical subordinate user ID</para>
++      </listitem>
++      <listitem>
++	<para>numerical subordinate user ID count</para>
++      </listitem>
++    </itemizedlist>
++
++    <para>
++      This file specifies the user IDs to be that each user may use
++      with the <command>newuidmap</command> command that ordinary users can use to
++      configure uid mapping in a user namespace.
++    </para>
++
++    <para>
++      Multiple ranges may be specified per user ID.
++    </para>
++
++  </refsect1>
++
++  <refsect1 id='files'>
++    <title>FILES</title>
++    <variablelist>
++      <varlistentry>
++	<term><filename>/etc/subuid</filename></term>
++	<listitem>
++	  <para>Per user subordinate user IDs.</para>
++	</listitem>
++      </varlistentry>
++      <varlistentry>
++	<term><filename>/etc/subuid-</filename></term>
++	<listitem>
++	  <para>Backup file for /etc/subuid.</para>
++	</listitem>
++      </varlistentry>
++    </variablelist>
++  </refsect1>
++
++  <refsect1 id='see_also'>
++    <title>SEE ALSO</title>
++    <para>
++      <citerefentry>
++	<refentrytitle>subgid</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>logindefs</refentrytitle><manvolnum>5</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newuidmap</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>newgidmap</refentrytitle><manvolnum>1</manvolnum>
++      </citerefentry>,
++      <citerefentry>
++	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
++      </citerefentry>,
++    </para>
++  </refsect1>
++</refentry>

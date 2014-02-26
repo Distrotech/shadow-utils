@@ -1,0 +1,13 @@
+Index: shadow-4.1.5.1/src/Makefile.am
+===================================================================
+--- shadow-4.1.5.1.orig/src/Makefile.am	2013-02-04 11:56:40.485335430 -0600
++++ shadow-4.1.5.1/src/Makefile.am	2013-02-04 11:57:49.525334261 -0600
+@@ -80,6 +80,8 @@
+ endif
+ 
+ chage_LDADD    = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
++newuidmap_LDADD    = $(LDADD) $(LIBSELINUX)
++newgidmap_LDADD    = $(LDADD) $(LIBSELINUX)
+ chfn_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)
+ chgpasswd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBSELINUX) $(LIBCRYPT)
+ chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)

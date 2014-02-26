@@ -1,0 +1,218 @@
+From ebiederm@xmission.com  Tue Jan 22 09:14:55 2013
+Return-Path: <ebiederm@xmission.com>
+X-Original-To: serge@hallyn.com
+Delivered-To: serge@hallyn.com
+Received: by mail.hallyn.com (Postfix, from userid 5001)
+	id 140DBC80F4; Tue, 22 Jan 2013 09:14:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=8.0 tests=BAD_ENC_HEADER,BAYES_00
+	autolearn=no version=3.3.1
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hallyn.com (Postfix) with ESMTPS id 5D815C80D1
+	for <serge@hallyn.com>; Tue, 22 Jan 2013 09:14:50 +0000 (UTC)
+Received: from out03.mta.xmission.com ([166.70.13.233])
+	by out02.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZum-0006il-0f; Tue, 22 Jan 2013 02:13:08 -0700
+Received: from in02.mta.xmission.com ([166.70.13.52])
+	by out03.mta.xmission.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZul-0004GF-Id; Tue, 22 Jan 2013 02:13:07 -0700
+Received: from c-98-207-153-68.hsd1.ca.comcast.net ([98.207.153.68] helo=eric-ThinkPad-X220.xmission.com)
+	by in02.mta.xmission.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.76)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1TxZuf-0004T0-MS; Tue, 22 Jan 2013 02:13:07 -0700
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Nicolas =?utf-8?Q?Fran=C3=A7ois?= <nicolas.francois@centraliens.net>
+Cc: <Pkg-shadow-devel@lists.alioth.debian.org>,  Linux Containers <containers@lists.linux-foundation.org>,  "Michael Kerrisk \(man-pages\)" <mtk.manpages@gmail.com>,  "Serge E. Hallyn" <serge@hallyn.com>
+References: <87d2wxshu0.fsf@xmission.com>
+Date: Tue, 22 Jan 2013 01:12:58 -0800
+In-Reply-To: <87d2wxshu0.fsf@xmission.com> (Eric W. Biederman's message of
+	"Tue, 22 Jan 2013 01:11:19 -0800")
+Message-ID: <871uddshr9.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-AID: U2FsdGVkX19iYyOCEx6dl2v1Ya/KIGpixG5+3MVA1bY=
+X-SA-Exim-Connect-IP: 98.207.153.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH 02/11] login.defs.5: Document the new variables in login.defs
+X-SA-Exim-Version: 4.2.1 (built Wed, 14 Nov 2012 14:26:46 -0700)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-UID: 2072                                                  
+Status: RO
+Content-Length: 7615
+Lines: 170
+
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ man/Makefile.am                    |    2 +
+ man/login.defs.5.xml               |    8 ++++++
+ man/login.defs.d/SUB_GID_COUNT.xml |   46 ++++++++++++++++++++++++++++++++++++
+ man/login.defs.d/SUB_UID_COUNT.xml |   46 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 102 insertions(+), 0 deletions(-)
+ create mode 100644 man/login.defs.d/SUB_GID_COUNT.xml
+ create mode 100644 man/login.defs.d/SUB_UID_COUNT.xml
+
+Index: shadow/man/Makefile.am
+===================================================================
+--- shadow.orig/man/Makefile.am	2013-02-01 15:27:51.048080390 -0600
++++ shadow/man/Makefile.am	2013-02-01 15:27:51.040080390 -0600
+@@ -163,6 +163,8 @@
+ 	USERDEL_CMD.xml \
+ 	USERGROUPS_ENAB.xml \
+ 	USE_TCB.xml \
++	SUB_GID_COUNT.xml \
++	SUB_UID_COUNT.xml \
+ 	SYS_GID_MAX.xml \
+ 	SYS_UID_MAX.xml
+ 
+Index: shadow/man/login.defs.5.xml
+===================================================================
+--- shadow.orig/man/login.defs.5.xml	2013-02-01 15:27:51.048080390 -0600
++++ shadow/man/login.defs.5.xml	2013-02-01 15:27:51.044080390 -0600
+@@ -78,6 +78,8 @@
+ <!ENTITY SULOG_FILE            SYSTEM "login.defs.d/SULOG_FILE.xml">
+ <!ENTITY SU_NAME               SYSTEM "login.defs.d/SU_NAME.xml">
+ <!ENTITY SU_WHEEL_ONLY         SYSTEM "login.defs.d/SU_WHEEL_ONLY.xml">
++<!ENTITY SUB_GID_COUNT         SYSTEM "login.defs.d/SUB_GID_COUNT.xml">
++<!ENTITY SUB_UID_COUNT         SYSTEM "login.defs.d/SUB_UID_COUNT.xml">
+ <!ENTITY SYS_GID_MAX           SYSTEM "login.defs.d/SYS_GID_MAX.xml">
+ <!ENTITY SYSLOG_SG_ENAB        SYSTEM "login.defs.d/SYSLOG_SG_ENAB.xml">
+ <!ENTITY SYSLOG_SU_ENAB        SYSTEM "login.defs.d/SYSLOG_SU_ENAB.xml">
+@@ -216,6 +218,8 @@
+       &SULOG_FILE;
+       &SU_NAME;
+       &SU_WHEEL_ONLY;
++      &SUB_GID_COUNT; <!-- documents also SUB_GID_MIN SUB_GID_MAX -->
++      &SUB_UID_COUNT; <!-- documents also SUB_UID_MIN SUB_UID_MAX -->
+       &SYS_GID_MAX; <!-- documents also SYS_GID_MIN -->
+       &SYS_UID_MAX; <!-- documents also SYS_UID_MIN -->
+       &SYSLOG_SG_ENAB;
+@@ -393,6 +397,8 @@
+ 	    PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+ 	    <phrase condition="sha_crypt">SHA_CRYPT_MAX_ROUNDS
+ 	    SHA_CRYPT_MIN_ROUNDS</phrase>
++	    SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN
++	    SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN
+ 	    SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN
+ 	    UMASK
+ 	  </para>
+@@ -470,6 +476,8 @@
+ 	    GID_MAX GID_MIN
+ 	    MAIL_DIR MAX_MEMBERS_PER_GROUP
+ 	    PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
++	    SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN
++	    SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN
+ 	    SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN
+ 	    UMASK
+ 	    <phrase condition="tcb">TCB_AUTH_GROUP TCB_SYMLINK USE_TCB</phrase>
+Index: shadow/man/login.defs.d/SUB_GID_COUNT.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/login.defs.d/SUB_GID_COUNT.xml	2013-02-01 15:27:51.044080390 -0600
+@@ -0,0 +1,46 @@
++<!--
++   Copyright (c) 2013, Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<varlistentry>
++  <term><option>SUB_GID_MIN</option> (number)</term>
++  <term><option>SUB_GID_MAX</option> (number)</term>
++  <term><option>SUB_GID_COUNT</option> (number)</term>
++  <listitem>
++    <para>
++      The commands <command>useradd</command> and <command>newusers</command>
++      allocate <option>SUB_GID_COUNT</option> unused group IDs from the range
++      <option>SUB_GID_MIN</option> to <option>SUB_GID_MAX</option> for each
++      new user.
++    </para>
++    <para>
++      The default values for <option>SUB_GID_MAN</option>,
++      <option>SUB_GID_MIN</option>, <option>SUB_GID_COUNT</option>
++      are respectively 100000, 600100000 and 10000.
++    </para>
++  </listitem>
++</varlistentry>
+Index: shadow/man/login.defs.d/SUB_UID_COUNT.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ shadow/man/login.defs.d/SUB_UID_COUNT.xml	2013-02-01 15:27:51.044080390 -0600
+@@ -0,0 +1,46 @@
++<!--
++   Copyright (c) 2013, Eric W. Biederman
++   All rights reserved.
++  
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++   1. Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++   2. Redistributions in binary form must reproduce the above copyright
++      notice, this list of conditions and the following disclaimer in the
++      documentation and/or other materials provided with the distribution.
++   3. The name of the copyright holders or contributors may not be used to
++      endorse or promote products derived from this software without
++      specific prior written permission.
++  
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
++   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<varlistentry>
++  <term><option>SUB_UID_MIN</option> (number)</term>
++  <term><option>SUB_UID_MAX</option> (number)</term>
++  <term><option>SUB_UID_COUNT</option> (number)</term>
++  <listitem>
++    <para>
++      The commands <command>useradd</command> and <command>newusers</command>
++      allocate <option>SUB_UID_COUNT</option> unused user IDs from the range
++      <option>SUB_UID_MIN</option> to <option>SUB_UID_MAX</option> for each
++      new user.
++    </para>
++    <para>
++      The default values for <option>SUB_GID_MAN</option>,
++      <option>SUB_GID_MIN</option>, <option>SUB_GID_COUNT</option>
++      are respectively 100000, 600100000 and 10000.
++    </para>
++  </listitem>
++</varlistentry>

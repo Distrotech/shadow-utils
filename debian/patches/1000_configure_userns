@@ -1,0 +1,105 @@
+=== modified file 'etc/login.defs'
+Index: shadow/etc/login.defs
+===================================================================
+--- shadow.orig/etc/login.defs	2014-02-16 19:31:38.934898148 -0500
++++ shadow/etc/login.defs	2014-02-16 19:31:38.926898149 -0500
+@@ -229,7 +229,7 @@
+ # Extra per user uids
+ SUB_UID_MIN		   100000
+ SUB_UID_MAX		600100000
+-SUB_UID_COUNT		    10000
++SUB_UID_COUNT		    65536
+ 
+ #
+ # Min/max values for automatic gid selection in groupadd
+@@ -242,7 +242,7 @@
+ # Extra per user group ids
+ SUB_GID_MIN		   100000
+ SUB_GID_MAX		600100000
+-SUB_GID_COUNT		    10000
++SUB_GID_COUNT		    65536
+ 
+ #
+ # Max number of login retries if password is bad
+Index: shadow/src/newusers.c
+===================================================================
+--- shadow.orig/src/newusers.c	2014-02-16 19:31:38.934898148 -0500
++++ shadow/src/newusers.c	2014-02-16 19:31:38.926898149 -0500
+@@ -946,8 +946,8 @@
+ #ifdef SHADOWGRP
+ 	is_shadow_grp = sgr_file_present ();
+ #endif
+-	is_sub_uid = sub_uid_file_present ();
+-	is_sub_gid = sub_gid_file_present ();
++	is_sub_uid = sub_uid_file_present () && !rflg;
++	is_sub_gid = sub_gid_file_present () && !rflg;
+ 
+ 	open_files ();
+ 
+Index: shadow/src/useradd.c
+===================================================================
+--- shadow.orig/src/useradd.c	2014-02-16 19:31:38.934898148 -0500
++++ shadow/src/useradd.c	2014-02-16 19:31:38.926898149 -0500
+@@ -1978,6 +1978,10 @@
+ #endif				/* USE_PAM */
+ #endif				/* ACCT_TOOLS_SETUID */
+ 
++	/* Needed for userns check */
++	uid_t uid_min = (uid_t) getdef_ulong ("UID_MIN", 1000UL);
++	uid_t uid_max = (uid_t) getdef_ulong ("UID_MAX", 60000UL);
++
+ 	/*
+ 	 * Get my name so that I can use it to report errors.
+ 	 */
+@@ -2001,18 +2005,20 @@
+ 	 */
+ 	user_groups[0] = (char *) 0;
+ 
+-
+ 	is_shadow_pwd = spw_file_present ();
+ #ifdef SHADOWGRP
+ 	is_shadow_grp = sgr_file_present ();
+ #endif
+-	is_sub_uid = sub_uid_file_present ();
+-	is_sub_gid = sub_gid_file_present ();
+-
+-	get_defaults ();
+ 
+ 	process_flags (argc, argv);
+ 
++	is_sub_uid = sub_uid_file_present () && !rflg &&
++	    (!user_id || (user_id <= uid_max && user_id >= uid_min));
++	is_sub_gid = sub_gid_file_present () && !rflg &&
++	    (!user_id || (user_id <= uid_max && user_id >= uid_min));
++
++	get_defaults ();
++
+ #ifdef ACCT_TOOLS_SETUID
+ #ifdef USE_PAM
+ 	{
+Index: shadow/libmisc/find_new_sub_uids.c
+===================================================================
+--- shadow.orig/libmisc/find_new_sub_uids.c	2014-02-16 19:31:38.934898148 -0500
++++ shadow/libmisc/find_new_sub_uids.c	2014-02-16 19:31:38.926898149 -0500
+@@ -56,7 +56,7 @@
+ 
+ 	min = getdef_ulong ("SUB_UID_MIN", 100000UL);
+ 	max = getdef_ulong ("SUB_UID_MAX", 600100000UL);
+-	count = getdef_ulong ("SUB_UID_COUNT", 10000);
++	count = getdef_ulong ("SUB_UID_COUNT", 65536);
+ 
+ 	if (min >= max || count >= max || (min + count) >= max) {
+ 		(void) fprintf (stderr,
+Index: shadow/libmisc/find_new_sub_gids.c
+===================================================================
+--- shadow.orig/libmisc/find_new_sub_gids.c	2014-02-16 19:32:21.298896382 -0500
++++ shadow/libmisc/find_new_sub_gids.c	2014-02-16 19:32:34.462895834 -0500
+@@ -56,7 +56,7 @@
+ 
+ 	min = getdef_ulong ("SUB_GID_MIN", 100000UL);
+ 	max = getdef_ulong ("SUB_GID_MAX", 600100000UL);
+-	count = getdef_ulong ("SUB_GID_COUNT", 10000);
++	count = getdef_ulong ("SUB_GID_COUNT", 65536);
+ 
+ 	if (min >= max || count >= max || (min + count) >= max) {
+ 		(void) fprintf (stderr,

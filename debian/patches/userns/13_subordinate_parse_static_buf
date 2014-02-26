@@ -1,0 +1,23 @@
+Description: subordinateio: Fix subordinate_parse to have an internal static buffer
+ subordinate_parse is supposed to return a static structure that
+ represents one line in /etc/subuid or /etc/subgid.  I goofed and
+ failed to make the variable rangebuf that holds the username of
+ in the returned structure static.
+ .
+ Add this missing static specification.
+Author: <Eric W. Biederman" <ebiederm@xmission.com>
+Origin: upstream
+Forwarded: no
+Index: shadow-4.1.5.1/lib/subordinateio.c
+===================================================================
+--- shadow-4.1.5.1.orig/lib/subordinateio.c	2013-02-04 11:56:40.265335433 -0600
++++ shadow-4.1.5.1/lib/subordinateio.c	2013-02-04 12:32:46.653298752 -0600
+@@ -48,7 +48,7 @@
+ static void *subordinate_parse (const char *line)
+ {
+ 	static struct subordinate_range range;
+-	char rangebuf[1024];
++	static char rangebuf[1024];
+ 	int i;
+ 	char *cp;
+ 	char *fields[NFIELDS];

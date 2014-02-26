@@ -1,5 +1,6 @@
 shadow (1:4.2-1) UNRELEASED; urgency=low
 
+  [ Nicolas FRANCOIS (Nekral) ]
   * New upstream release. Fixes:
     - Invalid free() in su fixed by using strdup(). Thanks to Serge
       Hallyn for the patch. Closes: #691459
@@ -31,6 +32,10 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * debian/login.su.pam: Enable pam_limits by default. Closes: #705301
   * debian/rules: Set default editor to sensible-editor for vipw.
     Closes: #688252
+  [ Micah Anderson ]
+  * added debian/patches/userns to enable use of subuids, plus some bugfix 
+    patches on top of them, patches from Eric Biederman, pulled from
+    Ubuntu. Closes: #739981
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 

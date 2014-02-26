@@ -1,0 +1,26 @@
+Index: shadow/man/subgid.5.xml
+===================================================================
+--- shadow.orig/man/subgid.5.xml	2013-03-06 15:19:23.848386200 -0600
++++ shadow/man/subgid.5.xml	2013-03-06 15:19:51.240386816 -0600
+@@ -104,7 +104,7 @@
+ 	<refentrytitle>subuid</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>logindefs</refentrytitle><manvolnum>5</manvolnum>
++	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>newuidmap</refentrytitle><manvolnum>1</manvolnum>
+Index: shadow/man/subuid.5.xml
+===================================================================
+--- shadow.orig/man/subuid.5.xml	2013-03-06 15:19:09.660385881 -0600
++++ shadow/man/subuid.5.xml	2013-03-06 15:19:44.956386675 -0600
+@@ -104,7 +104,7 @@
+ 	<refentrytitle>subgid</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>logindefs</refentrytitle><manvolnum>5</manvolnum>
++	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>newuidmap</refentrytitle><manvolnum>1</manvolnum>
