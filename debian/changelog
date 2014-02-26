@@ -40,6 +40,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * Update documentation of UMASK: Explain that USERGROUPS_ENAB will modify
     this default for UPGs. (Closes: #583971)
   * login.postinst: install a default /etc/subuid and /etc/subgid
+  * fix installation of setuid/setgid/newuidmap/newgid/map man pages
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 

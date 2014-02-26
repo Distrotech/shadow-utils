@@ -30,8 +30,6 @@ usr/share/man/*/man1/passwd.1
 usr/share/man/*/man5/passwd.5
 usr/share/man/*/man5/shadow.5
 usr/share/man/*/man5/gshadow.5
-usr/share/man/*/man5/subgid.5
-usr/share/man/*/man5/subuid.5
 usr/share/man/*/man8/chpasswd.8
 usr/share/man/*/man8/groupadd.8
 usr/share/man/*/man8/groupdel.8
@@ -59,6 +57,8 @@ usr/share/man/man5/shadow.5
 usr/share/man/man5/gshadow.5
 usr/share/man/man5/subuid.5
 usr/share/man/man5/subgid.5
+usr/share/man/man5/subgid.5
+usr/share/man/man5/subuid.5
 usr/share/man/man8/chgpasswd.8
 usr/share/man/man8/chpasswd.8
 usr/share/man/man8/groupadd.8

@@ -1,6 +1,4 @@
 usr/bin/newuidmap
 usr/bin/newgidmap
-usr/share/man/*/man1/newuidmap.1
-usr/share/man/*/man1/newgidmap.1
 usr/share/man/man1/newuidmap.1
 usr/share/man/man1/newgidmap.1
