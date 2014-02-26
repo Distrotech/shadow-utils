@@ -24,6 +24,19 @@ then
 	fi
 fi
 
+        # Create subuid/subgid if missing
+        if [ ! -e /etc/subuid ]; then
+                touch /etc/subuid
+                chown root:root /etc/subuid
+                chmod 644 /etc/subuid
+        fi
+
+        if [ ! -e /etc/subgid ]; then
+                touch /etc/subgid
+                chown root:root /etc/subgid
+                chmod 644 /etc/subgid
+        fi
+
 #DEBHELPER#
 
 exit 0

@@ -39,6 +39,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * Allow LXC devices (lxc/console, lxc/tty[1234]) in securetty.linux
   * Update documentation of UMASK: Explain that USERGROUPS_ENAB will modify
     this default for UPGs. (Closes: #583971)
+  * login.postinst: install a default /etc/subuid and /etc/subgid
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
