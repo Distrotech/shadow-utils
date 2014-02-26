@@ -36,6 +36,9 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * added debian/patches/userns to enable use of subuids, plus some bugfix 
     patches on top of them, patches from Eric Biederman, pulled from
     Ubuntu. Closes: #739981
+  * Allow LXC devices (lxc/console, lxc/tty[1234]) in securetty.linux
+  * Update documentation of UMASK: Explain that USERGROUPS_ENAB will modify
+    this default for UPGs. (Closes: #583971)
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
