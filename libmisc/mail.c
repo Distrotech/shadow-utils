@@ -40,7 +40,7 @@
 
 #include "getdef.h"
 
-#ident "$Id: mail.c 2819 2009-04-27 20:09:18Z nekral-guest $"
+#ident "$Id$"
 
 
 void mailcheck (void)

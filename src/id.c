@@ -40,7 +40,7 @@
 
 #include <config.h>
 
-#ident "$Id: id.c 3182 2010-03-23 11:26:34Z nekral-guest $"
+#ident "$Id$"
 
 #include <grp.h>
 #include <pwd.h>

@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: copydir.c 3706 2012-02-13 19:16:29Z nekral-guest $"
+#ident "$Id$"
 
 #include <assert.h>
 #include <sys/stat.h>

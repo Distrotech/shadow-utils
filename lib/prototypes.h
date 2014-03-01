@@ -35,12 +35,14 @@
  *
  * prototypes of libmisc functions, and private lib functions.
  *
- * $Id: prototypes.h 3656 2012-01-08 16:04:27Z nekral-guest $
+ * $Id$
  *
  */
 
 #ifndef _PROTOTYPES_H
 #define _PROTOTYPES_H
+
+#include <config.h>
 
 #include <sys/stat.h>
 #ifdef USE_UTMPX
@@ -124,7 +126,7 @@ extern int copy_tree (const char *src_root, const char *dst_root,
                       gid_t old_gid, gid_t new_gid);
 
 /* encrypt.c */
-extern /*@exposed@*/char *pw_encrypt (const char *, const char *);
+extern /*@exposed@*//*@null@*/char *pw_encrypt (const char *, const char *);
 
 /* entry.c */
 extern void pw_entry (const char *, struct passwd *);
@@ -148,6 +150,17 @@ extern int find_new_gid (bool sys_group,
 extern int find_new_uid (bool sys_user,
                          uid_t *uid,
                          /*@null@*/uid_t const *preferred_uid);
+
+#ifdef ENABLE_SUBIDS
+/* find_new_sub_gids.c */
+extern int find_new_sub_gids (const char *owner,
+			      gid_t *range_start, unsigned long *range_count);
+
+/* find_new_sub_uids.c */
+extern int find_new_sub_uids (const char *owner,
+			      uid_t *range_start, unsigned long *range_count);
+#endif				/* ENABLE_SUBIDS */
+
 
 /* get_gid.c */
 extern int get_gid (const char *gidstr, gid_t *gid);

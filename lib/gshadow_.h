@@ -30,7 +30,7 @@
  */
 
 /*
- *	$Id: gshadow_.h 3464 2011-08-14 13:16:54Z nekral-guest $
+ *	$Id$
  */
 
 #ifndef	_H_GSHADOW

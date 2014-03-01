@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: commonio.c 3727 2012-05-18 19:44:53Z nekral-guest $"
+#ident "$Id$"
 
 #include "defines.h"
 #include <assert.h>
@@ -1113,6 +1113,38 @@ int commonio_update (struct commonio_db *db, const void *eptr)
 	return 1;
 }
 
+#ifdef ENABLE_SUBIDS
+int commonio_append (struct commonio_db *db, const void *eptr)
+{
+	struct commonio_entry *p;
+	void *nentry;
+
+	if (!db->isopen || db->readonly) {
+		errno = EINVAL;
+		return 0;
+	}
+	nentry = db->ops->dup (eptr);
+	if (NULL == nentry) {
+		errno = ENOMEM;
+		return 0;
+	}
+	/* new entry */
+	p = (struct commonio_entry *) malloc (sizeof *p);
+	if (NULL == p) {
+		db->ops->free (nentry);
+		errno = ENOMEM;
+		return 0;
+	}
+
+	p->eptr = nentry;
+	p->line = NULL;
+	p->changed = true;
+	add_one_entry (db, p);
+
+	db->changed = true;
+	return 1;
+}
+#endif				/* ENABLE_SUBIDS */
 
 void commonio_del_entry (struct commonio_db *db, const struct commonio_entry *p)
 {

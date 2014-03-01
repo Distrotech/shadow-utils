@@ -26,7 +26,7 @@
 
 #include <config.h>
 
-#ident "$Id: nologin.c 2862 2009-05-09 13:14:23Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <stdlib.h>

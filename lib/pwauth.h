@@ -31,7 +31,7 @@
  */
 
 /*
- *	$Id: pwauth.h 2777 2009-04-23 17:43:27Z nekral-guest $
+ *	$Id$
  */
 
 #ifndef USE_PAM

@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: exitcodes.h 2849 2009-04-30 21:08:49Z nekral-guest $ */
+/* $Id$ */
 
 /*
  * Exit codes used by shadow programs

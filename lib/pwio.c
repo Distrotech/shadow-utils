@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwio.c 3296 2011-02-16 20:32:16Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
 #include "defines.h"

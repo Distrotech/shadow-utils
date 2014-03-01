@@ -30,7 +30,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwdcheck.c 2779 2009-04-23 20:17:02Z nekral-guest $"
+#ident "$Id$"
 
 #ifndef USE_PAM
 

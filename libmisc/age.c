@@ -42,7 +42,7 @@
 #include <pwd.h>
 #include <grp.h>
 
-#ident "$Id: age.c 2775 2009-04-23 17:33:21Z nekral-guest $"
+#ident "$Id$"
 
 #ifndef PASSWD_PROGRAM
 #define PASSWD_PROGRAM "/bin/passwd"

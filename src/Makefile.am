@@ -25,6 +25,9 @@ INCLUDES = \
 bin_PROGRAMS   = groups login su
 sbin_PROGRAMS  = nologin
 ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
+if ENABLE_SUBIDS
+ubin_PROGRAMS += newgidmap newuidmap
+endif
 usbin_PROGRAMS = \
 	chgpasswd \
 	chpasswd \
@@ -49,7 +52,7 @@ usbin_PROGRAMS = \
 noinst_PROGRAMS = id sulogin
 
 suidbins       = su
-suidubins      = chage chfn chsh expiry gpasswd newgrp passwd
+suidubins      = chage chfn chsh expiry gpasswd newgrp passwd newuidmap newgidmap
 if ACCT_TOOLS_SETUID
 	suidubins += chage chgpasswd chpasswd groupadd groupdel groupmod newusers useradd userdel usermod
 endif
@@ -78,6 +81,8 @@ LIBCRYPT_NOPAM = $(LIBCRYPT)
 endif
 
 chage_LDADD    = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
+newuidmap_LDADD    = $(LDADD) $(LIBSELINUX)
+newgidmap_LDADD    = $(LDADD) $(LIBSELINUX)
 chfn_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)
 chgpasswd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBSELINUX) $(LIBCRYPT)
 chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)

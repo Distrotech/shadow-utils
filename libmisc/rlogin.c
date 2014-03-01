@@ -34,7 +34,7 @@
 
 #ifdef RLOGIN
 
-#ident "$Id: rlogin.c 2849 2009-04-30 21:08:49Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
 #include "defines.h"

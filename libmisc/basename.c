@@ -38,7 +38,7 @@
 
 #include <config.h>
 
-#ident "$Id: basename.c 3493 2011-09-18 21:02:43Z nekral-guest $"
+#ident "$Id$"
 
 #include "defines.h"
 #include "prototypes.h"

@@ -40,7 +40,7 @@
 
 #ifndef USE_PAM
 
-#ident "$Id: limits.c 3558 2011-11-06 18:39:47Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <sys/stat.h>

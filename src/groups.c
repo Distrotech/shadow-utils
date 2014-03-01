@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: groups.c 3233 2010-08-22 19:36:09Z nekral-guest $"
+#ident "$Id$"
 
 #include <grp.h>
 #include <pwd.h>

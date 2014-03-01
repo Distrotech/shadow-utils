@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: fields.c 3380 2011-07-08 19:56:18Z nekral-guest $"
+#ident "$Id$"
 
 #include <ctype.h>
 #include <string.h>

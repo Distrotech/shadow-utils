@@ -36,7 +36,7 @@
 #include "defines.h"
 #include "prototypes.h"
 
-#ident "$Id: fputsx.c 3021 2009-06-12 20:20:45Z nekral-guest $"
+#ident "$Id$"
 
 
 /*@null@*/char *fgetsx (/*@returned@*/ /*@out@*/char *buf, int cnt, FILE * f)

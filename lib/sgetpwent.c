@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: sgetpwent.c 2581 2009-03-21 20:45:35Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include "defines.h"

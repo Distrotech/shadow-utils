@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: ulimit.c 2188 2008-06-15 21:59:41Z nekral-guest $"
+#ident "$Id$"
 
 #if HAVE_ULIMIT_H
 #include <ulimit.h>

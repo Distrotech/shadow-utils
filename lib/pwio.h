@@ -31,7 +31,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: pwio.h 2783 2009-04-23 21:19:02Z nekral-guest $ */
+/* $Id$ */
 #ifndef _PWIO_H
 #define _PWIO_H
 

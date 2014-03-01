@@ -50,7 +50,7 @@
 <!-- SHADOW-CONFIG-HERE -->
 ]>
 <refentry id='su.1'>
-  <!--  $Id: su.1.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <!--  $Id$ -->
   <refentryinfo>
     <author>
       <firstname>Julianne Frances</firstname>
@@ -148,8 +148,7 @@
     <variablelist remap='IP'>
       <varlistentry>
 	<term>
-	  <option>-c</option>, <option>--command</option>
-	  <replaceable>COMMAND</replaceable>
+	  <option>-c</option>, <option>--command</option>&nbsp;<replaceable>COMMAND</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -175,17 +174,18 @@
 	    the user logged in directly.
 	  </para>
 	  <para>
-	    When <option>-</option> is used, it must be specified as the last
-	    <command>su</command> option.
-	    The other forms (<option>-l</option> and <option>--login</option>)
+	    When <option>-</option> is used, it must be specified before any
+	    <option>username</option>.  For portability it is recommended
+	    to use it as last option, before any
+	    <option>username</option>.  The other forms
+	    (<option>-l</option> and <option>--login</option>)
 	    do not have this restriction.
 	  </para>
 	</listitem>
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-s</option>, <option>--shell</option>
-	  <replaceable>SHELL</replaceable>
+	  <option>-s</option>, <option>--shell</option>&nbsp;<replaceable>SHELL</replaceable>
 	</term>
 	<listitem>
 	  <para>The shell that will be invoked.</para>

@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: loginprompt.c 3490 2011-09-18 20:41:38Z nekral-guest $"
+#ident "$Id$"
 
 #include <assert.h>
 #include <stdio.h>

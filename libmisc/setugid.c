@@ -36,7 +36,7 @@
 
 #include <config.h>
 
-#ident "$Id: setugid.c 3231 2010-08-22 13:04:54Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <grp.h>

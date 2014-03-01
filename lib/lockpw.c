@@ -33,7 +33,7 @@
 
 #ifndef HAVE_LCKPWDF
 
-#ident "$Id: lockpw.c 1980 2008-04-27 00:40:09Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
 #include "defines.h"

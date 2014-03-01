@@ -38,7 +38,7 @@
 
 #include <ctype.h>
 
-#ident "$Id: strtoday.c 3169 2010-03-20 10:19:50Z nekral-guest $"
+#ident "$Id$"
 
 #include "defines.h"
 #include "prototypes.h"

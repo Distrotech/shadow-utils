@@ -42,10 +42,12 @@
 #endif
 
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #include <netdb.h>
 #include <stdio.h>
 
-#ident "$Id: utmp.c 3720 2012-05-18 17:57:52Z nekral-guest $"
+#ident "$Id$"
 
 
 /*

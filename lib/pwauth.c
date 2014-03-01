@@ -33,7 +33,7 @@
 #include <config.h>
 
 #ifndef USE_PAM
-#ident "$Id: pwauth.c 2782 2009-04-23 20:46:01Z nekral-guest $"
+#ident "$Id$"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -73,6 +73,7 @@ int pw_auth (const char *cipher,
 	char prompt[1024];
 	char *clear = NULL;
 	const char *cp;
+	const char *encrypted;
 	int retval;
 
 #ifdef	SKEY
@@ -177,7 +178,12 @@ int pw_auth (const char *cipher,
 	 * the results there as well.
 	 */
 
-	retval = strcmp (pw_encrypt (input, cipher), cipher);
+	encrypted = pw_encrypt (input, cipher);
+	if (NULL != encrypted) {
+		retval = strcmp (encrypted, cipher);
+	} else {
+		retval = -1;
+	}
 
 #ifdef  SKEY
 	/*

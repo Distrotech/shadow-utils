@@ -31,7 +31,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: sgroupio.h 3061 2009-09-07 18:59:03Z nekral-guest $ */
+/* $Id$ */
 #ifndef _SGROUPIO_H
 #define _SGROUPIO_H
 

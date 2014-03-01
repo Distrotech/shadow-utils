@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwd_init.c 1980 2008-04-27 00:40:09Z nekral-guest $"
+#ident "$Id$"
 
 #include "defines.h"
 #include <signal.h>

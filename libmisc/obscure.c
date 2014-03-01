@@ -34,7 +34,7 @@
 
 #ifndef USE_PAM
 
-#ident "$Id: obscure.c 3232 2010-08-22 19:13:53Z nekral-guest $"
+#ident "$Id$"
 
 
 /*

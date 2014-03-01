@@ -31,7 +31,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: groupio.h 2783 2009-04-23 21:19:02Z nekral-guest $ */
+/* $Id$ */
 #ifndef _GROUPIO_H
 #define _GROUPIO_H
 

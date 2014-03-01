@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwck.c 3574 2011-11-13 16:24:39Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <grp.h>

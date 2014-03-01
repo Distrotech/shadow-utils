@@ -1,4 +1,4 @@
-$Id: console.c.spec.txt 1342 2007-11-10 23:46:11Z nekral-guest $
+$Id$
 
 Specification for console.c source file --
 
