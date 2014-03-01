@@ -32,12 +32,14 @@
   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 <!ENTITY MAIL_DIR              SYSTEM "login.defs.d/MAIL_DIR.xml">
 <!ENTITY MAX_MEMBERS_PER_GROUP SYSTEM "login.defs.d/MAX_MEMBERS_PER_GROUP.xml">
+<!ENTITY SUB_GID_COUNT         SYSTEM "login.defs.d/SUB_GID_COUNT.xml">
+<!ENTITY SUB_UID_COUNT         SYSTEM "login.defs.d/SUB_UID_COUNT.xml">
 <!ENTITY TCB_SYMLINKS          SYSTEM "login.defs.d/TCB_SYMLINKS.xml">
 <!ENTITY USE_TCB               SYSTEM "login.defs.d/USE_TCB.xml">
 <!-- SHADOW-CONFIG-HERE -->
 ]>
 <refentry id='usermod.8'>
-  <!--  $Id: usermod.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $  -->
+  <!--  $Id$  -->
   <refentryinfo>
     <author>
       <firstname>Julianne Frances</firstname>
@@ -107,8 +109,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-c</option>, <option>--comment</option>
-	  <replaceable>COMMENT</replaceable>
+	  <option>-c</option>, <option>--comment</option>&nbsp;<replaceable>COMMENT</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -121,8 +122,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-d</option>, <option>--home</option>
-	  <replaceable>HOME_DIR</replaceable>
+	  <option>-d</option>, <option>--home</option>&nbsp;<replaceable>HOME_DIR</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -138,8 +138,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-e</option>, <option>--expiredate</option>
-	  <replaceable>EXPIRE_DATE</replaceable>
+	  <option>-e</option>, <option>--expiredate</option>&nbsp;<replaceable>EXPIRE_DATE</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -159,8 +158,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-f</option>, <option>--inactive</option>
-	  <replaceable>INACTIVE</replaceable>
+	  <option>-f</option>, <option>--inactive</option>&nbsp;<replaceable>INACTIVE</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -181,8 +179,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-g</option>, <option>--gid</option>
-	  <replaceable>GROUP</replaceable>
+	  <option>-g</option>, <option>--gid</option>&nbsp;<replaceable>GROUP</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -201,8 +198,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-G</option>, <option>--groups</option>
-	  <replaceable>GROUP1</replaceable>[<emphasis remap='I'>,GROUP2,...</emphasis>[<emphasis remap='I'>,GROUPN</emphasis>]]]
+	  <option>-G</option>, <option>--groups</option>&nbsp;<replaceable>GROUP1</replaceable>[<emphasis remap='I'>,GROUP2,...</emphasis>[<emphasis remap='I'>,GROUPN</emphasis>]]]
 	</term>
 	<listitem>
 	  <para>
@@ -222,8 +218,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-l</option>, <option>--login</option>
-	  <replaceable>NEW_LOGIN</replaceable>
+	  <option>-l</option>, <option>--login</option>&nbsp;<replaceable>NEW_LOGIN</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -287,8 +282,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-p</option>, <option>--password</option>
-	  <replaceable>PASSWORD</replaceable>
+	  <option>-p</option>, <option>--password</option>&nbsp;<replaceable>PASSWORD</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -315,8 +309,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-R</option>, <option>--root</option>
-	  <replaceable>CHROOT_DIR</replaceable>
+	  <option>-R</option>, <option>--root</option>&nbsp;<replaceable>CHROOT_DIR</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -328,8 +321,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-s</option>, <option>--shell</option>
-	  <replaceable>SHELL</replaceable>
+	  <option>-s</option>, <option>--shell</option>&nbsp;<replaceable>SHELL</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -340,8 +332,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-u</option>, <option>--uid</option>
-	  <replaceable>UID</replaceable>
+	  <option>-u</option>, <option>--uid</option>&nbsp;<replaceable>UID</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -389,10 +380,85 @@
 	  </para>
 	</listitem>
       </varlistentry>
+      <varlistentry condition="subids">
+	<term>
+	  <option>-v</option>, <option>--add-sub-uids</option>&nbsp;<replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Add a range of subordinate uids to the user's account. 
+	  </para>
+	  <para>
+	    This option may be specified multiple times to add multiple ranges to a users account.
+	  </para>
+	  <para>
+	     No checks will be performed with regard to
+	     <option>SUB_UID_MIN</option>, <option>SUB_UID_MAX</option>, or
+	     <option>SUB_UID_COUNT</option> from /etc/login.defs.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="subids">
+	<term>
+	  <option>-V</option>, <option>--del-sub-uids</option>&nbsp;<replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Remove a range of subordinate uids from the user's account.
+	  </para>
+	  <para>
+	    This option may be specified multiple times to remove multiple ranges to a users account.
+	    When both <option>--del-sub-uids</option> and <option>--add-sub-uids</option> are specified,
+	    the removal of all subordinate uid ranges happens before any subordinate uid range is added.
+	  </para>
+	  <para>
+	     No checks will be performed with regard to
+	     <option>SUB_UID_MIN</option>, <option>SUB_UID_MAX</option>, or
+	     <option>SUB_UID_COUNT</option> from /etc/login.defs.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="subids">
+	<term>
+	  <option>-w</option>, <option>--add-sub-gids</option>&nbsp;<replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Add a range of subordinate gids to the user's account.
+	  </para>
+	  <para>
+	    This option may be specified multiple times to add multiple ranges to a users account.
+	  </para>
+	  <para>
+	     No checks will be performed with regard to
+	     <option>SUB_GID_MIN</option>, <option>SUB_GID_MAX</option>, or
+	     <option>SUB_GID_COUNT</option> from /etc/login.defs.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="subids">
+	<term>
+	  <option>-W</option>, <option>--del-sub-gids</option>&nbsp;<replaceable>FIRST</replaceable>-<replaceable>LAST</replaceable>
+	</term>
+	<listitem>
+	  <para>
+	    Remove a range of subordinate gids from the user's account.
+	  </para>
+	  <para>
+	    This option may be specified multiple times to remove multiple ranges to a users account.
+	    When both <option>--del-sub-gids</option> and <option>--add-sub-gids</option> are specified,
+	    the removal of all subordinate gid ranges happens before any subordinate gid range is added.
+	  </para>
+	  <para>
+	     No checks will be performed with regard to
+	     <option>SUB_GID_MIN</option>, <option>SUB_GID_MAX</option>, or
+	     <option>SUB_GID_COUNT</option> from /etc/login.defs.
+	  </para>
+	</listitem>
+      </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-Z</option>, <option>--selinux-user</option>
-	  <replaceable>SEUSER</replaceable>
+	  <option>-Z</option>, <option>--selinux-user</option>&nbsp;<replaceable>SEUSER</replaceable>
 	</term>
 	<listitem>
 	  <para>
@@ -437,6 +503,8 @@
     <variablelist>
       &MAIL_DIR; <!-- documents also MAIL_FILE -->
       &MAX_MEMBERS_PER_GROUP;
+      &SUB_GID_COUNT; <!-- documents also SUB_GID_MAX and SUB_GID_MIN -->
+      &SUB_UID_COUNT; <!-- documents also SUB_UID_MAX and SUB_UID_MIN -->
       &TCB_SYMLINKS;
       &USE_TCB;
     </variablelist>
@@ -475,6 +543,18 @@
 	  <para>Secure user account information.</para>
 	</listitem>
       </varlistentry>
+      <varlistentry condition="subids">
+	<term><filename>/etc/subgid</filename></term>
+	<listitem>
+	  <para>Per user subordinate group IDs.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry condition="subids">
+	<term><filename>/etc/subuid</filename></term>
+	<listitem>
+	  <para>Per user subordinate user IDs.</para>
+	</listitem>
+      </varlistentry>
     </variablelist>
   </refsect1>
 
@@ -508,6 +588,14 @@
       <citerefentry>
 	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
+      <phrase condition="subids">
+	<citerefentry>
+	  <refentrytitle>subgid</refentrytitle><manvolnum>5</manvolnum>
+	</citerefentry>,
+	<citerefentry>
+	  <refentrytitle>subuid</refentrytitle><manvolnum>5</manvolnum>
+	</citerefentry>,
+      </phrase>
       <citerefentry>
 	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
       </citerefentry>,

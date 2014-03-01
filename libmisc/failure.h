@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: failure.h 2831 2009-04-28 19:19:33Z nekral-guest $ */
+/* $Id$ */
 #ifndef _FAILURE_H_
 #define _FAILURE_H_
 

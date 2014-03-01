@@ -37,7 +37,7 @@
 
 #include <config.h>
 
-#ident "$Id: grpunconv.c 3726 2012-05-18 19:32:32Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <stdlib.h>

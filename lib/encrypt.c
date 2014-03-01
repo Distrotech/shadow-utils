@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: encrypt.c 3231 2010-08-22 13:04:54Z nekral-guest $"
+#ident "$Id$"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -40,23 +40,22 @@
 #include "prototypes.h"
 #include "defines.h"
 
-/*@exposed@*/char *pw_encrypt (const char *clear, const char *salt)
+/*@exposed@*//*@null@*/char *pw_encrypt (const char *clear, const char *salt)
 {
 	static char cipher[128];
 	char *cp;
 
 	cp = crypt (clear, salt);
-	if (!cp) {
+	if (NULL == cp) {
 		/*
 		 * Single Unix Spec: crypt() may return a null pointer,
-		 * and set errno to indicate an error.  The caller doesn't
-		 * expect us to return NULL, so...
+		 * and set errno to indicate an error. In this case return
+		 * the NULL so the caller can handle appropriately.
 		 */
-		perror ("crypt");
-		exit (EXIT_FAILURE);
+		return NULL;
 	}
 
-	/* The GNU crypt does not return NULL if the algorithm is not
+	/* Some crypt() do not return NULL if the algorithm is not
 	 * supported, and return a DES encrypted password. */
 	if ((NULL != salt) && (salt[0] == '$') && (strlen (cp) <= 13))
 	{

@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwd2spwd.c 2595 2009-04-05 22:29:42Z nekral-guest $"
+#ident "$Id$"
 
 #ifndef USE_PAM
 

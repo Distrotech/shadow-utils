@@ -37,7 +37,7 @@
 #include "getdef.h"
 #include "prototypes.h"
 
-#ident "$Id: console.c 3289 2010-11-19 21:54:41Z nekral-guest $"
+#ident "$Id$"
 
 /* local function prototypes */
 static bool is_listed (const char *cfgin, const char *tty, bool def);

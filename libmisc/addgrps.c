@@ -41,7 +41,7 @@
 #include <grp.h>
 #include <errno.h>
 
-#ident "$Id: addgrps.c 3318 2011-06-02 15:36:29Z nekral-guest $"
+#ident "$Id$"
 
 #define SEP ",:"
 /*

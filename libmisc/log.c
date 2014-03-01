@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: log.c 2820 2009-04-27 20:15:09Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <pwd.h>

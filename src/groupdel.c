@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: groupdel.c 3576 2011-11-13 16:24:57Z nekral-guest $"
+#ident "$Id$"
 
 #include <ctype.h>
 #include <fcntl.h>

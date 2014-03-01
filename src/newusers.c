@@ -40,7 +40,7 @@
 
 #include <config.h>
 
-#ident "$Id: newusers.c 3652 2011-12-09 21:31:39Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -65,6 +65,9 @@
 #include "pwio.h"
 #include "sgroupio.h"
 #include "shadowio.h"
+#ifdef ENABLE_SUBIDS
+#include "subordinateio.h"
+#endif				/* ENABLE_SUBIDS */
 #include "chkname.h"
 
 /*
@@ -90,6 +93,12 @@ static bool sgr_locked = false;
 static bool pw_locked = false;
 static bool gr_locked = false;
 static bool spw_locked = false;
+#ifdef ENABLE_SUBIDS
+static bool is_sub_uid = false;
+static bool is_sub_gid = false;
+static bool sub_uid_locked = false;
+static bool sub_gid_locked = false;
+#endif				/* ENABLE_SUBIDS */
 
 /* local function prototypes */
 static void usage (int status);
@@ -98,7 +107,7 @@ static int add_group (const char *, const char *, gid_t *, gid_t);
 static int get_user_id (const char *, uid_t *);
 static int add_user (const char *, uid_t, gid_t);
 #ifndef USE_PAM
-static void update_passwd (struct passwd *, const char *);
+static int update_passwd (struct passwd *, const char *);
 #endif				/* !USE_PAM */
 static int add_passwd (struct passwd *, const char *);
 static void process_flags (int argc, char **argv);
@@ -178,6 +187,22 @@ static void fail_exit (int code)
 		}
 	}
 #endif
+#ifdef ENABLE_SUBIDS
+	if (sub_uid_locked) {
+		if (sub_uid_unlock () == 0) {
+			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
+			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
+			/* continue */
+		}
+	}
+	if (sub_gid_locked) {
+		if (sub_gid_unlock () == 0) {
+			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
+			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
+			/* continue */
+		}
+	}
+#endif				/* ENABLE_SUBIDS */
 
 	exit (code);
 }
@@ -384,9 +409,15 @@ static int add_user (const char *name, uid_t uid, gid_t gid)
 }
 
 #ifndef USE_PAM
-static void update_passwd (struct passwd *pwd, const char *password)
+/* 
+ * update_passwd - update the password in the passwd entry
+ *
+ * Return 0 if successful.
+ */
+static int update_passwd (struct passwd *pwd, const char *password)
 {
 	void *crypt_arg = NULL;
+	char *cp;
 	if (crypt_method != NULL) {
 #ifdef USE_SHA_CRYPT
 		if (sflg) {
@@ -398,10 +429,18 @@ static void update_passwd (struct passwd *pwd, const char *password)
 	if ((crypt_method != NULL) && (0 == strcmp(crypt_method, "NONE"))) {
 		pwd->pw_passwd = (char *)password;
 	} else {
-		pwd->pw_passwd = pw_encrypt (password,
-		                             crypt_make_salt (crypt_method,
-		                                              crypt_arg));
+		const char *salt = crypt_make_salt (crypt_method, crypt_arg);
+		cp = pw_encrypt (password, salt);
+		if (NULL == cp) {
+			fprintf (stderr,
+			         _("%s: failed to crypt password with salt '%s': %s\n"),
+			         Prog, salt, strerror (errno));
+			return 1;
+		}
+		pwd->pw_passwd = cp;
 	}
+
+	return 0;
 }
 #endif				/* !USE_PAM */
 
@@ -412,6 +451,7 @@ static int add_passwd (struct passwd *pwd, const char *password)
 {
 	const struct spwd *sp;
 	struct spwd spent;
+	char *cp;
 
 #ifndef USE_PAM
 	void *crypt_arg = NULL;
@@ -429,8 +469,7 @@ static int add_passwd (struct passwd *pwd, const char *password)
 	 * harder since there are zillions of things to do ...
 	 */
 	if (!is_shadow) {
-		update_passwd (pwd, password);
-		return 0;
+		return update_passwd (pwd, password);
 	}
 #endif				/* USE_PAM */
 
@@ -448,7 +487,14 @@ static int add_passwd (struct passwd *pwd, const char *password)
 		} else {
 			const char *salt = crypt_make_salt (crypt_method,
 			                                    crypt_arg);
-			spent.sp_pwdp = pw_encrypt (password, salt);
+			cp = pw_encrypt (password, salt);
+			if (NULL == cp) {
+				fprintf (stderr,
+				         _("%s: failed to crypt password with salt '%s': %s\n"),
+				         Prog, salt, strerror (errno));
+				return 1;
+			}
+			spent.sp_pwdp = cp;
 		}
 		spent.sp_lstchg = (long) time ((time_t *) 0) / SCALE;
 		if (0 == spent.sp_lstchg) {
@@ -466,8 +512,7 @@ static int add_passwd (struct passwd *pwd, const char *password)
 	 * the password set someplace else.
 	 */
 	if (strcmp (pwd->pw_passwd, "x") != 0) {
-		update_passwd (pwd, password);
-		return 0;
+		return update_passwd (pwd, password);
 	}
 #else				/* USE_PAM */
 	/*
@@ -492,7 +537,14 @@ static int add_passwd (struct passwd *pwd, const char *password)
 		spent.sp_pwdp = (char *)password;
 	} else {
 		const char *salt = crypt_make_salt (crypt_method, crypt_arg);
-		spent.sp_pwdp = pw_encrypt (password, salt);
+		cp = pw_encrypt (password, salt);
+		if (NULL == cp) {
+			fprintf (stderr,
+			         _("%s: failed to crypt password with salt '%s': %s\n"),
+			         Prog, salt, strerror (errno));
+			return 1;
+		}
+		spent.sp_pwdp = cp;
 	}
 #else
 	/*
@@ -732,6 +784,26 @@ static void open_files (void)
 		sgr_locked = true;
 	}
 #endif
+#ifdef ENABLE_SUBIDS
+	if (is_sub_uid) {
+		if (sub_uid_lock () == 0) {
+			fprintf (stderr,
+			         _("%s: cannot lock %s; try again later.\n"),
+			         Prog, sub_uid_dbname ());
+			fail_exit (EXIT_FAILURE);
+		}
+		sub_uid_locked = true;
+	}
+	if (is_sub_gid) {
+		if (sub_gid_lock () == 0) {
+			fprintf (stderr,
+			         _("%s: cannot lock %s; try again later.\n"),
+			         Prog, sub_gid_dbname ());
+			fail_exit (EXIT_FAILURE);
+		}
+		sub_gid_locked = true;
+	}
+#endif				/* ENABLE_SUBIDS */
 
 	if (pw_open (O_RDWR) == 0) {
 		fprintf (stderr, _("%s: cannot open %s\n"), Prog, pw_dbname ());
@@ -751,6 +823,24 @@ static void open_files (void)
 		fail_exit (EXIT_FAILURE);
 	}
 #endif
+#ifdef ENABLE_SUBIDS
+	if (is_sub_uid) {
+		if (sub_uid_open (O_RDWR) == 0) {
+			fprintf (stderr,
+			         _("%s: cannot open %s\n"),
+			         Prog, sub_uid_dbname ());
+			fail_exit (EXIT_FAILURE);
+		}
+	}
+	if (is_sub_gid) {
+		if (sub_gid_open (O_RDWR) == 0) {
+			fprintf (stderr,
+			         _("%s: cannot open %s\n"),
+			         Prog, sub_gid_dbname ());
+			fail_exit (EXIT_FAILURE);
+		}
+	}
+#endif				/* ENABLE_SUBIDS */
 }
 
 /*
@@ -795,6 +885,21 @@ static void close_files (void)
 		SYSLOG ((LOG_ERR, "failure while writing changes to %s", gr_dbname ()));
 		fail_exit (EXIT_FAILURE);
 	}
+#ifdef ENABLE_SUBIDS
+	if (is_sub_uid  && (sub_uid_close () == 0)) {
+		fprintf (stderr,
+		         _("%s: failure while writing changes to %s\n"), Prog, sub_uid_dbname ());
+		SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_uid_dbname ()));
+		fail_exit (EXIT_FAILURE);
+	}
+	if (is_sub_gid  && (sub_gid_close () == 0)) {
+		fprintf (stderr,
+		         _("%s: failure while writing changes to %s\n"), Prog, sub_gid_dbname ());
+		SYSLOG ((LOG_ERR, "failure while writing changes to %s", sub_gid_dbname ()));
+		fail_exit (EXIT_FAILURE);
+	}
+#endif				/* ENABLE_SUBIDS */
+
 	if (gr_unlock () == 0) {
 		fprintf (stderr,
 		         _("%s: failed to unlock %s\n"),
@@ -823,6 +928,24 @@ static void close_files (void)
 		sgr_locked = false;
 	}
 #endif
+#ifdef ENABLE_SUBIDS
+	if (is_sub_uid) {
+		if (sub_uid_unlock () == 0) {
+			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_uid_dbname ());
+			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_uid_dbname ()));
+			/* continue */
+		}
+		sub_uid_locked = false;
+	}
+	if (is_sub_gid) {
+		if (sub_gid_unlock () == 0) {
+			fprintf (stderr, _("%s: failed to unlock %s\n"), Prog, sub_gid_dbname ());
+			SYSLOG ((LOG_ERR, "failed to unlock %s", sub_gid_dbname ()));
+			/* continue */
+		}
+		sub_gid_locked = false;
+	}
+#endif				/* ENABLE_SUBIDS */
 }
 
 int main (int argc, char **argv)
@@ -864,6 +987,10 @@ int main (int argc, char **argv)
 #ifdef SHADOWGRP
 	is_shadow_grp = sgr_file_present ();
 #endif
+#ifdef ENABLE_SUBIDS
+	is_sub_uid = sub_uid_file_present ();
+	is_sub_gid = sub_gid_file_present ();
+#endif				/* ENABLE_SUBIDS */
 
 	open_files ();
 
@@ -1044,6 +1171,48 @@ int main (int argc, char **argv)
 			errors++;
 			continue;
 		}
+
+#ifdef ENABLE_SUBIDS
+		/*
+		 * Add subordinate uids if the user does not have them.
+		 */
+		if (is_sub_uid && !sub_uid_assigned(fields[0])) {
+			uid_t sub_uid_start = 0;
+			unsigned long sub_uid_count = 0;
+			if (find_new_sub_uids(fields[0], &sub_uid_start, &sub_uid_count) == 0) {
+				if (sub_uid_add(fields[0], sub_uid_start, sub_uid_count) == 0) {
+					fprintf (stderr,
+						_("%s: failed to prepare new %s entry\n"),
+						Prog, sub_uid_dbname ());
+				}
+			} else {
+				fprintf (stderr,
+					_("%s: can't find subordinate user range\n"),
+					Prog);
+				errors++;
+			}
+		}
+
+		/*
+		 * Add subordinate gids if the user does not have them.
+		 */
+		if (is_sub_gid && !sub_gid_assigned(fields[0])) {
+			gid_t sub_gid_start = 0;
+			unsigned long sub_gid_count = 0;
+			if (find_new_sub_gids(fields[0], &sub_gid_start, &sub_gid_count) == 0) {
+				if (sub_gid_add(fields[0], sub_gid_start, sub_gid_count) == 0) {
+					fprintf (stderr,
+						_("%s: failed to prepare new %s entry\n"),
+						Prog, sub_uid_dbname ());
+				}
+			} else {
+				fprintf (stderr,
+					_("%s: can't find subordinate group range\n"),
+					Prog);
+				errors++;
+			}
+		}
+#endif				/* ENABLE_SUBIDS */
 	}
 
 	/*

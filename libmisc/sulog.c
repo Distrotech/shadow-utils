@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: sulog.c 3231 2010-08-22 13:04:54Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <sys/stat.h>

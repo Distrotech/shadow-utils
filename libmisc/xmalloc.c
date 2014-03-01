@@ -41,7 +41,7 @@
 
 #include <config.h>
 
-#ident "$Id: xmalloc.c 3320 2011-06-02 18:41:05Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <errno.h>

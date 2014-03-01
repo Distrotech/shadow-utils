@@ -32,7 +32,7 @@
 <!-- SHADOW-CONFIG-HERE -->
 ]>
 <refentry id='gshadow.5'>
-  <!-- $Id: gshadow.5.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <!-- $Id$ -->
   <refentryinfo>
     <author>
       <firstname>Nicolas</firstname>

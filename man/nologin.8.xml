@@ -33,7 +33,7 @@
 <!-- SHADOW-CONFIG-HERE -->
 ]>
 <refentry id='nologin.8'>
-  <!-- $Id: nologin.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <!-- $Id$ -->
   <refentryinfo>
     <author>
       <firstname>Nicolas</firstname>

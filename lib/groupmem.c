@@ -3,7 +3,7 @@
  * Copyright (c) 1996 - 2000, Marek Michałkiewicz
  * Copyright (c) 2001       , Michał Moskal
  * Copyright (c) 2005       , Tomasz Kłoczko
- * Copyright (c) 2007 - 2010, Nicolas François
+ * Copyright (c) 2007 - 2013, Nicolas François
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#ident "$Id: groupmem.c 3231 2010-08-22 13:04:54Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
 #include "defines.h"
@@ -48,13 +48,19 @@
 	if (NULL == gr) {
 		return NULL;
 	}
+	/* The libc might define other fields. They won't be copied. */
+	memset (gr, 0, sizeof *gr);
 	gr->gr_gid = grent->gr_gid;
+	/*@-mustfreeonly@*/
 	gr->gr_name = strdup (grent->gr_name);
+	/*@=mustfreeonly@*/
 	if (NULL == gr->gr_name) {
 		free(gr);
 		return NULL;
 	}
+	/*@-mustfreeonly@*/
 	gr->gr_passwd = strdup (grent->gr_passwd);
+	/*@=mustfreeonly@*/
 	if (NULL == gr->gr_passwd) {
 		free(gr->gr_name);
 		free(gr);
@@ -63,7 +69,9 @@
 
 	for (i = 0; grent->gr_mem[i]; i++);
 
+	/*@-mustfreeonly@*/
 	gr->gr_mem = (char **) malloc ((i + 1) * sizeof (char *));
+	/*@=mustfreeonly@*/
 	if (NULL == gr->gr_mem) {
 		free(gr->gr_passwd);
 		free(gr->gr_name);

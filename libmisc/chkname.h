@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: chkname.h 2036 2008-05-25 23:31:10Z nekral-guest $ */
+/* $Id$ */
 #ifndef _CHKNAME_H_
 #define _CHKNAME_H_
 

@@ -36,7 +36,7 @@
 
 #include <config.h>
 
-#ident "$Id: yesno.c 2765 2009-04-23 11:14:56Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include "prototypes.h"

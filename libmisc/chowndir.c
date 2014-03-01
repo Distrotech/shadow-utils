@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: chowndir.c 3465 2011-08-14 14:00:14Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <sys/stat.h>

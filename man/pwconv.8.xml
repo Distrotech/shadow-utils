@@ -39,7 +39,7 @@
 <!-- SHADOW-CONFIG-HERE -->
 ]>
 <refentry id='pwconv.8'>
-  <!-- $Id: pwconv.8.xml 3742 2012-05-25 11:45:21Z nekral-guest $ -->
+  <!-- $Id$ -->
   <refentryinfo>
     <author>
       <firstname>Marek</firstname>
@@ -199,8 +199,7 @@
       </varlistentry>
       <varlistentry>
 	<term>
-	  <option>-R</option>, <option>--root</option>
-	  <replaceable>CHROOT_DIR</replaceable>
+	  <option>-R</option>, <option>--root</option>&nbsp;<replaceable>CHROOT_DIR</replaceable>
 	</term>
 	<listitem>
 	  <para>

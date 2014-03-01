@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: port.c 2130 2008-06-13 18:11:09Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <ctype.h>

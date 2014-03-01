@@ -36,7 +36,7 @@
  */
 
 #include <config.h>
-#ident "$Id: grpconv.c 3640 2011-11-19 21:51:52Z nekral-guest $"
+#ident "$Id$"
 
 #include <errno.h>
 #include <fcntl.h>

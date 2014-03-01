@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: chfn.c 3576 2011-11-13 16:24:57Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <pwd.h>

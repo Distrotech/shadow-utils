@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#ident "$Id: grpck.c 3559 2011-11-06 18:39:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <grp.h>

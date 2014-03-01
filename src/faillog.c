@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: faillog.c 3639 2011-11-19 21:44:34Z nekral-guest $"
+#ident "$Id$"
 
 #include <getopt.h>
 #include <pwd.h>

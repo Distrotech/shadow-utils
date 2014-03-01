@@ -43,7 +43,7 @@
 #include <pwd.h>
 #include <time.h>
 
-#ident "$Id: isexpired.c 3362 2011-06-16 21:25:36Z nekral-guest $"
+#ident "$Id$"
 
 
 /*

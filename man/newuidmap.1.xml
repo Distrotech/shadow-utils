@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2013 Eric W. Biederman
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. The name of the copyright holders or contributors may not be used to
+      endorse or promote products derived from this software without
+      specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!-- SHADOW-CONFIG-HERE -->
+]>
+
+<refentry id='newuidmap.1'>
+  <refmeta>
+    <refentrytitle>newuidmap</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class="sectdesc">User Commands</refmiscinfo>
+    <refmiscinfo class="source">shadow-utils</refmiscinfo>
+    <refmiscinfo class="version">&SHADOW_UTILS_VERSION;</refmiscinfo>
+  </refmeta>
+  <refnamediv id='name'>
+    <refname>newuidmap</refname>
+    <refpurpose>set the uid mapping of a user namespace</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>newuidmap</command>
+      <arg choice='plain'>
+	<replaceable>pid</replaceable>
+      </arg>
+      <arg choice='plain'>
+	<replaceable>uid</replaceable>
+      </arg>
+      <arg choice='plain'>
+	<replaceable>loweruid</replaceable>
+      </arg>
+      <arg choice='plain'>
+	<replaceable>count</replaceable>
+      </arg>
+      <arg choice='opt'>
+	<arg choice='plain'>
+	  <replaceable>uid</replaceable>
+	</arg>
+	<arg choice='plain'>
+	  <replaceable>loweruid</replaceable>
+	</arg>
+	<arg choice='plain'>
+	  <replaceable>count</replaceable>
+	</arg>
+	<arg choice='opt'>
+	  <replaceable>...</replaceable>
+	</arg>
+      </arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>
+      The <command>newuidmap</command> sets <filename>/proc/[pid]/uid_map</filename> based on it's
+      command line arguments and the uids allowed in <filename>/etc/subuid</filename>.
+    </para>
+
+    <para>
+      After the pid argument, <command>newuidmap</command> expects sets of 3 integers:
+      <variablelist>
+	<varlistentry>
+	  <term>uid</term>
+	  <listitem>
+	    <para>
+	      Begining of the range of UIDs inside the user namespace.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>loweruid</term>
+	  <listitem>
+	    <para>
+	      Begining of the range of UIDs outside the user namespace.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>count</term>
+	  <listitem>
+	    <para>
+	      Length of the ranges (both inside and outside the user namespace).
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+
+    <para>
+      <command>newuidmap</command> verifies that the caller is the owner
+      of the process indicated by <option>pid</option> and that for each
+      of the above sets, each of the UIDs in the range [loweruid,
+      loweruid+count] is allowed to the caller according to
+      <filename>/etc/subuid</filename> before setting
+      <filename>/proc/[pid]/uid_map</filename>.
+    </para>
+    <para>
+      Note that newuidmap may be used only once for a given process.
+    </para>
+  </refsect1>
+
+  <refsect1 id='options'>
+    <title>OPTIONS</title>
+    <para>
+      There currently are no options to the <command>newuidmap</command> command.
+    </para>
+    <variablelist remap='IP'>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='files'>
+    <title>FILES</title>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/subuid</filename></term>
+	<listitem>
+	  <para>List of users subordinate user IDs.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/proc/[pid]/uid_map</filename></term>
+	<listitem>
+	  <para>Mapping of uids from one between user namespaces.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry>
+	<refentrytitle>login.defs</refentrytitle><manvolnum>5</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>newusers</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>subuid</refentrytitle><manvolnum>5</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>useradd</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>usermod</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+	<refentrytitle>userdel</refentrytitle><manvolnum>8</manvolnum>
+      </citerefentry>.
+    </para>
+  </refsect1>
+</refentry>

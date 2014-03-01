@@ -32,7 +32,7 @@
 /*
  * faillog.h - login failure logging file format
  *
- *	$Id: faillog.h 1980 2008-04-27 00:40:09Z nekral-guest $
+ *	$Id$
  *
  * The login failure file is maintained by login(1) and faillog(8)
  * Each record in the file represents a separate UID and the file

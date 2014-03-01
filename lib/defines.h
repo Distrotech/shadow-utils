@@ -1,4 +1,4 @@
-/* $Id: defines.h 3492 2011-09-18 20:44:09Z nekral-guest $ */
+/* $Id$ */
 /* some useful defines */
 
 #ifndef _DEFINES_H_

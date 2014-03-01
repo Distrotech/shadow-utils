@@ -40,7 +40,7 @@
 
 #include <config.h>
 
-#ident "$Id: chkname.c 2828 2009-04-28 19:14:05Z nekral-guest $"
+#ident "$Id$"
 
 #include <ctype.h>
 #include "defines.h"

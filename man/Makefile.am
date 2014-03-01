@@ -58,6 +58,16 @@ if !USE_PAM
 man_MANS += $(man_nopam)
 endif
 
+man_subids = \
+	man1/newgidmap.1 \
+	man1/newuidmap.1 \
+	man5/subgid.5 \
+	man5/subuid.5
+
+if ENABLE_SUBIDS
+man_MANS += $(man_subids)
+endif
+
 man_XMANS = \
 	chage.1.xml \
 	chfn.1.xml \
@@ -81,7 +91,9 @@ man_XMANS = \
 	login.access.5.xml \
 	login.defs.5.xml \
 	logoutd.8.xml \
+	newgidmap.1.xml \
 	newgrp.1.xml \
+	newuidmap.1.xml \
 	newusers.8.xml \
 	nologin.8.xml \
 	passwd.1.xml \
@@ -94,6 +106,8 @@ man_XMANS = \
 	sg.1.xml \
 	su.1.xml \
 	suauth.5.xml \
+	subgid.5.xml \
+	subuid.5.xml \
 	useradd.8.xml \
 	userdel.8.xml \
 	usermod.8.xml \
@@ -159,6 +173,8 @@ login_defs_v = \
 	USERDEL_CMD.xml \
 	USERGROUPS_ENAB.xml \
 	USE_TCB.xml \
+	SUB_GID_COUNT.xml \
+	SUB_UID_COUNT.xml \
 	SYS_GID_MAX.xml \
 	SYS_UID_MAX.xml
 
@@ -175,6 +191,10 @@ EXTRA_DIST = \
 
 if USE_PAM
 EXTRA_DIST += $(man_nopam)
+endif
+
+if !ENABLE_SUBIDS
+EXTRA_DIST += $(man_subids)
 endif
 
 generate_mans.deps: *.xml

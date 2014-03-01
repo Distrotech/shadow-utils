@@ -2,7 +2,7 @@
  * Copyright (c) 1989 - 1994, Julianne Frances Haugh
  * Copyright (c) 1996 - 2000, Marek Michałkiewicz
  * Copyright (c) 2000 - 2006, Tomasz Kłoczko
- * Copyright (c) 2007 - 2012, Nicolas François
+ * Copyright (c) 2007 - 2013, Nicolas François
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@
 
 #include <config.h>
 
-#ident "$Id: su.c 3743 2012-05-25 11:51:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <getopt.h>
 #include <grp.h>
@@ -181,7 +181,7 @@ static bool iswheel (const char *username)
 static RETSIGTYPE kill_child (int unused(s))
 {
 	if (0 != pid_child) {
-		(void) kill (pid_child, SIGKILL);
+		(void) kill (-pid_child, SIGKILL);
 		(void) fputs (_(" ...killed.\n"), stderr);
 	} else {
 		(void) fputs (_(" ...waiting for child to terminate.\n"),
@@ -347,6 +347,7 @@ static void prepare_pam_close_session (void)
 			if (   ((pid_t)-1 == pid)
 			    && (EINTR == errno)
 			    && (SIGTSTP == caught)) {
+				caught = 0;
 				/* Except for SIGTSTP, which request to
 				 * stop the child.
 				 * We will SIGSTOP ourself on the next
@@ -370,7 +371,13 @@ static void prepare_pam_close_session (void)
 		(void) fputs ("\n", stderr);
 		(void) fputs (_("Session terminated, terminating shell..."),
 		              stderr);
-		(void) kill (pid_child, caught);
+		(void) kill (-pid_child, caught);
+
+		(void) signal (SIGALRM, kill_child);
+		(void) alarm (2);
+
+		(void) wait (&status);
+		(void) fputs (_(" ...terminated.\n"), stderr);
 	}
 
 	ret = pam_close_session (pamh, 0);
@@ -382,14 +389,6 @@ static void prepare_pam_close_session (void)
 
 	(void) pam_setcred (pamh, PAM_DELETE_CRED);
 	(void) pam_end (pamh, PAM_SUCCESS);
-
-	if (0 != caught) {
-		(void) signal (SIGALRM, kill_child);
-		(void) alarm (2);
-
-		(void) wait (&status);
-		(void) fputs (_(" ...terminated.\n"), stderr);
-	}
 
 	exit ((0 != WIFEXITED (status)) ? WEXITSTATUS (status)
 	                                : WTERMSIG (status) + 128);

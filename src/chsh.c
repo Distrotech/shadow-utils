@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: chsh.c 3640 2011-11-19 21:51:52Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <getopt.h>

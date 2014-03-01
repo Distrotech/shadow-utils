@@ -39,7 +39,7 @@
 #include <utmp.h>
 
 #ifndef	lint
-static char rcsid[] = "$Id: utent.c 3181 2010-03-23 08:56:52Z nekral-guest $";
+static char rcsid[] = "$Id$";
 #endif
 
 static int utmp_fd = -1;

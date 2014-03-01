@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: lastlog.c 3560 2011-11-06 18:39:59Z nekral-guest $"
+#ident "$Id$"
 
 #include <getopt.h>
 #include <lastlog.h>

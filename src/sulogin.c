@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: sulogin.c 3521 2011-10-18 20:28:01Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <pwd.h>

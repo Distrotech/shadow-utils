@@ -9,7 +9,7 @@
 
 #include <config.h>
 
-#ident "$Id: salt.c 3489 2011-09-18 20:40:50Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/time.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@
 static void seedRNG (void);
 static /*@observer@*/const char *gensalt (size_t salt_size);
 #ifdef USE_SHA_CRYPT
-static size_t SHA_salt_size (void);
+static long shadow_random (long min, long max);
 static /*@observer@*/const char *SHA_salt_rounds (/*@null@*/int *prefered_rounds);
 #endif /* USE_SHA_CRYPT */
 
@@ -81,17 +81,29 @@ static void seedRNG (void)
 #define MAGNUM(array,ch)	(array)[0]=(array)[2]='$',(array)[1]=(ch),(array)[3]='\0'
 
 #ifdef USE_SHA_CRYPT
+/* It is not clear what is the maximum value of random().
+ * We assume 2^31-1.*/
+#define RANDOM_MAX 0x7FFFFFFF
+
 /*
- * Return the salt size.
- * The size of the salt string is between 8 and 16 bytes for the SHA crypt
- * methods.
+ * Return a random number between min and max (both included).
+ *
+ * It favors slightly the higher numbers.
  */
-static size_t SHA_salt_size (void)
+static long shadow_random (long min, long max)
 {
-	double rand_size;
+	double drand;
+	long ret;
 	seedRNG ();
-	rand_size = (double) 9.0 * random () / RAND_MAX;
-	return (size_t) (8 + rand_size);
+	drand = (double) (max - min + 1) * random () / RANDOM_MAX;
+	/* On systems were this is not random() range is lower, we favor
+	 * higher numbers of salt. */
+	ret = (long) (max + 1 - drand);
+	/* And we catch limits, and use the highest number */
+	if ((ret < min) || (ret > max)) {
+		ret = max;
+	}
+	return ret;
 }
 
 /* Default number of rounds if not explicitly specified.  */
@@ -112,7 +124,6 @@ static /*@observer@*/const char *SHA_salt_rounds (/*@null@*/int *prefered_rounds
 	if (NULL == prefered_rounds) {
 		long min_rounds = getdef_long ("SHA_CRYPT_MIN_ROUNDS", -1);
 		long max_rounds = getdef_long ("SHA_CRYPT_MAX_ROUNDS", -1);
-		double rand_rounds;
 
 		if ((-1 == min_rounds) && (-1 == max_rounds)) {
 			return "";
@@ -130,10 +141,7 @@ static /*@observer@*/const char *SHA_salt_rounds (/*@null@*/int *prefered_rounds
 			max_rounds = min_rounds;
 		}
 
-		seedRNG ();
-		rand_rounds = (double) (max_rounds-min_rounds+1.0) * random ();
-		rand_rounds /= RAND_MAX;
-		rounds = min_rounds + rand_rounds;
+		rounds = shadow_random (min_rounds, max_rounds);
 	} else if (0 == *prefered_rounds) {
 		return "";
 	} else {
@@ -226,11 +234,11 @@ static /*@observer@*/const char *gensalt (size_t salt_size)
 	} else if (0 == strcmp (method, "SHA256")) {
 		MAGNUM(result, '5');
 		strcat(result, SHA_salt_rounds((int *)arg));
-		salt_len = SHA_salt_size();
+		salt_len = (size_t) shadow_random (8, 16);
 	} else if (0 == strcmp (method, "SHA512")) {
 		MAGNUM(result, '6');
 		strcat(result, SHA_salt_rounds((int *)arg));
-		salt_len = SHA_salt_size();
+		salt_len = (size_t) shadow_random (8, 16);
 #endif /* USE_SHA_CRYPT */
 	} else if (0 != strcmp (method, "DES")) {
 		fprintf (stderr,

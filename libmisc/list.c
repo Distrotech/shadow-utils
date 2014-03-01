@@ -31,7 +31,7 @@
 
 #include <config.h>
 
-#ident "$Id: list.c 3224 2010-08-21 15:32:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <assert.h>
 #include "prototypes.h"

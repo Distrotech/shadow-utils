@@ -31,7 +31,7 @@
 
 #include <config.h>
 
-#ident "$Id: sub.c 3232 2010-08-22 19:13:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <pwd.h>
 #include <stdio.h>
@@ -43,7 +43,7 @@
 /*
  * subsystem - change to subsystem root
  *
- *	A subsystem login is indicated by the presense of a "*" as
+ *	A subsystem login is indicated by the presence of a "*" as
  *	the first character of the login shell.  The given home
  *	directory will be used as the root of a new filesystem which
  *	the user is actually logged into.

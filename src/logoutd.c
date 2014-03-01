@@ -31,7 +31,7 @@
 
 #include <config.h>
 
-#ident "$Id: logoutd.c 3233 2010-08-22 19:36:09Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <signal.h>

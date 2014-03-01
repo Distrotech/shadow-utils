@@ -1,6 +1,478 @@
+2013-08-25  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/vipw.c: After waitpid(), use errno only if waitpid returned
+	-1. Debian#688260
+	* src/vipw.c: Likewise for system().
+
+2013-08-23  victory  <victory.deb@gmail.com>
+
+	* po/ja.po: Updated to 558t
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/po/shadow-man-pages.pot: Regenerated.
+	* man/po/*.po: Updated PO files.
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/newgrp.1.xml: Fix encoding.
+	* man/sg.1.xml: Likewise.
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/po/da.po: Unfuzzy according to previous change.
+	* man/po/de.po: Likewise.
+	* man/po/fr.po: Likewise.
+	* man/po/it.po: Likewise.
+	* man/po/pl.po: Likewise.
+	* man/po/ru.po: Likewise.
+	* man/po/sv.po: Likewise.
+	* man/po/zh_CN.po: Likewise.
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/chage.1.xml: Add a non breaking space between options and
+	their parameter because xml2po removes those spaces. Alioth#314401
+	* man/chfn.1.xml: Likewise.
+	* man/chgpasswd.8.xml: Likewise.
+	* man/chpasswd.8.xml: Likewise.
+	* man/chsh.1.xml: Likewise.
+	* man/faillog.8.xml: Likewise.
+	* man/gpasswd.1.xml: Likewise.
+	* man/groupadd.8.xml: Likewise.
+	* man/groupdel.8.xml: Likewise.
+	* man/groupmems.8.xml: Likewise.
+	* man/groupmod.8.xml: Likewise.
+	* man/grpck.8.xml: Likewise.
+	* man/lastlog.8.xml: Likewise.
+	* man/newusers.8.xml: Likewise.
+	* man/passwd.1.xml: Likewise.
+	* man/pwck.8.xml: Likewise.
+	* man/pwconv.8.xml: Likewise.
+	* man/su.1.xml: Likewise.
+	* man/useradd.8.xml: Likewise.
+	* man/userdel.8.xml: Likewise.
+	* man/usermod.8.xml: Likewise.
+	* man/vipw.8.xml: Likewise.
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/po/shadow-man-pages.pot: Regenerated.
+	* man/po/*.po: Updated PO files.
+
+2013-08-22  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/po/de.po: Fix encoding.
+
+2013-08-19  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c (subordinate_next): Fix return value.
+
+2013-08-16  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/idmapping.c: Include <stdio.h> needed for fprintf() and
+	stderr.
+
+2013-08-15  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/login.defs.d/SUB_GID_COUNT.xml: Document newusers behavior
+	when the user already have subordinate group IDs.
+	* man/login.defs.d/SUB_UID_COUNT.xml: Likewise.
+	* man/login.defs.d/SUB_GID_COUNT.xml: Fix typo (MAX<->MIN).
+	* man/login.defs.d/SUB_UID_COUNT.xml: Likewise.
+
+2013-08-15  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/usermod.c: Check early if /etc/subuid (/etc/subgid) exists
+	when option -v/-V (-w/-W) are provided. 
+
+2013-08-15  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/usermod.c: Fix parse of ranges. The hyphen might be followed
+	by a negative integer.
+
+2013-08-15  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c (find_free_range): max is allowed for new
+	ranges.
+
+2013-08-15  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/find_new_sub_gids.c: Remove dead code.
+	find_new_sub_gids() is always called with *range_count set to 0.
+	It's more difficult to keep the subordinate GIDs and UIDs
+	synchronized, than for the user's UID/GId because the count of
+	subordinate IDs may differ.
+	* libmisc/find_new_sub_uids.c: Likewise.
+	* lib/subordinateio.h, lib/subordinateio.c: Remove APIs that are
+	no more needed: is_sub_uid_range_free(), is_sub_gid_range_free(),
+	is_range_free().
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* configure.in: Check if sizeof uid_t and gid_t is larger than 32
+	bit to support subordinate IDs.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c: Avoid dead branches.
+	* lib/subordinateio.c: Add schematics with ranges to help reviews.
+	* lib/subordinateio.c: Avoid implicit conversion of pointers and
+	integers to booleans.
+	* lib/subordinateio.c: Added brackets.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/vipw.c: Fail in case arguments are provided after options.
+	Debian#677812
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c: Fix count for ranges truncated in
+	remove_range().
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/su.c: Terminate the child (if needed) before closing the PAM
+	session. This is probably more correct, and avoid reporting
+	termination from signals possibly sent by PAM modules (e.g. former
+	versions of pam_systemd). Debian#670132
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/su.c: When a SIGTSTP is caught, reset caught to 0. There is
+	no need to kill the child in such case after su is resumed. This
+	remove the "Session terminated, terminating shell...
+	...terminated." messages in such case.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/newgidmap.1.xml: Document the checks performed before
+	setting the mapping in /proc.
+	* man/newuidmap.1.xml: Likewise.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/idmapping.h: Document what the upper and lower fields
+	are in struct map_range.
+	* man/newgidmap.1.xml: Document when the gid, gidlower and count
+	argument are.
+	* man/newuidmap.1.xml: Likewise for uid, uidlower and count.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/salt.c (shadow_random): Use long instead of size_t.
+	Compatibility with size_t is easier to check since it's used for
+	smaller numbers (salt size).
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/groupmem.c: Add splint annotations. The added memset makes
+	splint think data was allocated.
+	* lib/pwmem.c: Likewise.
+	* lib/sgroupio.c: Likewise.
+	* lib/shadowmem.c: Likewise.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/login.defs.d/SUB_GID_COUNT.xml: Document that the behavior
+	of useradd and newusers depends on the existence of /etc/subgid.
+	* man/login.defs.d/SUB_UID_COUNT.xml: Likewise for /etc/subuid.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/useradd.c: Change message in case of find_new_sub_uids /
+	find_new_sub_gids failure. This complements the messages already
+	provided by these APIs.
+
+2013-08-13  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c: Fix handling of boundaries.
+	* libmisc/find_new_sub_uids.c: Likewise.
+	* libmisc/find_new_sub_gids.c: Likewise.
+
+2013-08-12  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c: Fix removal of ranges. The database needs
+	to be marked as changed or commonio_close will discard any change.
+
+2013-08-11  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/newusers.8.xml: Include documentation of SUB_GID_MIN,
+	SUB_GID_MAX, SUB_GID_COUNT, SUB_UID_MIN, SUB_UID_MAX,
+	SUB_UID_COUNT.
+	* man/useradd.8.xml: Likewise.
+	* man/usermod.8.xml: Likewise.
+	* man/newusers.8.xml: Document usage of /etc/subgid /etc/subuid.
+	* man/useradd.8.xml: Likewise.
+	* man/userdel.8.xml: Likewise.
+	* man/usermod.8.xml: Likewise.
+	* man/newusers.8.xml: Add references to subgid(5) and subuid(5).
+	* man/useradd.8.xml: Likewise.
+	* man/userdel.8.xml: Likewise.
+	* man/subgid.5.xml: Sort references alphabetically.
+	* man/subuid.5.xml: Likewise.
+	* man/subgid.5.xml: Add references to newusers(8), useradd(8),
+	userdel(8), usermod(8), user_namespaces(7).
+	* man/subuid.5.xml: Likewise.
+
+2013-08-11  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/newgidmap.1.xml: Sort references alphabetically.
+	* man/newuidmap.1.xml: Likewise.
+
+2013-08-11  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* configure.in: Add configure options --enable-subordinate-ids /
+	--disable-subordinate-ids. Enabled by default.
+	* lib/prototypes.h: Include <config.h> before using its macros.
+	* lib/commonio.h, lib/commonio.c: Define commonio_append only when
+	ENABLE_SUBIDS is defined.
+	* lib/prototypes.h, libmisc/find_new_sub_gids.c,
+	libmisc/find_new_sub_uids.c: Likewise.
+	* lib/subordinateio.h, lib/subordinateio.c: Likewise.
+	* libmisc/user_busy.c: Only check if subordinate IDs are in use if
+	ENABLE_SUBIDS is defined.
+	* src/Makefile.am: Create newgidmap and newuidmap only if
+	ENABLE_SUBIDS is defined.
+	* src/newusers.c: Check for ENABLE_SUBIDS to enable support for
+	subordinate IDs.
+	* src/useradd.c: Likewise.
+	* src/userdel.c: Likewise.
+	* src/usermod.c: Likewise.
+	* man/Makefile.am: Install man1/newgidmap.1, man1/newuidmap.1,
+	man5/subgid.5, and man5/subuid.5 only if ENABLE_SUBIDS is defined.
+	* man/fr/Makefile.am: Install man1/newgidmap.1, man1/newuidmap.1,
+	man5/subgid.5, and man5/subuid.5 (not translated yet).
+	* man/generate_mans.mak: Add xsltproc conditionals
+	subids/no_subids.
+	* man/login.defs.d/SUB_GID_COUNT.xml: Add dependency on subids
+	condition.
+	* man/login.defs.d/SUB_UID_COUNT.xml: Likewise.
+	* man/usermod.8.xml: Document options for subordinate IDs and
+	reference subgid(5) / subuid(5) depending on the subids condition.
+
+2013-08-09  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/salt.c: Remove unused variable.
+
+2013-08-07  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/utmp.c: Add include files needed for getaddrinfo().
+	See Alioth#314271
+
+2013-08-07  Mike Frysinger  <vapier@gentoo.org>
+
+	* configure.in: Check at configure time whether libc supports
+	ruserok (support dropped by newer C libraries).
+
+2013-08-07  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/usermod.8.xml: Fix typos and wording.
+	* man/usermod.8.xml: Add references to subgid(5) and subuid(5).
+
+2013-08-07  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/find_new_sub_gids.c: Fix wording: secondary ->
+	subordinate.
+	* libmisc/find_new_sub_uids.c: Likewise.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/find_new_sub_gids.c: Remove duplicate check (duplicate
+	at least in its intent).
+	* libmisc/find_new_sub_uids.c: Likewise.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* src/usermod.c: Fix typos.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/subgid.5.xml: Reorder words.
+	* man/subuid.5.xml: Likewise.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/subgid.5.xml: Fix typos.
+	* man/subuid.5.xml: Likewise.
+	* man/subgid.5.xml: Fix copy-paste errors from subuid.5.xml.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/newgidmap.1.xml: Remove copy-pasted NOTE.
+	* man/newuidmap.1.xml: Likewise.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/subordinateio.c: Remove unused variables.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/login.defs.d/SUB_GID_COUNT.xml: Fix typo.
+	* man/login.defs.d/SUB_UID_COUNT.xml: Likewise.
+	* man/login.defs.d/SUB_UID_COUNT.xml: Fix copy-paste issue from
+	SUB_GID_COUNT.
+	* man/newgidmap.1.xml: Fix Typo.
+	* src/useradd.c: Fix typos.
+	* lib/subordinateio.c: Fix typos.
+
+2013-08-06  Nicolas François  <nicolas.francois@centraliens.net>
+
+	Fix Debian bug #675824
+	* lib/groupmem.c (__gr_dup): Support libc which define other
+	fields in struct group.
+	* lib/pwmem.c: Likewise for struct passwd.
+	* lib/shadowmem.c: Likewise for struct spwd.
+	* lib/sgroupio.c: Apply same logic, even if this structure is
+	defined internally.
+
+2013-08-05  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/groupio.c: Revert change from 2013-07-29. The length of the
+	concatenated 2 lines was correct.
+
+2013-08-05  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/salt.c: random() max value is 2^31-1 (same as RAND_MAX
+	on GNU). As it is not clear whether on some systems the max value
+	can exceed this number and whether some systems have max values
+	which would be lower, we take this into account when defining the
+	salt size and number of rounds for SHA encrypted passwords. Higher
+	values are favored.
+
+2013-08-04  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/su.1.xml: With getopt, '-' does not need to be the last
+	option, but it is recommended for portability.
+	Closes https://bugs.launchpad.net/bugs/1100775
+
+2013-08-04  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* NEWS: Add NEWS entries.
+
+2013-08-04  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* man/po/da.po: Fix translation (--home became --home-dir).
+	* man/po/de.po: Likewise.
+	* man/po/fr.po: Likewise.
+	* man/po/pl.po: Likewise.
+	* man/po/ru.po: Likewise.
+	* man/po/sv.po: Likewise.
+
+2013-08-04  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* lib/groupio.c (merge_group_entries): Do not allocate more than
+	necessary (sizeof char* instead of char).
+	Thanks for Tomáš Mráz (alioth#313962)
+	* lib/groupio.c (merge_group_entries): Document that new_members
+	is correctly NULL terminated. (alioth:#313940)
+
+2013-08-03  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* Changelog: Update documentation of 2013-07-28  mancha entry.
+	* lib/prototypes.h, lib/encrypt.c: Update splint marker,
+	pw_encrypt can return NULL.
+	* lib/encrypt.c: Fix outdated statement on GNU crypt.
+	* src/chgpasswd.c: Improve diagnostic to user when pw_encrypt
+	fails and use fail_exit() instead of exit().
+	* src/chpasswd.c: Likewise.
+	* src/newusers.c: Likewise.
+	* src/passwd.c: Likewise when new password is encrypted.
+	* src/newgrp.c: Improve diagnostic to user and syslog when
+	pw_encrypt fails.  Do not apply 1s penalty as this is not an
+	invalid password issue.
+	* src/passwd.c: Likewise when password is checked.
+
+2013-08-02  Nicolas François  <nicolas.francois@centraliens.net>
+
+	* libmisc/setupenv.c: xstrdup the static char* temp_pw_dir /
+	temp_pw_shell. That way we can continue to use pw_free() without
+	segving. Thanks to Serge Hallyn for the patch.
+	* libmisc/setupenv.c: Free pw_dir and pw_shell before reallocating
+	them.
+
+2013-08-01  Yuri Kozlov  <yuray@komyakino.ru>
+
+        * po/ru.po: completed translation
+	  Closes: Debian#718356
+
+2013-07-29  Michael Scherer <misc-guest@alioth.debian.org>
+
+        * libmisc/root_flag.c: use chdir() before calling chroot() to
+	  avoid potential security issue (see
+	  http://www.bpfh.net/simes/computing/chroot-break.html)
+	  Closes: alioth#313962
+
+2013-07-29  Christian Perrier  <christian@perrier.eu.org>
+
+        * man/useradd.xml: use "--home-dir" instead of "--home"
+	  Fix translations too.
+	  Thanks to Ville Skyttä
+	  Closes: alioth#313880
+
+2013-07-29  Ville Skyttä  <scop-guest@alioth.debian.org>
+
+        * man/ja/man8/groupmod.8: Syntax fix
+	  Closes: alioth#313785
+
+2013-07-29  Brad Hubbard  <badone-guest@alioth.debian.org>
+
+	* lib/groupio.c: add newline char when two lines
+	are concatenated
+	Closes: alioth#313942
+	* lib/groupio.c: fix uninitialised memory in
+	merge_group_entries causes segfault in useradd by changing
+	a call to malloc to a call to calloc
+	Closes: alioth:#313940
+
+2013-07-28  Guido Trentalancia  <guido@trentalancia.com>
+
+        * etc/login.defs: fix typographic errors and use a better format
+	  Closes: Debian#685415
+
+2013-07-28  Simon Brandmair  <sbrandmair@gmx.net>
+
+        * man/po/de.po: translation completed : 1203 translated messages
+	  Closes: Debian#679152
+
+2013-07-28  mancha  <mancha1@hush.com>
+
+	* lib/encrypt.c (pw_encrypt): crypt() in glibc/eglibc 2.17 now
+	fails if passed a salt that violates specs. On Linux, crypt() also
+	fails with DES/MD5 salts in FIPS140 mode. Rather than exit() on
+	NULL returns we send them back to the caller for appropriate
+	handling (instead of exiting).  Closes: alioth#314234
+	* lib/pwauth.c: Handle NULL return from pw_crypt(), return non
+	zero (as in case of failure).
+	* libmisc/valid.c: Likewise.
+	* src/chgpasswd.c: Handle NULL return from pw_crypt(), report
+	crypt error to stderr and exit.
+	* src/chpasswd.c: Likewise.
+	* src/gpasswd.c: Likewise.
+	* src/newusers.c: Likewise.
+	* src/passwd.c: Likewise when new password is encrypted.
+	* src/newgrp.c: Handle NULL return from pw_crypt(), report crypt
+	error to stderr and syslog and return to report unchanged
+	password.
+	* src/passwd.c: Likewise when password is checked.
+
+2013-07-28  Christian Perrier  <christian@perrier.eu.org>
+
+	* configure.in: Prepare for next point release 4.2.
+	* if using the static char* for pw_dir, strdup it so
+	  pw_free() can be used. (Closes: Debian#691459, alioth#313957) 
+	* Kill the child process group, rather than just the 
+	  immediate child; this is needed now that su no
+	  longer starts a controlling terminal when not running an
+	  interactive shell (closes: Debian#713979)
+	  Thansk to Colin Watson for the patch.
+
 2012-05-25  Nicolas François  <nicolas.francois@centraliens.net>
 
 	* NEWS: Set release date.
+	* man/po/shadow-man-pages.pot: Regenerated.
+	* man/po/*.po: Updated PO files.
 
 2012-05-25  Nicolas François  <nicolas.francois@centraliens.net>
 
@@ -106,6 +578,10 @@
 2012-02-12  Nicolas François  <nicolas.francois@centraliens.net>
 
 	* NEWS: New placeholder for the next release (4.1.5.1 expected)
+
+2012-04-15  Robert Luberda  <robert@debian.org>
+
+	* man/po/pl.po: Complete translation of logoutd(8) in Polish.
 
 2012-02-13  Mike Frysinger  <vapier@gentoo.org>
 

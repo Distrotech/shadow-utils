@@ -35,7 +35,7 @@
 /* Newer versions of Linux libc already have shadow support.  */
 #if defined(SHADOWGRP) && !defined(HAVE_SHADOWGRP)	/*{ */
 
-#ident "$Id: gshadow.c 3096 2010-03-10 22:30:03Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include "prototypes.h"

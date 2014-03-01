@@ -29,7 +29,7 @@
 
 #include <config.h>
 
-#ident "$Id: getlong.c 2795 2009-04-24 23:27:12Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdlib.h>
 #include <errno.h>

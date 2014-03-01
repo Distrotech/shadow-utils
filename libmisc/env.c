@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: env.c 3362 2011-06-16 21:25:36Z nekral-guest $"
+#ident "$Id$"
 
 #include <assert.h>
 #include <stdio.h>

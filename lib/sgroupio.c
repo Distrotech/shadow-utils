@@ -3,7 +3,7 @@
  * Copyright (c) 1996 - 2000, Marek Michałkiewicz
  * Copyright (c) 2001       , Michał Moskal
  * Copyright (c) 2005       , Tomasz Kłoczko
- * Copyright (c) 2007 - 2008, Nicolas François
+ * Copyright (c) 2007 - 2013, Nicolas François
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 
 #ifdef SHADOWGRP
 
-#ident "$Id: sgroupio.c 3296 2011-02-16 20:32:16Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
 #include "defines.h"
@@ -51,12 +51,19 @@
 	if (NULL == sg) {
 		return NULL;
 	}
+	/* Do the same as the other _dup function, even if we know the
+	 * structure. */
+	memset (sg, 0, sizeof *sg);
+	/*@-mustfreeonly@*/
 	sg->sg_name = strdup (sgent->sg_name);
+	/*@=mustfreeonly@*/
 	if (NULL == sg->sg_name) {
 		free (sg);
 		return NULL;
 	}
+	/*@-mustfreeonly@*/
 	sg->sg_passwd = strdup (sgent->sg_passwd);
+	/*@=mustfreeonly@*/
 	if (NULL == sg->sg_passwd) {
 		free (sg->sg_name);
 		free (sg);
@@ -64,7 +71,9 @@
 	}
 
 	for (i = 0; NULL != sgent->sg_adm[i]; i++);
+	/*@-mustfreeonly@*/
 	sg->sg_adm = (char **) malloc ((i + 1) * sizeof (char *));
+	/*@=mustfreeonly@*/
 	if (NULL == sg->sg_adm) {
 		free (sg->sg_passwd);
 		free (sg->sg_name);
@@ -87,7 +96,9 @@
 	sg->sg_adm[i] = NULL;
 
 	for (i = 0; NULL != sgent->sg_mem[i]; i++);
+	/*@-mustfreeonly@*/
 	sg->sg_mem = (char **) malloc ((i + 1) * sizeof (char *));
+	/*@=mustfreeonly@*/
 	if (NULL == sg->sg_mem) {
 		for (i = 0; NULL != sg->sg_adm[i]; i++) {
 			free (sg->sg_adm[i]);

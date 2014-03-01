@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#ident "$Id: hushed.c 3232 2010-08-22 19:13:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <stdio.h>

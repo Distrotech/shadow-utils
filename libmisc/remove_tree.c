@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: remove_tree.c 3283 2010-09-05 15:34:42Z nekral-guest $"
+#ident "$Id$"
 
 #include <stdio.h>
 #include <stdlib.h>

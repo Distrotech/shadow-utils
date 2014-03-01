@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: entry.c 1980 2008-04-27 00:40:09Z nekral-guest $"
+#ident "$Id$"
 
 #include <sys/types.h>
 #include <stdio.h>

@@ -32,7 +32,7 @@
 
 #include <config.h>
 
-#ident "$Id: pwunconv.c 3743 2012-05-25 11:51:53Z nekral-guest $"
+#ident "$Id$"
 
 #include <fcntl.h>
 #include <pwd.h>

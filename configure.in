@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT
-AM_INIT_AUTOMAKE(shadow, 4.1.5.1)
+AM_INIT_AUTOMAKE(shadow, 4.2)
 AC_CONFIG_HEADERS([config.h])
 
 dnl Some hacks...
@@ -41,7 +41,8 @@ AC_CHECK_HEADER([shadow.h],,[AC_MSG_ERROR([You need a libc with shadow.h])])
 AC_CHECK_FUNCS(l64a fchmod fchown fsync futimes getgroups gethostname getspnam \
 	gettimeofday getusershell getutent initgroups lchown lckpwdf lstat \
 	lutimes memcpy memset setgroups sigaction strchr updwtmp updwtmpx innetgr \
-	getpwnam_r getpwuid_r getgrnam_r getgrgid_r getspnam_r getaddrinfo)
+	getpwnam_r getpwuid_r getgrnam_r getgrgid_r getspnam_r getaddrinfo \
+	ruserok)
 AC_SYS_LARGEFILE
 
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -194,8 +195,10 @@ AC_DEFINE_UNQUOTED(PASSWD_PROGRAM, "$shadow_cv_passwd_dir/passwd",
 
 dnl XXX - quick hack, should disappear before anyone notices :).
 AC_DEFINE(USE_SYSLOG, 1, [Define to use syslog().])
-AC_DEFINE(RLOGIN, 1, [Define if login should support the -r flag for rlogind.])
-AC_DEFINE(RUSEROK, 0, [Define to the ruserok() "success" return value (0 or 1).])
+if test "$ac_cv_func_ruserok" = "yes"; then
+	AC_DEFINE(RLOGIN, 1, [Define if login should support the -r flag for rlogind.])
+	AC_DEFINE(RUSEROK, 0, [Define to the ruserok() "success" return value (0 or 1).])
+fi
 
 AC_ARG_ENABLE(shadowgrp,
 	[AC_HELP_STRING([--enable-shadowgrp], [enable shadow group support @<:@default=yes@:>@])],
@@ -235,6 +238,13 @@ AC_ARG_ENABLE(utmpx,
 	   *) AC_MSG_ERROR(bad value ${enableval} for --enable-utmpx) ;;
 	 esac],
 	[enable_utmpx="no"]
+)
+
+AC_ARG_ENABLE(subordinate-ids,
+	[AC_HELP_STRING([--enable-subordinate-ids],
+		[support subordinate ids @<:@default=yes@:>@])],
+	[enable_subids="${enableval}"],
+	[enable_subids="maybe"]
 )
 
 AC_ARG_WITH(audit, 
@@ -320,6 +330,31 @@ if test "$enable_man" = "yes"; then
 		[DocBook XSL Stylesheets >= 1.70.1], [], enable_man=no)
 fi
 AM_CONDITIONAL(ENABLE_REGENERATE_MAN, test "x$enable_man" != "xno")
+
+if test "$enable_subids" != "no"; then
+	dnl
+	dnl FIXME: check if 32 bit UIDs/GIDs are supported by libc
+	dnl
+	AC_RUN_IFELSE([AC_LANG_SOURCE([
+#include <sys/types.h>
+int main(void) {
+	uid_t u;
+	gid_t g;
+	return (sizeof u < 4) || (sizeof g < 4);
+}
+	])], [id32bit="yes"], [id32bit="no"])
+
+	if test "x$id32bit" = "xyes"; then
+		AC_DEFINE(ENABLE_SUBIDS, 1, [Define to support the subordinate IDs.])
+		enable_subids="yes"
+	else
+		if test "x$enable_subids" = "xyes"; then
+			AC_MSG_ERROR([Cannot enable support the subordinate IDs on systems where gid_t or uid_t has less than 32 bits])
+		fi
+		enable_subids="no"
+	fi
+fi
+AM_CONDITIONAL(ENABLE_SUBIDS, test "x$enable_subids" != "xno")
 
 AC_SUBST(LIBCRYPT)
 AC_CHECK_LIB(crypt, crypt, [LIBCRYPT=-lcrypt],
@@ -646,4 +681,5 @@ echo "	shadow group support:		$enable_shadowgrp"
 echo "	S/Key support:			$with_skey"
 echo "	SHA passwords encryption:	$with_sha_crypt"
 echo "	nscd support:			$with_nscd"
+echo "	subordinate IDs support:	$enable_subids"
 echo

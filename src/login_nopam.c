@@ -22,7 +22,7 @@
 #endif
 
 #ifndef USE_PAM
-#ident "$Id: login_nopam.c 3182 2010-03-23 11:26:34Z nekral-guest $"
+#ident "$Id$"
 
 #include "prototypes.h"
     /*

@@ -33,7 +33,7 @@
 
 #ifdef USE_PAM
 
-#ident "$Id: pam_pass.c 2870 2009-05-09 13:15:17Z nekral-guest $"
+#ident "$Id$"
 
 
 /*

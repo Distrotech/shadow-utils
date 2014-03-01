@@ -32,7 +32,7 @@
 /*
  * port.h - structure of /etc/porttime
  *
- *	$Id: port.h 1980 2008-04-27 00:40:09Z nekral-guest $
+ *	$Id$
  *
  *	Each entry in /etc/porttime consists of a TTY device
  *	name or "*" to indicate all TTY devices, followed by

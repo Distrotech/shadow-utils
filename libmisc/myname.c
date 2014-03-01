@@ -36,7 +36,7 @@
 
 #include <config.h>
 
-#ident "$Id: myname.c 2813 2009-04-26 17:10:49Z nekral-guest $"
+#ident "$Id$"
 
 #include "defines.h"
 #include <pwd.h>
