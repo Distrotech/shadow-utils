@@ -32,9 +32,6 @@ endif
 # Set the default editor for vipw/vigr
 CFLAGS += -DDEFAULT_EDITOR=\\\"sensible-editor\\\"
 
-# Automatically controls patching at build time:
-include /usr/share/cdbs/1/rules/patchsys-quilt.mk
-
 # Add extras to the install process:
 binary-install/login::
 	dh_installpam -p login
