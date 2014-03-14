@@ -11,6 +11,8 @@ endif
 # Enable PIE, BINDNOW, and possible future flags.
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
+# Call autoreconf since we need to regenerate all the autofoo files
+include /usr/share/cdbs/1/rules/autoreconf.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 # Specify where dh_install will find the files that it needs to move:
 DEB_DH_INSTALL_SOURCEDIR=debian/tmp
@@ -20,11 +22,6 @@ DEB_DH_INSTALL_SOURCEDIR=debian/tmp
 DEB_DESTDIR=$(CURDIR)/debian/tmp
 
 include /usr/share/cdbs/1/class/autotools.mk
-# Automatically update autoconf, etc.
-DEB_AUTO_UPDATE_ACLOCAL  = 1.9
-DEB_AUTO_UPDATE_AUTOCONF = 1.9
-DEB_AUTO_UPDATE_AUTOMAKE = 1.9
-DEB_AUTO_UPDATE_LIBTOOL = pre
 
 # Adds extra options when calling the configure script:
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-shared --without-libcrack --without-audit --mandir=/usr/share/man --with-libpam --enable-shadowgrp --enable-man --disable-account-tools-setuid --with-group-name-max-length=32 --without-acl --without-attr --without-tcb
