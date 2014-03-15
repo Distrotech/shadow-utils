@@ -8,9 +8,11 @@ Status wrt upstream: This is a Debian specific patch.
 Note: the fix of the man page is still missing.
       (to be taken from the trunk)
 
---- a/src/su.c
-+++ b/src/su.c
-@@ -1150,6 +1150,35 @@
+Index: git/src/su.c
+===================================================================
+--- git.orig/src/su.c
++++ git/src/su.c
+@@ -1152,6 +1152,35 @@
  			argv[0] = "-c";
  			argv[1] = command;
  		}

@@ -15,8 +15,10 @@ Details:
  than '-' as the leading character).  Thus, the maintenance tools don't
  anymore.  closes: #79682, #166798, #171179
 
---- a/libmisc/chkname.c
-+++ b/libmisc/chkname.c
+Index: git/libmisc/chkname.c
+===================================================================
+--- git.orig/libmisc/chkname.c
++++ git/libmisc/chkname.c
 @@ -48,6 +48,7 @@
  
  static bool is_valid_name (const char *name)
@@ -52,9 +54,11 @@ Details:
  
  	return true;
  }
---- a/man/useradd.8.xml
-+++ b/man/useradd.8.xml
-@@ -635,12 +635,20 @@
+Index: git/man/useradd.8.xml
+===================================================================
+--- git.orig/man/useradd.8.xml
++++ git/man/useradd.8.xml
+@@ -633,12 +633,20 @@
      </para>
  
      <para>
@@ -76,9 +80,11 @@ Details:
        Usernames may only be up to 32 characters long.
      </para>
    </refsect1>
---- a/man/groupadd.8.xml
-+++ b/man/groupadd.8.xml
-@@ -240,12 +240,18 @@
+Index: git/man/groupadd.8.xml
+===================================================================
+--- git.orig/man/groupadd.8.xml
++++ git/man/groupadd.8.xml
+@@ -256,12 +256,18 @@
     <refsect1 id='caveats'>
       <title>CAVEATS</title>
       <para>

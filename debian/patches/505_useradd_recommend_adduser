@@ -4,9 +4,11 @@ Fixes: #406046
 
 Status wrt upstream: Debian specific patch.
 
---- a/man/useradd.8.xml
-+++ b/man/useradd.8.xml
-@@ -84,6 +84,12 @@
+Index: git/man/useradd.8.xml
+===================================================================
+--- git.orig/man/useradd.8.xml
++++ git/man/useradd.8.xml
+@@ -105,6 +105,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
        <para>
@@ -19,9 +21,11 @@ Status wrt upstream: Debian specific patch.
  	When invoked without the <option>-D</option> option, the
  	<command>useradd</command> command creates a new user account using
  	the values specified on the command line plus the default values from
---- a/man/userdel.8.xml
-+++ b/man/userdel.8.xml
-@@ -64,6 +64,12 @@
+Index: git/man/userdel.8.xml
+===================================================================
+--- git.orig/man/userdel.8.xml
++++ git/man/userdel.8.xml
+@@ -83,6 +83,12 @@
    <refsect1 id='description'>
      <title>DESCRIPTION</title>
      <para>

@@ -2,8 +2,10 @@ Goal: save the [g]shadow files with the 'shadow' group and mode 0440
 
 Fixes: #166793
 
---- a/lib/commonio.c
-+++ b/lib/commonio.c
+Index: git/lib/commonio.c
+===================================================================
+--- git.orig/lib/commonio.c
++++ git/lib/commonio.c
 @@ -44,6 +44,7 @@
  #include <errno.h>
  #include <stdio.h>

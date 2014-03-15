@@ -9,8 +9,10 @@ Status wrt upstream: cppw is not available upstream.
 
 Depends on 401_cppw_src.dpatch
 
---- a/src/cppw.c
-+++ b/src/cppw.c
+Index: git/src/cppw.c
+===================================================================
+--- git.orig/src/cppw.c
++++ git/src/cppw.c
 @@ -34,6 +34,9 @@
  #include <sys/types.h>
  #include <signal.h>

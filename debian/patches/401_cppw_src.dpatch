@@ -5,8 +5,10 @@
 ## DP: Add cppw / cpgr
 
 @DPATCH@
+Index: git/src/cppw.c
+===================================================================
 --- /dev/null
-+++ b/src/cppw.c
++++ git/src/cppw.c
 @@ -0,0 +1,238 @@
 +/*
 +  cppw, cpgr  copy with locking given file over the password or group file
@@ -246,17 +248,19 @@
 +	return 0;
 +}
 +
---- a/src/Makefile.am
-+++ b/src/Makefile.am
-@@ -26,6 +26,7 @@
- sbin_PROGRAMS  = nologin
- ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
+Index: git/src/Makefile.am
+===================================================================
+--- git.orig/src/Makefile.am
++++ git/src/Makefile.am
+@@ -29,6 +29,7 @@
+ ubin_PROGRAMS += newgidmap newuidmap
+ endif
  usbin_PROGRAMS = \
 +	cppw \
  	chgpasswd \
  	chpasswd \
  	groupadd \
-@@ -82,6 +83,7 @@
+@@ -87,6 +88,7 @@
  chgpasswd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBSELINUX) $(LIBCRYPT)
  chsh_LDADD     = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT_NOPAM) $(LIBSKEY) $(LIBMD)
  chpasswd_LDADD = $(LDADD) $(LIBPAM) $(LIBSELINUX) $(LIBCRYPT)
@@ -264,8 +268,10 @@
  gpasswd_LDADD  = $(LDADD) $(LIBAUDIT) $(LIBSELINUX) $(LIBCRYPT)
  groupadd_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
  groupdel_LDADD = $(LDADD) $(LIBPAM_SUID) $(LIBAUDIT) $(LIBSELINUX)
---- a/po/POTFILES.in
-+++ b/po/POTFILES.in
+Index: git/po/POTFILES.in
+===================================================================
+--- git.orig/po/POTFILES.in
++++ git/po/POTFILES.in
 @@ -85,6 +85,7 @@
  src/chgpasswd.c
  src/chpasswd.c

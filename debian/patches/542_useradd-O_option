@@ -5,9 +5,11 @@ Note: useradd.8 needs to be regenerated.
 Status wrt upstream: not included as this is just specific 
                      backward compatibility for Debian
 
---- a/man/useradd.8.xml
-+++ b/man/useradd.8.xml
-@@ -321,6 +321,11 @@
+Index: git/man/useradd.8.xml
+===================================================================
+--- git.orig/man/useradd.8.xml
++++ git/man/useradd.8.xml
+@@ -329,6 +329,11 @@
  	    databases are resetted to avoid reusing the entry from a previously
  	    deleted user.
  	  </para>
@@ -19,9 +21,11 @@ Status wrt upstream: not included as this is just specific
  	</listitem>
        </varlistentry>
        <varlistentry>
---- a/src/useradd.c
-+++ b/src/useradd.c
-@@ -1011,9 +1011,9 @@
+Index: git/src/useradd.c
+===================================================================
+--- git.orig/src/useradd.c
++++ git/src/useradd.c
+@@ -1056,9 +1056,9 @@
  		};
  		while ((c = getopt_long (argc, argv,
  #ifdef WITH_SELINUX
@@ -33,7 +37,7 @@ Status wrt upstream: not included as this is just specific
  #endif				/* !WITH_SELINUX */
  		                         long_options, NULL)) != -1) {
  			switch (c) {
-@@ -1136,6 +1136,7 @@
+@@ -1181,6 +1181,7 @@
  				kflg = true;
  				break;
  			case 'K':

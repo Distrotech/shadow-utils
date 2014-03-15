@@ -1,5 +1,7 @@
---- a/src/Makefile.am
-+++ b/src/Makefile.am
+Index: git/src/Makefile.am
+===================================================================
+--- git.orig/src/Makefile.am
++++ git/src/Makefile.am
 @@ -23,7 +23,6 @@
  # $prefix/bin and $prefix/sbin, no install-data hacks...)
  
@@ -8,7 +10,7 @@
  ubin_PROGRAMS  = faillog lastlog chage chfn chsh expiry gpasswd newgrp passwd
  if ENABLE_SUBIDS
  ubin_PROGRAMS += newgidmap newuidmap
-@@ -38,6 +37,7 @@
+@@ -41,6 +40,7 @@
  	grpunconv \
  	logoutd \
  	newusers \
