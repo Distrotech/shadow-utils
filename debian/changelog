@@ -32,6 +32,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * debian/login.su.pam: Enable pam_limits by default. Closes: #705301
   * debian/rules: Set default editor to sensible-editor for vipw.
     Closes: #688252
+
   [ Micah Anderson ]
   * added debian/patches/userns to enable use of subuids, plus some bugfix 
     patches on top of them, patches from Eric Biederman, pulled from
@@ -41,6 +42,11 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
     this default for UPGs. (Closes: #583971)
   * login.postinst: install a default /etc/subuid and /etc/subgid
   * fix installation of setuid/setgid/newuidmap/newgid/map man pages
+
+  [ Laurent Bigonville ]
+  * Switch to dpkg-source 3.0 (quilt) format
+  * Add build-dependency against bison
+  * Call dh-autoreconf since we need to regenerate all the autofoo files
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
