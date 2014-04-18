@@ -52,6 +52,9 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * Fix 1000_configure_userns to avoid dropping a needed #endif
     Closes: #744877
 
+  [ Christian Perrier ]
+  * Bump Standards to 3.9.5 (checked)
+
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
 shadow (1:4.1.5.1-1) unstable; urgency=low
