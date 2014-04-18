@@ -54,6 +54,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
 
   [ Christian Perrier ]
   * Bump Standards to 3.9.5 (checked)
+  * Use 'set -e' in postinst scripts and not in thei shebang line
 
  -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
 
