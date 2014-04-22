@@ -1,4 +1,4 @@
-shadow (1:4.2-1) UNRELEASED; urgency=low
+shadow (1:4.2-1) experimental; urgency=low
 
   [ Nicolas FRANCOIS (Nekral) ]
   * New upstream release. Fixes:
@@ -57,7 +57,7 @@ shadow (1:4.2-1) UNRELEASED; urgency=low
   * Use 'set -e' in postinst scripts and not in thei shebang line
   * Explicitly point to GPL-2 document in debian/copyright
 
- -- Christian Perrier <bubulle@debian.org>  Sat, 27 Jul 2013 20:07:18 +0200
+ -- Christian Perrier <bubulle@debian.org>  Tue, 22 Apr 2014 09:01:42 +0200
 
 shadow (1:4.1.5.1-1) unstable; urgency=low
 
