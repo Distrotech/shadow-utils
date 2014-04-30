@@ -3,11 +3,6 @@
 
 DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 
-ifeq ($(DEB_HOST_ARCH_OS),hurd)
-# Do not build login on The Hurd
-override DEB_ARCH_PACKAGES=passwd
-endif
-
 # Enable PIE, BINDNOW, and possible future flags.
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
@@ -34,6 +29,10 @@ CFLAGS += -DDEFAULT_EDITOR=\\\"sensible-editor\\\"
 
 # Add extras to the install process:
 binary-install/login::
+ifeq ($(DEB_HOST_ARCH_OS),hurd)
+	# /bin/login is provided by the hurd package.
+	rm -f debian/login/bin/login
+endif
 	dh_installpam -p login
 	dh_installpam -p login --name=su
 	install -c -m 444 debian/login.defs debian/login/etc/login.defs
@@ -52,11 +51,6 @@ binary-install/passwd::
 	dh_installpam -p passwd --name=chsh
 	dh_installpam -p passwd --name=chpasswd
 	dh_installpam -p passwd --name=newusers
-ifeq ($(DEB_HOST_ARCH_OS),hurd)
-# login is not built on The Hurd, but some utilities of passwd depends on
-# /etc/login.defs.
-	install -c -m 444 debian/login.defs debian/passwd/etc/login.defs
-endif
 	install -c -m 644 debian/useradd.default debian/passwd/etc/default/useradd
 	install -d debian/passwd/sbin
 	install -c -m 555 debian/shadowconfig.sh debian/passwd/sbin/shadowconfig

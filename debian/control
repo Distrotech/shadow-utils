@@ -24,7 +24,8 @@ Package: login
 Architecture: any
 Pre-Depends: ${shlibs:Depends}, ${misc:Depends}, libpam-runtime, libpam-modules
 Conflicts: gnunet (<< 0.7.0c-2), amavisd-new (<<2.3.3-8), python-4suite (<< 0.99cvs20060405-1), backupninja (<< 0.9.3-5), echolot (<< 2.1.8-4)
-Replaces: manpages-de (<< 0.5-3), manpages-tr (<<1.0.5), manpages-zh (<<1.5.1-1)
+Breaks: coreutils (<< 8.21~) [hurd-any], passwd (<< 1:4.1.5.1-2~) [hurd-any], hurd (<< 20140206~) [hurd-any]
+Replaces: manpages-de (<< 0.5-3), manpages-tr (<<1.0.5), manpages-zh (<<1.5.1-1), passwd (<< 1:4.1.5.1-2~) [hurd-any], coreutils (<< 8.21~) [hurd-any], hurd (<< 20140206~) [hurd-any]
 Essential: yes
 Description: system login tools
  These tools are required to be able to login and use your system. The
