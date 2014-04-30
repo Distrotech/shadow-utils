@@ -15,6 +15,9 @@ shadow (1:4.2-2) UNRELEASED; urgency=low
     This will allow initscripts to drop /etc/init.d/motd.
     Closes: #741129
 
+  [ Trần Ngọc Quân ]
+  * Vietnamese translation update.
+
  -- Christian Perrier <bubulle@debian.org>  Wed, 30 Apr 2014 22:14:23 +0200
 
 shadow (1:4.2-1) experimental; urgency=low
