@@ -33,3 +33,4 @@
 #userns/manpagetypo
 #userns/16_add-argument-sanity-checking.patch
 1000_configure_userns
+1010_vietnamese_translation
