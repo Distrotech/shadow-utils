@@ -9,6 +9,12 @@ shadow (1:4.2-2) UNRELEASED; urgency=low
     by the hurd package. Closes: #737805.
     This fix was accidentally forgotten in 1:4.2-1
 
+  [ Josh Triplett ]
+  * use the new pam_exec functionality from pam 1.1.8-1 to implement the
+    dynamic motd, rather than using /run/motd.dynamic from initscripts.
+    This will allow initscripts to drop /etc/init.d/motd.
+    Closes: #741129
+
  -- Christian Perrier <bubulle@debian.org>  Wed, 30 Apr 2014 22:14:23 +0200
 
 shadow (1:4.2-1) experimental; urgency=low
