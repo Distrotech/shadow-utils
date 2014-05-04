@@ -1,5 +1,7 @@
 shadow (1:4.2-2) unstable; urgency=low
 
+  * The "Soumaintrain" release
+  * The "Rigotte de Condrieu" release was 4.2-1
   * Upload to unstable
   * Last upload integrates the use of dh_autoreconf which has the same
     effect then Eric Dorland's patch in 1:4.1.5.1-1.1 NMU to drop the
