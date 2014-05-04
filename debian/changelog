@@ -1,9 +1,3 @@
-shadow (1:4.2-3) UNRELEASED; urgency=low
-
-  * Add upstream signing key as debian/upstream-signing-key.asc
-
- -- Christian Perrier <bubulle@debian.org>  Sun, 04 May 2014 19:01:33 +0200
-
 shadow (1:4.2-2) unstable; urgency=low
 
   * Upload to unstable
@@ -30,6 +24,8 @@ shadow (1:4.2-2) unstable; urgency=low
 
   [ Christian Perrier ]
   * Add a lintian override for newuidmap and newgidmap setuid binaries
+  * Add upstream signing key as debian/upstream-signing-key.asc
+  * Chack upstream signing key in debian/watch
 
  -- Christian Perrier <bubulle@debian.org>  Sun, 04 May 2014 18:04:22 +0200
 
