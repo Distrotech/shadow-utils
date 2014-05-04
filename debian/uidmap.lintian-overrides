@@ -1,0 +1,2 @@
+uidmap: setuid-binary usr/bin/newgidmap 4755 root/root
+uidmap: setuid-binary usr/bin/newuidmap 4755 root/root

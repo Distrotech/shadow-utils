@@ -21,6 +21,9 @@ shadow (1:4.2-2) UNRELEASED; urgency=low
   [ Trần Ngọc Quân ]
   * Vietnamese translation update.
 
+  [ Christian Perrier ]
+  * Add a lintian override for newuidmap and newgidmap setuid binaries
+
  -- Christian Perrier <bubulle@debian.org>  Wed, 30 Apr 2014 22:14:23 +0200
 
 shadow (1:4.2-1) experimental; urgency=low
