@@ -9,6 +9,9 @@ shadow (1:4.2-3) UNRELEASED; urgency=low
   * Fix some typos and errors in German translation of manpages.
     Done as an upstream patch, as of now and will be part of 4.2.1
     Closes: #734609
+  * Fix a typo in su manpage.
+    Done as an upstream patch, as of now and will be part of 4.2.1
+    Closes: #730692
 
   [ Laurent Bigonville ]
   * Move pam_selinux open call higher in the session stack. Closes: #747313

@@ -2,6 +2,7 @@
 #900_testsuite_groupmems
 #901_testsuite_gcov
 
+1020_fix-typo-manpage
 503_shadowconfig.8
 008_login_log_failure_in_FTMP
 429_login_FAILLOG_ENAB
