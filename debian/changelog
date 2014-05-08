@@ -3,6 +3,9 @@ shadow (1:4.2-3) UNRELEASED; urgency=low
   [ Christian Perrier ]
   * Fix typos in login.pam (thanks to Jakub Wilk for reporting)
     Closes: #747115
+  * Update French translations of programs messages and manpages.
+    Done as an upstream patch, as of now and will be part of 4.2.1
+    Closes: #725793
 
   [ Laurent Bigonville ]
   * Move pam_selinux open call higher in the session stack. Closes: #747313
