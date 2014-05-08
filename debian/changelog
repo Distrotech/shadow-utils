@@ -1,7 +1,11 @@
 shadow (1:4.2-3) UNRELEASED; urgency=low
 
+  [ Christian Perrier ]
   * Fix typos in login.pam (thanks to Jakub Wilk for reporting)
     Closes: #747115
+
+  [ Laurent Bigonville ]
+  * Move pam_selinux open call higher in the session stack. Closes: #747313
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 06 May 2014 07:39:03 +0200
 
