@@ -1,0 +1,31 @@
+Index: git/man/po/de.po
+===================================================================
+--- git.orig/man/po/de.po
++++ git/man/po/de.po
+@@ -3064,7 +3064,7 @@
+ #: limits.5.xml:61(refmiscinfo) gshadow.5.xml:48(refmiscinfo)
+ #: faillog.5.xml:59(refmiscinfo)
+ msgid "File Formats and Conversions"
+-msgstr "Dateiformate und -konvertierung"
++msgstr "Dateiformate und konvertierung"
+ 
+ #: suauth.5.xml:65(refpurpose)
+ msgid "detailed su control file"
+@@ -4315,7 +4315,7 @@
+ 
+ #: shadow.5.xml:235(para)
+ msgid "An empty field means that the account will never expire."
+-msgstr "Ein leeren Feld bedeutet, dass das Konto nicht verfallen wird."
++msgstr "Ein leeres Feld bedeutet, dass das Konto nicht verfallen wird."
+ 
+ #: shadow.5.xml:238(para)
+ msgid ""
+@@ -6884,7 +6884,7 @@
+ "contents of this file should be a message indicating why logins are "
+ "inhibited."
+ msgstr ""
+-"Falls angegeben, der Name einer Datei, dessen Existenz Anmeldungen außer von "
++"Falls angegeben, der Name einer Datei, deren Existenz Anmeldungen außer von "
+ "Root verhindert. Der Inhalt der Datei sollte die Gründe enthalten, weshalb "
+ "Anmeldungen untersagt sind."
+ 
