@@ -1,0 +1,146 @@
+'\" t
+.\"     Title: suauth
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formats et conversions de fichiers
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "SUAUTH" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formats et conversions de fich"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+suauth \- Fichier de contr\(^ole d\('etaill\('e de su
+.SH "SYNOPSIS"
+.HP \w'\fB/etc/suauth\fR\ 'u
+\fB/etc/suauth\fR
+.SH "DESCRIPTION"
+.PP
+Le fichier
+/etc/suauth
+est lu chaque fois que su est ex\('ecut\('e\&. Il permet de modifier le comportement de la commande su, en fonction de\ \&:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      1) l\*(Aqutilisateur cible de su
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+2) l\*(Aqutilisateur qui ex\('ecute la commande su (ou un groupe dont il est membre)
+.PP
+Le fichier est format\('e de la fa\(,con suivante (les lignes commen\(,cant par un \(Fo\ \&#\ \&\(Fc sont des commentaires, et sont ignor\('ees)\ \&:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      vers\-id:par\-id:ACTION
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+O\(`u vers\-id peut \(^etre le mot
+\fIALL\fR, une liste de noms d\*(Aqutilisateurs s\('epar\('es par une virgule ou
+\fIALL EXCEPT\fR
+suivi d\*(Aqune liste d\*(Aqutilisateurs s\('epar\('es par une virgule\&.
+.PP
+par\-id utilise le m\(^eme format que vers\-id, mais accepte \('egalement le mot\-cl\('e
+\fIGROUP\fR\&.
+\fIALL EXCEPT GROUP\fR
+est \('egalement accept\('e\&.
+\fIGROUP\fR
+est suivi d\*(Aqun ou plusieurs noms de groupes, s\('epar\('es par une virgule\&. Il n\*(Aqest pas suffisant d\*(Aqavoir comme groupe primaire le groupe appropri\('e\ \&: une entr\('ee dans
+\fB/etc/group\fR(5)
+est n\('ecessaire\&.
+.PP
+Les valeurs d\*(AqACTION valables sont\ \&:
+.PP
+\fIDENY\fR
+.RS 4
+La tentative de changement d\*(Aqutilisateur est arr\(^et\('ee avant que le mot de passe ne soit demand\('e\&.
+.RE
+.PP
+\fINOPASS\fR
+.RS 4
+La tentative est automatiquement r\('eussie\&. Aucun mot de passe n\*(Aqest demand\('e\&.
+.RE
+.PP
+\fIOWNPASS\fR
+.RS 4
+Pour que la commande su soit r\('eussie, l\*(Aqutilisateur doit entrer son propre mot de passe\&. Ceci lui est demand\('e\&.
+.RE
+.PP
+Notez qu\*(Aqil y a trois champs s\('epar\('es par un \(Fo\ \&deux\-points\ \&\(Fc\&. Ne pas accoler d\*(Aqespace \(`a ce \(Fo\ \&deux\-points\ \&\(Fc\&. Notez aussi que le fichier est examin\('e s\('equentiellement ligne par ligne, et que la premi\(`ere r\(`egle applicable est utilis\('ee sans que le reste du fichier ne soit examin\('e\&. Ceci permet \(`a l\*(Aqadministrateur syst\(`eme de d\('efinir un contr\(^ole aussi fin qu\*(Aqil le souhaite\&.
+.SH "EXEMPLE"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      # exemple de fichier /etc/suauth
+      #
+      # Deux utilisateurs privil\('egi\('es peuvent
+      # devenir root avec leur propre mot de passe\&.
+      #
+      root:chris,birddog:OWNPASS
+      #
+      # Les autres ne peuvent pas de venir root avec
+      # su, \(`a l\*(Aqexception des membres du groupe wheel\&.
+      # Ceci correspond au comportement des BSD\&.
+      #
+      root:ALL EXCEPT GROUP wheel:DENY
+      #
+      # terry et birddog sont des comptes poss\('ed\('es
+      # par la m\(^eme personne\&.
+      # Un acc\(`es sans mot passe est am\('enag\('e
+      # entre ces deux comptes\&.
+      #
+      terry:birddog:NOPASS
+      birddog:terry:NOPASS
+      #
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "FICHIERS"
+.PP
+/etc/suauth
+.RS 4
+.RE
+.SH "BOGUES"
+.PP
+Il en reste sans doute beaucoup\&. L\*(Aqanalyseur du fichier est particuli\(`erement impitoyable avec les erreurs de syntaxe\&. Il n\*(Aqautorise d\*(Aqespace qu\*(Aqen d\('ebut et fin de ligne, et seul le d\('elimiteur sp\('ecifique doit \(^etre utilis\('e\&.
+.SH "DIAGNOSTICS"
+.PP
+Une erreur dans l\*(Aqanalyse du fichier est report\('ee via
+\fBsyslogd\fR(8)
+au niveau ERR dans la cat\('egorie AUTH\&.
+.SH "VOIR AUSSI"
+.PP
+\fBsu\fR(1)\&.

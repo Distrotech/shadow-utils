@@ -1,0 +1,287 @@
+'\" t
+.\"     Title: userdel
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "USERDEL" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+userdel \- 删除用户账户和相关文件
+.SH "大纲"
+.HP \w'\fBuserdel\fR\ 'u
+\fBuserdel\fR [选项] \fI登录\fR
+.SH "描述"
+.PP
+\fBuserdel\fR
+修改系统账户文件，删除与用户名
+\fILOGIN\fR
+相关的所以项目。给出的用户名必须存在。
+.SH "选项"
+.PP
+\fBuserdel\fR
+可以使用的选项有：
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+此选项强制删除用户账户，甚至用户仍然在登录状态。它也强制
+\fBuserdel\fR
+删除用户的主目录和邮箱，即使其它用户也使用同一个主目录或邮箱不属于指定的用户。如果
+/etc/login\&.defs
+中的
+\fBUSERGROUPS_ENAB\fR
+定义为
+\fIyes\fR，并且如果有一个和用户同名的组，也会删除此组，即使它仍然是别的用户的主组。
+.sp
+\fI注意：\fR此选项危险，可能会破坏系统的稳定性。
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-r\fR, \fB\-\-remove\fR
+.RS 4
+用户主目录中的文件将随用户主目录和用户邮箱一起删除。在其它文件系统中的文件必须手动搜索并删除。
+.sp
+邮箱在
+login\&.defs
+文件中的
+\fBMAIL_DIR\fR
+变量中定义。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR
+.RS 4
+移除用户登录的所有 SELinux 用户映射。
+.RE
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBMAIL_DIR\fR (string)
+.RS 4
+邮箱目录。修改或删除用户账户时需要处理邮箱，如果没有指定，将使用编译时指定的默认值。
+.RE
+.PP
+\fBMAIL_FILE\fR (string)
+.RS 4
+定义用户邮箱文件的位置(相对于主目录)。
+.RE
+.PP
+\fBMAIL_DIR\fR
+and
+\fBMAIL_FILE\fR
+变量由
+\fBuseradd\fR，\fBusermod\fR
+和
+\fBuserdel\fR
+用于创建、移动或删除用户邮箱。
+.PP
+如果
+\fBMAIL_CHECK_ENAB\fR
+设置为
+\fIyes\fR，它们也被用于定义
+\fBMAIL\fR
+环境变量。
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBUSERDEL_CMD\fR (string)
+.RS 4
+如果定义了，这是删除账户时执行的命令。它应该移除所有属于此用户的的 at/cron/print 等作业(作为第一个参数传递)。
+.sp
+这个脚本的返回值并不被带到账户中去。
+.sp
+这是一个示例脚本，它移除用户的 cron、at 和 print 作业：
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# 检查需要的参数
+if [ $# != 1 ]; then
+	echo "Usage: $0 username"
+	exit 1
+fi
+
+# 移除 cron 作业
+crontab \-r \-u $1
+
+# 移除 at 作业
+# 注意这将移除所有属于同一个 UID 的作业
+# 即使此 ID 由多个用户名共享
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# 移除 print 作业
+lprm $1
+
+# 全部完成
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolean)
+.RS 4
+如果 uid 和 gid 相同，用户名和主用户名也相同，使非 root 组的组掩码位和属主位相同 (如：022 \-> 002, 077 \-> 007)。
+.sp
+如果设置为
+\fIyes\fR，如果组中没有成员了，\fBuserdel\fR
+将移除此用户组，\fBuseradd\fR
+创建用户时，也会创建一个同名的默认组。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "退出值"
+.PP
+\fBuserdel\fR
+命令使用如下值退出：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI1\fR
+.RS 4
+无法更新密码文件
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI6\fR
+.RS 4
+指定的用户不存在
+.RE
+.PP
+\fI8\fR
+.RS 4
+用户已经登录
+.RE
+.PP
+\fI10\fR
+.RS 4
+无法更新组文件
+.RE
+.PP
+\fI12\fR
+.RS 4
+无法删除主目录
+.RE
+.SH "CAVEATS"
+.PP
+如果某账户有正在运行的进程，\fBuserdel\fR
+不会允许此账户。此时，您可能必须要杀死那写进程或者锁定用户的密码和账户，并稍后再删除账户。\fB\-f\fR
+选项可以强制此删除账户。
+.PP
+您应该手动检查所以文件系统，以确保没有遗留此用户的文件。
+.PP
+您不能在 NIS 客户端上移除任何 NIS 属性。这必须在 NIS 服务器上执行。
+.PP
+如果在
+/etc/login\&.defs
+中
+\fBUSERGROUPS_ENAB\fR
+设置为
+\fIyes\fR，
+\fBuserdel\fR
+将删除同名组。为了避免损坏 passwd 和 group 数据库，\fBuserdel\fR
+将会检查这个主是否被别的用户用作主组，如果有，将只发出警告并不删除此组。\fB\-f\fR
+选项可以强制删除此组。
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBlogin.defs\fR(5),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBusermod\fR(8)\&.

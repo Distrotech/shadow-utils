@@ -1,0 +1,167 @@
+'\" t
+.\"     Title: faillog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "FAILLOG" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+faillog \- zeigt Aufzeichnungen der fehlgeschlagenen Anmeldungen an oder richtet Beschr\(:ankungen f\(:ur fehlgeschlagene Anmeldungen ein
+.SH "\(:UBERSICHT"
+.HP \w'\fBfaillog\fR\ 'u
+\fBfaillog\fR [\fIOptionen\fR]
+.SH "BESCHREIBUNG"
+.PP
+\fBfaillog\fR
+zeigt den Inhalt der Datenbank der fehlgeschlagenen Anmeldungen (/var/log/faillog) an\&. Es kann auch die Z\(:ahlung und Beschr\(:ankung der Fehlversuche verwalten\&. Wenn
+\fBfaillog\fR
+ohne Optionen ausgef\(:uhrt wird, wird nur die Liste der fehlgeschlagenen Anmeldungen aller Benutzer angezeigt, deren Anmeldung jemals gescheitert ist\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBfaillog\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-a\fR, \fB\-\-all\fR
+.RS 4
+zeigt (oder bearbeitet) die faillog\-Eintr\(:age aller Benutzer, die einen Eintrag in der Datenbank
+faillog
+haben
+.sp
+Die Spanne der Benutzer kann mit der Option
+\fB\-u\fR
+eingegrenzt werden\&.
+.sp
+Im Anzeigemodus ist dies auf vorhandene Benutzer beschr\(:ankt, erzwingt aber die Anzeige der Faillog\-Eintr\(:age, auch wenn diese leer sind\&.
+.sp
+Mit den Optionen
+\fB\-l\fR,
+\fB\-m\fR,
+\fB\-r\fR
+und
+\fB\-t\fR
+werden die Benutzereintr\(:age selbst dann ge\(:andert, wenn der Benutzer auf dem System nicht vorhanden ist\&. Dies kann sinnvoll sein, wenn die Eintr\(:age von gel\(:oschten Benutzer zur\(:uckgesetzt werden sollen oder vorsorglich eine Richtlinie f\(:ur eine Anzahl von Benutzern eingerichtet werden soll\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-l\fR, \fB\-\-lock\-secs\fR\ \&\fISEK\fR
+.RS 4
+sperrt nach einer fehlgeschlagenen Anmeldung das Konto f\(:ur
+\fISEK\fR
+Sekunden
+.sp
+F\(:ur diese Option muss ein Schreibzugriff auf
+/var/log/faillog
+bestehen\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-maximum\fR\ \&\fIMAX\fR
+.RS 4
+setzt den Z\(:ahler der fehlgeschlagene Anmeldungen, nach denen das Konto abgeschaltet wird, auf
+\fIMAX\fR
+.sp
+Wenn
+\fIMAX\fR
+den Wert 0 hat, besteht keine Beschr\(:ankung f\(:ur die Anzahl fehlgeschlagener Anmeldeversuche\&.
+.sp
+F\(:ur
+\fIroot\fR
+sollte der Wert der maximalen Anmeldeversuche immer 0 betragen, um eine durch einen Angriff ausgel\(:oste Dienstverweigerung (denial of service) zu verhindern\&.
+.sp
+F\(:ur diese Option muss ein Schreibzugriff auf
+/var/log/faillog
+bestehen\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-reset\fR
+.RS 4
+setzt die Z\(:ahlerst\(:ande der fehlgeschlagenen Anmeldeversuche zur\(:uck
+.sp
+F\(:ur diese Option muss ein Schreibzugriff auf
+/var/log/faillog
+bestehen\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fITAGE\fR
+.RS 4
+zeigt die Eintr\(:age der fehlgeschlagenen Anmeldungen an, die aktueller als
+\fITAGE\fR
+sind
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIMENGE\fR
+.RS 4
+zeigt die Aufzeichnungen der fehlgeschlagenen Anmeldungen nur der angegebenen Benutzer an oder bearbeitet (wenn mit den Optionen
+\fB\-l\fR,
+\fB\-m\fR
+oder
+\fB\-r\fR
+verwendet) nur deren Z\(:ahlerst\(:ande und Beschr\(:ankungen
+.sp
+Die Bestimmung der Benutzer erfolgt durch ihren Anmeldenamen, ihrer zahlenm\(:a\(ssigen Benutzer\-ID oder einer
+\fIMENGE\fR
+von Benutzern\&. Diese
+\fIMENGE\fR
+kann mit Minimum\- und Maximumwerten (\fIUID_MIN\-UID_MAX\fR), nur mit einem Maximumwert (\fIUID_MIN\-UID_MAX\fR) oder nur einem Minimumwert (\fIUID_MIN\-\fR) bestimmt werden\&.
+.RE
+.PP
+Wenn keine der Optionen
+\fB\-l\fR,
+\fB\-m\fR
+oder
+\fB\-r\fR
+verwendet wird, zeigt
+\fBfaillog\fR
+die Aufzeichnung der fehlgeschlagenen Anmeldeversuche der angegebenen Benutzer an\&.
+.SH "WARNUNGEN"
+.PP
+\fBfaillog\fR
+zeigt nur die Benutzer an, die sich seit der letzten fehlgeschlagenen Anmeldung nicht erfolgreich anmelden konnten\&. Um die \(:ubrigen Benutzer anzuzeigen, m\(:ussen Sie diese explizit mit der Option
+\fB\-u\fR
+benennen oder sich alle Benutzer mit der Option
+\fB\-a\fR
+anzeigen lassen\&.
+.SH "DATEIEN"
+.PP
+/var/log/faillog
+.RS 4
+Datei mit fehlgeschlagenen Anmeldungen
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBlogin\fR(1),
+\fBfaillog\fR(5)\&.

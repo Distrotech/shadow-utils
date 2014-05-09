@@ -1,0 +1,160 @@
+'\" t
+.\"     Title: chfn
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "CHFN" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+chfn \- Modifier le nom complet et les informations associ\('ees \(`a un utilisateur
+.SH "SYNOPSIS"
+.HP \w'\fBchfn\fR\ 'u
+\fBchfn\fR [\fIoptions\fR] [\fILOGIN\fR]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBchfn\fR
+modifie le nom complet d\*(Aqun utilisateur, son num\('ero de bureau, son num\('ero de t\('el\('ephone professionnel, son extension, et son num\('ero de t\('el\('ephone personnel\&. Ces informations sont g\('en\('eralement affich\('ees par
+\fBfinger\fR(1)
+ou d\*(Aqautres programmes similaires\&. Un utilisateur normal ne peut modifier que les informations associ\('ees \(`a son propre compte, avec les restrictions pr\('ecis\('ees dans
+/etc/login\&.defs\&. (Par d\('efaut, les utilisateurs ne peuvent pas modifier leur nom complet)\&. Le superutilisateur peut modifier n\*(Aqimporte quel champ pour n\*(Aqimporte quel compte\&. De plus, seul le superutilisateur peut utiliser l\*(Aqoption
+\fB\-o\fR
+pour modifier les parties non pr\('ecis\('ees du champ GECOS\&.
+.PP
+Ces champs ne doivent contenir aucun \(Fo\ \&:\ \&\(Fc\&. \(`A l\*(Aqexception du champ
+\fIautre\fR, ils ne doivent contenir aucune virgule ou signe \('egal\&. Il est \('egalement recommand\('e d\*(Aq\('eviter les caract\(`eres non US\-ASCII, mais cela n\*(Aqest impos\('e que pour les num\('eros de t\('el\('ephone\&. Le champ
+\fIautre\fR
+est utilis\('e pour garder des informations de compte utilis\('ees par d\*(Aqautres applications\&.
+.SH "OPTIONS"
+.PP
+Les options applicables \(`a la commande
+\fBchfn\fR
+sont\ \&:
+.PP
+\fB\-f\fR, \fB\-\-full\-name\fR\ \&\fIFULL_NAME\fR
+.RS 4
+Modifier le nom complet de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-home\-phone\fR\ \&\fIHOME_PHONE\fR
+.RS 4
+Modifier le num\('ero de t\('el\('ephone personnel de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-other\fR\ \&\fIOTHER\fR
+.RS 4
+Modifier les informations GECO de l\*(Aqutilisateur\&. Ce champ est utilis\('e pour enregistrer les informations de l\*(Aqutilisateur utilis\('ees par d\*(Aqautres applications et peut \(^etre chang\('e seulement par un superutilisateur\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-room\fR\ \&\fIROOM_NUMBER\fR
+.RS 4
+Modifier le num\('ero de bureau de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-work\-phone\fR\ \&\fIWORK_PHONE\fR
+.RS 4
+Modifier le num\('ero de t\('el\('ephone professionnel de l\*(Aqutilisateur\&.
+.RE
+.PP
+Si aucune option n\*(Aqest s\('electionn\('ee,
+\fBchfn\fR
+op\(`ere de mani\(`ere interactive, demandant \(`a l\*(Aqutilisateur d\*(Aqentrer les valeurs actuelles de chacun des champs\&. Entrer une nouvelle valeur pour la modifier, ou de laisser une ligne blanche pour conserver la valeur actuelle\&. La valeur actuelle est indiqu\('ee entre crochets (\fB[ ]\fR)\&. En l\*(Aqabsence d\*(Aqoption,
+\fBchfn\fR
+op\(`ere sur l\*(Aqutilisateur actuel\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBCHFN_AUTH\fR (bool\('een)
+.RS 4
+La valeur
+\fIyes\fR
+indique que le programme
+\fBchfn\fR
+n\('ecessitera une authentification avant de proc\('eder \(`a tout changement, \(`a moins qu\*(Aqils ne soient ex\('ecut\('es par le superutilisateur\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Ce param\(`etre pr\('ecise quelles valeurs du champ
+\fIgecos\fR
+du fichier
+passwd
+peuvent \(^etre modifi\('ees par les utilisateurs ordinaires \(`a l\*(Aqaide du programme
+\fBchfn\fR\&. Il est constitu\('e d\*(Aqune combinaison de lettres parmi
+\fIf\fR,
+\fIr\fR,
+\fIw\fR
+et
+\fIh\fR, correspondant respectivement au nom complet, au num\('ero de bureau, au num\('ero de t\('el\('ephone professionnel et au num\('ero de t\('el\('ephone personnel\&. Pour des raisons de compatibilit\('e avec des versions ant\('erieures,
+\fIyes\fR
+est \('equivalent \(`a
+\fIrwh\fR
+et
+\fIno\fR
+\(`a
+\fIfrwh\fR\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, seul le superutilisateur peut effectuer des modifications\&. Pour une configuration encore plus restrictive, il sera pr\('ef\('erable de ne pas installer
+\fBchfn\fR
+avec l\*(Aqindicateur SUID positionn\('e\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (cha\(^ine de caract\(`eres)
+.RS 4
+La cha\(^ine de caract\(`eres utilis\('ee pour l\*(Aqinvite de mot de passe\&. La valeur par d\('efaut est d\*(Aqutiliser "Password: " (\(Fo\ \&mot de passe\ \&:\ \&\(Fc), ou une traduction de cette cha\(^ine\&. Si vous d\('efinissez cette variable, l\*(Aqinvite ne sera pas traduite\&.
+.sp
+Si la cha\(^ine contient
+\fI%s\fR, ces caract\(`eres seront remplac\('es par le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchsh\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

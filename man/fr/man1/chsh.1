@@ -1,0 +1,118 @@
+'\" t
+.\"     Title: chsh
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "CHSH" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+chsh \- Changer l\*(Aqinterpr\('eteur de commandes initial
+.SH "SYNOPSIS"
+.HP \w'\fBchsh\fR\ 'u
+\fBchsh\fR [\fIoptions\fR] [\fILOGIN\fR]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBchsh\fR
+modifie l\*(Aqinterpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc) de l\*(Aqutilisateur qui sera invoqu\('e lors des connexions de l\*(Aqutilisateur\&. Un utilisateur normal ne peut changer que l\*(Aqinterpr\('eteur associ\('e \(`a son propre compte\&. Le superutilisateur peut changer l\*(Aqinterpr\('eteur de commandes initial de n\*(Aqimporte quel compte\&.
+.SH "OPTIONS"
+.PP
+Les options applicables \(`a la commande
+\fBchsh\fR
+sont\ \&:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Nom du nouvel interpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc) de l\*(Aqutilisateur\&. Si ce champ est vide, le syst\(`eme s\('electionnera l\*(Aqinterpr\('eteur de commandes initial par d\('efaut\&.
+.RE
+.PP
+Quand l\*(Aqoption
+\fB\-s\fR
+n\*(Aqest pas s\('electionn\('ee,
+\fBchsh\fR
+op\(`ere de fa\(,con interactive, demandant \(`a l\*(Aqutilisateur quel doit \(^etre le nouvel interpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc)\&. L\*(Aqutilisateur pourra entrer une nouvelle valeur pour modifier l\*(Aqinterpr\('eteur, ou laisser la ligne blanche pour conserver l\*(Aqinterpr\('eteur actuel\&. L\*(Aqinterpr\('eteur actuel est indiqu\('e entre crochets (\fI[\ \&]\fR)\&.
+.SH "NOTE"
+.PP
+La seule restriction plac\('ee sur l\*(Aqinterpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc) est que cette commande doit faire partie de
+/etc/shells, \(`a moins qu\*(Aqelle ne soit invoqu\('ee par le superutilisateur, qui peut ajouter n\*(Aqimporte quelle valeur\&. Un compte avec un interpr\('eteur de commandes initial restreint ne peut pas changer son interpr\('eteur\&. Pour cette raison, il est d\('econseill\('e de placer
+/bin/rsh
+dans
+/etc/shells, puisqu\*(Aqune modification accidentelle vers un interpr\('eteur restreint emp\(^echera alors l\*(Aqutilisateur de revenir ensuite \(`a l\*(Aqinterpr\('eteur pr\('ec\('edent\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBCHSH_AUTH\fR (bool\('een)
+.RS 4
+La valeur
+\fIyes\fR
+indique que le programme
+\fBchsh\fR
+n\('ecessitera une authentification avant de proc\('eder \(`a tout changement, \(`a moins qu\*(Aqils ne soient ex\('ecut\('es par le superutilisateur\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (cha\(^ine de caract\(`eres)
+.RS 4
+La cha\(^ine de caract\(`eres utilis\('ee pour l\*(Aqinvite de mot de passe\&. La valeur par d\('efaut est d\*(Aqutiliser "Password: " (\(Fo\ \&mot de passe\ \&:\ \&\(Fc), ou une traduction de cette cha\(^ine\&. Si vous d\('efinissez cette variable, l\*(Aqinvite ne sera pas traduite\&.
+.sp
+Si la cha\(^ine contient
+\fI%s\fR, ces caract\(`eres seront remplac\('es par le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shells
+.RS 4
+Liste des interpr\('eteurs de commandes initiaux valables\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

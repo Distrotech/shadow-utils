@@ -1,0 +1,232 @@
+'\" t
+.\"     Title: gpasswd
+.\"    Author: Rafal Maszkowski
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "GPASSWD" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+gpasswd \- amministra /etc/group e /etc/gshadow
+.SH "SINOSSI"
+.HP \w'\fBgpasswd\fR\ 'u
+\fBgpasswd\fR [\fIopzione\fR] \fIgruppo\fR
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBgpasswd\fR
+\(`e utilizzato per amministrare
+/etc/groupe /etc/gshadow\&. Ogni gruppo pu\(`o avereamministratori,
+membri e una password\&.
+.PP
+Gli amministratori di sistema possono usare l\*(Aqopzione
+\fB\-A\fR
+per definire l\*(Aqamministratore/gli amministratori di gruppo e l\*(Aqopzione
+\fB\-M\fR
+per definire i membri ed hanno tutti i permessi degli amministratori di gruppo e dei membri\&.
+.PP
+\fBgpasswd\fR
+richiamato da
+un amminstatore di gruppo
+con un nome di gruppo richiede solo la nuova password del
+\fIgruppo\fR\&.
+.PP
+Se la password \(`e impostata i membri possono ancora usare
+\fBnewgrp\fR(1)
+senza la password, i non\-membri devono fornire la password\&.
+.SS "Note sulle password di gruppo"
+.PP
+Le password di gruppo rappresentano un intrinseco problema di sicurezza perch\('e pi\(`u di una persona deve conoscerle\&. Ciononostante i gruppi sono uno strumento molto utile per la cooperazione tra vari utenti\&.
+.SH "OPZIONI"
+.PP
+Ad eccezione di
+\fB\-A\fR
+e
+\fB\-M\fR, le altre opzioni non possono essere combinate\&.
+.PP
+Il comando
+\fBgpasswd\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-a\fR, \fB\-\-add\fR\ \&\fIutente\fR
+.RS 4
+Aggiunge
+\fIutente\fR
+al
+\fIgruppo\fR
+indicato\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR\ \&\fIutente\fR
+.RS 4
+Rimuove
+\fIutente\fR
+dal
+\fIgruppo\fR
+indicato\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-Q\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-remove\-password\fR
+.RS 4
+Rimuove la password dal
+\fIgruppo\fR
+indicato\&. La password del gruppo sar\(`a vuota\&. Solo ai membri del gruppo sar\(`a ammesso l\*(Aqaccesso tramite
+\fBnewgrp\fR
+al
+\fIgruppo\fR
+indicato\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-restrict\fR
+.RS 4
+Limita l\*(Aqaccesso al
+\fIgruppo\fR
+indicato\&. La password del gruppo \(`e cambiata in \(Fo!\(Fc\&. Solo ai membri del gruppo con una password verr\(`a permesso di usare
+\fBnewgrp\fR
+per accedere al
+\fIgruppo\fR
+indicato\&.
+.RE
+.PP
+\fB\-A\fR, \fB\-\-administrators\fR\ \&\fIutente\fR,\&.\&.\&.
+.RS 4
+Imposta l\*(Aqelenco degli utenti amministratori\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-members\fR\ \&\fIutente\fR,\&.\&.\&.
+.RS 4
+Definisce l\*(Aqelenco dei membri del gruppo\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Questo strumento opera solo sul file
+/etc/groupe sul file /etc/gshadow\&. Quindi non si possono modificare gruppi NIS o LDAP\&. Questo dovrebbe essere fatto sul corrispondente server\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBENCRYPT_METHOD\fR (testo)
+.RS 4
+Definisce l\*(Aqalgoritmo di cifratura predefinito per le password (se non ne viene specificato uno a riga di comando)\&.
+.sp
+Pu\(`o avere uno dei seguenti valori:
+\fIDES\fR
+(predefinito),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Nota: questo parametro ha la precedenza sulla variabile
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (booleano)
+.RS 4
+Indica se le password vanno cifrate usando l\*(Aqalgoritmo basato su MD5\&. Se impostato a
+\fIyes\fR
+le nuove password saranno cifrate usando un algoritmo basato su MD5 e compatibile con quello delle versioni pi\(`u recenti di FreeBSD\&. Supporta password di lunghezza qualsiasi e testi \(Fosalt\(Fc pi\(`u lunghi\&. Impostare a
+\fIno\fR
+se si devono copiare password su altri sistemi che non gestiscono l\*(Aqalgoritmo\&. Il valore predefinito \(`e
+\fIno\fR\&.
+.sp
+Questa variabile ha meno priorit\(`a della variabile
+\fBENCRYPT_METHOD\fR
+e di qualsiasi opzione a riga di comando che imposta un algoritmo di cifratura\&.
+.sp
+Questa variabile non \(`e pi\(`u usata\&. Si dovrebbe utilizzare
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (numerico), \fBSHA_CRYPT_MAX_ROUNDS\fR (numerico)
+.RS 4
+Quando
+\fBENCRYPT_METHOD\fR
+vale
+\fISHA256\fR
+o
+\fISHA512\fR, questo definisce il numero di cicli SHA usati per l\*(Aqalgoritmo di cifratura (quando il numero di cicli non \(`e impostato a riga di comando)\&.
+.sp
+Con molti cicli \(`e pi\(`u difficile trovare una password usando la forza bruta\&. Ma va notato che \(`e richiesta maggiore potenza di calcolo per autenticare gli utenti\&.
+.sp
+Se non specificato sar\(`a la libc a scegliere il numero di cicli (5000)\&.
+.sp
+Il valore deve essere compreso tra 1\&.000 e 999\&.999\&.999\&.
+.sp
+Se viene impostato solo uno tra
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+e
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora l\*(Aqunico valore viene utilizzato\&.
+.sp
+Se
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora viene utilizzato il maggiore\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBnewgrp\fR(1),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBgrpck\fR(8),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

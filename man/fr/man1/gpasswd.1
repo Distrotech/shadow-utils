@@ -1,0 +1,225 @@
+'\" t
+.\"     Title: gpasswd
+.\"    Author: Rafal Maszkowski
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GPASSWD" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+gpasswd \- Administrer /etc/group et /etc/gshadow
+.SH "SYNOPSIS"
+.HP \w'\fBgpasswd\fR\ 'u
+\fBgpasswd\fR [\fIoption\fR] \fIgroupe\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBgpasswd\fR
+est utilis\('ee pour administrer
+/etc/groupet /etc/gshadow\&. Chaque groupe peut avoir
+des administrateurs,
+des membres et un mot de passe\&.
+.PP
+Les administrateurs syst\(`eme peuvent utiliser l\*(Aqoption
+\fB\-A\fR
+pour d\('efinir un ou des administrateurs de groupe et l\*(Aqoption
+\fB\-M\fR
+pour d\('efinir les membres\&. Ils ont tous les droits des administrateurs et membres du groupe\&.
+.PP
+\fBgpasswd\fR
+appel\('ee par
+un administrateur de groupe
+avec un nom de groupe demande seulement le nouveau mot de passe du
+\fIgroupe\fR\&.
+.PP
+Si un mot de passe est configur\('e, les membres peuvent toujours utiliser
+\fBnewgrp\fR(1)
+sans mot de passe\&. Les non membres doivent fournir le mot de passe\&.
+.SS "Notes sur les mots de passe de groupe"
+.PP
+Les mots de passe de groupe repr\('esentent naturellement un risque en mati\(`ere de s\('ecurit\('e, puisque plusieurs personnes ont connaissance du mot de passe\&. Cependant, les groupes sont utiles pour permettre la coop\('eration entre diff\('erents utilisateurs\&.
+.SH "OPTIONS"
+.PP
+\(`A part les options
+\fB\-A\fR
+et
+\fB\-M\fR, les options ne peuvent pas \(^etre combin\('ees\&.
+.PP
+Les options disponibles pour la commande
+\fBgpasswd\fR
+sont\ \&:
+.PP
+\fB\-a\fR, \fB\-\-add\fR\ \&\fIuser\fR
+.RS 4
+Ajouter l\*(Aq\fIutilisateur\fR
+\(`a ce
+\fIgroupe\fR\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR\ \&\fIuser\fR
+.RS 4
+Enlever l\*(Aq\fIutilisateur\fR
+de ce
+\fIgroupe\fR\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-Q\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-remove\-password\fR
+.RS 4
+Enlever le mot de passe pour ce
+\fIgroupe\fR\&. Le mot de passe du groupe sera vide\&. Seuls les membres du groupe seront autoris\('es \(`a utiliser
+\fBnewgrp\fR
+pour rejoindre ce
+\fIgroupe\fR\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-restrict\fR
+.RS 4
+Restreindre l\*(Aqacc\(`es \(`a ce
+\fIgroupe\fR\&. Le mot de passe du groupe est d\('efini \(`a \(Fo\ \&!\ \&\(Fc\&. Seuls les membres du groupe seront autoris\('es \(`a utiliser
+\fBnewgrp\fR
+pour rejoindre ce
+\fIgroupe\fR\&.
+.RE
+.PP
+\fB\-A\fR, \fB\-\-administrators\fR\ \&\fIuser\fR,\&.\&.\&.
+.RS 4
+Configurer la liste des administrateurs\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-members\fR\ \&\fIuser\fR,\&.\&.\&.
+.RS 4
+Configurer la liste des membres du groupe\&.
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+Cet outil ne fonctionne que sur
+les fichiers/etc/groupet /etc/gshadow\&. Par cons\('equent vous ne pouvez modifier aucun groupe NIS ou LDAP\&. Cela doit \(^etre effectu\('e sur le serveur correspondant\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBENCRYPT_METHOD\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir les algorithmes de chiffrement par d\('efaut du syst\(`eme pour coder les mots de passes (si aucun algorithme n\*(Aqa \('et\('e indiqu\('e sur la ligne de commandes)\&.
+.sp
+Les valeurs suivantes sont accept\('ees\ \&:
+\fIDES\fR
+(par d\('efaut),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Remarque\ \&: ce param\(`etre remplace la variable
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (bool\('een)
+.RS 4
+Indiquer si un mot de passe doit \(^etre chiffr\('e en utilisant l\*(Aqalgorithme bas\('e sur MD5\&. Si configur\('ee \(`a
+\fIyes\fR, les nouveaux mots de passe seront chiffr\('es en utilisant l\*(Aqalgorithme bas\('e sur MD5 compatible avec celui utilis\('e par les versions r\('ecentes de FreeBSD\&. Il g\(`ere des mots de passe de longueur illimit\('ee et des cha\(^ines de salage plus longues\&. Configurez\-la \(`a
+\fIno\fR
+pour copier les mots de passe chiffr\('es sur d\*(Aqautres syst\(`emes qui ne comprennent pas le nouvel algorithme\&. la valeur par d\('efaut est
+\fIno\fR\&.
+.sp
+Cette variable est \('ecras\('ee par la variable
+\fBENCRYPT_METHOD\fR
+ou par toute option de la ligne de commande utilis\('ee pour configurer l\*(Aqalgorithme de chiffrement\&.
+.sp
+Cette variable est obsol\(`ete\&. Vous devriez utiliser
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (nombre), \fBSHA_CRYPT_MAX_ROUNDS\fR (nombre)
+.RS 4
+Quand
+\fBENCRYPT_METHOD\fR
+est configur\('ee \(`a
+\fISHA256\fR
+ou
+\fISHA512\fR, cela d\('efinit le nombre de rounds de SHA utilis\('es par l\*(Aqalgorithme de chiffrement par d\('efaut (quand le nombre de rounds n\*(Aqest pas pr\('ecis\('e sur la ligne de commande)\&.
+.sp
+Avec beaucoup de rounds, il est plus difficile de trouver le mot de passe avec une attaque par force brute\&. Veuillez remarquer que plus de ressources processeur seront n\('ecessaires pour authentifier les utilisateurs\&.
+.sp
+Si non pr\('ecis\('ee, la libc utilisera le nombre de rounds par d\('efaut (5000)\&.
+.sp
+Les valeurs doivent \(^etre comprises dans l\*(Aqintervalle 1\ \&000\ \&\-\ \&999\ \&999\ \&999\&.
+.sp
+Si une seule des variables
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+ou
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+est configur\('ee, alors cette valeur sera utilis\('ee\&.
+.sp
+Si
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, la valeur la plus \('elev\('ee sera utilis\('ee\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBnewgrp\fR(1),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBgrpck\fR(8),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

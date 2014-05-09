@@ -1,0 +1,207 @@
+'\" t
+.\"     Title: groupmod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "GROUPMOD" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+groupmod \- modify a group definition on the system
+.SH "大纲"
+.HP \w'\fBgroupmod\fR\ 'u
+\fBgroupmod\fR [\fI选项\fR] \fIGROUP\fR
+.SH "描述"
+.PP
+The
+\fBgroupmod\fR
+command modifies the definition of the specified
+\fIGROUP\fR
+by modifying the appropriate entry in the group database\&.
+.SH "选项"
+.PP
+\fBgroupmod\fR
+命令可以接受的选项有：
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+The group ID of the given
+\fIGROUP\fR
+will be changed to
+\fIGID\fR\&.
+.sp
+The value of
+\fIGID\fR
+must be a non\-negative decimal integer\&. This value must be unique, unless the
+\fB\-o\fR
+option is used\&.
+.sp
+Users who use the group as primary group will be updated to keep the group as their primary group\&.
+.sp
+Any files that have the old group ID and must continue to belong to
+\fIGROUP\fR, must have their group ID changed manually\&.
+.sp
+No checks will be performed with regard to the
+\fBGID_MIN\fR,
+\fBGID_MAX\fR,
+\fBSYS_GID_MIN\fR, or
+\fBSYS_GID_MAX\fR
+from
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-n\fR, \fB\-\-new\-name\fR\ \&\fINEW_GROUP\fR
+.RS 4
+The name of the group will be changed from
+\fIGROUP\fR
+to
+\fINEW_GROUP\fR
+name\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+When used with the
+\fB\-g\fR
+option, allow to change the group
+\fIGID\fR
+to a non\-unique value\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+已经加密过的密码，就像
+\fBcrypt\fR(3)
+返回的那样。
+.sp
+\fB注意：\fR不推荐使用这个选项，因为密码(或加密过的密码)会被用户通过列出这个过程而看到。
+.sp
+您应该确保密码符合系统的密码政策。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.SH "退出值"
+.PP
+\fBgroupmod\fR
+命令可以返回如下值：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI3\fR
+.RS 4
+给了选项一个无效的参数
+.RE
+.PP
+\fI4\fR
+.RS 4
+指定的组不存在
+.RE
+.PP
+\fI6\fR
+.RS 4
+指定的组不存在
+.RE
+.PP
+\fI9\fR
+.RS 4
+组名已经在使用
+.RE
+.PP
+\fI10\fR
+.RS 4
+无法更新组文件
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

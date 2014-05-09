@@ -1,0 +1,277 @@
+'\" t
+.\"     Title: limits
+.\"    Author: Luca Berra
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dateiformate und konvertierung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "LIMITS" "5" "09.05.2014" "shadow\-utils 4\&.2" "Dateiformate und konvertierung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+limits \- Festlegung von Resourcenbeschr\(:ankungen
+.SH "BESCHREIBUNG"
+.PP
+Die
+\fIlimits\fR\-Datei (standardm\(:a\(ssig
+/etc/limits
+oder die durch LIMITS_FILE in
+config\&.h
+festgelegte) bezeichnet die von Ihnen eingef\(:uhrte Beschr\(:ankung von Ressourcen\&. Sie sollte Root geh\(:oren und nur von ihm lesbar sein\&.
+.PP
+Standardm\(:a\(ssig bestehen f\(:ur Root keine Einschr\(:ankungen\&. Tats\(:achlich gibt es keine M\(:oglichkeit, mit diesem Verfahren Root\-Konten (Konten mit der UID 0) Beschr\(:ankungen aufzuerlegen\&.
+.PP
+Jede Zeile beschreibt eine Beschr\(:ankung f\(:ur einen Benutzer in der Form:
+.PP
+\fIBenutzer BESCHR\(:ANKUNGSZEICHENKETTE\fR
+.PP
+oder in der Form:
+.PP
+\fI@Gruppe BESCHR\(:ANKUNGSZEICHENKETTE\fR
+.PP
+Die
+\fIBESCHR\(:ANKUNGSZEICHENKETTE\fR
+ist eine Kette von Ressourcen\-Beschr\(:ankungen\&. Jede Beschr\(:ankung besteht aus einer Buchstabenkennung, der eine zahlenm\(:a\(ssige Beschr\(:ankung folgt\&.
+.PP
+G\(:ultige Kennungen sind:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A: maximaler Adressraum (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+C: maximale Gr\(:o\(sse der Speicherabbild\-Datei
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+D: maximale Datengr\(:o\(sse (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+F: maximale Dateigr\(:o\(sse (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+K: Maske f\(:ur die Dateierstellung, wird von
+\fBumask\fR(2)
+gesetzt\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+I: Maximaler Wert von nice (0 bis 39, was in 20 bis \-19 \(:ubersetzt wird)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+L: maximale Anzahl von Logins f\(:ur diesen Benutzer
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+M: maximaler gesperrter Adressbereich im Speicher (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+N: maximale Anzahl offener Dateien
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+O: Maximale Echtzeit\-Priorit\(:at
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+P: Prozesspriorit\(:at, wird von
+\fBsetpriority\fR(2)
+gesetzt\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+R: maximale Resident Set Size (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+S: maximale Gr\(:o\(sse des Stapelverarbeitungsspeichers (KB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+T: maximale CPU\-Zeit (Min)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+U: maximale Anzahl von Prozessen
+.RE
+.PP
+Zum Beispiel ist
+\fIL2D2048N5\fR
+eine g\(:ultige
+\fIBESCHR\(:ANKUNGSZEICHENKETTE\fR\&. Um das Lesen zu erleichtern, werden folgende Eintr\(:age gleich behandelt:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      Benutzername L2D2048N5
+      Benutzername L2 D2048 N5
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Beachten Sie, dass nach
+\fIBenutzername\fR
+die \(:ubrige Zeile als Zeichenkette f\(:ur Beschr\(:ankungen angesehen wird\&. Kommentare sind daher nicht zul\(:assig\&. Eine ung\(:ultige Zeichenkette wird von
+\fBlogin\fR
+ignoriert\&.
+.PP
+Standardwerte werden mit dem Benutzernamen \(Fc\fI*\fR\(Fo festgelegt\&. Falls Sie mehrfach
+\fIStandard\fR\-Werte in der
+\fIBESCHR\(:ANKUNGSDATEI\fR
+bestimmen, wird nur der letzte ber\(:ucksichtigt\&.
+.PP
+Beschr\(:ankungen, die in der Form \(Fc\fI@group\fR\(Fo festgelegt wurden, gelten f\(:ur alle Mitglieder der angegebenen Gruppe
+\fIgroup\fR\&.
+.PP
+Wenn mehr als eine Zeile mit Beschr\(:ankungen f\(:ur einen Benutzer vorhanden ist, wird f\(:ur ihn nur die erste Zeile ber\(:ucksichtigt\&.
+.PP
+Wenn keine Zeile auf einen Benutzer zutrifft, wird auf ihn die letzte Zeile mit
+\fI@group\fR
+angewendet, die auf eine Gruppe verweist, deren Mitglied er ist\&. Wenn er auch nicht Mitglied einer der aufgef\(:uhrten Gruppe ist, wird auf ihn die letzte Zeile, in der Standardwerte bestimmt sind, angewendet\&.
+.PP
+Mit einem Gedankenstrich \(Fc\fI\-\fR\(Fo k\(:onnen Sie alle Beschr\(:ankungen f\(:ur einen Benutzer zu entfernen\&.
+.PP
+Um f\(:ur einen Benutzer eine bestimmte Beschr\(:ankung zu entfernen, m\(:ussen Sie f\(:ur diese Beschr\(:ankung anstelle des numerischen Wertes einen Gedankenstrich \(Fc\fI\-\fR\(Fo setzen\&.
+.PP
+Ber\(:ucksichtigen Sie auch, dass alle Beschr\(:ankungen nur JE ANMELDUNG gelten\&. Sie sind nicht global und auch nicht dauerhaft\&. Vielleicht wird es einmal globale Beschr\(:ankungen geben, f\(:ur jetzt muss dies aber reichen ;)
+.SH "DATEIEN"
+.PP
+/etc/limits
+.RS 4
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBlogin\fR(1),
+\fBsetpriority\fR(2),
+\fBsetrlimit\fR(2)\&.

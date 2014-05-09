@@ -1,0 +1,207 @@
+'\" t
+.\"     Title: chgpasswd
+.\"    Author: Thomas K\(/loczko <kloczek@pld.org.pl>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "CHGPASSWD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+chgpasswd \- Mettre \(`a jour par lot des mots de passe des groupes
+.SH "SYNOPSIS"
+.HP \w'\fBchgpasswd\fR\ 'u
+\fBchgpasswd\fR [\fIoptions\fR]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBchgpasswd\fR
+lit une liste de paires de noms de groupes et de mots de passe depuis l\*(Aqentr\('ee standard et utilise ces informations pour mettre \(`a jour un ensemble de groupes existants\&. Chaque ligne est au format suivant\ \&:
+.PP
+\fInom_utilisateur\fR:\fImot_de_passe\fR
+.PP
+Par d\('efaut, le mot de passe doit \(^etre fourni en clair, et est chiffr\('e par
+\fBchgpasswd\fR\&.
+.PP
+L\*(Aqalgorithme de chiffrement peut \(^etre d\('efini pour le syst\(`eme avec la variable
+\fBENCRYPT_METHOD\fR
+de
+/etc/login\&.defs
+et peut \(^etre surcharg\('e avec les options
+\fB\-e\fR,
+\fB\-m\fR
+ou
+\fB\-c\fR\&.
+.PP
+Cette commande est destin\('ee aux gros syst\(`emes pour lesquels un nombre importants de comptes sont cr\('e\('es en une seule fois\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBchgpasswd\fR
+sont\ \&:
+.PP
+\fB\-c\fR, \fB\-\-crypt\-method\fR
+.RS 4
+Utiliser la m\('ethode pr\('ecis\('ee pour chiffrer les mots de passe\&.
+.sp
+Les m\('ethodes disponibles sont DES, MD5, NONE et SHA256 ou SHA512 si votre libc prend en charge ces m\('ethodes\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-encrypted\fR
+.RS 4
+Indiquer que les mots de passe fournis sont chiffr\('es\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-md5\fR
+.RS 4
+Permettre d\*(Aqutiliser le chiffrement MD5, plut\(^ot que DES, lorsque les mots de passe fournis ne sont pas chiffr\('es\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sha\-rounds\fR
+.RS 4
+Utiliser le nombre de rounds pr\('ecis\('e pour chiffrer les mots de passe\&.
+.sp
+La valeur 0 signifie que le syst\(`eme choisira la valeur par d\('efaut du nombre de rounds pour la m\('ethode de chiffrement (5\ \&000)\&.
+.sp
+Une valeur minimale de 1\ \&000 et une valeur maximale de 999\ \&999\ \&999 seront impos\('ees\&.
+.sp
+Vous ne pouvez utiliser cette m\('ethode qu\*(Aqavec les m\('ethodes de chiffrement SHA256 ou SHA512\&.
+.sp
+Par d\('efaut, le nombre de rounds est d\('efini par les variables SHA_CRYPT_MIN_ROUNDS et SHA_CRYPT_MAX_ROUNDS dans
+/etc/login\&.defs\&.
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+Pensez \(`a configurer les permissions ou umask afin d\*(Aqemp\(^echer la lecture des fichiers non chiffr\('es par les d\*(Aqautres utilisateurs\&.
+.PP
+Vous devez vous assurer que les mots de passe et la m\('ethode de chiffrement respectent la politique de mot de passe du syst\(`eme\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBENCRYPT_METHOD\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir les algorithmes de chiffrement par d\('efaut du syst\(`eme pour coder les mots de passes (si aucun algorithme n\*(Aqa \('et\('e indiqu\('e sur la ligne de commandes)\&.
+.sp
+Les valeurs suivantes sont accept\('ees\ \&:
+\fIDES\fR
+(par d\('efaut),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Remarque\ \&: ce param\(`etre remplace la variable
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (bool\('een)
+.RS 4
+Indiquer si un mot de passe doit \(^etre chiffr\('e en utilisant l\*(Aqalgorithme bas\('e sur MD5\&. Si configur\('ee \(`a
+\fIyes\fR, les nouveaux mots de passe seront chiffr\('es en utilisant l\*(Aqalgorithme bas\('e sur MD5 compatible avec celui utilis\('e par les versions r\('ecentes de FreeBSD\&. Il g\(`ere des mots de passe de longueur illimit\('ee et des cha\(^ines de salage plus longues\&. Configurez\-la \(`a
+\fIno\fR
+pour copier les mots de passe chiffr\('es sur d\*(Aqautres syst\(`emes qui ne comprennent pas le nouvel algorithme\&. la valeur par d\('efaut est
+\fIno\fR\&.
+.sp
+Cette variable est \('ecras\('ee par la variable
+\fBENCRYPT_METHOD\fR
+ou par toute option de la ligne de commande utilis\('ee pour configurer l\*(Aqalgorithme de chiffrement\&.
+.sp
+Cette variable est obsol\(`ete\&. Vous devriez utiliser
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (nombre), \fBSHA_CRYPT_MAX_ROUNDS\fR (nombre)
+.RS 4
+Quand
+\fBENCRYPT_METHOD\fR
+est configur\('ee \(`a
+\fISHA256\fR
+ou
+\fISHA512\fR, cela d\('efinit le nombre de rounds de SHA utilis\('es par l\*(Aqalgorithme de chiffrement par d\('efaut (quand le nombre de rounds n\*(Aqest pas pr\('ecis\('e sur la ligne de commande)\&.
+.sp
+Avec beaucoup de rounds, il est plus difficile de trouver le mot de passe avec une attaque par force brute\&. Veuillez remarquer que plus de ressources processeur seront n\('ecessaires pour authentifier les utilisateurs\&.
+.sp
+Si non pr\('ecis\('ee, la libc utilisera le nombre de rounds par d\('efaut (5000)\&.
+.sp
+Les valeurs doivent \(^etre comprises dans l\*(Aqintervalle 1\ \&000\ \&\-\ \&999\ \&999\ \&999\&.
+.sp
+Si une seule des variables
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+ou
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+est configur\('ee, alors cette valeur sera utilis\('ee\&.
+.sp
+Si
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, la valeur la plus \('elev\('ee sera utilis\('ee\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgpasswd\fR(1),
+\fBgroupadd\fR(8),
+\fBlogin.defs\fR(5)\&.

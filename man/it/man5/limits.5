@@ -1,0 +1,275 @@
+'\" t
+.\"     Title: limits
+.\"    Author: Luca Berra
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formati di file e conversioni
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "LIMITS" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formati di file e conversioni"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+limits \- definizione dei limiti di risorsa
+.SH "DESCRIZIONE"
+.PP
+Il file
+\fIlimits\fR
+(/etc/limits
+o quanto definito da LIMITS_FILE in
+config\&.h) descrive i limiti di risorsa che si vuole imporre\&. Deve essere di propriet\(`a di root e leggibile solo dall\*(Aqaccount root\&.
+.PP
+In maniera predefinita non c\*(Aq\(`e nessun limite alla quota di \(Foroot\(Fc\&. In effetti non c\*(Aq\(`e nessun modo per imporre una quota massima tramite questa procedura agli account equivalenti a root (cio\(`e tutti quelli con UID 0)\&.
+.PP
+Ogni riga descrive un limite per l\*(Aqutente in questo formato:
+.PP
+\fIutente TESTO_LIMITE\fR
+.PP
+oppure nel formato:
+.PP
+\fI@gruppo TESTO_LIMITE\fR
+.PP
+Dove
+\fITESTO_LIMITE\fR
+\(`e un testo dato dalla concatenazione di vari limiti di risorsa\&. Ogni limite consiste di una lettera identificativa seguita dal limite numerico\&.
+.PP
+Gli identificatori validi sono:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A: spazio massimo di indirizzamento (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+C: dimensione massima dei file \(Focore\(Fc (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+D: spazio massimo per i dati (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+F: dimensione massima di file (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+K: maschera dei permessi per i file creati, impostata da
+\fBumask\fR(2)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+I: massimo valore di \(Fonice\(Fc (0\&.\&.39 che viene tradotto in 20\&.\&.\-19)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+L: massimo numero di accessi per questo utente
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+M: massima quantit\(`a di memoria bloccata (della quale non si pu\(`o fare \(Foswap\(Fc) (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+N: numero massimo di file aperti
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+O: massima priorit\(`a \(Foreal time\(Fc
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+P: priorit\(`a di processo, impostata con
+\fBsetpriority\fR(2)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+R: massimo \(Foresident set size\(Fc (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+S: dimensione massima della pila (kB)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+T: quantit\(`a massima di tempo CPU (MIN)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+U: massimo numero di processi
+.RE
+.PP
+Ad esempio,
+\fIL2D2048N5\fR
+\(`e uno testo valido per
+\fITESTO_LIMITE\fR\&. Per sempicit\(`a di lettura le seguenti scritture sono equivalenti:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+   nomeutente L2D2048N5
+   nomeutente L2 D2048 N5
+   
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Notare che dopo
+\fInomeutente\fR
+il resto della riga \(`e considerato il testo del limite, quindi non sono ammessi commenti a fine riga\&. Un testo limite non valido verr\(`a ignorato dal programma
+\fBlogin\fR\&.
+.PP
+L\*(Aqimpostazione predefinita \(`e quella che ha come nome utente \(Fo\fI*\fR\(Fc\&. Se si hanno varie righe
+\fIpredefinite\fR
+nel file
+\fILIMITS_FILE\fR
+verr\(`a utilizzata solo l\*(Aqultima\&.
+.PP
+I limiti specificati nella forma \(Fo\fI@gruppo\fR\(Fc si applicano ai membri del
+\fIgruppo\fR
+specificato\&.
+.PP
+Se ci sono pi\(`u righe per lo stesso utente nel file limits, allora solo la prima verr\(`a considerata\&.
+.PP
+Se non ci sono righe specifiche per un utente, verr\(`a presa l\*(Aqultima riga
+\fI@group\fR
+relativa ad un gruppo del quale l\*(Aqutente \(`e membro, oppure l\*(Aqultima riga con limiti predefiniti se non si trova nessuna riga con gruppi dell\*(Aqutente\&.
+.PP
+Per eliminare completamente l\*(Aqimpostazione di limiti per un certo utente, si pu\(`o utilizzare \(Fo\fI\-\fR\(Fc\&.
+.PP
+Per disabilitare i limiti per un utente, un singolo trattino \(Fo\fI\-\fR\(Fc pu\(`o essere utilizzato al posto del valore numerico del limite\&.
+.PP
+Notare inoltre che tutte queste impostazioni sono effettuate ad ogni accesso\&. Non si tratta di impostazioni globali n\('e permanenti\&. Forse limiti globali saranno possibili in futuro, ma per ora devono bastare questi ;)
+.SH "FILE"
+.PP
+/etc/limits
+.RS 4
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBlogin\fR(1),
+\fBsetpriority\fR(2),
+\fBsetrlimit\fR(2)\&.

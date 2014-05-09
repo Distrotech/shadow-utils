@@ -1,0 +1,239 @@
+'\" t
+.\"     Title: grpck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GRPCK" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+grpck \- V\('erifier l\*(Aqint\('egrit\('e des fichiers d\*(Aqadministration des groupes
+.SH "SYNOPSIS"
+.HP \w'\fBgrpck\fR\ 'u
+\fBgrpck\fR [options] [\fIgroupe\fR\ [\ \fIshadow\fR\ ]]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBgrpck\fR
+v\('erifie l\*(Aqint\('egrit\('e des informations sur les groupes du syst\(`eme\&. Toutes les entr\('ees de
+/etc/groupet /etc/gshadow
+sont v\('erifi\('ees afin de s\*(Aqassurer qu\*(Aqelles ont le bon format et qu\*(Aqelles contiennent des donn\('ees valables dans chaque champ\&. Une confirmation de l\*(Aqutilisateur sera demand\('ee pour d\('etruire les entr\('ees mal format\('ees ou ayant d\*(Aqautres erreurs non r\('ecup\('erables\&.
+.PP
+Voici les v\('erifications effectu\('ees\ \&:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+nombre correct de champs\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+unicit\('e et validit\('e des noms de groupe\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e des identifiants de groupe
+(seulement /etc/group)\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e de la liste de membres
+et d\*(Aqadministrateurs\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+correspondance d\*(Aqentr\('ee dans le fichier
+/etc/gshadow
+(respectivement
+/etc/group
+pour les v\('erifications de
+gshadow)\&.
+.RE
+.PP
+Une erreur dans le nombre de champs ou la non unicit\('e d\*(Aqun nom de groupe sera fatale\&. Si le nombre de champs n\*(Aqest pas correct, il sera demand\('e \(`a l\*(Aqutilisateur de supprimer la ligne\&. Si l\*(Aqutilisateur ne r\('epond pas par l\*(Aqaffirmative, les v\('erifications suivantes ne seront pas effectu\('ees\&. Il sera \('egalement demand\('e de supprimer les entr\('ees correspondant aux noms de groupe redondants, mais dans ce cas, les autres v\('erifications seront effectu\('ees\&. Toutes les autres erreurs ne sont que des avertissements et l\*(Aqutilisateur est encourag\('e \(`a utiliser
+\fBgroupmod\fR
+pour les corriger\&.
+.PP
+Les commandes qui op\(`erent sur
+les fichiers/etc/groupet /etc/gshadow
+ne peuvent pas modifier les entr\('ees corrompues ou redondantes\&.
+\fBgrpck\fR
+doit \(^etre utilis\('ee dans ce cas pour supprimer ces entr\('ees\&.
+.SH "OPTIONS"
+.PP
+Les options
+\fB\-r\fR
+et
+\fB\-s\fR
+ne peuvent pas \(^etre combin\('ees\&.
+.PP
+Les options disponibles pour la commande
+\fBgrpck\fR
+sont\ \&:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+Ex\('ecute la commande
+\fBgrpck\fR
+en mode lecture seule\&. Cela signifie qu\*(Aq\(`a toutes les questions concernant des modifications il sera r\('epondu
+\fIno\fR
+sans l\*(Aqintervention de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+Trie les entr\('ees de
+/etc/groupet /etc/gshadow
+par GID\&.
+.RE
+.PP
+Par d\('efaut,
+\fBgrpck\fR
+op\(`ere sur
+/etc/groupet /etc/gshadow\&. L\*(Aqutilisateur peut pr\('eciser d\*(Aqautres fichiers avec
+les param\(`etres\fIgroup\fRet \fIshadow\fR\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBgrpck\fR
+renvoie les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI1\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI2\fR
+.RS 4
+une entr\('ee de groupe ou plus est incorrecte
+.RE
+.PP
+\fI3\fR
+.RS 4
+impossible d\*(Aqouvrir les fichiers group
+.RE
+.PP
+\fI4\fR
+.RS 4
+impossible de verrouiller les fichiers group
+.RE
+.PP
+\fI5\fR
+.RS 4
+impossible de mettre \(`a jour les fichiers group
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgroup\fR(5),
+\fBgroupmod\fR(8),
+\fBgshadow\fR(5),\fBpasswd\fR(5),
+\fBpwck\fR(8),
+\fBshadow\fR(5)\&.

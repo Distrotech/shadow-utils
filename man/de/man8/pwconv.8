@@ -1,0 +1,185 @@
+'\" t
+.\"     Title: pwconv
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "PWCONV" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pwconv, pwunconv, grpconv, grpunconv \- konvertiert zu oder von Shadow\-Passw\(:ortern und \-gruppen
+.SH "\(:UBERSICHT"
+.HP \w'\fBpwconv\fR\ 'u
+\fBpwconv\fR [\fIOptionen\fR]
+.HP \w'\fBpwunconv\fR\ 'u
+\fBpwunconv\fR [\fIOptionen\fR]
+.HP \w'\fBgrpconv\fR\ 'u
+\fBgrpconv\fR [\fIOptionen\fR]
+.HP \w'\fBgrpunconv\fR\ 'u
+\fBgrpunconv\fR [\fIOptionen\fR]
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBpwconv\fR
+erstellt eine
+\fIshadow\fR\-Datei aus einer
+\fIpasswd\fR\-Datei und gegebenenfalls aus einer bereits vorhandenen
+\fIshadow\fR\-Datei\&.
+.PP
+Der Befehl
+\fBpwunconv\fR
+erstellt eine
+\fIpasswd\fR\-Datei aus einer
+\fIpasswd\fR\- und
+\fIshadow\fR\-Datei und entfernt anschlie\(ssend die\fIshadow\fR\-Datei\&.
+.PP
+Der Befehl
+\fBgrconv\fR
+erstellt eine
+\fIgshadow\fR\-Datei aus einer
+\fIgroup\fR\-Datei und gegebenenfalls aus einer bereits vorhandenen
+\fIgshadow\fR\-Datei\&.
+.PP
+Der Befehl
+\fBgrpunconv\fR
+erstellt eine
+\fIgroup\fR\-Datei aus einer
+\fIgroup\fR\- und
+\fIgshadow\fR\-Datei und entfernt anschlie\(ssend die
+\fIgshadow\fR\-Datei\&.
+.PP
+Diese vier Programme funktionieren mit der normalen und der Shadow\-Passwortdatei und den Gruppendateien:
+/etc/passwd,
+/etc/group,
+/etc/shadow
+und
+/etc/gshadow\&.
+.PP
+Jedes dieser Programme erzeugt vor der Konvertierung die notwendigen Sperren\&.
+\fBpwconv\fR
+und
+\fBgrpconv\fR
+sind vergleichbar\&. Zuerst werden die Eintr\(:age aus der Shadow\-Datei entfernt, die nicht in der Hauptdatei enthalten sind\&. Anschlie\(ssend werden die Eintr\(:age in der Shadow\-Datei aktualisiert, die kein \(Fcx\(Fo als Passwort haben\&. Zuletzt werden die Passw\(:orter in der Hauptdatei durch \(Fcx\(Fo ersetzt\&. Diese Programme k\(:onnen f\(:ur eine erstmalige Konvertierung genutzt werden als auch, um die Shadow\-Datei zu aktualisieren, falls die Hauptdatei von Hand bearbeitet wurde\&.
+.PP
+\fBpwconv\fR
+verwendet die Werte
+\fIPASS_MIN_DAYS\fR,
+\fIPASS_MAX_DAYS\fR
+und
+\fIPASS_WARN_AGE\fR
+aus
+/etc/login\&.defs, wenn neue Eintr\(:age zu
+/etc/shadow
+hinzugef\(:ugt werden\&.
+.PP
+Ebenfalls sind die Befehle
+\fBpwunconv\fR
+und
+\fBgrpunconv\fR
+\(:ahnlich\&. Passw\(:orter in der Hauptdatei werden durch die Shadow\-Datei aktualisiert\&. Eintr\(:age, welche in der Hauptdatei, aber nicht in der Shadow\-Datei vorhanden sind, bleiben unber\(:uhrt\&. Zuletzt wird die Shadow\-Datei gel\(:oscht\&. Eine Information f\(:ur den Verfall von Passw\(:ortern geht durch
+\fBpwunconv\fR
+verloren\&. Es wird aber so viel wie m\(:oglich umgewandelt\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die von den Befehlen
+\fBpwconv\fR,
+\fBpwunconv\fR,
+\fBgrpconv\fR
+und
+\fBgrpunconv\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.SH "FEHLER"
+.PP
+Fehler in der Passwort\- oder Gruppendatei (wie z\&.B\&. ung\(:ultige oder doppelte Eintr\(:age) k\(:onnen zu Endlosschleifen oder anderen seltsamen Fehlern f\(:uhren\&. Sie sollten daher
+\fBpwck\fR
+und
+\fBgrpck\fR
+ausf\(:uhren, um solche Fehler zu entfernen, bevor Sie von oder zu Shadow\-Passw\(:ortern oder \-gruppen umwandeln\&.
+.SH "KONFIGURATION"
+.PP
+Die folgende Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten von
+\fBgrpconv\fR
+und
+\fBgrpunconv\fR:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten von
+\fBpwconv\fR:
+.PP
+\fBPASS_MAX_DAYS\fR (Zahl)
+.RS 4
+Die maximale Anzahl von Tagen, f\(:ur die ein Passwort verwendet werden darf\&. Wenn das Passwort \(:alter ist, wird ein Wechsel des Passworts erzwungen\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (Zahl)
+.RS 4
+Die Mindestanzahl von Tagen, bevor ein Wechsel des Passworts zugelassen wird\&. Ein vorheriger Versuch, das Passwort zu \(:andern, wird abgelehnt\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (Zahl)
+.RS 4
+Die Anzahl von Tagen, an denen der Benutzer vorgewarnt wird, bevor das Passwort verf\(:allt\&. Eine Null bedeutet, dass eine Warnung nur am Tag des Verfalls ausgegeben wird\&. Ein negativer Wert bedeutet, dass keine Vorwarnung erfolgt\&. Falls nicht angegeben, wird keine Vorwarnung ausgegeben\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgrpck\fR(8),
+\fBlogin.defs\fR(5),
+\fBpwck\fR(8)\&.

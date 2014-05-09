@@ -1,0 +1,834 @@
+'\" t
+.\"     Title: login.defs
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dateiformate und konvertierung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "LOGIN\&.DEFS" "5" "09.05.2014" "shadow\-utils 4\&.2" "Dateiformate und konvertierung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+login.defs \- Konfiguration der Werkzeugsammlung f\(:ur Shadow\-Passw\(:orter
+.SH "BESCHREIBUNG"
+.PP
+Die Datei
+/etc/login\&.defs
+legt die systemspezifische Konfiguration der Werkzeugsammlung f\(:ur Shadow\-Passw\(:orter fest\&. Diese Datei muss vorhanden sein\&. Wenn sie fehlt, wird das System zwar laufen, es k\(:onnen aber unerw\(:unschte Ergebnisse auftauchen\&.
+.PP
+Diese Datei ist eine lesbare Textdatei\&. Jede Zeile der Datei beschreibt einen Konfigurationsparameter\&. Eine Zeile besteht aus einem Konfigurationsnamen und einem Wert, die durch ein Leerzeichen getrennt sind\&. Leer\- und Kommentarzeilen werden nicht beachtet\&. Kommentare werden mit dem Rautezeichen \(Fc#\(Fo eingeleitet\&. Die Raute muss das erste nicht leere Zeichen der Zeile sein\&.
+.PP
+Die Parameterwerte k\(:onnen aus vier Typen bestehen: Zeichenketten, Boolesch, Zahlen und lange Zahlen\&. Eine Zeichenkette kann aus jedem druckbaren Zeichen bestehen\&. Ein Boolesch sollte \(Fcyes\(Fo oder \(Fcno\(Fo sein\&. Einem anderen oder undefinierten Parameter f\(:ur Boolesch wird der Wert \(Fcno\(Fo zugewiesen\&. Normale und lange Zahlen k\(:onnen aus Dezimalzahlen, Oktalzahlen (beginnen mit \(Fc0\(Fo) oder Hexadezimalzahlen (beginnen mit \(Fc0x\(Fo) bestehen\&. Die maximale Gr\(:o\(sse der Parameter normaler und langer Zahlen ist systemabh\(:angig\&.
+.PP
+Die folgenden Konfigurationsm\(:oglichkeiten sind vorhanden:
+.PP
+\fBCHFN_AUTH\fR (boolesch)
+.RS 4
+Falls
+\fIyes\fR, ben\(:otigt das Programm
+\fBchfn\fR
+eine Authentifizierung, bevor es \(:Anderungen vornimmt, sofern es nicht von Root ausgef\(:uhrt wird\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (Zeichenkette)
+.RS 4
+Der Parameter bestimmt, welcher Wert in dem
+\fIgecos\fR\-Feld von
+/etc/passwd
+von gew\(:ohnlichen Benutzern mittels des Programms
+\fBchfn\fR
+ge\(:andert werden darf\&. Er kann aus jeder Kombination der Buchstaben
+\fIf\fR
+,\fIr\fR,
+\fIw\fR
+und
+\fIh\fR
+bestehen\&. Diese Buchstaben stehen f\(:ur den vollst\(:andigen Namen, die Zimmernummer, die gesch\(:aftliche Telefonnummer und die private Telefonnummer\&. Zum Zweck der Abw\(:artskompatibilit\(:at entspricht
+\fIyes\fR\fIrwh\fR
+und
+\fIno\fR\fIfrwh\fR\&. Falls nichts festgelegt wird, kann nur Root \(:Anderungen vornehmen\&. Die gr\(:o\(sste Einschr\(:ankung erreicht man besser, indem
+chfn
+nicht mit SUID\-Rechten ausgestattet wird\&.
+.RE
+.PP
+\fBCHSH_AUTH\fR (boolesch)
+.RS 4
+Falls
+\fIyes\fR, ben\(:otigt das Programm
+\fBchsh\fR
+eine Authentifizierung, bevor es \(:Anderungen vornimmt, sofern es nicht von Root ausgef\(:uhrt wird\&.
+.RE
+.PP
+\fBCONSOLE\fR (Zeichenkette)
+.RS 4
+Die Konfiguration erfolgt entweder \(:uber die Angabe des vollen Pfadnamens einer Datei, welche die Namen der Ger\(:ate enth\(:alt (eines pro Zeile), oder mit einer Liste der Ger\(:atenamen, die mit \(Fc:\(Fo getrennt sind\&. Root kann sich nur auf diesen Ger\(:aten anmelden\&.
+.sp
+Wenn es unkonfiguriert gelassen wird, kann sich Root auf jedem Ger\(:at anmelden\&.
+.sp
+Das Ger\(:at soll ohne vorangestelltes /dev/ angegeben werden\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (Zeichenkette)
+.RS 4
+Liste von Gruppen, deren Mitglied der Benutzer wird, wenn der sich auf der Konsole anmeldet, die mit dem Parameter CONSOLE festgelegt wird\&. Standardm\(:a\(ssig ist die Liste leer\&.
+
+Seien Sie vorsichtig\&. Benutzer k\(:onnen dauerhaft Zugang zu den Gruppen erlangen, auch wenn sie nicht auf der Konsole angemeldet sind\&.
+.RE
+.PP
+\fBCREATE_HOME\fR (boolesch)
+.RS 4
+bestimmt, ob standardm\(:a\(ssig ein Home\-Verzeichnis f\(:ur neue Benutzer erstellt werden soll
+.sp
+Diese Einstellung trifft nicht auf Systembenutzer zu\&. Sie kann auf der Befehlszeile \(:uberschrieben werden\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (boolesch)
+.RS 4
+Legt fest, ob ein Login erlaubt wird, wenn mit cd nicht in das Home\-Verzeichnis gewechselt werden kann\&. Standardm\(:a\(ssig wird dies nicht zugelassen\&.
+.sp
+Falls auf
+\fIyes\fR
+gesetzt, wird der Benutzer mit dem Wurzelverzeichnis (/) angemeldet, wenn mit cd nicht in sein Home\-Verzeichnis gewechselt werden kann\&.
+.RE
+.PP
+\fBENCRYPT_METHOD\fR (Zeichenkette)
+.RS 4
+Damit wird der standardm\(:a\(ssige Verschl\(:usselungsalgorithmus, mit dem Passw\(:orter verschl\(:usselt werden, bestimmt (soweit nicht in der Befehlszeile ein Algorithmus angegeben wird)\&.
+.sp
+Ihm kann einer der folgenden Wert zugewiesen werden:
+\fIDES\fR
+(default),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Hinweis: Dieser Parameter \(:uberschreibt die Variable
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBENV_HZ\fR (Zeichenkette)
+.RS 4
+Wenn vergeben, wird damit die Umgebungsvariable HZ definiert, wenn sich ein Benutzer anmeldet\&. Dem Wert muss ein
+\fIHZ=\fR
+vorangestellt werden\&. Ein \(:ublicher Wert bei Linux ist
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_PATH\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable PATH definiert, wenn sich ein normaler Benutzer anmeldet\&. Der Wert ist eine Liste, deren Eintr\(:age durch Doppelpunkte getrennt sind (zum Beispiel
+\fI/bin:/usr/bin\fR)\&. Ihr kann ein
+\fIPATH=\fR
+vorangestellt werden\&. Der Standardwert ist
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable PATH definiert, wenn sich der Superuser anmeldet\&. Der Wert ist eine Liste, deren Eintr\(:age durch Doppelpunkte getrennt sind (zum Beispiel
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR)\&. Ihr kann ein
+\fIPATH=\fR
+vorangestellt werden\&. Der Standardwert ist
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable TZ definiert, wenn sich ein Benutzer anmeldet\&. Der Wert kann der Name der Zeitzone sein, dem
+\fITZ=\fR
+vorausgeht (zum Beispiel
+\fITZ=CST6CDT\fR), oder der vollst\(:andige Pfad der Datei, welche die Konfiguration der Zeitzone enth\(:alt (zum Beispiel
+/etc/tzname)\&.
+.sp
+Wenn ein vollst\(:andiger Pfadname angegeben wird, die Datei aber nicht existiert oder nicht lesbar ist, wird
+\fITZ=CST6CDT\fR
+verwendet\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (Zeichenkette)
+.RS 4
+Wenn diese Datei vorhanden ist, wird die Anmeldeumgebung aus ihr gelesen\&. Jede Zeile sollte die Form Name=Wert haben\&.
+.sp
+Zeilen, die mit einem # beginnen, werden als Kommentare behandelt und daher ignoriert\&.
+.RE
+.PP
+\fBERASECHAR\fR (Zahl)
+.RS 4
+Das L\(:oschzeichen des Terminals (\fI010\fR
+= R\(:ucktaste,
+\fI0177\fR
+= Entf)\&.
+.sp
+Wenn der Wert mit \(Fc0\(Fo beginnt, wird er als Oktalzahl gewertet, wenn er mit \(Fc0x\(Fo beginnt, als Hexadezimalzahl\&.
+.RE
+.PP
+\fBFAIL_DELAY\fR (Zahl)
+.RS 4
+Wartezeit in Sekunden, ehe nach einem fehlgeschlagenen Anmeldeversuch ein neuer unternommen werden kann
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung und Anzeige der Informationen zu fehlgeschlagenen Anmeldeversuchen in
+/var/log/faillog
+.RE
+.PP
+\fBFAKE_SHELL\fR (Zeichenkette)
+.RS 4
+Falls angegeben, f\(:uhrt
+\fBlogin\fR
+diese Shell anstelle der in
+/etc/passwd
+angegebenen Shell des Benutzers aus\&.
+.RE
+.PP
+\fBFTMP_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, werden fehlgeschlagene Anmeldeversuche in dieser Datei im Format utmp protokolliert\&.
+.RE
+.PP
+\fBGID_MAX\fR (Zahl), \fBGID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung normaler Gruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBGID_MIN\fR
+ist 1000, f\(:ur
+\fBGID_MAX\fR
+60\&.000\&.
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, kann diese Datei die \(:ubliche Informationsanzeige w\(:ahrend des Anmeldevorgangs unterbinden\&. Wenn ein vollst\(:andiger Pfad angegeben wird, wird der Modus ohne Anmeldeinformationen verwendet, wenn der Name oder die Shell des Benutzers in der Datei enthalten sind\&. Wenn kein vollst\(:andiger Pfad angegeben wird, wird der Modus ohne Anmeldeinformationen aktiviert, wenn die Datei im Home\-Verzeichnis des Benutzers existiert\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, wird diese Datei vor der Anmeldeaufforderung angezeigt\&.
+.RE
+.PP
+\fBKILLCHAR\fR (Zahl)
+.RS 4
+Das KILL\-Zeichen des Terminals (\fI025\fR
+= CTRL/U)\&.
+.sp
+Wenn der Wert mit \(Fc0\(Fo beginnt, wird er als Oktalzahl gewertet, wenn er mit \(Fc0x\(Fo beginnt, als Hexadezimalzahl\&.
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung und Anzeige der Informationen zu Anmeldezeiten in
+/var/log/lastlog
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung erfolgreicher Anmeldungen
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Anzeige unbekannter Benutzernamen, wenn fehlgeschlagene Anmeldeversuche aufgezeichnet werden
+.sp
+Hinweis: Das Protokollieren unbekannter Benutzernamen kann ein Sicherheitsproblem darstellen, wenn ein Benutzer sein Passwort anstelle seines Anmeldenamens eingibt\&.
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (Zahl)
+.RS 4
+maximale Anzahl von Anmeldeversuchen, wenn ein falsches Passwort eingegeben wird
+.RE
+.PP
+\fBLOGIN_STRING\fR (Zeichenkette)
+.RS 4
+Diese Zeichenkette wird bei der Eingabeaufforderung des Passworts (Prompt) verwendet\&. Standardm\(:a\(ssig wird \(FcPassword: \(Fo oder eine \(:Ubersetzung davon benutzt\&. Wenn Sie diese Variable definieren, wird die Eingabeaufforderung nicht \(:ubersetzt\&.
+.sp
+Wenn die Zeichenkette ein
+\fI%s\fR
+enth\(:alt, wird dies durch den Benutzernamen ersetzt\&.
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (Zahl)
+.RS 4
+H\(:ochstdauer f\(:ur einen Anmeldeversuch
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Pr\(:ufung und Anzeige des Status der Mailbox bei der Anmeldung
+.sp
+Sie sollten dies abschalten, wenn schon die Startdateien der Shell die Mails pr\(:ufen (\(Fcmailx \-e\(Fo oder \(:ahnliches)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (Zeichenkette)
+.RS 4
+Das Verzeichnis des Mail\-Spools\&. Diese Angabe wird ben\(:otigt, um die Mailbox zu bearbeiten, nachdem das entsprechende Benutzerkonto ver\(:andert oder gel\(:oscht wurde\&. Falls nicht angegeben, wird ein Standard verwendet, der beim Kompilieren festgelegt wurde\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (Zeichenkette)
+.RS 4
+Legt den Ort der Mail\-Spool\-Dateien eines Benutzers relativ zu seinem Home\-Verzeichnis fest\&.
+.RE
+.PP
+Die Variablen
+\fBMAIL_DIR\fR
+und
+\fBMAIL_FILE\fR
+werden von
+\fBuseradd\fR,
+\fBusermod\fR
+und
+\fBuserdel\fR
+verwendet, um den Mail\-Spool eines Benutzers zu erstellen, zu verschieben oder zu l\(:oschen\&.
+.PP
+Falls
+\fBMAIL_CHECK_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, werden sie auch verwendet, um die Umgebungsvariable
+\fBMAIL\fR
+festzulegen\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (boolesch)
+.RS 4
+Legt fest, ob Passw\(:orter mit dem auf MD5 beruhenden Algorithmus verschl\(:usselt werden\&. Falls diesem Wert
+\fIyes\fR
+zugewiesen ist, werden neue Passw\(:orter mit dem auf MD5 beruhenden Algorithmus verschl\(:usselt, der zu dem in der aktuellen Ver\(:offentlichung von FreeBSD eingesetzten Algorithmus kompatibel ist\&. Passw\(:orter k\(:onnen dann beliebig lang sein, auch die Salt\-Zeichenketten sind l\(:anger\&. Setzen Sie diesen Wert auf
+\fIno\fR, wenn Sie verschl\(:usselte Passw\(:orter auf ein anderes System kopieren m\(:ochten, das den neuen Algorithmus nicht versteht\&. Der Standardwert ist
+\fIno\fR\&.
+.sp
+Dieser Variable geht die Variable
+\fBENCRYPT_METHOD\fR
+und eine Option auf der Befehlszeile, mit der der Verschl\(:usselungsalgorithmus bestimmt wird, vor\&.
+.sp
+Der Einsatz dieser Variable ist veraltet\&. Sie sollten
+\fBENCRYPT_METHOD\fR
+verwenden\&.
+.RE
+.PP
+\fBMOTD_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, eine Aufz\(:ahlung von Dateien, welche die bei der Anmeldung anzuzeigenden \(FcNachrichten des Tages\(Fo enth\(:alt\&. Die Dateien werden mit einem \(Fc:\(Fo getrennt\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, der Name einer Datei, deren Existenz Anmeldungen au\(sser von Root verhindert\&. Der Inhalt der Datei sollte die Gr\(:unde enthalten, weshalb Anmeldungen untersagt sind\&.
+.RE
+.PP
+\fBOBSCURE_CHECKS_ENAB\fR (boolesch)
+.RS 4
+Aktiviert zus\(:atzliche Tests bei der Ver\(:anderung eines Passworts\&.
+.RE
+.PP
+\fBPASS_ALWAYS_WARN\fR (boolesch)
+.RS 4
+weist auf schwache Passw\(:orter hin (aber l\(:asst sie zu), falls Sie root sind
+.RE
+.PP
+\fBPASS_CHANGE_TRIES\fR (Zahl)
+.RS 4
+maximale Anzahl von Versuchen, ein Passwort zu \(:andern, wenn dies wegen zu geringer St\(:arke des gew\(:ahlten Passworts abgelehnt wurde
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (Zahl)
+.RS 4
+Die maximale Anzahl von Tagen, f\(:ur die ein Passwort verwendet werden darf\&. Wenn das Passwort \(:alter ist, wird ein Wechsel des Passworts erzwungen\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (Zahl)
+.RS 4
+Die Mindestanzahl von Tagen, bevor ein Wechsel des Passworts zugelassen wird\&. Ein vorheriger Versuch, das Passwort zu \(:andern, wird abgelehnt\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (Zahl)
+.RS 4
+Die Anzahl von Tagen, an denen der Benutzer vorgewarnt wird, bevor das Passwort verf\(:allt\&. Eine Null bedeutet, dass eine Warnung nur am Tag des Verfalls ausgegeben wird\&. Ein negativer Wert bedeutet, dass keine Vorwarnung erfolgt\&. Falls nicht angegeben, wird keine Vorwarnung ausgegeben\&.
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR,
+\fBPASS_MIN_DAYS\fR
+und
+\fBPASS_WARN_AGE\fR
+werden nur bei der Erstellung eines Kontos verwendet\&. Sp\(:atere \(:Anderungen dieser Werte ber\(:uhren bestehende Konten nicht\&.
+.PP
+\fBPASS_MAX_LEN\fR (Zahl), \fBPASS_MIN_LEN\fR (Zahl)
+.RS 4
+Anzahl der von crypt() ber\(:ucksichtigten Zeichen des Passworts\&. Standardm\(:a\(ssig ist
+\fBPASS_MAX_LEN\fR
+8\&. Diese Option wird ignoriert, wenn
+\fBMD5_CRYPT_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist\&.
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Auswertung der in
+/etc/porttime
+angegebenen Zeitbegrenzungen
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Setzen von Resourcenbeschr\(:ankungen aus
+/etc/limits
+und von ulimit, umask und niceness aus dem gecos\-Feld des Benutzers von passwd
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (Zahl), \fBSHA_CRYPT_MAX_ROUNDS\fR (Zahl)
+.RS 4
+Wenn
+\fBENCRYPT_METHOD\fR
+auf
+\fISHA256\fR
+oder
+\fISHA512\fR
+gesetzt ist, legt dies die Anzahl der Runden von SHA fest, die standardm\(:a\(ssig vom Verschl\(:usselungsalgorithmus verwendet werden (falls die Anzahl der Runden nicht auf der Befehlszeile angegeben wird)\&.
+.sp
+Je mehr Runden Sie definieren, umso schwieriger ist es, das Passwort mit sturem Durchprobieren (brute force) zu knacken; umso mehr Rechenleistung wird jedoch auch f\(:ur die Anmeldung eines Benutzers ben\(:otigt\&.
+.sp
+Falls Sie nichts angeben, wird libc die Standardanzahl der Runden festlegen (5000)\&.
+.sp
+Die Werte m\(:ussen zwischen 1000\-999\&.999\&.999 liegen\&.
+.sp
+Falls nur der Wert f\(:ur
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+oder
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+festgelegt wird, wird dieser Wert verwendet\&.
+.sp
+Falls
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, wird der h\(:ohere Wert verwendet\&.
+.RE
+.PP
+\fBSULOG_FILE\fR (Zeichenkette)
+.RS 4
+Wenn angegeben, wird jeder Aufruf von su in dieser Datei protokolliert\&.
+.RE
+.PP
+\fBSU_NAME\fR (Zeichenkette)
+.RS 4
+Damit kann die Anzeige des Namens des Befehls festgelegt werden, wenn \(Fcsu \-\(Fo ausgef\(:uhrt wird\&. Wenn beispielsweise dies auf \(Fcsu\(Fo gesetzt wurde, zeigt \(Fcps\(Fo den Befehl als \(Fc\-su\(Fo an\&. Wenn es dagegen nicht vergeben wurde, wird \(Fcps\(Fo den Namen der Shell anzeigen, die ausgef\(:uhrt wird, also etwa \(Fc\-sh\(Fo\&.
+.RE
+.PP
+\fBSU_WHEEL_ONLY\fR (boolesch)
+.RS 4
+Falls
+\fIyes\fR, muss der Benutzer Mitglied der ersten Gruppe mit der GID 0 in
+/etc/group
+sein (auf den meisten Linux\-Systemen hei\(sst die
+\fIroot\fR), um mit
+\fBsu\fR
+zu einem Konto mit der UID 0 wechseln zu k\(:onnen\&. Falls die Gruppe nicht existiert oder keine Mitglieder hat, kann niemand mittels
+\fBsu\fR
+zur UID 0 wechseln\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (Zahl), \fBSYS_GID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung von Systemgruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBSYS_GID_MIN\fR
+ist 101, f\(:ur
+\fBSYS_GID_MAX\fR\fBGID_MIN\fR\-1\&.
+.RE
+.PP
+\fBSYS_UID_MAX\fR (Zahl), \fBSYS_UID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Benutzer\-IDs, aus dem die Programme
+\fBuseradd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung von Systembenutzern ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBSYS_UID_MIN\fR
+ist 101, f\(:ur
+\fBSYS_UID_MAX\fR\fBUID_MIN\fR\-1\&.
+.RE
+.PP
+\fBSYSLOG_SG_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Protokollieren der Aktivit\(:aten von
+\fBsg\fR
+in \(Fcsyslog\(Fo
+.RE
+.PP
+\fBSYSLOG_SU_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Protokollieren der Aktivit\(:aten von
+\fBsu\fR
+in \(Fcsyslog\(Fo neben der Protokollierung in der sulog\-Datei
+.RE
+.PP
+\fBTTYGROUP\fR (Zeichenkette), \fBTTYPERM\fR (Zeichenkette)
+.RS 4
+Die Rechte des Terminals: Das Anmelde\-tty geh\(:ort der Gruppe
+\fBTTYGROUP\fR
+an, die Rechte werden auf
+\fBTTYPERM\fR
+gesetzt\&.
+.sp
+Standardm\(:a\(ssig ist der Eigent\(:umer des Terminals die Hauptgruppe des Benutzers, die Rechte werden auf
+\fI0600\fR
+gesetzt\&.
+.sp
+\fBTTYGROUP\fR
+kann der Gruppenname oder die als Zahl ausgedr\(:uckte Gruppen\-ID sein\&.
+.sp
+Wenn Sie ein
+\fBwrite\fR\-Programm haben, das \(Fcsetgid\(Fo f\(:ur eine Gruppe besitzt, der das Terminal geh\(:ort, sollten Sie TTYGROUP die Gruppennummer und TTYPERM den Wert 0620 zuweisen\&. Oder Sie sollten TTYGROUP als Kommentar belassen und TTYPERM den Wert 622 oder 600 zuweisen\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, eine Datei, welche einer tty\-Zeile den Umgebungsparameter TERM zuweist\&. Jede Zeile hat das Format wie etwa \(Fcvt100 tty01\(Fo\&.
+.RE
+.PP
+\fBUID_MAX\fR (Zahl), \fBUID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Benutzer\-IDs, aus dem die Programme
+\fBuseradd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung normaler Benutzer ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBUID_MIN\fR
+ist 1000, f\(:ur
+\fBUID_MAX\fR
+60\&.000\&.
+.RE
+.PP
+\fBULIMIT\fR (Zahl)
+.RS 4
+der Standardwert von
+\fBulimit\fR
+.RE
+.PP
+\fBUMASK\fR (Zahl)
+.RS 4
+Die Bit\-Gruppe, welche die Rechte von erstellten Dateien bestimmt, wird anf\(:anglich auf diesen Wert gesetzt\&. Falls nicht angegeben, wird sie auf 022 gesetzt\&.
+.sp
+\fBuseradd\fR
+und
+\fBnewusers\fR
+verwenden diese Bit\-Gruppe, um die Rechte des von ihnen erstellten Home\-Verzeichnisses zu setzen\&.
+.sp
+Sie wird auch von
+\fBlogin\fR
+verwendet, um die anf\(:angliche Umask eines Benutzers zu bestimmen\&. Beachten Sie, dass diese Bit\-Gruppe durch die GECOS\-Zeile des Benutzers (wenn
+\fBQUOTAS_ENAB\fR
+gesetzt wurde) oder die Festlegung eines Limits in
+\fBlimits\fR(5)
+mit der Kennung
+\fIK\fR
+\(:uberschrieben werden kann\&.
+.RE
+.PP
+\fBUSERDEL_CMD\fR (Zeichenkette)
+.RS 4
+Falls angegeben, wird dieser Befehl ausgef\(:uhrt, wenn ein Benutzer entfernt wird\&. Damit k\(:onnen At\-, Cron\- und Druckauftr\(:age etc\&. des entfernten Benutzers (wird als erstes Argument \(:ubergeben) gel\(:oscht werden\&.
+.sp
+Der R\(:uckgabewert des Skripts wird nicht ausgewertet\&.
+.sp
+Dies ist ein Beispielsskript, das die cron\-, at\- und Druckauftr\(:age des Benutzers entfernt:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# Pr\(:ufen, ob das ben\(:otigte Argument angegeben wurde
+if [ $# != 1 ]; then
+	echo "Verwendungsweise: $0 Benutzername"
+	exit 1
+fi
+
+# cron\-Auftr\(:age entfernen
+crontab \-r \-u $1
+
+# at\-Auftr\(:age entfernen\&.
+# Hinweis: Dies wird alle Auftr\(:age entfernen, die der gleichen UID
+# geh\(:oren, selbst wenn sie von einem Benutzer mit einem anderen Namen
+# eingerichtet wurden\&.
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# Druck\-Auftr\(:age entfernen
+lprm $1
+
+# Fertig
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolesch)
+.RS 4
+Erlaubt Benutzern, die nicht Root sind, die Umask\-Gruppen\-Bits auf ihre Umask\-Bits zu setzen (Beispiel: 022 \-> 002, 077 \-> 007), falls die UID mit der GID identisch ist sowie der Benutzername mit dem Gruppennamen \(:ubereinstimmt\&.
+.sp
+Wenn der Wert
+\fIyes\fR
+ist, wird
+\fBuserdel\fR
+die Gruppe des Benutzers entfernen, falls sie keine Mitglieder mehr hat, und
+\fBuseradd\fR
+wird standardm\(:a\(ssig eine Gruppe mit dem Namen des Benutzers erstellen\&.
+.RE
+.SH "QUERVERWEISE"
+.PP
+Die folgenden Querverweise zeigen, welche Programme aus der Shadow\-Passwort\-Werkzeugsammlung welche Parameter verwenden\&.
+.PP
+chfn
+.RS 4
+CHFN_AUTH
+CHFN_RESTRICT
+LOGIN_STRING
+.RE
+.PP
+chgpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chpasswd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENABSHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chsh
+.RS 4
+CHSH_AUTH LOGIN_STRING
+.RE
+.PP
+gpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+groupadd
+.RS 4
+GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP SYS_GID_MAX SYS_GID_MIN
+.RE
+.PP
+groupdel
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmems
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmod
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpck
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpunconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+login
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENV_PATH ENV_SUPATH ENV_TZ ENVIRON_FILE
+ERASECHAR FAIL_DELAY
+FAILLOG_ENAB
+FAKE_SHELL
+FTMP_FILE
+HUSHLOGIN_FILE
+ISSUE_FILE
+KILLCHAR
+LASTLOG_ENAB
+LOGIN_RETRIES
+LOGIN_STRING
+LOGIN_TIMEOUT LOG_OK_LOGINS LOG_UNKFAIL_ENAB
+MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE MOTD_FILE NOLOGINS_FILE PORTTIME_CHECKS_ENAB QUOTAS_ENAB
+TTYGROUP TTYPERM TTYTYPE_FILE
+ULIMIT UMASK
+USERGROUPS_ENAB
+.RE
+.PP
+newgrp / sg
+.RS 4
+SYSLOG_SG_ENAB
+.RE
+.PP
+newusers
+.RS 4
+ENCRYPT_METHOD GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+passwd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENAB OBSCURE_CHECKS_ENAB PASS_ALWAYS_WARN PASS_CHANGE_TRIES PASS_MAX_LEN PASS_MIN_LEN
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+pwck
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+pwconv
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+su
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENVIRON_FILE
+ENV_PATH ENV_SUPATH
+ENV_TZ LOGIN_STRING MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE QUOTAS_ENAB
+SULOG_FILE SU_NAME
+SU_WHEEL_ONLY
+SYSLOG_SU_ENAB
+USERGROUPS_ENAB
+.RE
+.PP
+sulogin
+.RS 4
+ENV_HZ
+ENV_TZ
+.RE
+.PP
+useradd
+.RS 4
+CREATE_HOME GID_MAX GID_MIN MAIL_DIR MAX_MEMBERS_PER_GROUP PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+userdel
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP USERDEL_CMD USERGROUPS_ENAB
+.RE
+.PP
+usermod
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBsu\fR(1),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBpam\fR(8)\&.

@@ -1,0 +1,237 @@
+'\" t
+.\"     Title: grpck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "GRPCK" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+grpck \- verifica l\*(Aqintegrit\(`a dei file dei gruppi
+.SH "SINOSSI"
+.HP \w'\fBgrpck\fR\ 'u
+\fBgrpck\fR [opzioni] [\fIgruppo\fR\ [\ \fIshadow\fR\ ]]
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBgrpck\fR
+verifica l\*(Aqintegrit\(`a delle informazioni sui gruppi\&. Ogni voce in
+/etc/groupe in /etc/gshadow
+viene controllata per verificare che abbia il formato corretto e dati validi\&. Viene richiesto all\*(Aqutente di rimuovere le voci che non hanno un formato appropriato o che presentano altri errori impossibili da correggere\&.
+.PP
+Vengono fatti controlli per verificare che ogni voce abbia:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+il corretto numero di campi
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+un nome univoco e valido di gruppo
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+un identificatore valido di gruppo
+(solo /etc/group)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+un elenco valido di membrie amministratori
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+una voce corrispondente nel file
+/etc/gshadow
+(rispettivamente
+/etc/group
+per i controlli in
+gshadow)
+.RE
+.PP
+Gli errori nelle verifiche sul corretto numero di campi e sull\*(Aqunivocit\(`a del nome del gruppo sono irrimediabili\&. Se una voce ha un numero errato di campi, all\*(Aqutente viene chiesto di cancellare l\*(Aqintera riga; se l\*(Aqutente non risponde affermativamente, vengono omessi tutti gli ulteriori controlli\&. Viene richiesta la cancellazione anche per le voci aventi il nome del gruppo duplicato, ma i rimanenti controlli vengono ugualmente effettuati\&. Tutti gli altri errori non sono gravi e l\*(Aqutente \(`e invitato a eseguire il comando
+\fBgroupmod\fR
+per correggerli\&.
+.PP
+I comandi che operano
+sui file /etc/group e /etc/gshadow
+non sono in grado di modificare voci corrotte o duplicate; in tali circostanze va usato
+\fBgrpck\fR
+per rimuovere le voci scorrette\&.
+.SH "OPZIONI"
+.PP
+Le opzioni
+\fB\-r\fR
+e
+\fB\-s\fR
+non possono essere combinate\&.
+.PP
+Il comando
+\fBgrpck\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+Esegue il comando
+\fBgrpck\fR
+in sola lettura\&. Questo implica che sia risposto
+\fIno\fR
+automaticamente a tutte le domande relative alle modifiche\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+Ordina le voci in
+/etc/groupe /etc/gshadowper GID\&.
+.RE
+.PP
+By default,
+\fBgrpck\fR
+operates on
+/etc/groupand /etc/gshadow\&. The user may select alternate files with the
+\fIgroup\fRand \fIshadow\fR parameters\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+Il comando
+\fBgrpck\fR
+restituisce i seguenti valori:
+.PP
+\fI0\fR
+.RS 4
+successo
+.RE
+.PP
+\fI1\fR
+.RS 4
+sintassi del comando errata
+.RE
+.PP
+\fI2\fR
+.RS 4
+una o pi\(`u voci di gruppo contengono errori
+.RE
+.PP
+\fI3\fR
+.RS 4
+impossibile aprire i file dei gruppi
+.RE
+.PP
+\fI4\fR
+.RS 4
+impossibile fare il lock dei file dei gruppi
+.RE
+.PP
+\fI5\fR
+.RS 4
+impossibile aggiornare i file dei gruppi
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBgroup\fR(5),
+\fBgroupmod\fR(8),
+\fBgshadow\fR(5),\fBpasswd\fR(5),
+\fBpwck\fR(8),
+\fBshadow\fR(5)\&.

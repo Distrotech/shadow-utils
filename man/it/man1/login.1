@@ -1,0 +1,485 @@
+'\" t
+.\"     Title: login
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "LOGIN" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+login \- apre una sessione sul sistema
+.SH "SINOSSI"
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fImacchina\fR] [\fInome\fR] [\fIENV=VAR\fR...]
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fImacchina\fR] \-f \fInome\fR
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] \-r\ \fImacchina\fR
+.SH "DESCRIZIONE"
+.PP
+\fBlogin\fR
+viene utilizzato per aprire una sessione sul sistema\&. Normalmente viene invocato automaticamente rispondendo al prompt
+\fIlogin:\fR
+del terminale\&.
+\fBlogin\fR
+pu\(`o essere trattato in maniera speciale dalla shell e non pu\(`o essere invocato come sottoprocesso\&. Quando \(`e richiamato dalla shell,
+\fBlogin\fR
+va invocato come
+\fBexec login\fR
+che termina la shell utente attuale (il che impedir\(`a al nuovo utente che accede, di poter ritornare alla sessione del chiamante)\&. Il tentativo di esecuzione di
+\fBlogin\fR
+da una shell che non sia quella di login produce un messaggio d\*(Aqerrore\&.
+.PP
+Se necessario viene quindi chiesta la password all\*(Aqutente\&. Durante questa operazione l\*(Aqeco sul terminale \(`e disabilitata per non rivelare la password\&. Solo un basso numero di tentativi falliti \(`e permesso prima che
+\fBlogin\fR
+termini e che la connessione sia interrotta\&.
+.PP
+Se la scadenza delle password \(`e abilitata per il proprio account, prima di proseguire ci pu\(`o essere la richiesta di una nuova password\&. Il programma chieder\(`a prima la vecchia password e poi la nuova per poter continuare\&. Per maggiori informazioni si faccia riferimento a
+\fBpasswd\fR(1)\&.
+.PP
+Dopo aver completato correttamente l\*(Aqaccesso, vengono mostrati eventuali messaggi di sistema e si viene informati della presenza di nuova posta\&. Si pu\(`o evitare di visualizzare i messaggi in
+/etc/motd
+creando un file vuoto chiamato
+\&.hushlogin
+nella propria directory di login\&. Il messaggio relativo alla presenza di posta \(`e \(Fo\fIC\*(Aq\(`e nuova posta\&.\fR\(Fc, \(Fo\fIC\*(Aq\(`e posta\&.\fR\(Fc o \(Fo\fINessun messaggio di posta\&.\fR\(Fc a seconda dello stato della propria casella di posta\&.
+.PP
+I propri ID di utente e gruppo vengono poi impostati in base ai valori definiti nel file
+/etc/passwd\&. I valori di
+\fB$HOME\fR,
+\fB$SHELL\fR,
+\fB$PATH\fR,
+\fB$LOGNAME\fR
+e
+\fB$MAIL\fR
+sono impostati in base ai campi appropriati nella voce della password\&. Anche i valori per ulimit, umask e nice possono essere impostati in base al campo GECOS\&.
+.PP
+In alcune installazioni la variabile d\*(Aqambiente
+\fB$TERM\fR
+pu\(`o essere impostata in base al tipo di terminale della propria connessione, come specificato in
+/etc/ttytype\&.
+.PP
+Pu\(`o anche essere eseguito uno script di inizializzazione per il proprio interprete dei comandi\&. Fare riferimento alla relativa sezione di manuale per maggiori informazioni su questa funzione\&.
+.PP
+Un sottosistema di login \(`e indicato dalla presenza del carattere \(Fo*\(Fc all\*(Aqinizio della shell di login\&. La directory home impostata sar\(`a utilizzata come root di un nuovo file system al quale l\*(Aqutente accede\&.
+.PP
+Il programma
+\fBlogin\fR
+NON \(`e responsabile di rimuovere gli utenti dal file utmp\&. La correzione del proprietario di una sessione di terminale \(`e responsabilit\(`a di
+\fBgetty\fR(8)
+e
+\fBinit\fR(8)\&. Se si usa
+\fBlogin\fR
+senza
+\fBexec\fR
+dal prompt della shell, allora l\*(Aqutente che si sta usando risulter\(`a sempre connesso al sistema anche oltre il termine della \(Fosottosessione\(Fc\&.
+.SH "OPZIONI"
+.PP
+\fB\-f\fR
+.RS 4
+Non effettua l\*(Aqautenticazione, l\*(Aqutente \(`e gi\(`a autenticato
+.sp
+Nota: in questo caso
+\fIusername\fR
+\(`e obbligatorio\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Nome dell\*(Aqhost remoto per questo login\&.
+.RE
+.PP
+\fB\-p\fR
+.RS 4
+Non modifica l\*(Aqambiente\&.
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+Attiva il protocollo autologin di rlogin\&.
+.RE
+.PP
+Le opzioni
+\fB\-r\fR,
+\fB\-h\fR
+e
+\fB\-f\fR
+possono essere utilizzate solo quando
+\fBlogin\fR
+viene invocato da root\&.
+.SH "AVVISI/CAVEAT"
+.PP
+Questa versione di
+\fBlogin\fR
+ha molte opzioni di compilazione; in un determinato sistema potrebbe esserne in uso solo una parte\&.
+.PP
+La posizione dei file \(`e soggetta a differenze in base alla configurazione del sistema\&.
+.PP
+Il programma
+\fBlogin\fR
+NON \(`e responsabile di rimuovere gli utenti dal file utmp\&. La correzione del proprietario di una sessione di terminale \(`e responsabilit\(`a di
+\fBgetty\fR(8)
+e
+\fBinit\fR(8)\&. Se si usa
+\fBlogin\fR
+senza
+\fBexec\fR
+dal prompt della shell, allora l\*(Aqutente che si sta usando risulter\(`a sempre connesso al sistema anche oltre il termine della \(Fosottosessione\(Fc\&.
+.PP
+Come per ogni programma, l\*(Aqaspetto di
+\fBlogin\fR
+pu\(`o essere simulata\&. Se utenti non fidati hanno accesso fisico alla macchina, essi potrebbero sfruttare questa cosa per ottenere la password della prossima persona che si siede davanti al terminale\&. In Linux si pu\(`o utilizzare il meccanismo SAK per iniziare un percorso sicuro che previene questo tipo di attacchi\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBCONSOLE\fR (testo)
+.RS 4
+Se definito, o il percorso completo di un file che contiene l\*(Aqelenco di nomi di device (uno per riga) oppure un elenco di nomi di device separati da \(Fo:\(Fc\&. L\*(Aqaccesso come root verr\(`a permesso solo attraverso questi device\&.
+.sp
+Se non definito, root potr\(`a accedere da qualsiasi device\&.
+.sp
+Il nome di device deve essere specificato senza il prefisso /dev\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (testo)
+.RS 4
+Elenco di gruppi da aggiungere ai gruppi supplementari dell\*(Aqutente quando questi accede dalla console (come determinato dalla impostazione CONSOLE)\&. Il valore predefinito \(`e nullo\&.
+
+Usare con cautela \- \(`e possibile che gli utenti ottengano l\*(Aqaccesso permanente a questi gruppi anche se non accedono dalla console\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (booleano)
+.RS 4
+Indica se permettere l\*(Aqaccesso al sistema anche se non si pu\(`o accedere alla directory home\&. Il valore predefinito \(`e no\&.
+.sp
+Se impostato a
+\fIyes\fR, l\*(Aqutente acceder\(`a alla directory root (/) nel caso che non sia possibile accedere alla propria directory home\&.
+.RE
+.PP
+\fBENV_HZ\fR (testo)
+.RS 4
+Se impostato viene utilizzato per definire il valore della variabile d\*(Aqambiente HZ al login dell\*(Aqutente\&. Il valore deve essere preceduto da
+\fIHZ=\fR\&. Un valore comune per Linux \(`e
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_PATH\fR (testo)
+.RS 4
+If set, it will be used to define the PATH environment variable when a regular user login\&. The value is a colon separated list of paths (for example
+\fI/bin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (testo)
+.RS 4
+If set, it will be used to define the PATH environment variable when the superuser login\&. The value is a colon separated list of paths (for example
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (testo)
+.RS 4
+Se impostato viene usato per definire la variabile d\*(Aqambiente TZ al login dell\*(Aqutente\&. Il valore pu\(`o essere il nome di una \(Fotimezone\(Fc preceduta da
+\fITZ=\fR
+(ad esempio
+\fITZ=CST6CDT\fR), o il percorso completo di un file che contenga la specifica della \(Fotimezone\(Fc (ad esempio
+/etc/tzname)\&.
+.sp
+Se viene specificato il percorso completo di un file che per\(`o non esiste o non pu\(`o essere letto, allora viene utilizzato il valore predefinito
+\fITZ=CST6CDT\fR\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (testo)
+.RS 4
+Se questo file esiste ed \(`e leggibile, l\*(Aqambiente di login viene letto da l\(`i\&. Ogni riga deve essere nella forma nome=valore\&.
+.sp
+Le righe che iniziano con \(Fo#\(Fc sono trattate come commenti e ignorate\&.
+.RE
+.PP
+\fBERASECHAR\fR (numerico)
+.RS 4
+Carattere ERASE del terminale (\fI010\fR
+= backspace,
+\fI0177\fR
+= Canc)\&.
+.sp
+Il valore deve avere il prefisso \(Fo0\(Fc se in ottale, o \(Fo0x\(Fc se esadecimale\&.
+.RE
+.PP
+\fBFAIL_DELAY\fR (numerico)
+.RS 4
+Numero di secondi prima che venga concesso un ulteriore tentativo dopo un accesso fallito\&.
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (booleano)
+.RS 4
+Abilita la memorizzazione e mostra le informazioni sugli accessi falliti contenute in
+/var/log/faillog\&.
+.RE
+.PP
+\fBFAKE_SHELL\fR (testo)
+.RS 4
+Se impostato,
+\fBlogin\fR
+eseguir\(`a questa shell al posto di quella utente specificata in
+/etc/passwd\&.
+.RE
+.PP
+\fBFTMP_FILE\fR (testo)
+.RS 4
+Se impostato, gli accessi falliti verranno tracciati in questo file nel formato utmp\&.
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (testo)
+.RS 4
+Se definito, questo file inibisce quanto stampato durante l\*(Aqaccesso\&. Se viene specificato un percorso completo, la modalit\(`a silenziosa (hushed) viene attivata se in quel file \(`e presente il nome dell\*(Aqutente o della shell dell\*(Aqutente\&. Se il percorso non \(`e completo, allora la modalit\(`a silenziosa viene attivata se quel file \(`e presente nella directory home dell\*(Aqutente\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (testo)
+.RS 4
+Se definito, il file verr\(`a mostrato prima del prompt di login\&.
+.RE
+.PP
+\fBKILLCHAR\fR (numerico)
+.RS 4
+Il carattere da usare sul terminale per cancellare l\*(Aqintera riga (\fI025\fR
+= CTRL\-U)
+.sp
+Il valore deve avere il prefisso \(Fo0\(Fc se in ottale, o \(Fo0x\(Fc se esadecimale\&.
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (booleano)
+.RS 4
+Abilita la memorizzazione e la stampa delle informazioni sulle date degli ultimi accessi in /var/log/lastlog\&.
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (numerico)
+.RS 4
+Massimo numero di tentativi di accesso per password errata\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (testo)
+.RS 4
+Il testo da utilizzare per richiedere la password\&. Il valore predefinito \(`e \(FoPassword: \(Fc o una sua traduzione\&. Se si imposta questa variabile allora il testo non verr\(`a tradotto\&.
+.sp
+Se il testo contiene
+\fI%s\fR, questo verr\(`a sostituito dal nome dell\*(Aqutente\&.
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (numerico)
+.RS 4
+Numero massimo di secondi per l\*(Aqaccesso\&.
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (booleano)
+.RS 4
+Abilita la tracciatura degli accessi avvenuti con successo\&.
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (booleano)
+.RS 4
+Abilita l\*(Aqinclusione dei nomi utente sconosciuti quando si registrano gli accessi falliti\&.
+.sp
+Nota: memorizzare i nomi sconosciuti potrebbe diventare un problema legato alla sicurezza se un utente inserisce la propria password al posto del nome utente\&.
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (testo)
+.RS 4
+Abilita la verifica e stampa a video dello stato della casella di posta al momento dell\*(Aqaccesso al sistema\&.
+.sp
+Andrebbe disabilitato se i file di avvio della shell effettuano gi\(`a questo controllo (\(Fomailx \-e\(Fc o equivalente)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (testo)
+.RS 4
+La directory di spool per la posta\&. Questa \(`e necessaria per manipolare la casella di posta quando il corrispondente account utente viene modificato o cancellato\&. Se non \(`e specificata viene utilizzato un valore impostato al momento della compilazione\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (testo)
+.RS 4
+Imposta la posizione delle caselle di posta degli utenti relative alla loro directory home\&.
+.RE
+.PP
+Le variabili
+\fBMAIL_DIR\fR
+e
+\fBMAIL_FILE\fR
+vengono utilizzate da
+\fBuseradd\fR,
+\fBusermod\fR
+e
+\fBuserdel\fR
+per creare, spostare e cancellare le caselle di posta dell\*(Aqutente\&.
+.PP
+Se
+\fBMAIL_CHECK_ENAB\fR
+\(`e impostata a
+\fIyes\fR
+allora sono anche utilizzate per impostare la variabile d\*(Aqambiente
+\fBMAIL\fR\&.
+.PP
+\fBMOTD_FILE\fR (testo)
+.RS 4
+Se definito \(`e una lista di nomi di file con \(Fomessaggi del giorno\(Fc separati da \(Fo:\(Fc che vengono mostrati subito dopo l\*(Aqaccesso\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (testo)
+.RS 4
+Se definito \(`e il nome di un file che impedisce l\*(Aqaccesso degli utenti non root\&. Il suo contenuto dovrebbe essere un messaggio che indica il motivo per il quale l\*(Aqaccesso \(`e impedito\&.
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (booleano)
+.RS 4
+Abilita la verifica delle restrizioni temporali specificate in
+/etc/porttime\&.
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (booleano)
+.RS 4
+Abilita l\*(Aqimpostazione di limiti di risorsa definiti in
+/etc/limits
+e ulimit, umask e livello di \(Fonice\(Fc in base al campo gecos del passwd dell\*(Aqutente\&.
+.RE
+.PP
+\fBTTYGROUP\fR (testo), \fBTTYPERM\fR (testo)
+.RS 4
+I permessi del terminale: il tty usato per l\*(Aqaccesso sar\(`a di propriet\(`a del gruppo
+\fBTTYGROUP\fR
+e avr\(`a permessi impostati a
+\fBTTYPERM\fR\&.
+.sp
+In maniera predefinita la propriet\(`a del terminale sar\(`a impostata al gruppo primario dell\*(Aqutente, mentre i permessi saranno
+\fI0600\fR\&.
+.sp
+\fBTTYGROUP\fR
+pu\(`o essere il nome del gruppo o il suo identificativo numerico\&.
+.sp
+Se si ha il comando
+\fBwrite\fR
+che \(`e \(Fosetgid\(Fc e ha un gruppo speciale che possiede i terminali, definire TTYGROUP con lo stesso gruppo e TTYPERM a 0620\&. Altrimenti lasciare TTYGROUP commentato e assegnare TTYPERM a 622 o 600\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (testo)
+.RS 4
+Se definito si tratta di un file che mappa le linee tty nella variabile d\*(Aqambiente TERM\&. Ogni riga del file \(`e in un formato tipo \(Fovt100 tty01\(Fc\&.
+.RE
+.PP
+\fBULIMIT\fR (numerico)
+.RS 4
+Valore
+\fBulimit\fR
+predefinito\&.
+.RE
+.PP
+\fBUMASK\fR (numerico)
+.RS 4
+La maschera di permessi alla creazione dei file \(`e inizializzata con questo valore\&. Se non specificato la maschera viene impostata a 022\&.
+.sp
+\fBuseradd\fR
+e
+\fBnewusers\fR
+usano questa maschera per impostare i permessi della directory home che creano\&.
+.sp
+Viene anche utilizzata da
+\fBlogin\fR
+per definire la maschera iniziale dell\*(Aqutente\&. Notare che questa maschera pu\(`o essere modificata dalla riga GECOS dell\*(Aqutente (se
+\fBQUOTAS_ENAB\fR
+\(`e impostato) o specificando un limite con l\*(Aqidentificativo
+\fIK\fR
+in
+\fBlimits\fR(5)\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (booleano)
+.RS 4
+Abilita l\*(Aqimpostazione dei bit di gruppo di umask in modo che siano gli stessi dei bit del proprietario (esempio: 022 \-> 002, 077 \-> 007) per utenti non root a condizione che uid e gid siano identici e che il nome utente sia lo stesso del gruppo primario\&.
+.sp
+Se impostato a
+\fIyes\fR,
+\fBuserdel\fR
+canceller\(`a il gruppo dell\*(Aqutente se non contiene altri membri, e
+\fBuseradd\fR
+creer\(`a automaticamente un gruppo con lo stesso nome dell\*(Aqutente\&.
+.RE
+.SH "FILE"
+.PP
+/var/run/utmp
+.RS 4
+Elenco delle sessioni attive\&.
+.RE
+.PP
+/var/log/wtmp
+.RS 4
+Elenco delle precedenti sessioni di login\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/motd
+.RS 4
+File di sistema con il messaggio del giorno\&.
+.RE
+.PP
+/etc/nologin
+.RS 4
+Impedisce l\*(Aqaccesso al sistema per utenti diversi da root\&.
+.RE
+.PP
+/etc/ttytype
+.RS 4
+Elenco di tipi di terminale\&.
+.RE
+.PP
+$HOME/\&.hushlogin
+.RS 4
+Impedisce che vengano mostrati i messaggi di sistema\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBmail\fR(1),
+\fBpasswd\fR(1),
+\fBsh\fR(1),
+\fBsu\fR(1),
+\fBlogin.defs\fR(5),
+\fBnologin\fR(5),
+\fBpasswd\fR(5),
+\fBsecuretty\fR(5),
+\fBgetty\fR(8)\&.

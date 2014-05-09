@@ -1,0 +1,135 @@
+'\" t
+.\"     Title: groupdel
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Kommandoer for systemh\(oandtering
+.\"    Source: shadow-utils 4.2
+.\"  Language: Danish
+.\"
+.TH "GROUPDEL" "8" "09/05/2014" "shadow\-utils 4\&.2" "Kommandoer for systemh\(oandterin"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAVN"
+groupdel \- slet en gruppe
+.SH "SYNOPSIS"
+.HP \w'\fBgroupdel\fR\ 'u
+\fBgroupdel\fR [\fItilvalg\fR] \fIGRUPPE\fR
+.SH "BESKRIVELSE"
+.PP
+The
+\fBgroupdel\fR
+command modifies the system account files, deleting all entries that refer to
+\fIGROUP\fR\&. The named group must exist\&.
+.SH "TILVALG"
+.PP
+Tilvalgene som g\(aelder for kommandoen
+\fBgroupdel\fR
+er:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Vis hj\(aelpeteksten og afslut\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Brug \(aendringer i mappen
+\fICHROOT_DIR\fR
+og brug konfigurationsfilerne fra mappen
+\fICHROOT_DIR\fR\&.
+.RE
+.SH "CAVEATS"
+.PP
+De kan ikke fjerne den prim\(aere gruppe for en eksisterende bruger\&. Du skal fjerne brugeren f\(/or du fjerner gruppen\&.
+.PP
+Du skal manuelt kontrollere alle filsystemer for at sikre dig, at ingen filer fortsat er ejet af denne gruppe\&.
+.SH "KONFIGURATION"
+.PP
+De f\(/olgende konfigurationsvariabler i
+/etc/login\&.defs
+\(aendrer opf\(/orelsen for dette v\(aerkt\(/oj:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+Maximum members per group entry\&. When the maximum is reached, a new group entry (line) is started in
+/etc/group
+(with the same name, same password, and same GID)\&.
+.sp
+The default value is 0, meaning that there are no limits in the number of members in a group\&.
+.sp
+This feature (split group) permits to limit the length of lines in the group file\&. This is useful to make sure that lines for NIS groups are not larger than 1024 characters\&.
+.sp
+If you need to enforce such limit, you can use 25\&.
+.sp
+Note: split groups may not be supported by all tools (even in the Shadow toolsuite)\&. You should not use this variable unless you really need it\&.
+.RE
+.SH "FILER"
+.PP
+/etc/group
+.RS 4
+Information om gruppekonto\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Information om sikret gruppekonto\&.
+.RE
+.SH "EXIT VALUES"
+.PP
+Kommandoen
+\fBgroupdel\fR
+findes med de f\(/olgende v\(aerdier:
+.PP
+\fI0\fR
+.RS 4
+success
+.RE
+.PP
+\fI2\fR
+.RS 4
+invalid command syntax
+.RE
+.PP
+\fI6\fR
+.RS 4
+angivet gruppe findes ikke
+.RE
+.PP
+\fI8\fR
+.RS 4
+Kan ikke fjerne brugers prim\(aere gruppe
+.RE
+.PP
+\fI10\fR
+.RS 4
+can\*(Aqt update group file
+.RE
+.SH "SE OGS\(oA"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupmod\fR(8),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

@@ -1,0 +1,203 @@
+'\" t
+.\"     Title: pwconv
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "PWCONV" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+pwconv, pwunconv, grpconv, grpunconv \- Convertir vers ou depuis les fichiers de mots de passe ou de groupe cach\('es
+.SH "SYNOPSIS"
+.HP \w'\fBpwconv\fR\ 'u
+\fBpwconv\fR [\fIoptions\fR]
+.HP \w'\fBpwunconv\fR\ 'u
+\fBpwunconv\fR [\fIoptions\fR]
+.HP \w'\fBgrpconv\fR\ 'u
+\fBgrpconv\fR [\fIoptions\fR]
+.HP \w'\fBgrpunconv\fR\ 'u
+\fBgrpunconv\fR [\fIoptions\fR]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBpwconv\fR
+cr\('ee le fichier
+\fIshadow\fR
+\(`a partir du fichier
+\fIpasswd\fR
+et d\*(Aqun \('eventuel fichier
+\fIshadow\fR\&.
+.PP
+La commande
+\fBpwunconv\fR
+cr\('ee le fichier
+\fIpasswd\fR
+\(`a partir des fichiers
+\fIpasswd\fR
+et
+\fIshadow\fR
+puis supprime
+\fIshadow\fR\&.
+.PP
+La commande
+\fBgrpconv\fR
+cr\('ee
+\fIgshadow\fR
+\(`a partir de
+\fIgroup\fR
+et d\*(Aqun \('eventuel fichier
+\fIgshadow\fR\&.
+.PP
+La commande
+\fBgrpunconv\fR
+cr\('ee
+\fIgroup\fR
+\(`a partir des fichiers
+\fIgroup\fR
+et
+\fIgshadow\fR
+puis supprime
+\fIgshadow\fR\&.
+.PP
+Ces quatre programmes op\(`erent sur les fichiers de mots de passe et d\*(Aqinformations sur les groupes cach\('es ou non\ \&:
+/etc/passwd,
+/etc/group,
+/etc/shadow, et
+/etc/gshadow\&.
+.PP
+Chaque programme place les verrous n\('ecessaires avant d\*(Aqeffectuer la conversion\&.
+\fBpwconv\fR
+et
+\fBgrpconv\fR
+sont similaires\&. Dans un premier temps, les entr\('ees du fichier de mots de passe cach\('es (/etc/shadow
+ou
+/etc/gshadow) qui n\*(Aqexistent pas dans le fichier principal (passwd
+ou
+group), sont retir\('ees\&. Ensuite, les entr\('ees du fichier
+shadow
+n\*(Aqayant pas pour mot de passe \(Fo\ \&x\ \&\(Fc dans le fichier
+passwd
+sont mises \(`a jour\&. Enfin, les mots de passe du fichier
+passwd
+sont remplac\('es par \(Fo\ \&x\ \&\(Fc\&. Ces programmes peuvent \(^etre utilis\('es pour une premi\(`ere conversion, ou bien pour une mise \(`a jour, si les fichiers principaux [\ \&NdT\ \&: non cach\('es\ \&] ont \('et\('e \('edit\('es \(`a la main\&.
+.PP
+Lors de l\*(Aqajout de nouvelles entr\('ees dans
+/etc/shadow,
+\fBpwconv\fR
+utilisera les valeurs de
+\fIPASS_MIN_DAYS\fR,
+\fIPASS_MAX_DAYS\fR, et
+\fIPASS_WARN_AGE\fR
+d\('efinies dans le fichier
+/etc/login\&.defs\&.
+.PP
+De m\(^eme,
+\fBpwunconv\fR
+et
+\fBgrpunconv\fR
+sont similaires\&. Les mots de passe des fichiers principaux sont mis \(`a jour \(`a partir des fichiers d\*(Aqinformations cach\('ees (\(Fo\ \&shadowed file\ \&\(Fc)\&. Les entr\('ees existant dans un fichier principal, mais pas dans le fichier cach\('e sont laiss\('ees\&. Enfin, le fichier cach\('e est supprim\('e\&. Certaines informations d\*(Aq\(^age des mots de passe sont perdues par
+\fBpwunconv\fR\&. Il ne convertit que ce qu\*(Aqil peut\&.
+.SH "OPTIONS"
+.PP
+Les options applicables aux commandes
+\fBpwconv\fR,
+\fBpwunconv\fR,
+\fBgrpconv\fR
+et
+\fBgrpunconv\fR
+sont\ \&:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.SH "BOGUES"
+.PP
+Des erreurs dans les fichiers de mots de passe ou d\*(Aqinformations sur les groupes (comme des entr\('ees invalides ou redondantes) peuvent conduire ces programmes \(`a boucler ind\('efiniment ou \(`a \('echouer d\*(Aqune mani\(`ere tout aussi \('etrange\&. Veuillez ex\('ecuter
+\fBpwck\fR
+et
+\fBgrpck\fR
+pour corriger ces erreurs avant de lancer toute conversion\&.
+.SH "CONFIGURATION"
+.PP
+La variable de configuration suivante dans
+/etc/login\&.defs
+change le comportement de
+\fBgrpconv\fR
+et
+\fBgrpunconv\fR\ \&:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+changent le comportement de
+\fBpwconv\fR\ \&:
+.PP
+\fBPASS_MAX_DAYS\fR (nombre)
+.RS 4
+Nombre maximum de jours de validit\('e d\*(Aqun mot de passe\&. Apr\(`es cette dur\('ee, une modification du mot de passe est obligatoire\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (nombre)
+.RS 4
+Nombre minimum de jours autoris\('e avant la modification d\*(Aqun mot de passe\&. Toute tentative de modification du mot de passe avant cette dur\('ee est rejet\('ee\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (nombre)
+.RS 4
+Nombre de jours durant lesquels l\*(Aqutilisateur recevra un avertissement avant que son mot de passe n\*(Aqarrive en fin de validit\('e\&. Une valeur n\('egative signifie qu\*(Aqaucun avertissement n\*(Aqest donn\('e\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, aucun avertissement n\*(Aqest donn\('e\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgrpck\fR(8),
+\fBlogin.defs\fR(5),
+\fBpwck\fR(8)\&.

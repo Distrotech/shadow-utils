@@ -1,0 +1,162 @@
+'\" t
+.\"     Title: chfn
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: User Commands
+.\"    Source: shadow-utils 4.2
+.\"  Language: Danish
+.\"
+.TH "CHFN" "1" "09/05/2014" "shadow\-utils 4\&.2" "User Commands"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAVN"
+chfn \- change real user name and information
+.SH "SYNOPSIS"
+.HP \w'\fBchfn\fR\ 'u
+\fBchfn\fR [\fItilvalg\fR] [\fILOGIND\fR]
+.SH "BESKRIVELSE"
+.PP
+The
+\fBchfn\fR
+command changes user fullname, office room number, office phone number, and home phone number information for a user\*(Aqs account\&. This information is typically printed by
+\fBfinger\fR(1)
+and similar programs\&. A normal user may only change the fields for her own account, subject to the restrictions in
+/etc/login\&.defs\&. (The default configuration is to prevent users from changing their fullname\&.) The superuser may change any field for any account\&. Additionally, only the superuser may use the
+\fB\-o\fR
+option to change the undefined portions of the GECOS field\&.
+.PP
+These fields must not contain any colons\&. Except for the
+\fIother\fR
+field, they should not contain any comma or equal sign\&. It is also recommended to avoid non\-US\-ASCII characters, but this is only enforced for the phone numbers\&. The
+\fIother\fR
+field is used to store accounting information used by other applications\&.
+.SH "TILVALG"
+.PP
+Tilvalgende som g\(aelder for kommandoen
+\fBchfn\fR
+er:
+.PP
+\fB\-f\fR, \fB\-\-full\-name\fR\ \&\fINAVN\fR
+.RS 4
+\(AEndr brugerens navn\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-home\-phone\fR\ \&\fITELEFONNUMMER\fR
+.RS 4
+\(AEndr brugerens telefonnummer\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-other\fR\ \&\fIANDEN\fR
+.RS 4
+\(AEndr brugerens anden GECOS\-information\&. Dette felt bruges til at gemme kontoinformation brugt af andre programmer, og kan kun \(aendres af en superbruger\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-room\fR\ \&\fIV\(AERELSESNUMMER\fR
+.RS 4
+\(AEndr brugerens v\(aerelsesnummer\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Brug \(aendringer i mappen
+\fICHROOT_DIR\fR
+og brug konfigurationsfilerne fra mappen
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-help\fR
+.RS 4
+Vis hj\(aelpeteksten og afslut\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-work\-phone\fR\ \&\fIARBEJDSTELEFON\fR
+.RS 4
+\(AEndr brugerens arbejdsnummer\&.
+.RE
+.PP
+If none of the options are selected,
+\fBchfn\fR
+operates in an interactive fashion, prompting the user with the current values for all of the fields\&. Enter the new value to change the field, or leave the line blank to use the current value\&. The current value is displayed between a pair of
+\fB[ ]\fR
+marks\&. Without options,
+\fBchfn\fR
+prompts for the current user account\&.
+.SH "KONFIGURATION"
+.PP
+De f\(/olgende konfigurationsvariabler i
+/etc/login\&.defs
+\(aendrer opf\(/orelsen for dette v\(aerkt\(/oj:
+.PP
+\fBCHFN_AUTH\fR (boolesk)
+.RS 4
+If
+\fIyes\fR, the
+\fBchfn\fR
+program will require authentication before making any changes, unless run by the superuser\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (string)
+.RS 4
+This parameter specifies which values in the
+\fIgecos\fR
+field of the
+/etc/passwd
+file may be changed by regular users using the
+\fBchfn\fR
+program\&. It can be any combination of letters
+\fIf\fR,
+\fIr\fR,
+\fIw\fR,
+\fIh\fR, for Full name, Room number, Work phone, and Home phone, respectively\&. For backward compatibility,
+\fIyes\fR
+is equivalent to
+\fIrwh\fR
+and
+\fIno\fR
+is equivalent to
+\fIfrwh\fR\&. If not specified, only the superuser can make any changes\&. The most restrictive setting is better achieved by not installing
+\fBchfn\fR
+SUID\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (string)
+.RS 4
+The string used for prompting a password\&. The default is to use "Password: ", or a translation of that string\&. If you set this variable, the prompt will not be translated\&.
+.sp
+If the string contains
+\fI%s\fR, this will be replaced by the user\*(Aqs name\&.
+.RE
+.SH "FILER"
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow password suite configuration\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Information om brugerkonto\&.
+.RE
+.SH "SE OGS\(oA"
+.PP
+\fBchsh\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

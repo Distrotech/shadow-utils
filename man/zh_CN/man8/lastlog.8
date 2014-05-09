@@ -1,0 +1,110 @@
+'\" t
+.\"     Title: lastlog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "LASTLOG" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+lastlog \- 报告所有用户的最近登录情况，或者指定用户的最近登录情况
+.SH "大纲"
+.HP \w'\fBlastlog\fR\ 'u
+\fBlastlog\fR [\fI选项\fR]
+.SH "描述"
+.PP
+\fBlastlog\fR
+formats and prints the contents of the last login log
+/var/log/lastlog
+file\&. The
+\fIlogin\-name\fR,
+\fIport\fR, and
+\fIlast login time\fR
+will be printed\&. The default (no flags) causes lastlog entries to be printed, sorted by their order in
+/etc/passwd\&.
+.SH "选项"
+.PP
+\fBlastlog\fR
+命令可以接受的选项有：
+.PP
+\fB\-b\fR, \fB\-\-before\fR\ \&\fIDAYS\fR
+.RS 4
+只显示老于
+\fIDAYS\fR
+的最近登录记录。
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIDAYS\fR
+.RS 4
+只现实新于
+\fIDAYS\fR
+的最近登录记录。
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIRANGE\fR
+.RS 4
+现实指定用户的最近登录记录。
+.sp
+The users can be specified by a login name, a numerical user ID, or a
+\fIRANGE\fR
+of users\&. This
+\fIRANGE\fR
+of users can be specified with a min and max values (\fIUID_MIN\-UID_MAX\fR), a max value (\fI\-UID_MAX\fR), or a min value (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+如果用户从来没有登录过，将会显示
+\fI** 从未登录 **\fR
+而不是端口和时间。
+.PP
+Only the entries for the current users of the system will be displayed\&. Other entries may exist for users that were deleted previously\&.
+.SH "注意"
+.PP
+The
+lastlog
+file is a database which contains info on the last login of each user\&. You should not rotate it\&. It is a sparse file, so its size on the disk is usually much smaller than the one shown by "\fBls \-l\fR" (which can indicate a really big file if you have in
+passwd
+users with a high UID)\&. You can display its real size with "\fBls \-s\fR"\&.
+.SH "文件"
+.PP
+/var/log/lastlog
+.RS 4
+Database times of previous user logins\&.
+.RE
+.SH "CAVEATS"
+.PP
+Large gaps in UID numbers will cause the lastlog program to run longer with no output to the screen (i\&.e\&. if in lastlog database there is no entries for users with UID between 170 and 800 lastlog will appear to hang as it processes entries with UIDs 171\-799)\&.

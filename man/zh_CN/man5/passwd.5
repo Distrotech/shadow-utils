@@ -1,0 +1,178 @@
+'\" t
+.\"     Title: passwd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 文件格式和转化
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "PASSWD" "5" "2014-05-09" "shadow\-utils 4\&.2" "文件格式和转化"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+passwd \- 密码文件
+.SH "描述"
+.PP
+/etc/passwd
+为每个用户账户包含一行，包含使用冒号 (\(lq:\(rq) 分隔的七个字段，分别是：
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+登录名
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+可选的加密后的密码
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+数字用户 ID
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+数字组 ID
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+用户名和注释字段
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+用户主目录
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+可选的用户命令解释器
+.RE
+.PP
+加密的密码字段可以为空，此时使用指定的登录名登录时不会要求认证。然而，如果
+\fIpassword\fR
+为空，一些读取
+/etc/passwd
+文件的程序可能会不允许
+\fI任何\fR
+访问。如果
+\fIpassword\fR
+字段是一个小写的
+\(lqx\(rq，那么加密的密码实际上存储于
+\fBshadow\fR(5)
+中；在
+/etc/shadow
+文件中
+\fI必须\fR
+有对应的行，否则用户账户就会无效。如果
+\fIpassword\fR
+字段是其他任何字符串，将会被视为加密过的密码，如
+\fBcrypt\fR(3)
+中的说明。
+.PP
+此注释字段被多个系统工具使用，例如
+\fBfinger\fR(1)。
+.PP
+主目录字段提供了初始工作目录的名称。\fBlogin\fR
+程序根据此信息设置
+\fB$HOME\fR
+环境变量。
+.PP
+命令解释器字段提供了用户命令语言解释器的名称，或者开始时执行的程序的名称。\fBlogin\fR
+程序使用此信息设置
+\fB$SHELL\fR
+环境变量的值。如果字段为空，默认值为
+/bin/sh。
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+可选的加密后的密码文件
+.RE
+.PP
+/etc/passwd\-
+.RS 4
+/etc/passwd 的备份文件。
+.sp
+注意，此文件由 shadow 工具集使用，而不是所有的用户和密码管理工具都会使用。
+.RE
+.SH "参见"
+.PP
+\fBcrypt\fR(3),
+\fBgetent\fR(1),
+\fBgetpwnam\fR(3),
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBpwck\fR(8),
+\fBpwconv\fR(8),
+\fBpwunconv\fR(8),
+\fBshadow\fR(5),
+\fBsu\fR(1),
+\fBsulogin\fR(8)\&.

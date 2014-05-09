@@ -1,0 +1,92 @@
+'\" t
+.\"     Title: sg
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "SG" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+sg \- ex\('ecuter une commande avec un autre identifiant de groupe
+.SH "SYNOPSIS"
+.HP \w'\fBsg\fR\ 'u
+\fBsg\fR [\-] [groupe\ [\-c]\ commande]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBsg\fR
+fonctionne de la m\(^eme mani\(`ere que
+\fBnewgrp\fR, mais prend une commande comme param\(`etre\&. Cette commande sera ex\('ecut\('ee avec un interpr\('eteur de commandes
+/bin/sh\&. Avec la plupart des interpr\('eteurs de commandes permettant d\*(Aqex\('ecuter
+\fBsg\fR, si la commande comporte plusieurs mots, il faut la placer entre des guillemets (\(Fo\ \&"\ \&\(Fc)\&. Une autre diff\('erence entre
+\fBnewgrp\fR
+et
+\fBsg\fR
+est que certains interpr\('eteurs de commandes traitent
+\fBnewgrp\fR
+de fa\(,con particuli\(`ere, en se rempla\(,cant eux\-m\(^emes par une nouvelle instance d\*(Aqun interpr\('eteur que
+\fBnewgrp\fR
+cr\('ee\&. Ceci n\*(Aqest pas le cas de
+\fBsg\fR, ce qui permet de retrouver le groupe pr\('ec\('edent \(`a la sortie de
+\fBsg\fR\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBSYSLOG_SG_ENAB\fR (bool\('een)
+.RS 4
+Activer la journalisation \(Fo\ \&syslog\ \&\(Fc de l\*(Aqactivit\('e de
+\fBsg\fR\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBnewgrp\fR(1),
+\fBsu\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

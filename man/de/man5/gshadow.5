@@ -1,0 +1,105 @@
+'\" t
+.\"     Title: gshadow
+.\"    Author: Nicolas Fran\(,cois <nicolas.francois@centraliens.net>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dateiformate und konvertierung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "GSHADOW" "5" "09.05.2014" "shadow\-utils 4\&.2" "Dateiformate und konvertierung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gshadow \- Shadow\-Datei f\(:ur Gruppen
+.SH "BESCHREIBUNG"
+.PP
+In
+/etc/gshadow
+befinden sich die Informationen f\(:ur das Shadow\-Gruppen\-System\&.
+.PP
+Um die Sicherheit der Passw\(:orter zu gew\(:ahrleisten, darf diese Datei nicht f\(:ur normale Benutzer lesbar sein\&.
+.PP
+Die darin enthaltenen Zeilen haben folgende Felder, die durch Doppelpunkt getrennt sind:
+.PP
+\fBGruppenname\fR
+.RS 4
+Es muss sich um einen g\(:ultigen, auf dem System vorhandenen Gruppennamen handeln\&.
+.RE
+.PP
+\fBverschl\(:usseltes Passwort\fR
+.RS 4
+Sie sollten in
+\fBcrypt\fR(3)
+nachsehen, wenn Sie mehr \(:uber die Bedeutung dieser Zeichenkette wissen wollen\&.
+.sp
+Wenn das Passwortfeld eine Zeichenkette enth\(:alt, die kein zul\(:assiges Ergebnis von
+\fBcrypt\fR(3)
+ist, z\&.B\&. ! oder *, k\(:onnen Benutzer nicht mit einem Unix\-Passwort Zugang zu der Gruppe erhalten, wobei Gruppenmitglieder kein Passwort ben\(:otigen\&.
+.sp
+Das Passwort wird angefordert, wenn ein Benutzer, der nicht Mitglied der Gruppe ist, die Berechtigungen dieser Gruppe erhalten will (vergleiche
+\fBnewgrp\fR(1))\&.
+.sp
+Dieses Feld kann leer bleiben\&. Dies hat zur Folge, dass nur Gruppenmitglieder von den Rechten der Gruppe Gebrauch machen k\(:onnen\&.
+.sp
+Ein Passwortfeld, das mit einem Ausrufezeichen beginnt, f\(:uhrt dazu, dass das Passwort gesperrt ist\&. Die \(:ubrigen Zeichen sind das Passwort vor der Sperrung\&.
+.sp
+Dieses Passwort geht den in
+/etc/group
+definierten Passw\(:ortern vor\&.
+.RE
+.PP
+\fBGruppenverwalter\fR
+.RS 4
+Es muss sich dabei um eine durch Kommas getrennte Liste von Benutzernamen handeln\&.
+.sp
+Gruppenverwalter k\(:onnen das Passwort und die Mitglieder der Gruppe \(:andern\&.
+.sp
+Gruppenverwalter haben die gleichen Recht wie die Gruppenmitglieder (siehe unten)\&.
+.RE
+.PP
+\fBMitglieder\fR
+.RS 4
+Es muss sich dabei um eine durch Kommas getrennte Liste von Benutzernamen handeln\&.
+.sp
+Mitglieder haben Zugang zu der Gruppe, ohne eine Passwort eingeben zu m\(:ussen\&.
+.sp
+Sie sollten die gleiche Benutzerliste wie in
+/etc/group
+verwenden\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgpasswd\fR(5),
+\fBgroup\fR(5),
+\fBgrpck\fR(8),
+\fBgrpconv\fR(8),
+\fBnewgrp\fR(1)\&.

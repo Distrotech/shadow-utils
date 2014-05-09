@@ -1,0 +1,136 @@
+'\" t
+.\"     Title: vipw
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "VIPW" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vipw, vigr \- bearbeitet die Passwort\-, Gruppen\-, Shadow\-Passwort\- oder Shadow\-Gruppen\-Datei
+.SH "\(:UBERSICHT"
+.HP \w'\fBvipw\fR\ 'u
+\fBvipw\fR [\fIOptionen\fR]
+.HP \w'\fBvigr\fR\ 'u
+\fBvigr\fR [\fIOptionen\fR]
+.SH "BESCHREIBUNG"
+.PP
+Die Befehle
+\fBvipw\fR
+und
+\fBvigr\fR
+bearbeiten die Dateien
+/etc/passwd
+beziehungsweise
+/etc/group\&. Mit der Option
+\fB\-s\fR
+bearbeiten Sie die Shadow\-Versionen beider Dateien,
+/etc/shadow
+und
+/etc/gshadow\&. Die Programme werden die geeigneten Sperren setzen, um eine Besch\(:adigung der Dateien zu verhindern\&. Wenn ein Editor ben\(:otigt wird, wird zuerst die Umgebungsvariable
+\fB$VISUAL\fR
+ausgewertet, danach die Umgebungsvariable
+\fB$EDITOR\fR\&. Zuletzt wird der Standard\-Editor
+\fBvi\fR(1)
+verwendet\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die von den Befehlen
+\fBvipw\fR
+und
+\fBvigr\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-g\fR, \fB\-\-group\fR
+.RS 4
+bearbeitet die Gruppendatenbank
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-p\fR, \fB\-\-passwd\fR
+.RS 4
+bearbeitet die Passwd\-Datenbank
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+stiller Modus
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shadow\fR
+.RS 4
+bearbeitet die Shadow\- oder Gshadow\-Datenbank
+.RE
+.SH "UMGEBUNGSVARIABLEN"
+.PP
+\fBVISUAL\fR
+.RS 4
+der verwendete Editor
+.RE
+.PP
+\fBEDITOR\fR
+.RS 4
+der verwendete Editor, wenn
+\fBVISUAL\fR
+nicht gesetzt ist
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBvi\fR(1),\fBgroup\fR(5),
+\fBgshadow\fR(5),
+\fBpasswd\fR(5), ,
+\fBshadow\fR(5)\&.

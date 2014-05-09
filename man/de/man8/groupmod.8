@@ -1,0 +1,211 @@
+'\" t
+.\"     Title: groupmod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "GROUPMOD" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+groupmod \- \(:andert die Eigenschaften einer Gruppe auf dem System
+.SH "\(:UBERSICHT"
+.HP \w'\fBgroupmod\fR\ 'u
+\fBgroupmod\fR [\fIOptionen\fR] \fIGRUPPE\fR
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBgroupmod\fR
+\(:andert die Eigenschaften der angegebenen
+\fIGRUPPE\fR, indem die passenden Eintr\(:age in der Gruppendatenbank ge\(:andert werden\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBgroupmod\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+Die Gruppen\-ID der angegebenen
+\fIGRUPPE\fR
+wird zu
+\fIGID\fR
+ge\(:andert\&.
+.sp
+Der Wert von
+\fIGID\fR
+muss eine nicht negative, dezimale Zahl sein\&. Er muss eindeutig sein, au\(sser wenn die Option
+\fB\-o\fR
+verwendet wird\&.
+.sp
+Benutzer, welche die Gruppe als Hauptgruppe verwenden, werden aktualisiert, um die Gruppe als Hauptgruppe zu behalten\&.
+.sp
+Bei Dateien, welche die alte Gruppen\-ID haben und weiterhin der Gruppe
+\fIGROUP\fR
+geh\(:oren sollen, muss die Gruppen\-ID per Hand angepasst werden\&.
+.sp
+Die Werte von
+\fBGID_MIN\fR,
+\fBGID_MAX\fR,
+\fBSYS_GID_MIN\fR
+und
+\fBSYS_GID_MAX\fR
+aus
+/etc/login\&.defs
+werden nicht gepr\(:uft\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-n\fR, \fB\-\-new\-name\fR\ \&\fINEUE_GRUPPE\fR
+.RS 4
+Der Gruppenname wird vom Namen
+\fIGRUPPE\fR
+zu
+\fINEUE_GRUPPE\fR
+ge\(:andert\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Wenn sie mit der Option
+\fB\-g\fR
+verwendet wird, kann mit ihr der Wert der Gruppen\-\fIGID\fR
+auf einen nicht eindeutigen Wert gesetzt werden\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORT\fR
+.RS 4
+das verschl\(:usselte Passwort, wie es von
+\fBcrypt\fR(3)
+zur\(:uckgegeben wird
+.sp
+\fBHinweis:\fR
+Diese Option ist nicht empfehlenswert, weil das Passwort (auch wenn es verschl\(:usselt ist) f\(:ur Benutzer sichtbar ist, die sich den Prozess anzeigen lassen\&.
+.sp
+Sie sollten sicherstellen, dass das Passwort den Passwortrichtlinien des Systems entspricht\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBgroupmod\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI2\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI3\fR
+.RS 4
+ung\(:ultiges Argument f\(:ur Option
+.RE
+.PP
+\fI4\fR
+.RS 4
+angegebene Gruppe ist nicht vorhanden
+.RE
+.PP
+\fI6\fR
+.RS 4
+angegebene Gruppe ist nicht vorhanden
+.RE
+.PP
+\fI9\fR
+.RS 4
+Gruppenname wird schon verwendet
+.RE
+.PP
+\fI10\fR
+.RS 4
+Die Gruppendatei kann nicht aktualisieren werden\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

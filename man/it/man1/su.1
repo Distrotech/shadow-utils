@@ -1,0 +1,453 @@
+'\" t
+.\"     Title: su
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "SU" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+su \- cambia ID utente o diventa amministratore
+.SH "SINOSSI"
+.HP \w'\fBsu\fR\ 'u
+\fBsu\fR [\fIopzioni\fR] [\fInome\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBsu\fR
+permette di diventare un altro utente durante una sessione di login\&. Se nessun
+\fBnome\fR
+utente viene specificato,
+\fBsu\fR
+acquisice i privilegi di amministratore\&. L\*(Aqopzione
+\fB\-\fR
+pu\(`o essere usata per fornire un ambiente simile a quello che l\*(Aqutente troverebbe se effettuasse il login direttamente\&.
+.PP
+Dopo il nome utente, \(`e possibile specificare argomenti aggiuntivi da passare alla shell di login dell\*(Aqutente\&. In particolare, molti interpreti di comando adottano la convenzione per cui l\*(Aqopzione
+\fB\-c\fR
+seguita da un argomento fa s\(`i che quest\*(Aqultimo sia considerato un comando\&. Il comando viene eseguito dalla shell specificata in
+/etc/passwd
+per l\*(Aqutente di destinazione\&.
+.PP
+Si pu\(`o utilizzare
+\fB\-\-\fR
+per separare le opzioni di
+\fBsu\fR
+dagli argomenti passati alla shell\&.
+.PP
+All\*(Aqutente viene quindi chiesta la password, se necessario\&. Una password errata viene segnalata da un messaggio d\*(Aqerrore\&. Viene effettuato il log di tutti i tentativi, siano essi riusciti o meno, al fine di rilevare ogni abuso del sistema\&.
+.PP
+Le variabili d\*(Aqambiente in uso vengono passate alla nuova shell, eccetto il valore di
+\fB$PATH\fR
+che viene impostato a
+/bin:/usr/bin
+per gli utenti qualsiasi e a
+/sbin:/bin:/usr/sbin:/usr/bin
+per l\*(Aqamministratore\&. Questa impostazione \(`e controllata dalle definizioni
+\fIENV_PATH\fR
+ed
+\fIENV_SUPATH\fR
+in
+/etc/login\&.defs\&.
+.PP
+Un sottosistema di login \(`e indicato dalla presenza del carattere \(Fo*\(Fc all\*(Aqinizio della shell di login\&. La directory home impostata sar\(`a utilizzata come root di un nuovo file system al quale l\*(Aqutente accede\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBsu\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-c\fR, \fB\-\-command\fR\ \&\fICOMANDO\fR
+.RS 4
+Specifica un comando che verr\(`a invocato dalla shell tramite la sua opzione
+\fB\-c\fR\&.
+.sp
+The executed command will have no controlling terminal\&. This option cannot be used to execute interactive programs which need a controlling TTY\&.
+.RE
+.PP
+\fB\-\fR, \fB\-l\fR, \fB\-\-login\fR
+.RS 4
+Fornisce un ambiente simile a quello che un utente si attende quando effettua direttamente il login\&.
+.sp
+When
+\fB\-\fR
+is used, it must be specified before any
+\fBusername\fR\&. For portability it is recommended to use it as last option, before any
+\fBusername\fR\&. The other forms (\fB\-l\fR
+and
+\fB\-\-login\fR) do not have this restriction\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+La shell che verr\(`a invocata\&.
+.sp
+La shell invocata viene scelta da (in ordine di priorit\(`a):
+.PP
+.RS 4
+La shell specificata con \-\-shell\&.
+.RE
+.PP
+.RS 4
+Se viene usato
+\fB\-\-preserve\-environment\fR, la shell specificata dalla variabile d\*(Aqambiente
+\fB$SHELL\fR\&.
+.RE
+.PP
+.RS 4
+La shell indicata nel file
+/etc/passwd
+per l\*(Aqutente target\&.
+.RE
+.PP
+.RS 4
+/bin/sh
+se gli altri metodi falliscono\&.
+.RE
+.sp
+Se l\*(Aqutente target ha una shell con restrizioni (cio\(`e se la sua shell presente in
+/etc/passwd
+non \(`e presente in
+/etc/shells), allora l\*(Aqopzione
+\fB\-\-shell\fR
+e la variabile d\*(Aqambiente
+\fB$SHELL\fR
+non vengono prese in considerazione a meno che
+\fBsu\fR
+sia invocato da root\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-p\fR, \fB\-\-preserve\-environment\fR
+.RS 4
+Mantiene l\*(Aqambiente attuale, fatta eccezione per:
+.PP
+\fB$PATH\fR
+.RS 4
+reimpostato in accordo alle opzioni
+\fBENV_PATH\fR
+o
+\fBENV_SUPATH\fR
+del file
+/etc/login\&.defs
+(vedi sotto);
+.RE
+.PP
+\fB$IFS\fR
+.RS 4
+reimpostato a
+\(Fo<space><tab><newline>\(Fc
+se era impostato\&.
+.RE
+.sp
+Se l\*(Aqutente target ha una shell con restrizioni, questa opzione non ha effetto (a meno che
+\fBsu\fR
+sia invocato da root)\&.
+.sp
+Notare che il comportamento predefinito per l\*(Aqambiente \(`e il seguente:
+.PP
+.RS 4
+Le variabili d\*(Aqambiente
+\fB$HOME\fR,
+\fB$SHELL\fR,
+\fB$USER\fR,
+\fB$LOGNAME\fR,
+\fB$PATH\fR
+e
+\fB$IFS\fR
+sono reimpostate\&.
+.RE
+.PP
+.RS 4
+Se l\*(Aqopzione
+\fB\-\-login\fR
+non \(`e usata, l\*(Aqambiente \(`e copiato con l\*(Aqeccezione delle variabili elencate sopra\&.
+.RE
+.PP
+.RS 4
+Se l\*(Aqopzione
+\fB\-\-login\fR
+\(`e utilizzata, le variabili
+\fB$TERM\fR,
+\fB$COLORTERM\fR,
+\fB$DISPLAY\fR
+e
+\fB$XAUTHORITY\fR
+sono copiate se risultano impostate\&.
+.RE
+.PP
+.RS 4
+Se l\*(Aqopzione
+\fB\-\-login\fR
+\(`e utilizzata, le variabili d\*(Aqambiente
+\fB$TZ\fR,
+\fB$HZ\fR
+e
+\fB$MAIL\fR
+sono impostate in accordo alle opzioni
+\fBENV_TZ\fR,
+\fBENV_HZ\fR,
+\fBMAIL_DIR\fR
+e
+\fBMAIL_FILE\fR
+specificate nel file
+/etc/login\&.defs
+(vedi sotto)\&.
+.RE
+.PP
+.RS 4
+Se l\*(Aqopzione
+\fB\-\-login\fR
+\(`e utilizzata, altre variabili d\*(Aqambiente potrebbero essere impostate dal file
+\fBENVIRON_FILE\fR
+(vedi sotto)\&.
+.RE
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Questa versione di
+\fBsu\fR
+ha molte opzioni di compilazione; solo una parte di esse potrebbe essere in uso su un determinato sistema\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBCONSOLE\fR (testo)
+.RS 4
+Se definito, o il percorso completo di un file che contiene l\*(Aqelenco di nomi di device (uno per riga) oppure un elenco di nomi di device separati da \(Fo:\(Fc\&. L\*(Aqaccesso come root verr\(`a permesso solo attraverso questi device\&.
+.sp
+Se non definito, root potr\(`a accedere da qualsiasi device\&.
+.sp
+Il nome di device deve essere specificato senza il prefisso /dev\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (testo)
+.RS 4
+Elenco di gruppi da aggiungere ai gruppi supplementari dell\*(Aqutente quando questi accede dalla console (come determinato dalla impostazione CONSOLE)\&. Il valore predefinito \(`e nullo\&.
+
+Usare con cautela \- \(`e possibile che gli utenti ottengano l\*(Aqaccesso permanente a questi gruppi anche se non accedono dalla console\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (booleano)
+.RS 4
+Indica se permettere l\*(Aqaccesso al sistema anche se non si pu\(`o accedere alla directory home\&. Il valore predefinito \(`e no\&.
+.sp
+Se impostato a
+\fIyes\fR, l\*(Aqutente acceder\(`a alla directory root (/) nel caso che non sia possibile accedere alla propria directory home\&.
+.RE
+.PP
+\fBENV_HZ\fR (testo)
+.RS 4
+Se impostato viene utilizzato per definire il valore della variabile d\*(Aqambiente HZ al login dell\*(Aqutente\&. Il valore deve essere preceduto da
+\fIHZ=\fR\&. Un valore comune per Linux \(`e
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (testo)
+.RS 4
+Se questo file esiste ed \(`e leggibile, l\*(Aqambiente di login viene letto da l\(`i\&. Ogni riga deve essere nella forma nome=valore\&.
+.sp
+Le righe che iniziano con \(Fo#\(Fc sono trattate come commenti e ignorate\&.
+.RE
+.PP
+\fBENV_PATH\fR (testo)
+.RS 4
+If set, it will be used to define the PATH environment variable when a regular user login\&. The value is a colon separated list of paths (for example
+\fI/bin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (testo)
+.RS 4
+If set, it will be used to define the PATH environment variable when the superuser login\&. The value is a colon separated list of paths (for example
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (testo)
+.RS 4
+Se impostato viene usato per definire la variabile d\*(Aqambiente TZ al login dell\*(Aqutente\&. Il valore pu\(`o essere il nome di una \(Fotimezone\(Fc preceduta da
+\fITZ=\fR
+(ad esempio
+\fITZ=CST6CDT\fR), o il percorso completo di un file che contenga la specifica della \(Fotimezone\(Fc (ad esempio
+/etc/tzname)\&.
+.sp
+Se viene specificato il percorso completo di un file che per\(`o non esiste o non pu\(`o essere letto, allora viene utilizzato il valore predefinito
+\fITZ=CST6CDT\fR\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (testo)
+.RS 4
+Il testo da utilizzare per richiedere la password\&. Il valore predefinito \(`e \(FoPassword: \(Fc o una sua traduzione\&. Se si imposta questa variabile allora il testo non verr\(`a tradotto\&.
+.sp
+Se il testo contiene
+\fI%s\fR, questo verr\(`a sostituito dal nome dell\*(Aqutente\&.
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (testo)
+.RS 4
+Abilita la verifica e stampa a video dello stato della casella di posta al momento dell\*(Aqaccesso al sistema\&.
+.sp
+Andrebbe disabilitato se i file di avvio della shell effettuano gi\(`a questo controllo (\(Fomailx \-e\(Fc o equivalente)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (testo)
+.RS 4
+La directory di spool per la posta\&. Questa \(`e necessaria per manipolare la casella di posta quando il corrispondente account utente viene modificato o cancellato\&. Se non \(`e specificata viene utilizzato un valore impostato al momento della compilazione\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (testo)
+.RS 4
+Imposta la posizione delle caselle di posta degli utenti relative alla loro directory home\&.
+.RE
+.PP
+Le variabili
+\fBMAIL_DIR\fR
+e
+\fBMAIL_FILE\fR
+vengono utilizzate da
+\fBuseradd\fR,
+\fBusermod\fR
+e
+\fBuserdel\fR
+per creare, spostare e cancellare le caselle di posta dell\*(Aqutente\&.
+.PP
+Se
+\fBMAIL_CHECK_ENAB\fR
+\(`e impostata a
+\fIyes\fR
+allora sono anche utilizzate per impostare la variabile d\*(Aqambiente
+\fBMAIL\fR\&.
+.PP
+\fBQUOTAS_ENAB\fR (booleano)
+.RS 4
+Abilita l\*(Aqimpostazione di limiti di risorsa definiti in
+/etc/limits
+e ulimit, umask e livello di \(Fonice\(Fc in base al campo gecos del passwd dell\*(Aqutente\&.
+.RE
+.PP
+\fBSULOG_FILE\fR (testo)
+.RS 4
+Se definito, tutta l\*(Aqattivit\(`a di \(Fosu\(Fc viene tracciata in questo file\&.
+.RE
+.PP
+\fBSU_NAME\fR (testo)
+.RS 4
+Se definito \(`e il nome del comando da mostrare quando si esegue \(Fosu \-\(Fc\&. Ad esempio, se lo di definisce come \(Fosu\(Fc allora \(Fops\(Fc mostrer\(`a che il comando \(`e \(Fo\-su\(Fc\&. Se non definito, \(Fops\(Fc mostrer\(`a il nome della shell invocata, come \(Fo\-sh\(Fc\&.
+.RE
+.PP
+\fBSU_WHEEL_ONLY\fR (booleano)
+.RS 4
+Se
+\fIyes\fR, l\*(Aqutente deve essere elencato come membro del primo gruppo con gid 0 in
+/etc/group
+(chiamato
+\fIroot\fR
+in molti sistemi Linux) perch\('e sia possibile usare
+\fBsu\fR
+verso account con uid 0\&. Se il gruppo non esiste o \(`e vuoto, nessuno potr\(`a utilizzare
+\fBsu\fR
+verso uid 0\&.
+.RE
+.PP
+\fBSYSLOG_SU_ENAB\fR (booleano)
+.RS 4
+Abilita la tracciatura su \(Fosyslog\(Fc dell\*(Aqattivit\(`a di
+\fBsu\fR, oltre a quella sul file \(Fosulog\(Fc\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (booleano)
+.RS 4
+Abilita l\*(Aqimpostazione dei bit di gruppo di umask in modo che siano gli stessi dei bit del proprietario (esempio: 022 \-> 002, 077 \-> 007) per utenti non root a condizione che uid e gid siano identici e che il nome utente sia lo stesso del gruppo primario\&.
+.sp
+Se impostato a
+\fIyes\fR,
+\fBuserdel\fR
+canceller\(`a il gruppo dell\*(Aqutente se non contiene altri membri, e
+\fBuseradd\fR
+creer\(`a automaticamente un gruppo con lo stesso nome dell\*(Aqutente\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+In caso di successo, il valore restituito da
+\fBsu\fR
+\(`e quello del comando da esso eseguito\&.
+.PP
+Se questo comando \(`e terminato da un segnale,
+\fBsu\fR
+restituisce il numero del segnale pi\(`u 128\&.
+.PP
+Se \(Fosu\(Fc deve terminare il comando (perch\('e gli \(`e stato chiesto di terminare ma il comando non \(`e terminato in tempo),
+\fBsu\fR
+restituisce 255\&.
+.PP
+Alcuni dei codici d\*(Aquscita di
+\fBsu\fR
+sono indipendenti dal comando eseguito:
+.PP
+\fI0\fR
+.RS 4
+successo (solo
+\fB\-\-help\fR)
+.RE
+.PP
+\fI1\fR
+.RS 4
+Errore di sistema o di autenticazione
+.RE
+.PP
+\fI126\fR
+.RS 4
+Il comando richiesto non \(`e stato trovato
+.RE
+.PP
+\fI127\fR
+.RS 4
+Il comando richiesto non pu\(`o essere eseguito
+.RE
+"
+.SH "VEDERE ANCHE"
+.PP
+\fBlogin\fR(1),
+\fBlogin.defs\fR(5),
+\fBsg\fR(1),
+\fBsh\fR(1)\&.

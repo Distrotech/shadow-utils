@@ -1,0 +1,177 @@
+'\" t
+.\"     Title: chage
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "CHAGE" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+chage \- cambia le informazioni sulla scadenza della password
+.SH "SINOSSI"
+.HP \w'\fBchage\fR\ 'u
+\fBchage\fR [\fIopzioni\fR] \fILOGIN\fR
+.SH "DESCRIZIONE"
+.PP
+\fBchage\fR
+modifica il numero minimo di giorni tra i cambi di password e la data dell\*(Aqultimo cambio\&. Queste informazioni sono usate dal sistema per determinare quando un utente deve cambiare la propria password\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBchage\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-d\fR, \fB\-\-lastday\fR\ \&\fIULTIMO_GIORNO\fR
+.RS 4
+Imposta la data dell\*(Aqultimo cambio della password, espressa come il numero di giorni trascorsi dal 1 gennaio 1970\&. La data pu\(`o anche essere specificata nel formato AAAA\-MM\-GG o nella notazione comunemente usata nel proprio paese\&.
+.RE
+.PP
+\fB\-E\fR, \fB\-\-expiredate\fR\ \&\fIDATA_SCADENZA\fR
+.RS 4
+Imposta la data o il numero di giorni dal 1 gennaio 1970 dal quale l\*(Aqaccount utente non sar\(`a pi\(`u accessibile\&. La data pu\(`o essere inserita nel formato AAAA\-MM\-GG (o il formato pi\(`u comunemente utilizzato nel proprio paese)\&. Un utente il cui account sia bloccato deve contattare l\*(Aqamministratore di sistema prima di poter accedere nuovamente al sistema\&.
+.sp
+Se si passa il numero
+\fI\-1\fR
+come
+\fIDATA_SCADENZA\fR, si rimuove la data di scadenza dell\*(Aqaccount\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-I\fR, \fB\-\-inactive\fR\ \&\fIINATTIVO\fR
+.RS 4
+Imposta il numero di giorni di inattivit\(`a dopo la scadenza della password dopo i quali l\*(Aqaccount viene bloccato\&. L\*(Aqopzione
+\fIINATTIVO\fR
+indica il numero di giorni di inattivit\(`a\&. Un utente con l\*(Aqaccount bloccato deve contattare l\*(Aqamministratore prima di poter usare ancora il sistema\&.
+.sp
+Utilizzare il numero
+\fI\-1\fR
+come
+\fIINATTIVO\fR
+elimina l\*(Aqintervallo di inattivit\(`a dall\*(Aqaccount\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+Visualizza le informazioni sulla scadenza dell\*(Aqaccount\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-mindays\fR\ \&\fIMIN_GIORNI\fR
+.RS 4
+Imposta il numero minimo di giorni tra i cambi di password a
+\fIMIN_GIORNI\fR\&. Un valore pari a zero indica che l\*(Aqutente pu\(`o cambiare la propria password in qualsiasi momento\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-maxdays\fR\ \&\fIMAX_GIORNI\fR
+.RS 4
+Imposta il numero massimo di giorni di validit\(`a di una password\&. Quando la somma di
+\fIMAX_GIORNI\fR
+e
+\fIULTIMO_GIORNO\fR
+\(`e inferiore alla data odierna, l\*(Aqutente \(`e obbligato a cambiare la password prima di poter usare ancora il proprio account\&. Questo evento pu\(`o essere reso noto in anticipo usando l\*(Aqopzione
+\fB\-W\fR, che fornisce un preavviso all\*(Aqutente\&.
+.sp
+Usare il valore
+\fI\-1\fR
+come
+\fIMAX_GIORNI\fR
+rimuove il controllo sulla validit\(`a della password\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-warndays\fR\ \&\fIAVVISO_GIORNI\fR
+.RS 4
+Imposta il numero di giorni di preavviso prima che sia obbligatorio cambiare la password\&. L\*(Aqopzione
+\fIAVVISO_GIORNI\fR
+indica il numero di giorni prima della scadenza della password in cui l\*(Aqutente viene avvertito dell\*(Aqimminente scadenza\&.
+.RE
+.PP
+Se non viene specificata nessuna opzione,
+\fBchage\fR
+opera in modalit\(`a interattiva, chiedendo all\*(Aqutente il nuovo valore per ogni campo\&. Inserire un nuovo valore per modificare il campo, oppure lasciare la riga vuota per continuare a usare il valore attuale\&. I valori attuali vengono mostrati tra parentesi quadre
+\fI[ ]\fR\&.
+.SH "NOTA"
+.PP
+\fBchage\fR
+richiede che il file delle password shadow sia disponibile\&.
+.PP
+L\*(Aquso del comando
+\fBchage\fR
+\(`e permesso solo all\*(Aqutente root, tranne per l\*(Aqopzione
+\fB\-l\fR, che pu\(`o essere usata da un utente non privilegiato per conoscere la scadenza della propria password o dell\*(Aqaccount\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+Il comando
+\fBchage\fR
+restituisce i seguenti valori:
+.PP
+\fI0\fR
+.RS 4
+successo
+.RE
+.PP
+\fI1\fR
+.RS 4
+permesso negato
+.RE
+.PP
+\fI2\fR
+.RS 4
+sintassi del comando errata
+.RE
+.PP
+\fI15\fR
+.RS 4
+non \(`e possibile trovare il file delle password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBpasswd\fR(5),
+\fBshadow\fR(5)\&.

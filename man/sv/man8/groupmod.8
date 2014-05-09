@@ -1,0 +1,209 @@
+'\" t
+.\"     Title: groupmod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09-05-2014
+.\"    Manual: Systemhanteringskommandon
+.\"    Source: shadow-utils 4.2
+.\"  Language: Swedish
+.\"
+.TH "GROUPMOD" "8" "09-05-2014" "shadow\-utils 4\&.2" "Systemhanteringskommandon"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAMN"
+groupmod \- \(:andra en gruppdefinition p\(oa systemet
+.SH "SYNOPSIS"
+.HP \w'\fBgroupmod\fR\ 'u
+\fBgroupmod\fR [\fIflaggor\fR] \fIGRUPP\fR
+.SH "BESKRIVNING"
+.PP
+The
+\fBgroupmod\fR
+command modifies the definition of the specified
+\fIGROUP\fR
+by modifying the appropriate entry in the group database\&.
+.SH "FLAGGOR"
+.PP
+Flaggorna som g\(:aller f\(:or kommandot
+\fBgroupmod\fR
+\(:ar:
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+The group ID of the given
+\fIGROUP\fR
+will be changed to
+\fIGID\fR\&.
+.sp
+The value of
+\fIGID\fR
+must be a non\-negative decimal integer\&. This value must be unique, unless the
+\fB\-o\fR
+option is used\&.
+.sp
+Users who use the group as primary group will be updated to keep the group as their primary group\&.
+.sp
+Any files that have the old group ID and must continue to belong to
+\fIGROUP\fR, must have their group ID changed manually\&.
+.sp
+No checks will be performed with regard to the
+\fBGID_MIN\fR,
+\fBGID_MAX\fR,
+\fBSYS_GID_MIN\fR, or
+\fBSYS_GID_MAX\fR
+from
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Visa hj\(:alpmeddelande och avsluta\&.
+.RE
+.PP
+\fB\-n\fR, \fB\-\-new\-name\fR\ \&\fINY_GRUPP\fR
+.RS 4
+The name of the group will be changed from
+\fIGROUP\fR
+to
+\fINEW_GROUP\fR
+name\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+When used with the
+\fB\-g\fR
+option, allow to change the group
+\fIGID\fR
+to a non\-unique value\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIL\(:OSENORD\fR
+.RS 4
+Det krypterade l\(:osenordet, som returneras av
+\fBcrypt\fR(3)\&.
+.sp
+\fBNote:\fR
+This option is not recommended because the password (or encrypted password) will be visible by users listing the processes\&.
+.sp
+You should make sure the password respects the system\*(Aqs password policy\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+The following configuration variables in
+/etc/login\&.defs
+change the behavior of this tool:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+Maximum members per group entry\&. When the maximum is reached, a new group entry (line) is started in
+/etc/group
+(with the same name, same password, and same GID)\&.
+.sp
+The default value is 0, meaning that there are no limits in the number of members in a group\&.
+.sp
+This feature (split group) permits to limit the length of lines in the group file\&. This is useful to make sure that lines for NIS groups are not larger than 1024 characters\&.
+.sp
+If you need to enforce such limit, you can use 25\&.
+.sp
+Note: split groups may not be supported by all tools (even in the Shadow toolsuite)\&. You should not use this variable unless you really need it\&.
+.RE
+.SH "FILER"
+.PP
+/etc/group
+.RS 4
+Gruppkontoinformation\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+S\(:aker gruppkontoinformation\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow password suite configuration\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Anv\(:andarkontoinformation\&.
+.RE
+.SH "AVSLUTNINGSV\(:ARDEN"
+.PP
+Kommandot
+\fBgroupmod\fR
+avslutas med f\(:oljande v\(:arden:
+.PP
+\fI0\fR
+.RS 4
+lyckad
+.RE
+.PP
+\fI2\fR
+.RS 4
+ogiltig kommandosyntax
+.RE
+.PP
+\fI3\fR
+.RS 4
+ogiltigt argument till flagga
+.RE
+.PP
+\fI4\fR
+.RS 4
+angiven grupp finns inte
+.RE
+.PP
+\fI6\fR
+.RS 4
+angiven grupp finns inte
+.RE
+.PP
+\fI9\fR
+.RS 4
+gruppnamnet anv\(:ands redan
+.RE
+.PP
+\fI10\fR
+.RS 4
+kan inte uppdatera gruppfilen
+.RE
+.SH "SE OCKS\(oA"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

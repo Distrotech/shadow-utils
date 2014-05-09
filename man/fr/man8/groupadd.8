@@ -1,0 +1,249 @@
+'\" t
+.\"     Title: groupadd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GROUPADD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+groupadd \- Cr\('eer un nouveau groupe
+.SH "SYNOPSIS"
+.HP \w'\fBgroupadd\fR\ 'u
+\fBgroupadd\fR [\fIoptions\fR] \fIgroupe\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBgroupadd\fR
+cr\('ee un nouveau compte de groupe en utilisant les valeurs sp\('ecifi\('ees sur la ligne de commande et les valeurs par d\('efaut du syst\(`eme\&. Le nouveau groupe sera ins\('er\('e dans les fichiers du syst\(`eme selon les besoins\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBgroupadd\fR
+sont\ \&:
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+Avec cette option, la commande quittera juste avec un \('etat de succ\(`es si le groupe indiqu\('e existe d\('ej\(`a\&. Avec l\*(Aqoption
+\fB\-g\fR, si l\*(Aqidentifiant de groupe indiqu\('e existe d\('ej\(`a, un autre identifiant de groupe (non utilis\('e) sera choisi (c\&.\-\(`a\-d\&. que
+\fB\-g\fR
+est d\('esactiv\('ee)\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+La valeur num\('erique de l\*(Aqidentifiant du groupe (\(Fo\ \&group ID\ \&\(Fc ou GID)\&. Cette valeur doit \(^etre unique, sauf si l\*(Aqoption
+\fB\-o\fR
+est utilis\('ee\&. La valeur ne doit pas \(^etre n\('egative\&. Par d\('efaut, le plus petit identifiant sup\('erieur au
+\fBGID_MIN\fR
+et aux identifiants des groupes existants est utilis\('e\&.
+.sp
+Voir aussi aussi la description des options
+\fB\-r\fR
+et
+\fBGID_MAX\fR\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fIKEY\fR=\fIVALUE\fR
+.RS 4
+Surcharger les valeurs par d\('efaut du fichier
+/etc/login\&.defs
+(GID_MIN, GID_MAX et autres)\&. L\*(Aqoption
+\fB\-K\fR
+peut \(^etre indiqu\('ee plusieurs fois\&.
+.sp
+Example:
+\fB\-K\fR\ \&\fIGID_MIN\fR=\fI100\fR\ \&
+\fB\-K\fR\ \&\fIGID_MAX\fR=\fI499\fR
+.sp
+Note:
+\fB\-K\fR\ \&\fIGID_MIN\fR=\fI10\fR,\fIGID_MAX\fR=\fI499\fR
+doesn\*(Aqt work yet\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Cette option permet d\*(Aqajouter un groupe avec un identifiant (\(Fo\ \&GID\ \&\(Fc) d\('ej\(`a utilis\('e\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+Le mot de passe chiffr\('e, comme renvoy\('e par
+\fBcrypt\fR(3)\&. Le comportement par d\('efaut est de d\('esactiver le mot de passe\&.
+.sp
+\fBRemarque\ \&:\fR
+l\*(Aqutilisation de cette option est d\('econseill\('ee car le mot de passe (ou le mot de passe chiffr\('e) peut \(^etre visible des utilisateurs qui affichent la liste des processus\&.
+.sp
+Il est n\('ecessaire de v\('erifier si le mot de passe respecte la politique de mots de passe du syst\(`eme\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+Cr\('eer un groupe syst\(`eme\&.
+.sp
+Les identifiants num\('eriques des nouveaux groupes syst\(`emes sont choisis dans l\*(Aqintervalle
+\fBSYS_GID_MIN\fR\-\fBSYS_GID_MAX\fR, d\('efini dans
+login\&.defs, au lieu de
+\fBGID_MIN\fR\-\fBGID_MAX\fR
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBGID_MAX\fR (nombre), \fBGID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation des groupes normaux\&.
+.sp
+La valeur par d\('efaut pour
+\fBGID_MIN\fR
+(respectivement
+\fBGID_MAX\fR) est 1000 (respectivement 60000)\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (nombre), \fBSYS_GID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation de groupes syst\(`eme\&.
+.sp
+La valeur par d\('efaut pour
+\fBSYS_GID_MIN\fR
+(respectivement
+\fBSYS_GID_MAX\fR) est 101 (respectivement
+\fBGID_MIN\fR\-1)\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+Les noms de groupe doivent commencer par une lettre minuscule ou un tiret bas (\(Fo\ \&underscore\ \&\(Fc), et seuls des lettres minuscules, des chiffres, des \(Fo\ \&underscore\ \&\(Fc, ou des tirets peuvent suivre\&. Ils peuvent se terminer par un signe dollar\&. Soit, sous la forme d\*(Aqune expression rationnelle\ \&: [a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+Les noms de groupe sont limit\('es \(`a 16 caract\(`eres\&.
+.PP
+Vous ne pouvez pas ajouter d\*(Aqutilisateur \(`a un groupe NIS ou LDAP\&. Cela doit \(^etre effectu\('e sur le serveur correspondant\&.
+.PP
+Si le nom du groupe existe dans une base de donn\('ees externe, telle que NIS ou LDAP,
+\fBgroupadd\fR
+refusera de cr\('eer le groupe\&.
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBgroupadd\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI2\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI3\fR
+.RS 4
+param\(`etre non valable pour l\*(Aqoption
+.RE
+.PP
+\fI4\fR
+.RS 4
+GID d\('ej\(`a utilis\('e (et
+\fB\-o\fR
+n\*(Aqest pas utilis\('e)
+.RE
+.PP
+\fI9\fR
+.RS 4
+nom de groupe d\('ej\(`a utilis\('e
+.RE
+.PP
+\fI10\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des groupes
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

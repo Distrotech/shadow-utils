@@ -1,0 +1,500 @@
+'\" t
+.\"     Title: login
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dienstprogramme f\(:ur Benutzer
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "LOGIN" "1" "09.05.2014" "shadow\-utils 4\&.2" "Dienstprogramme f\(:ur Benutzer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+login \- startet eine Sitzung auf dem System
+.SH "\(:UBERSICHT"
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fIRechner\fR] [\fIBenutzername\fR] [\fIENV=VAR\fR...]
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fIRechner\fR] \-f \fIBenutzername\fR
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] \-r\ \fIRechner\fR
+.SH "BESCHREIBUNG"
+.PP
+Das Programm
+\fBlogin\fR
+wird verwendet, um eine neue Sitzung auf dem System zu starten\&. Es wird normalerweise automatisch als Antwort auf die
+\fIlogin:\fR\-Eingabeaufforderung auf dem Terminal des Benutzers ausgef\(:uhrt\&.
+\fBlogin\fR
+kann von der Shell besonders behandelt werden und kann nicht als Subprozess gestartet werden\&. Wenn
+\fBlogin\fR
+von einer Shell aufgerufen wird, sollte es als
+\fBexec login\fR
+ausgef\(:uhrt werden, so dass die aktuelle Shell des Benutzers beendet wird (und somit verhindert wird, dass der neue Benutzer in die Sitzung des alten zur\(:uckkehren kann)\&. Der Versuch, von einer Shell au\(sser der Anmelde\-Shell
+\fBlogin\fR
+auszuf\(:uhren, wird eine Fehlermeldung erzeugen\&.
+.PP
+Falls erforderlich, wird der Benutzer anschlie\(ssend nach einem Passwort gefragt\&. Dieses wird w\(:ahrend der Eingabe nicht angezeigt\&. Es sind nur eine kleine Anzahl von Anmeldeversuchen zul\(:assig, ehe
+\fBlogin\fR
+abbricht und die Kommunikation getrennt wird\&.
+.PP
+Falls der Passwortverfall f\(:ur Ihr Konto aktiviert wurde, kann es sein, dass Sie vor der weiteren Nutzung nach einem neuen Passwort gefragt werden\&. Sie m\(:ussen Ihr altes und neues Passwort angegeben, bevor Sie fortfahren k\(:onnen\&. In der Dokumentation zu
+\fBpasswd\fR(1)
+finden sich weitere Informationen\&.
+.PP
+Nach einer erfolgreichen Anmeldung werden Ihnen Systemmeldungen pr\(:asentiert, sowie das Vorhandensein von Mails angezeigt\&. Die Anzeige der systemweiten Nachrichtendatei
+/etc/motd
+kann abgeschaltet werden, indem im Anmeldeverzeichnis eine leere Datei
+\&.hushlogin
+angelegt wird\&. Je nach Zustand der Mailbox des Benutzers ist die Mailnachricht entweder \(Fc\fISie haben neue Mails\&.\fR\(Fo, \(Fc\fISie haben Mails\&.\fR\(Fo oder \(Fc\fIKeine Mails\&.\fR\(Fo\&.
+.PP
+Die Benutzer\- und Gruppen\-IDs werden gem\(:a\(ss den Werten in
+/etc/passwd
+gesetzt\&. Die Werte f\(:ur
+\fB$HOME\fR,
+\fB$SHELL\fR,
+\fB$PATH\fR,
+\fB$LOGNAME\fR
+und
+\fB$MAIL\fR
+werden ebenfalls entsprechend den Feldern im Passworteintrag gesetzt\&. Werte f\(:ur ulimit, umask und nice k\(:onnen ebenfalls gem\(:a\(ss den Werten im GECOS\-Feld gesetzt werden\&.
+.PP
+Bei einigen Installationen wird anf\(:anglich die Umgebungsvariable
+\fB$TERM\fR
+entsprechend dem Terminaltyp Ihrer tty\-Zeile, wie sie in
+/etc/ttytype
+angegeben ist, gesetzt\&.
+.PP
+Ein Startskript f\(:ur Ihren Befehlsinterpreter kann auch ausgef\(:uhrt werden\&. Sehen Sie bitte in den entsprechenden Handbuchseiten f\(:ur weitere Informationen dar\(:uber nach\&.
+.PP
+Eine Subsystem\-Anmeldung wird durch einen \(Fc*\(Fo als erstes Zeichen der Anmelde\-Shell gekennzeichnet\&. Das angegebene Home\-Verzeichnis wird als Wurzel f\(:ur das Dateisystem verwendet, auf welchem der Benutzer tats\(:achlich angemeldet ist\&.
+.PP
+Es liegt NICHT in der Verantwortung von
+\fBlogin\fR, Benutzer aus der utmp\-Datei zu entfernen\&. Sowohl
+\fBgetty\fR(8)
+als auch
+\fBinit\fR(8)
+sind daf\(:ur zust\(:andig, die offenkundige Eigent\(:umerstellung einer Terminalsitzung aufzur\(:aumen\&. Falls Sie
+\fBlogin\fR
+von der Shell ohne
+\fBexec\fR
+verwenden, wird der Benutzer, den Sie verwenden, weiterhin als angemeldet erscheinen, obwohl Sie die \(Fcuntergeordnete Sitzung\(Fo beendet haben\&.
+.SH "OPTIONEN"
+.PP
+\fB\-f\fR
+.RS 4
+Keine Authentifizierung durchf\(:uhren, Benutzer ist bereits angemeldet\&.
+.sp
+Hinweis: In diesem Fall muss
+\fIBenutzername\fR
+angegeben werden\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Name des entfernt stehenden Rechners f\(:ur die Anmeldung
+.RE
+.PP
+\fB\-p\fR
+.RS 4
+beh\(:alt die Umgebungseinstellungen bei
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+f\(:uhrt das Autologin\-Protokoll f\(:ur rlogin aus
+.RE
+.PP
+Die Optionen
+\fB\-r\fR,
+\fB\-h\fR
+und
+\fB\-f\fR
+k\(:onnen nur verwendet werden, wenn
+\fBlogin\fR
+von Root ausgef\(:uhrt wird\&.
+.SH "WARNUNGEN"
+.PP
+Diese Version von
+\fBlogin\fR
+hat viele Optionen f\(:ur die Kompilierung, wobei eventuell nicht alle Optionen auf allen Systemen verwendet werden\&.
+.PP
+Der Ort der Konfigurationsdateien kann je nach Konfiguration des Systems unterschiedlich sein\&.
+.PP
+Es liegt NICHT in der Verantwortung von
+\fBlogin\fR, Benutzer aus der utmp\-Datei zu entfernen\&. Sowohl
+\fBgetty\fR(8)
+als auch
+\fBinit\fR(8)
+sind daf\(:ur zust\(:andig, die offenkundige Eigent\(:umerstellung einer Terminalsitzung aufzur\(:aumen\&. Falls Sie
+\fBlogin\fR
+von der Shell ohne
+\fBexec\fR
+verwenden, wird der Benutzer, den Sie verwenden, weiterhin als angemeldet erscheinen, obwohl Sie die \(Fcuntergeordnete Sitzung\(Fo beendet haben\&.
+.PP
+Wie bei jedem anderen Programm kann auch das Erscheinungsbild von
+\fBlogin\fR
+vorgespiegelt werden\&. Falls unseri\(:ose Benutzer physischen Zugriff auf den Rechner haben, kann dies von einem Angreifer verwendet werden, um das Passwort der Person zu erhalten, die sich als n\(:achste vor den Rechner setzt\&. In Linux k\(:onnen Benutzer den SAK\-Mechanismus verwenden, um einen vertrauensw\(:urdigen Pfad zu erstellen und somit diesem Angriff zu entgehen\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBCONSOLE\fR (Zeichenkette)
+.RS 4
+Die Konfiguration erfolgt entweder \(:uber die Angabe des vollen Pfadnamens einer Datei, welche die Namen der Ger\(:ate enth\(:alt (eines pro Zeile), oder mit einer Liste der Ger\(:atenamen, die mit \(Fc:\(Fo getrennt sind\&. Root kann sich nur auf diesen Ger\(:aten anmelden\&.
+.sp
+Wenn es unkonfiguriert gelassen wird, kann sich Root auf jedem Ger\(:at anmelden\&.
+.sp
+Das Ger\(:at soll ohne vorangestelltes /dev/ angegeben werden\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (Zeichenkette)
+.RS 4
+Liste von Gruppen, deren Mitglied der Benutzer wird, wenn der sich auf der Konsole anmeldet, die mit dem Parameter CONSOLE festgelegt wird\&. Standardm\(:a\(ssig ist die Liste leer\&.
+
+Seien Sie vorsichtig\&. Benutzer k\(:onnen dauerhaft Zugang zu den Gruppen erlangen, auch wenn sie nicht auf der Konsole angemeldet sind\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (boolesch)
+.RS 4
+Legt fest, ob ein Login erlaubt wird, wenn mit cd nicht in das Home\-Verzeichnis gewechselt werden kann\&. Standardm\(:a\(ssig wird dies nicht zugelassen\&.
+.sp
+Falls auf
+\fIyes\fR
+gesetzt, wird der Benutzer mit dem Wurzelverzeichnis (/) angemeldet, wenn mit cd nicht in sein Home\-Verzeichnis gewechselt werden kann\&.
+.RE
+.PP
+\fBENV_HZ\fR (Zeichenkette)
+.RS 4
+Wenn vergeben, wird damit die Umgebungsvariable HZ definiert, wenn sich ein Benutzer anmeldet\&. Dem Wert muss ein
+\fIHZ=\fR
+vorangestellt werden\&. Ein \(:ublicher Wert bei Linux ist
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_PATH\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable PATH definiert, wenn sich ein normaler Benutzer anmeldet\&. Der Wert ist eine Liste, deren Eintr\(:age durch Doppelpunkte getrennt sind (zum Beispiel
+\fI/bin:/usr/bin\fR)\&. Ihr kann ein
+\fIPATH=\fR
+vorangestellt werden\&. Der Standardwert ist
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable PATH definiert, wenn sich der Superuser anmeldet\&. Der Wert ist eine Liste, deren Eintr\(:age durch Doppelpunkte getrennt sind (zum Beispiel
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR)\&. Ihr kann ein
+\fIPATH=\fR
+vorangestellt werden\&. Der Standardwert ist
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (Zeichenkette)
+.RS 4
+Wenn gesetzt, wird damit die Umgebungsvariable TZ definiert, wenn sich ein Benutzer anmeldet\&. Der Wert kann der Name der Zeitzone sein, dem
+\fITZ=\fR
+vorausgeht (zum Beispiel
+\fITZ=CST6CDT\fR), oder der vollst\(:andige Pfad der Datei, welche die Konfiguration der Zeitzone enth\(:alt (zum Beispiel
+/etc/tzname)\&.
+.sp
+Wenn ein vollst\(:andiger Pfadname angegeben wird, die Datei aber nicht existiert oder nicht lesbar ist, wird
+\fITZ=CST6CDT\fR
+verwendet\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (Zeichenkette)
+.RS 4
+Wenn diese Datei vorhanden ist, wird die Anmeldeumgebung aus ihr gelesen\&. Jede Zeile sollte die Form Name=Wert haben\&.
+.sp
+Zeilen, die mit einem # beginnen, werden als Kommentare behandelt und daher ignoriert\&.
+.RE
+.PP
+\fBERASECHAR\fR (Zahl)
+.RS 4
+Das L\(:oschzeichen des Terminals (\fI010\fR
+= R\(:ucktaste,
+\fI0177\fR
+= Entf)\&.
+.sp
+Wenn der Wert mit \(Fc0\(Fo beginnt, wird er als Oktalzahl gewertet, wenn er mit \(Fc0x\(Fo beginnt, als Hexadezimalzahl\&.
+.RE
+.PP
+\fBFAIL_DELAY\fR (Zahl)
+.RS 4
+Wartezeit in Sekunden, ehe nach einem fehlgeschlagenen Anmeldeversuch ein neuer unternommen werden kann
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung und Anzeige der Informationen zu fehlgeschlagenen Anmeldeversuchen in
+/var/log/faillog
+.RE
+.PP
+\fBFAKE_SHELL\fR (Zeichenkette)
+.RS 4
+Falls angegeben, f\(:uhrt
+\fBlogin\fR
+diese Shell anstelle der in
+/etc/passwd
+angegebenen Shell des Benutzers aus\&.
+.RE
+.PP
+\fBFTMP_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, werden fehlgeschlagene Anmeldeversuche in dieser Datei im Format utmp protokolliert\&.
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, kann diese Datei die \(:ubliche Informationsanzeige w\(:ahrend des Anmeldevorgangs unterbinden\&. Wenn ein vollst\(:andiger Pfad angegeben wird, wird der Modus ohne Anmeldeinformationen verwendet, wenn der Name oder die Shell des Benutzers in der Datei enthalten sind\&. Wenn kein vollst\(:andiger Pfad angegeben wird, wird der Modus ohne Anmeldeinformationen aktiviert, wenn die Datei im Home\-Verzeichnis des Benutzers existiert\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, wird diese Datei vor der Anmeldeaufforderung angezeigt\&.
+.RE
+.PP
+\fBKILLCHAR\fR (Zahl)
+.RS 4
+Das KILL\-Zeichen des Terminals (\fI025\fR
+= CTRL/U)\&.
+.sp
+Wenn der Wert mit \(Fc0\(Fo beginnt, wird er als Oktalzahl gewertet, wenn er mit \(Fc0x\(Fo beginnt, als Hexadezimalzahl\&.
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung und Anzeige der Informationen zu Anmeldezeiten in
+/var/log/lastlog
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (Zahl)
+.RS 4
+maximale Anzahl von Anmeldeversuchen, wenn ein falsches Passwort eingegeben wird
+.RE
+.PP
+\fBLOGIN_STRING\fR (Zeichenkette)
+.RS 4
+Diese Zeichenkette wird bei der Eingabeaufforderung des Passworts (Prompt) verwendet\&. Standardm\(:a\(ssig wird \(FcPassword: \(Fo oder eine \(:Ubersetzung davon benutzt\&. Wenn Sie diese Variable definieren, wird die Eingabeaufforderung nicht \(:ubersetzt\&.
+.sp
+Wenn die Zeichenkette ein
+\fI%s\fR
+enth\(:alt, wird dies durch den Benutzernamen ersetzt\&.
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (Zahl)
+.RS 4
+H\(:ochstdauer f\(:ur einen Anmeldeversuch
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (boolesch)
+.RS 4
+aktiviert die Protokollierung erfolgreicher Anmeldungen
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Anzeige unbekannter Benutzernamen, wenn fehlgeschlagene Anmeldeversuche aufgezeichnet werden
+.sp
+Hinweis: Das Protokollieren unbekannter Benutzernamen kann ein Sicherheitsproblem darstellen, wenn ein Benutzer sein Passwort anstelle seines Anmeldenamens eingibt\&.
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Pr\(:ufung und Anzeige des Status der Mailbox bei der Anmeldung
+.sp
+Sie sollten dies abschalten, wenn schon die Startdateien der Shell die Mails pr\(:ufen (\(Fcmailx \-e\(Fo oder \(:ahnliches)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (Zeichenkette)
+.RS 4
+Das Verzeichnis des Mail\-Spools\&. Diese Angabe wird ben\(:otigt, um die Mailbox zu bearbeiten, nachdem das entsprechende Benutzerkonto ver\(:andert oder gel\(:oscht wurde\&. Falls nicht angegeben, wird ein Standard verwendet, der beim Kompilieren festgelegt wurde\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (Zeichenkette)
+.RS 4
+Legt den Ort der Mail\-Spool\-Dateien eines Benutzers relativ zu seinem Home\-Verzeichnis fest\&.
+.RE
+.PP
+Die Variablen
+\fBMAIL_DIR\fR
+und
+\fBMAIL_FILE\fR
+werden von
+\fBuseradd\fR,
+\fBusermod\fR
+und
+\fBuserdel\fR
+verwendet, um den Mail\-Spool eines Benutzers zu erstellen, zu verschieben oder zu l\(:oschen\&.
+.PP
+Falls
+\fBMAIL_CHECK_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, werden sie auch verwendet, um die Umgebungsvariable
+\fBMAIL\fR
+festzulegen\&.
+.PP
+\fBMOTD_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, eine Aufz\(:ahlung von Dateien, welche die bei der Anmeldung anzuzeigenden \(FcNachrichten des Tages\(Fo enth\(:alt\&. Die Dateien werden mit einem \(Fc:\(Fo getrennt\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, der Name einer Datei, deren Existenz Anmeldungen au\(sser von Root verhindert\&. Der Inhalt der Datei sollte die Gr\(:unde enthalten, weshalb Anmeldungen untersagt sind\&.
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (boolesch)
+.RS 4
+aktiviert die Auswertung der in
+/etc/porttime
+angegebenen Zeitbegrenzungen
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Setzen von Resourcenbeschr\(:ankungen aus
+/etc/limits
+und von ulimit, umask und niceness aus dem gecos\-Feld des Benutzers von passwd
+.RE
+.PP
+\fBTTYGROUP\fR (Zeichenkette), \fBTTYPERM\fR (Zeichenkette)
+.RS 4
+Die Rechte des Terminals: Das Anmelde\-tty geh\(:ort der Gruppe
+\fBTTYGROUP\fR
+an, die Rechte werden auf
+\fBTTYPERM\fR
+gesetzt\&.
+.sp
+Standardm\(:a\(ssig ist der Eigent\(:umer des Terminals die Hauptgruppe des Benutzers, die Rechte werden auf
+\fI0600\fR
+gesetzt\&.
+.sp
+\fBTTYGROUP\fR
+kann der Gruppenname oder die als Zahl ausgedr\(:uckte Gruppen\-ID sein\&.
+.sp
+Wenn Sie ein
+\fBwrite\fR\-Programm haben, das \(Fcsetgid\(Fo f\(:ur eine Gruppe besitzt, der das Terminal geh\(:ort, sollten Sie TTYGROUP die Gruppennummer und TTYPERM den Wert 0620 zuweisen\&. Oder Sie sollten TTYGROUP als Kommentar belassen und TTYPERM den Wert 622 oder 600 zuweisen\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (Zeichenkette)
+.RS 4
+Falls angegeben, eine Datei, welche einer tty\-Zeile den Umgebungsparameter TERM zuweist\&. Jede Zeile hat das Format wie etwa \(Fcvt100 tty01\(Fo\&.
+.RE
+.PP
+\fBULIMIT\fR (Zahl)
+.RS 4
+der Standardwert von
+\fBulimit\fR
+.RE
+.PP
+\fBUMASK\fR (Zahl)
+.RS 4
+Die Bit\-Gruppe, welche die Rechte von erstellten Dateien bestimmt, wird anf\(:anglich auf diesen Wert gesetzt\&. Falls nicht angegeben, wird sie auf 022 gesetzt\&.
+.sp
+\fBuseradd\fR
+und
+\fBnewusers\fR
+verwenden diese Bit\-Gruppe, um die Rechte des von ihnen erstellten Home\-Verzeichnisses zu setzen\&.
+.sp
+Sie wird auch von
+\fBlogin\fR
+verwendet, um die anf\(:angliche Umask eines Benutzers zu bestimmen\&. Beachten Sie, dass diese Bit\-Gruppe durch die GECOS\-Zeile des Benutzers (wenn
+\fBQUOTAS_ENAB\fR
+gesetzt wurde) oder die Festlegung eines Limits in
+\fBlimits\fR(5)
+mit der Kennung
+\fIK\fR
+\(:uberschrieben werden kann\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolesch)
+.RS 4
+Erlaubt Benutzern, die nicht Root sind, die Umask\-Gruppen\-Bits auf ihre Umask\-Bits zu setzen (Beispiel: 022 \-> 002, 077 \-> 007), falls die UID mit der GID identisch ist sowie der Benutzername mit dem Gruppennamen \(:ubereinstimmt\&.
+.sp
+Wenn der Wert
+\fIyes\fR
+ist, wird
+\fBuserdel\fR
+die Gruppe des Benutzers entfernen, falls sie keine Mitglieder mehr hat, und
+\fBuseradd\fR
+wird standardm\(:a\(ssig eine Gruppe mit dem Namen des Benutzers erstellen\&.
+.RE
+.SH "DATEIEN"
+.PP
+/var/run/utmp
+.RS 4
+Liste der aktuellen angemeldeten Sitzungen
+.RE
+.PP
+/var/log/wtmp
+.RS 4
+Liste der vorangegangenen angemeldeten Sitzungen
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/motd
+.RS 4
+Datei mit der Systemmeldung des Tages
+.RE
+.PP
+/etc/nologin
+.RS 4
+verhindert, dass sich Benutzer au\(sser Root anmelden
+.RE
+.PP
+/etc/ttytype
+.RS 4
+Liste der Terminaltypen
+.RE
+.PP
+$HOME/\&.hushlogin
+.RS 4
+unterdr\(:uckt die Ausgabe von Systemnachrichten
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBmail\fR(1),
+\fBpasswd\fR(1),
+\fBsh\fR(1),
+\fBsu\fR(1),
+\fBlogin.defs\fR(5),
+\fBnologin\fR(5),
+\fBpasswd\fR(5),
+\fBsecuretty\fR(5),
+\fBgetty\fR(8)\&.

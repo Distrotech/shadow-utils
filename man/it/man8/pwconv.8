@@ -1,0 +1,191 @@
+'\" t
+.\"     Title: pwconv
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "PWCONV" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+pwconv, pwunconv, grpconv, grpunconv \- convertono a e da password e gruppi shadow\&.
+.SH "SINOSSI"
+.HP \w'\fBpwconv\fR\ 'u
+\fBpwconv\fR [\fIopzioni\fR]
+.HP \w'\fBpwunconv\fR\ 'u
+\fBpwunconv\fR [\fIopzioni\fR]
+.HP \w'\fBgrpconv\fR\ 'u
+\fBgrpconv\fR [\fIopzioni\fR]
+.HP \w'\fBgrpunconv\fR\ 'u
+\fBgrpunconv\fR [\fIopzioni\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBpwconv\fR
+crea
+\fIshadow\fR
+da
+\fIpasswd\fR
+e da un eventuale preesistente
+\fIshadow\fR\&.
+.PP
+\fBpwunconv\fR
+crea
+\fIpasswd\fR
+da
+\fIpasswd\fR
+e
+\fIshadow\fR
+e poi cancella
+\fIshadow\fR\&.
+.PP
+\fBgrpconv\fR
+crea
+\fIgshadow\fR
+da
+\fIgroup\fR
+e da un eventuale preesistente
+\fIgshadow\fR\&.
+.PP
+\fBgrpunconv\fR
+crea
+\fIgroup\fR
+da
+\fIgroup\fR
+e
+\fIgshadow\fR
+e quindi rimuove
+\fIgshadow\fR\&.
+.PP
+Questi quattro programmi agiscono tutti sui file normali e oscurati (shadow) delle password e dei gruppi:
+/etc/passwd,
+/etc/group,
+/etc/shadow
+e
+/etc/gshadow\&.
+.PP
+Ciascun programma, prima della conversione, acquisisce i lock necessari\&.
+\fBpwconv\fR
+e
+\fBgrpconv\fR
+sono simili\&. Per prima cosa vengono rimosse le voci nel file shadow che non esistono nel file principale\&. Quindi vengono aggiornate le voci oscurate che non hanno \(Fox\(Fc come password nel file principale\&. Vengono aggiunte le eventuali voci oscurate mancanti\&. Infine, le password nel file principale vengono sostituite con \(Fox\(Fc\&. Questi programmi possono essere usati per le conversioni iniziali cos\(`i come per aggiornare il file oscurato se il file principale viene modificato a mano\&.
+.PP
+\fBpwconv\fR
+user\(`a i valori
+\fIPASS_MIN_DAYS\fR,
+\fIPASS_MAX_DAYS\fR
+e
+\fIPASS_WARN_AGE\fR
+da
+/etc/login\&.defs
+al momento dell\*(Aqaggiunta di nuove voci a
+/etc/shadow\&.
+.PP
+Analogamente,
+\fBpwunconv\fR
+e
+\fBgrpunconv\fR
+sono simili\&. Le password nel file principale vengono aggiornate dal file shadow\&. Voci che esistono nel file principale ma non nel file shadow vengono lasciate stare\&. Infine, viene rimosso il file shadow\&. Alcune informazioni sull\*(Aqinvecchiamento delle password vengono perse da
+\fBpwunconv\fR\&. Convertir\(`a solo quello che potr\(`a\&.
+.SH "OPZIONI"
+.PP
+Le opzioni che si possono applicare ai comandi
+\fBpwconv\fR,
+\fBpwunconv\fR,
+\fBgrpconv\fR
+e
+\fBgrpunconv\fR
+sono:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.SH "ERRORI"
+.PP
+Errori nel file delle password o dei gruppi (come elementi non validi o duplicati) possono causare dei cicli infiniti in questi programmi, oppure degli errori non prevedibili\&. Eseguire
+\fBpwck\fR
+e
+\fBgrpck\fR
+per correggere ogni eventuale errore prima di convertire da o verso password o gruppi shadow\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+influenzano il comportamento di
+\fBgrpconv\fR
+e
+\fBgrpunconv\fR:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+influenzano il comportamento di
+\fBpwconv\fR:
+.PP
+\fBPASS_MAX_DAYS\fR (numerico)
+.RS 4
+Il numero massimo di giorni che una password pu\(`o essere utilizzata\&. Se la password \(`e pi\(`u vecchia verr\(`a imposto il suo cambiamento\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (numerico)
+.RS 4
+Il numero minimo di giorni tra due cambiamenti di password\&. Ogni tentativo di cambiare la password prima di questo periodo verr\(`a rifiutato\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (numerico)
+.RS 4
+Il numero di giorni per i quali un utente va avvisato che la sua password sta per scadere\&. Se zero l\*(Aqutente viene avvisato solo alla scadenza\&. Un valore negativo indica che non si deve avvisare mai\&. Se non specificato allora non c\*(Aq\(`e nessun avviso\&.
+.RE
+.SH "FILE"
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBgrpck\fR(8),
+\fBlogin.defs\fR(5),
+\fBpwck\fR(8)\&.

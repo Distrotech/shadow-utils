@@ -1,0 +1,438 @@
+'\" t
+.\"     Title: usermod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "USERMOD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+usermod \- modifica l\*(Aqaccount di un utente
+.SH "SINOSSI"
+.HP \w'\fBusermod\fR\ 'u
+\fBusermod\fR [\fIopzioni\fR] \fILOGIN\fR
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBusermod\fR
+modifica i file di account del sistema in modo da riflettere i cambiamenti che sono specificati sulla riga di comando\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBusermod\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-a\fR, \fB\-\-append\fR
+.RS 4
+Aggiunge l\*(Aqutente al/i gruppo/i supplmentare/i\&. Usare solo con l\*(Aqopzione
+\fB\-G\fR\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fICOMMENTO\fR
+.RS 4
+Il nuovo valore per il campo commento dell\*(Aqutente nel file password\&. Normalmente viene modificato usando l\*(Aqutilit\(`a
+\fBchfn\fR(1)\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\fR\ \&\fIHOME_DIR\fR
+.RS 4
+La nuova directory home dell\*(Aqutente\&.
+.sp
+Se \(`e data l\*(Aqopzione
+\fB\-m\fR
+il contenuto della directory home corrente sar\(`a spostato nella nuova directory home, che viene creata se non esiste gi\(`a\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIDATA_SCADENZA\fR
+.RS 4
+La data in cui l\*(Aqaccount dell\*(Aqutente verr\(`a disabilitato\&. La data \(`e specificata nel formato
+\fIAAAA\-MM\-GG\fR\&.
+.sp
+Un argomento
+\fIDATA_SCADENZA\fR
+vuoto disabilita la scadenza dell\*(Aqaccount\&.
+.sp
+Questa opzione richiede il file
+/etc/shadow\&. Se non c\*(Aq\(`e ancora viene creata una voce nel file
+/etc/shadow\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINATTIVO\fR
+.RS 4
+Il numero di giorni dopo la scadenza di una password prima che l\*(Aqaccount venga disabilitato permanentemente\&.
+.sp
+Il valore 0 disabilita l\*(Aqaccount non appena la password \(`e scaduta, e il valore \-1 disabilita questa funzionalit\(`a\&.
+.sp
+Questa opzione richiede il file
+/etc/shadow\&. Se non c\*(Aq\(`e ancora viene creata una voce nel file
+/etc/shadow\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGRUPPO\fR
+.RS 4
+Il nome o numero del gruppo da assegnare alla connessione dell\*(Aqutente\&. Il gruppo deve esistere\&.
+.sp
+Tutti i file nella directory home dell\*(Aqutente che hanno come gruppo il precedente gruppo primario dell\*(Aqutente stesso verranno modificati perch\('e abbiano questo nuovo gruppo\&.
+.sp
+Il gruppo dei file che si trovano all\*(Aqesterno della directory home dell\*(Aqutente andr\(`a modificato manualmente\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGRUPPO1\fR[\fI,GRUPPO2,\&.\&.\&.\fR[\fI,GRUPPON\fR]]]
+.RS 4
+Una lista di gruppi supplementari di cui l\*(Aqutente \(`e altres\(`i membro\&. Ciascun gruppo \(`e separato dal successivo da una virgola, senza spazi bianchi intermedi\&. I gruppi sono soggetti alle stesse restrizioni del gruppo dato con l\*(Aqopzione
+\fB\-g\fR\&.
+.sp
+Se l\*(Aqutente \(`e attualmente membro di un gruppo che non \(`e elencato, l\*(Aqutente verr\(`a rimosso dal gruppo\&. Questo comportamento pu\(`o essere cambiato con l\*(Aqopzione
+\fB\-a\fR
+che aggiunge all\*(Aqutente i gruppi supplementari dei quali fa attualmente parte\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-login\fR\ \&\fINUOVO_LOGIN\fR
+.RS 4
+Il nome dell\*(Aqutente verr\(`a cambiato da
+\fILOGIN\fR
+a
+\fINUOVO_LOGIN\fR\&. Niente altro viene cambiato\&. In particolare, la directory home dell\*(Aqutente e la casella di posta dovrebbero probabilmente essere modificate manualmente in modo da riflettere il nuovo nome di login\&.
+.RE
+.PP
+\fB\-L\fR, \fB\-\-lock\fR
+.RS 4
+Blocca la password di un utente\&. Questo inserisce un \(Fo!\(Fc davanti alla password cifrata, disabilitandola\&. Non si pu\(`o utilizzare questa opzione con le opzioni
+\fB\-p\fR
+e
+\fB\-U\fR\&.
+.sp
+Nota: se si vuole bloccare l\*(Aqaccount (non solo l\*(Aqaccesso tramite password), si deve anche impostare
+\fIDATA_SCADENZA\fR
+a
+\fI1\fR\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-move\-home\fR
+.RS 4
+Sposta il contenuto della directory home di un utente nella nuova posizione\&.
+.sp
+Questa opzione \(`e valida solo in combinazioone con l\*(Aqopzione
+\fB\-d\fR
+(o
+\fB\-\-home\fR)\&.
+.sp
+\fBusermod\fR
+cercher\(`a di adattare la propriet\(`a dei file e di copiare i permessi, le ACL e gli attributi estesi, ma successive modifiche manuali potrebbe comunque essere necessarie\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Quando \(`e usata con l\*(Aqopzione
+\fB\-u\fR
+questa opzione permette di modificare l\*(AqID utente in un valore non univoco\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+La passwird cifrata, cos\(`i come viene restituita da
+\fBcrypt\fR(3)\&.
+.sp
+\fBNota:\fR
+questa opzione non \(`e consigliata perch\('e la password (o password cifrata) sar\(`a visibile agli utenti che elencano i processi\&.
+.sp
+Ci si deve accertare che la password rispetti le norme delle password del sistema\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Il nome della nuova shell di login dell\*(Aqutente\&. Lasciando questo campo vuoto si fa in modo che il sistema selezioni la shell di login predefinita\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+Il nuovo valore numerico dell\*(AqID utente\&.
+.sp
+Questo valore deve essere univoco, a meno che non sia utilizzata l\*(Aqopzione
+\fB\-o\fR\&. Il valore non pu\(`o essere negativo\&.
+.sp
+La casella di posta dell\*(Aqutente e ogni altro file di propriet\(`a dell\*(Aqutente che si trovi all\*(Aqinterno della directory home avr\(`a l\*(AqID utente cambiato automaticamente\&.
+.sp
+La propriet\(`a dei file esterni alla directory home dell\*(Aqutente va corretta manualmente\&.
+.sp
+Non vengono fatti controlli riguardo
+\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBSYS_UID_MIN\fR
+o
+\fBSYS_UID_MAX\fR
+dal file
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-unlock\fR
+.RS 4
+Sblocca la password di un utente\&. Questo rimuove il \(Fo!\(Fc davanti alla password cifrata\&. Non si pu\(`o usare questa opzione con l\*(Aqopzione
+\fB\-p\fR
+o
+\fB\-L\fR\&.
+.sp
+Nota: se si vuole sbloccare l\*(Aqaccount (non solo l\*(Aqaccesso con password) si deve anche impostare
+\fIDATA_SCADENZA\fR
+(per esempio a
+\fI99999\fR
+o al valore
+\fBEXPIRE\fR
+dal file
+/etc/default/useradd)\&.
+.RE
+.PP
+\fB\-v\fR, \fB\-\-add\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate uids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-del\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate uids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-uids\fR
+and
+\fB\-\-add\-sub\-uids\fR
+are specified, the removal of all subordinate uid ranges happens before any subordinate uid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-add\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate gids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-del\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate gids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-gids\fR
+and
+\fB\-\-add\-sub\-gids\fR
+are specified, the removal of all subordinate gid ranges happens before any subordinate gid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fIUTENTESE\fR
+.RS 4
+Il nuovo utente SELinux per il login dell\*(Aqutente\&.
+.sp
+Un
+\fIUTENTESE\fR
+vuoto rimuover\(`a la mappatura per l\*(Aqutente SELinux da
+\fILOGIN\fR
+(se presente)\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Se si cambia l\*(AqID numerico, il nome dell\*(Aqutente o la sua directory home, si deve verificare che l\*(Aqutente in questione non stia eseguendo nessun processo al momento dell\*(Aqesecuzione del comando\&.
+\fBusermod\fR
+effettua questo controllo in Linux, ma su altri sistemi controlla solo che non sia registrato come collegato in utmp\&.
+.PP
+Si deve cambiare manualmente il proprietario di eventuali file
+\fBcrontab\fR
+e compiti
+\fBat\fR\&.
+.PP
+Si devono apportare tutte le modifiche che riguardano NIS sul server NIS\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBMAIL_DIR\fR (testo)
+.RS 4
+La directory di spool per la posta\&. Questa \(`e necessaria per manipolare la casella di posta quando il corrispondente account utente viene modificato o cancellato\&. Se non \(`e specificata viene utilizzato un valore impostato al momento della compilazione\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (testo)
+.RS 4
+Imposta la posizione delle caselle di posta degli utenti relative alla loro directory home\&.
+.RE
+.PP
+Le variabili
+\fBMAIL_DIR\fR
+e
+\fBMAIL_FILE\fR
+vengono utilizzate da
+\fBuseradd\fR,
+\fBusermod\fR
+e
+\fBuserdel\fR
+per creare, spostare e cancellare le caselle di posta dell\*(Aqutente\&.
+.PP
+Se
+\fBMAIL_CHECK_ENAB\fR
+\(`e impostata a
+\fIyes\fR
+allora sono anche utilizzate per impostare la variabile d\*(Aqambiente
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBuserdel\fR(8)\&.

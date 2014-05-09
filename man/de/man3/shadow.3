@@ -1,0 +1,242 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Bibliotheksaufrufe
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "SHADOW" "3" "09.05.2014" "shadow\-utils 4\&.2" "Bibliotheksaufrufe"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+shadow, getspnam \- Routinen f\(:ur die Datei, die die verschl\(:usselten Passw\(:orter enth\(:alt
+.SH "SYNTAX"
+.PP
+\fI#include <shadow\&.h>\fR
+.PP
+\fIstruct spwd *getspent();\fR
+.PP
+\fItruct spwd *getspnam(char\fR\fI*name\fR\fI);\fR
+.PP
+\fIvoid setspent();\fR
+.PP
+\fIvoid endspent();\fR
+.PP
+\fIstruct spwd *fgetspent(FILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIstruct spwd *sgetspent(char\fR\fI*cp\fR\fI);\fR
+.PP
+\fIint putspent(struct spwd\fR\fI*p,\fR\fIDATEIEN\fR\fI*fp\fR\fI);\fR
+.PP
+\fIint lckpwdf();\fR
+.PP
+\fIint ulckpwdf();\fR
+.SH "BESCHREIBUNG"
+.PP
+\fIshadow\fR
+ver\(:andert den Inhalt der Shadow\-Passwort\-Datei
+/etc/shadow\&. Der Aufbau der Datei
+\fI#include\fR
+ist:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+struct spwd {
+      char  *sp_namp; /* Anmeldename des Benutzers */
+      char  *sp_pwdp; /* verschl\(:usseltes Passwort */
+      long int  sp_lstchg; /* letzte \(:Anderung des Passworts */
+      long int  sp_min; /* Tage, ehe \(:Anderung erlaubt ist */
+      long int  sp_max; /* Tage, bis \(:Anderung erfolgen muss */
+      long int  sp_warn; /* Tage f\(:ur Warnung vor Verfall */
+      long int  sp_inact; /* Tage, ehe Konto inaktiv wird */
+      long int  sp_expire; /* Datum, an dem Konto abgeschaltet wird */
+      unsigned long int  sp_flag; /* reserviert f\(:ur zuk\(:unftigen Gebrauch*/
+}
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Die Bedeutung dieser Felder ist:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_namp \- Verweis auf Benutzername, der mit einer Null endet
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_pwdp \- Verweis auf Passwort, das mit einer Null endet
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_lstchg \- Anzahl der Tage gerechnet ab dem 1\&. Januar 1970, seitdem das Passwort das letzte Mal ge\(:andert wurde
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_min \- Anzahl der Tage, ehe das Passwort nicht ge\(:andert werden darf
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_max \- Anzahl der Tage, nach denen das Passwort ge\(:andert werden muss
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_warn \- Anzahl der Tage ehe das Passwort verf\(:allt, an denen der Benutzer vor dem Verfall gewarnt wird
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_inact \- Anzahl der Tage nach dem Verfall des Passworts, nach denen das Konto als inaktiv angesehen und abgeschaltet wird
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_expire \- Anzahl Tage gerechnet ab dem 1\&. Januar 1970, f\(:ur die das Konto abgeschaltet ist
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_flag \- f\(:ur zuk\(:unftigen Gebrauch reserviert
+.RE
+.SH "BESCHREIBUNG"
+.PP
+\fIgetspent\fR,
+\fIgetspname\fR,
+\fIfgetspent\fR
+und
+\fIsgetspent\fR
+geben einen Verweis auf
+\fIstruct spwd\fR
+zur\(:uck\&.
+\fIgetspent\fR
+gibt den n\(:achsten Eintrag der Datei zur\(:uck\&.
+\fIfgetspent\fR
+gibt den n\(:achsten Eintrag im angegebenen Datenstrom zur\(:uck, f\(:ur den angenommen wird, dass es sich dabei um eine Datei im zul\(:assigen Format handelt\&.
+\fIsgetspent\fR
+gibt einen Verweis auf einen
+\fIstruct spwd\fR
+zur\(:uck, wobei die angegebene Zeichenkette als Eingabe verwendet wird\&.
+\fIgetspnam\fR
+sucht ab der aktuellen Position in der Datei nach einem Eintrag, der mit
+\fIname\fR
+\(:ubereinstimmt\&.
+.PP
+\fIsetspent\fR
+und
+\fIendspent\fR
+k\(:onnen verwendet werden, um den Zugriff auf die Shadow\-Passwort\-Datei zu beginnen oder zu beenden\&.
+.PP
+Die Routinen
+\fIlckpwdf\fR
+und
+\fIulckpwdf\fR
+sollten eingesetzt werden, da so sichergestellt werden kann, dass exlusiv auf die Datei
+/etc/shadow
+zugegriffen wird\&.
+\fIlckpwdf\fR
+versucht, eine Sperre durch
+\fIpw_lock\fR
+f\(:ur bis zu 15 Sekunden zu erhalten\&. Dann versucht es, eine zweite Sperre durch
+\fIspw_lock\fR
+f\(:ur den Rest der 15 Sekunden zu erhalten\&. Sollte einer der beiden Versuche nach insgesamt 15 Sekunden scheitern, gibt
+\fIlckpwdf\fR
+\-1 zur\(:uck\&. Wurden beide Sperren erhalten, wird 0 zur\(:uckgegeben\&.
+.SH "DIAGNOSE"
+.PP
+Wenn kein weiterer Eintrag vorhanden ist oder w\(:ahrend der Verarbeitung ein Fehler auftritt, geben die Routinen NULL zur\(:uck\&. Routinen, die
+\fIint\fR
+als R\(:uckgabewert haben, geben im Erfolgsfall 0 und beim Scheitern \-1 zur\(:uck\&.
+.SH "WARNUNGEN"
+.PP
+Diese Routinen k\(:onnen nur von Root verwendet werden, da der Zugriff auf die Shadow\-Passwort\-Datei beschr\(:ankt ist\&.
+.SH "DATEIEN"
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgetpwent\fR(3),
+\fBshadow\fR(5)\&.

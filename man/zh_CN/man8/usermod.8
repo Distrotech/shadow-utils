@@ -1,0 +1,447 @@
+'\" t
+.\"     Title: usermod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "USERMOD" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+usermod \- 修改一个用户账户
+.SH "大纲"
+.HP \w'\fBusermod\fR\ 'u
+\fBusermod\fR [\fI选项\fR] \fI登录\fR
+.SH "描述"
+.PP
+\fBusermod\fR
+修改系统账户文件和在命令行上指定的相关更改。
+.SH "选项"
+.PP
+\fBusermod\fR
+可以接受的选项有：
+.PP
+\fB\-a\fR, \fB\-\-append\fR
+.RS 4
+将用户添加到附加组。只能和
+\fB\-G\fR
+选项一起使用。
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fICOMMENT\fR
+.RS 4
+用户密码文件中注释字段的新值。通常使用
+\fBchfn\fR(1)
+工具对其进行修改。
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\fR\ \&\fIHOME_DIR\fR
+.RS 4
+用户的新登录目录。
+.sp
+如果给了
+\fB\-m\fR
+选项，当前主目录的内容将会移动到新主目录中，如果不存在，则创建。
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+用户账户将被禁用的日期。日期以
+\fIYYYY\-MM\-DD\fR
+格式指定。
+.sp
+空
+\fIEXPIRE_DATE\fR
+参数将禁用账户过期。
+.sp
+此选项需要一个
+/etc/passwd
+文件。如果没有，将会创建一条
+/etc/shadow
+项目。
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+密码过期之后，账户被彻底禁用之前的天数。
+.sp
+0 表示密码过期时，立即禁用账户；\-1 表示不使用这个功能。
+.sp
+此选项需要一个
+/etc/passwd
+文件。如果没有，将会创建一条
+/etc/shadow
+项目。
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+用户的新初始登录组的组名或数字代号。此组必须存在。
+.sp
+用户主目录中，属于原来的主组的文件将转交新组所有。
+.sp
+主目录之外的文件所属的组必须手动修改。
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGROUP1\fR[\fI,GROUP2,\&.\&.\&.\fR[\fI,GROUPN\fR]]]
+.RS 4
+用户还属于的附加组列表。组之间使用逗号分隔，没有空格。这些组需要遵守和
+\fB\-g\fR
+选项中给的组同样的限制。
+.sp
+如果用户当前是一个组的成员，而这个组没有列在这里，用户将被从那个组里便删除。这个行为可以通过
+\fB\-a\fR
+选项修改，这使用户追加到给出的附加组列表中。
+.RE
+.PP
+\fB\-l\fR, \fB\-\-login\fR\ \&\fINEW_LOGIN\fR
+.RS 4
+用户的名称将会从
+\fILOGIN\fR
+修改为
+\fINEW_LOGIN\fR。不会更改别的任何东西。特别是，用户的主目录名和邮件池也需要手动修改以和新登录名对应。
+.RE
+.PP
+\fB\-L\fR, \fB\-\-lock\fR
+.RS 4
+锁定用户的密码。这会在用户加密的密码之前放置一个\(lq!\(rq，可以快速禁用密码。您可以和
+\fB\-p\fR
+或
+\fB\-U\fR
+配合使用此选项。
+.sp
+注意：如果希望锁定账户(不仅仅是通过密码访问)，您也需要设置
+\fIEXPIRE_DATE\fR
+为
+\fI1\fR。
+.RE
+.PP
+\fB\-m\fR, \fB\-\-move\-home\fR
+.RS 4
+将用户的主目录移动到新位置。
+.sp
+这个选项只有和
+\fB\-d\fR
+(或
+\fB\-\-home\fR) 选项组合使用时才有效。
+.sp
+\fBusermod\fR
+会改写文件的属主并复制模式、ACL 和扩展属性，但是稍后也可能需要手动修改。
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+使用
+\fB\-u\fR
+选项时，可以将用户 ID 改为非唯一的值。
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+已经加密过的密码，就像
+\fBcrypt\fR(3)
+返回的那样。
+.sp
+\fB注意：\fR不推荐使用这个选项，因为密码(或加密过的密码)会被用户通过列出这个过程而看到。
+.sp
+您应该确保密码符合系统的密码政策。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+用户的新登录 shell 的名称。将此字段设置为空会让系统选择默认的登录 shell。
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+用户 ID 的新数值。
+.sp
+这个值必须是唯一的，除非使用了
+\fB\-o\fR
+选项，必须是非负值。
+.sp
+用户的邮箱，用户主目录中属于此用户的文件的属主 ID 也将自动更改。
+.sp
+用户主目录之外文件所有权必须手动修复。
+.sp
+不会对
+/etc/login\&.defs
+中的
+\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBSYS_UID_MIN\fR
+和
+\fBSYS_UID_MAX\fR
+进行检查。
+.RE
+.PP
+\fB\-U\fR, \fB\-\-unlock\fR
+.RS 4
+解锁用户的密码。这将移除加密的密码之前的\(lq!\(rq。您可以将此选项和
+\fB\-p\fR
+或
+\fB\-L\fR
+配合使用。
+.sp
+注意：如果您希望解锁账户(不只是使用密码访问)，您也应该设置
+\fIEXPIRE_DATE\fR
+(例如设置为
+\fI99999\fR，或者
+/etc/default/useradd
+中的
+\fBEXPIRE\fR
+值)。
+.RE
+.PP
+\fB\-v\fR, \fB\-\-add\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate uids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-del\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate uids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-uids\fR
+and
+\fB\-\-add\-sub\-uids\fR
+are specified, the removal of all subordinate uid ranges happens before any subordinate uid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-add\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate gids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-del\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate gids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-gids\fR
+and
+\fB\-\-add\-sub\-gids\fR
+are specified, the removal of all subordinate gid ranges happens before any subordinate gid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISEUSER\fR
+.RS 4
+用户登陆的 SELinux 用户。
+.sp
+空的
+\fISEUSER\fR
+将移除用户
+\fILOGIN\fR
+的 SELinux 用户映射(如果有)。
+.RE
+.SH "CAVEATS"
+.PP
+如果要更改用户的数字 ID、用户名或主目录，需要确保允许命令时，用户没有执行任何进程。\fBusermod\fR
+会在 Linux 上进行检查；但是在其它平台上，仅仅根据 utmp 检查用户是否已经登录。
+.PP
+您必须手动更改
+\fBcrontab\fR
+文件或
+\fBat\fR
+作业的属主。
+.PP
+您必须更改 NIS 服务器上的 NIS 相关内容。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBMAIL_DIR\fR (string)
+.RS 4
+邮箱目录。修改或删除用户账户时需要处理邮箱，如果没有指定，将使用编译时指定的默认值。
+.RE
+.PP
+\fBMAIL_FILE\fR (string)
+.RS 4
+定义用户邮箱文件的位置(相对于主目录)。
+.RE
+.PP
+\fBMAIL_DIR\fR
+and
+\fBMAIL_FILE\fR
+变量由
+\fBuseradd\fR，\fBusermod\fR
+和
+\fBuserdel\fR
+用于创建、移动或删除用户邮箱。
+.PP
+如果
+\fBMAIL_CHECK_ENAB\fR
+设置为
+\fIyes\fR，它们也被用于定义
+\fBMAIL\fR
+环境变量。
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBuserdel\fR(8)\&.

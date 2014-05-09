@@ -1,0 +1,93 @@
+'\" t
+.\"     Title: porttime
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 文件格式和转化
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "PORTTIME" "5" "2014-05-09" "shadow\-utils 4\&.2" "文件格式和转化"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+porttime \- 端口访问时间文件
+.SH "描述"
+.PP
+\fIporttime\fR
+包含一个 tty 设备、用户名和允许登录时间的列表。
+.PP
+每项包含三个由冒号分隔的字段。第一个字段是逗号分隔的 tty 设备列表，或者星号表示匹配所有终端。第二个字段是逗号分隔的用户名列表，或者星号表示匹配所有用户名。第三个字段是逗号分隔的访问许可时间。
+.PP
+每条访问时间包含一周的 0 天或多天，缩写为
+\fISu\fR,
+\fIMo\fR,
+\fITu\fR,
+\fIWe\fR,
+\fITh\fR,
+\fIFr\fR
+和
+\fISa\fR，随后是连字符分隔的一组时间，缩写
+\fIWk\fR
+可以用于表示周一到周五，\fIAl\fR
+可以用于表示没一天。如果没有制定周几，将会假定为
+\fIAl\fR。
+.SH "示例"
+.PP
+下面的条目允许在工作日的上午九点到下午五点在任何端口上访问用户
+\fBjfh\fR。
+.PP
+*:jfh:Wk0900\-1700
+.PP
+下面这条任何时间，只允许用户
+\fIroot\fR
+和
+\fIoper\fR
+在
+/dev/console
+登录。这也是说
+/etc/porttime
+文件是一个访问时间的有序列表。任何匹配第二条的其他用户都不会被允许访问。
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      console:root,oper:Al0000\-2400
+      console:*:
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+如下项允许，在非工作时间在任何端口上使用用户
+\fIgames\fR。
+.PP
+*:games:Wk1700\-0900,SaSu0000\-2400
+.SH "文件"
+.PP
+/etc/porttime
+.RS 4
+包含了端口访问信息的文件。
+.RE
+.SH "参见"
+.PP
+\fBlogin\fR(1)\&.

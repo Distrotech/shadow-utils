@@ -1,0 +1,738 @@
+'\" t
+.\"     Title: useradd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "USERADD" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+useradd \- 创建一个新用户或更新默认新用户信息
+.SH "大纲"
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR [\fI选项\fR] \fI登录\fR
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D [\fI选项\fR]
+.SH "描述"
+.PP
+如果使用时不带
+\fB\-D\fR
+选项，\fBuseradd\fR
+命令使用命令行上指定的值和系统的默认值创建一个新用户。根据命令行选项，\fBuseradd\fR
+命令也会更新系统文件和创建新用户的主目录并复制初始文件。
+.PP
+默认上，也会为用户创建组 (察看
+\fB\-g\fR,
+\fB\-N\fR,
+\fB\-U\fR，和
+\fBUSERGROUPS_ENAB\fR)。
+.SH "选项"
+.PP
+\fBuseradd\fR
+可以使用的选项有：
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIBASE_DIR\fR
+.RS 4
+如果没有使用
+\fB\-d\fR\ \&\fIHOME_DIR\fR，则使用默认的基目录。\fIBASE_DIR\fR
+加上账户名就是主目录。如果没有使用
+\fB\-m\fR
+选项，\fIBASE_DIR\fR
+必须已经存在。
+.sp
+如果选项没有指定，\fBuseradd\fR
+将使用
+/etc/default/useradd
+中的
+\fBHOME\fR
+变量，或者默认的
+/home。
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fICOMMENT\fR
+.RS 4
+任何字符串。通常是关于登录的简短描述，当前用于用户全名。
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\-dir\fR\ \&\fIHOME_DIR\fR
+.RS 4
+将创建新用户，并使用
+\fIHOME_DIR\fR
+作为用户登陆目录的值。默认值是将
+\fILOGIN\fR
+名附加到
+\fIBASE_DIR\fR
+后面，并使用这作为登陆目录。目录不一定必须已经存在
+\fIHOME_DIR\fR，但是会在需要时创建。
+.RE
+.PP
+\fB\-D\fR, \fB\-\-defaults\fR
+.RS 4
+看下边，\(lq更改默认值\(rq子节。
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+用户账户将被禁用的日期。日期以
+\fIYYYY\-MM\-DD\fR
+格式指定。
+.sp
+如果没有指定，\fBuseradd\fR
+将使用
+/etc/default/useradd
+中
+\fBEXPIRE\fR
+变量指定的默认过期日期，或者一个空字符串(不过期)。
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+密码过期后，账户被彻底禁用之前的天数。0 表示立即禁用，\-1 表示禁用这个功能。
+.sp
+如果未指定，\fBuseradd\fR
+将使用
+/etc/default/useradd
+中的
+\fBINACTIVE\fR
+指定的默认禁用周期，或者默认为 \-1。
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+用户初始登陆组的组名或号码。组名必须已经存在。组号码必须指代已经存在的组。
+.sp
+如果没有指定，
+\fBuseradd\fR
+的行为将依赖于
+/etc/login\&.defs
+文件中的
+\fBUSERGROUPS_ENAB\fR
+参数。如果此参数设置为了
+\fIyes\fR
+(或者在命令行上指定了
+\fB\-U/\-\-user\-group\fR)，将会为用户创建一个组，组名和登录名相同。如果选项设置为了
+\fIno\fR
+(或者在命令行上指定了
+\fB\-N/\-\-no\-user\-group\fR)，useradd 会把新用户的主组设置为
+/etc/default/useradd
+中
+\fBGROUP\fR
+变量指定的值，再或者默认是 100。
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGROUP1\fR[\fI,GROUP2,\&.\&.\&.\fR[\fI,GROUPN\fR]]]
+.RS 4
+用户还属于的附加组列表。每个组都用逗号隔开，没有中间的空格。这里的组受到了
+\fB\-g\fR
+选项给定的组同样的限制。默认上，用户只属于初始组。
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-k\fR, \fB\-\-skel\fR\ \&\fISKEL_DIR\fR
+.RS 4
+骨架目录，包含使用
+\fBuseradd\fR
+创建用户时，要复制到用户主目录中的文件和目录。
+.sp
+这个选项只有在指定
+\fB\-m\fR
+(或
+\fB\-\-create\-home\fR) 选项时才有效。
+.sp
+如果此项没有设置，骨架目录使用
+/etc/default/useradd
+中的
+\fBSKEL\fR
+的变量或默认为
+/etc/skel。
+.sp
+如果可以，也复制 ACL 和扩展属性。
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fIKEY\fR=\fIVALUE\fR
+.RS 4
+默认覆盖
+/etc/login\&.defs
+(\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBUMASK\fR,
+\fBPASS_MAX_DAYS\fR
+及其它)。
+例如：\fB\-K\fR\ \&\fIPASS_MAX_DAYS\fR=\fI\-1\fR
+可以用于创建一个密码不会过期的系统账户，即使系统账户没有密码。可以指定多个
+\fB\-K\fR
+选项，如：\fB\-K\fR\ \&\fIUID_MIN\fR=\fI100\fR\ \&\fB\-K\fR\ \&\fIUID_MAX\fR=\fI499\fR
+.RE
+.PP
+\fB\-l\fR, \fB\-\-no\-log\-init\fR
+.RS 4
+不要将用户添加到最近登录和登录失败数据库。
+.sp
+默认上，最近登录和登录失败中用户的条目会被重置，以避免重新使用先前删除的用户的条目。
+.RE
+.PP
+\fB\-m\fR, \fB\-\-create\-home\fR
+.RS 4
+如果不存在，则创建用户主目录。骨架目录中的文件和目录(可以使用
+\fB\-k\fR
+选项指定)，将会复制到主目录。
+.sp
+默认上，如果没有指定此选项并且
+\fBCREATE_HOME\fR
+没有启用，不会创建主目录。
+.RE
+.PP
+\fB\-M\fR
+.RS 4
+不创建用户主目录，即使系统在
+/etc/login\&.defs
+中的设置 (\fBCREATE_HOME\fR) 为
+\fIyes\fR。
+.RE
+.PP
+\fB\-N\fR, \fB\-\-no\-user\-group\fR
+.RS 4
+不要创建同名组，而是将用户添加到
+\fB\-g\fR
+选项指定的组，或根据
+/etc/default/useradd
+中的
+\fBGROUP\fR
+变量。
+.sp
+如果没有指定
+\fB\-g\fR,
+\fB\-N\fR
+和
+\fB\-U\fR
+选项，默认行为由
+/etc/login\&.defs
+中的
+\fBUSERGROUPS_ENAB\fR
+变量指定。
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+允许使用重复的 UID 创建用户账户。
+.sp
+此选项只有和
+\fB\-u\fR
+选项组合使用才有效。
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+加密了的密码，就像
+\fBcrypt\fR(3)
+的返回值。默认为禁用密码。
+.sp
+\fB注意：\fR不推荐使用这个选项，因为密码(或加密过的密码)会被用户通过列出这个过程而看到。
+.sp
+您应该确保密码符合系统的密码政策。
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+创建一个系统账户。
+.sp
+System users will be created with no aging information in
+/etc/shadow, and their numeric identifiers are chosen in the
+\fBSYS_UID_MIN\fR\-\fBSYS_UID_MAX\fR
+range, defined in
+/etc/login\&.defs, instead of
+\fBUID_MIN\fR\-\fBUID_MAX\fR
+(and their
+\fBGID\fR
+counterparts for the creation of groups)\&.
+.sp
+注意：\fBuseradd\fR
+不会为这种用户创建主目录，无论
+/etc/login\&.defs
+(\fBCREATE_HOME\fR) 中是的默认设置是怎样。如果想为要创建的系统账户创建主目录，需要指定
+\fB\-m\fR
+选项。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+用户的登录 shell 名。默认为留空，让系统根据
+/etc/default/useradd
+中的
+\fBSHELL\fR
+变量选择默认的登录 shell，默认为空字符串。
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+用户 ID 的数字值。此值必须为唯一的，除非使用了
+\fB\-o\fR
+选项。此值必须非负，默认使用大于等于
+\fBUID_MIN\fR，且大于任何其他用户 ID 最小值。
+.sp
+请参考
+\fB\-r\fR
+选项和
+\fBUID_MAX\fR
+的描述。
+.RE
+.PP
+\fB\-U\fR, \fB\-\-user\-group\fR
+.RS 4
+创建一个和用户同名的组，并将用户添加到组中。
+.sp
+如果没有指定
+\fB\-g\fR,
+\fB\-N\fR
+和
+\fB\-U\fR
+选项，默认行为由
+/etc/login\&.defs
+中的
+\fBUSERGROUPS_ENAB\fR
+变量指定。
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISEUSER\fR
+.RS 4
+用户登陆的 SELinux 用户。默认为留空，这会造成系统选择默认的 SELinux 用户。
+.RE
+.SS "更改默认值"
+.PP
+只带
+\fB\-D\fR
+选项使用时，\fBuseradd\fR
+将显示当前的默认值。\fB\-D\fR
+和其它选项配合使用时，\fBuseradd\fR
+将为指定的选项更新默认值。有效的\(lq更改默认值\(rq选项有：
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIBASE_DIR\fR
+.RS 4
+新用户主目录的路径前缀。如果创建新账户时，没有使用
+\fB\-d\fR
+选项，用户的名称将会缀在
+\fIBASE_DIR\fR
+的后边形成新用户的主目录名。
+.sp
+这个选择在
+/etc/default/useradd
+中设置
+\fBHOME\fR
+选项。
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+禁用此用户账户的日期。
+.sp
+此选项在
+/etc/default/useradd
+中设置
+\fBEXPIRE\fR
+变量。
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+密码过期到账户被禁用之前的天数。
+.sp
+这个选项在
+/etc/default/useradd
+中设置
+\fBINACTIVE\fR
+变量。
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+新用户初始组的组名或 ID (使用了
+\fB\-N/\-\-no\-user\-group\fR
+或者
+/etc/login\&.defs
+中的变量
+\fBUSERGROUPS_ENAB\fR
+设置为
+\fIno\fR
+时)。给出的组必须存在，并且数字组 ID 必须有一个已经存在的项。
+.sp
+这个选项在
+/etc/default/useradd
+中设置
+\fBGROUP\fR
+变量。
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+新用户的登录 shell 名。
+.sp
+这个选项在
+/etc/default/useradd
+设置
+\fBSHELL\fR
+变量。
+.RE
+.SH "注意："
+.PP
+系统管理员负责将默认的用户文件放在
+/etc/skel/
+目录中(或者命令行上、/etc/default/useradd
+中指定的任何其它目录)。
+.SH "CAVEATS"
+.PP
+您可能不能想 NIS 组或 LDAP 组添加用户。这只能在相应服务器上进行。
+.PP
+相似地，如果用户名已经存在于外部用户数据库中，比如 NIS 或 LDAP，\fBuseradd\fR
+将拒绝创建用户账户的请求。
+.PP
+用户名必须以一个小写字母或下划线开始，跟随小写字符、数字、下划线或连字符的组合。可以以美元符号结束。用正则表达式表示就是：[a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+用户名不能超过 32 个字符长。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBCREATE_HOME\fR (boolean)
+.RS 4
+指示是否应该为新用户默认创建主目录。
+.sp
+此设置并不应用到系统用户，并且可以使用命令行覆盖。
+.RE
+.PP
+\fBGID_MAX\fR (number), \fBGID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR，\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的常规组的组 ID 的范围。
+.sp
+\fBGID_MIN\fR
+和
+\fBGID_MAX\fR
+的默认值分别是 1000 和 60000。
+.RE
+.PP
+\fBMAIL_DIR\fR (string)
+.RS 4
+邮箱目录。修改或删除用户账户时需要处理邮箱，如果没有指定，将使用编译时指定的默认值。
+.RE
+.PP
+\fBMAIL_FILE\fR (string)
+.RS 4
+定义用户邮箱文件的位置(相对于主目录)。
+.RE
+.PP
+\fBMAIL_DIR\fR
+and
+\fBMAIL_FILE\fR
+变量由
+\fBuseradd\fR，\fBusermod\fR
+和
+\fBuserdel\fR
+用于创建、移动或删除用户邮箱。
+.PP
+如果
+\fBMAIL_CHECK_ENAB\fR
+设置为
+\fIyes\fR，它们也被用于定义
+\fBMAIL\fR
+环境变量。
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (number)
+.RS 4
+一个密码可以使用的最大天数。如果密码比这旧，将会强迫更改密码。如果不指定，就假定为 \-1，这会禁用这个限制。
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (number)
+.RS 4
+两次更改密码时间的最小间隔。将会拒绝任何早于此的更改密码的尝试。如果不指定，假定为 \-1，将会禁用这个限制。
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (number)
+.RS 4
+密码过期之前给出警告的天数。0 表示只有只在过期的当天警告，负值表示不警告。如果没有指定，不会给警告。
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (number), \fBSYS_GID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR、\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的系统组的组 ID 的范围。
+.sp
+\fBSYS_GID_MIN\fR
+和
+\fBSYS_GID_MAX\fR
+的默认值分别是 101 和
+\fBGID_MIN\fR\-1。
+.RE
+.PP
+\fBSYS_UID_MAX\fR (number), \fBSYS_UID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR
+或
+\fBnewusers\fR
+创建的系统用户的用户 ID 的范围。
+.sp
+\fBSYS_UID_MIN\fR
+和
+\fBSYS_UID_MAX\fR
+的默认值分别是 101 和
+\fBUID_MIN\fR\-1。
+.RE
+.PP
+\fBUID_MAX\fR (number), \fBUID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR
+或
+\fBnewusers\fR
+创建的普通用户的用户 ID 的范围。
+.sp
+\fBUID_MIN\fR
+和
+\fBUID_MAX\fR
+的默认值分别是 1000 和 60000。
+.RE
+.PP
+\fBUMASK\fR (number)
+.RS 4
+文件模式创建掩码初始化为此值。如果没有指定，掩码初始化为 022。
+.sp
+\fBuseradd\fR
+和
+\fBnewusers\fR
+使用此掩码设置它们创建的用户主目录的模式。
+.sp
+也被
+\fBlogin\fR
+用于指定用户的初始 umask。注意，此掩码可以被用户的 GECOS 行覆盖(当设置了
+\fBQUOTAS_ENAB\fR
+时)，也可以被带
+\fIK\fR
+指示符的
+\fBlimits\fR(5)
+定义的限制值覆盖。
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolean)
+.RS 4
+如果 uid 和 gid 相同，用户名和主用户名也相同，使非 root 组的组掩码位和属主位相同 (如：022 \-> 002, 077 \-> 007)。
+.sp
+如果设置为
+\fIyes\fR，如果组中没有成员了，\fBuserdel\fR
+将移除此用户组，\fBuseradd\fR
+创建用户时，也会创建一个同名的默认组。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.PP
+/etc/default/useradd
+.RS 4
+账户创建的默认值。
+.RE
+.PP
+/etc/skel/
+.RS 4
+包含默认文件的目录。
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "退出值"
+.PP
+\fBuseradd\fR
+可以返回如下值：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI1\fR
+.RS 4
+无法更新密码文件
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI3\fR
+.RS 4
+给了选项一个无效的参数
+.RE
+.PP
+\fI4\fR
+.RS 4
+UID 已经使用 (且没有
+\fB\-o\fR)
+.RE
+.PP
+\fI6\fR
+.RS 4
+指定的组不存在
+.RE
+.PP
+\fI9\fR
+.RS 4
+用户名已被使用
+.RE
+.PP
+\fI10\fR
+.RS 4
+无法更新组文件
+.RE
+.PP
+\fI12\fR
+.RS 4
+无法创建主目录
+.RE
+.PP
+\fI14\fR
+.RS 4
+can\*(Aqt update SELinux user mapping
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBnewusers\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

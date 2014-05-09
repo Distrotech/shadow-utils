@@ -1,0 +1,110 @@
+'\" t
+.\"     Title: lastlog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 05/09/2014
+.\"    Manual: Polecenia Zarządzania Systemem
+.\"    Source: shadow-utils 4.2
+.\"  Language: Polish
+.\"
+.TH "LASTLOG" "8" "05/09/2014" "shadow\-utils 4\&.2" "Polecenia Zarządzania Systemem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAZWA"
+lastlog \- wyświetla informacje o ostanim logowaniu dla wybranego lub wszystkich użytkowanik\('ow
+.SH "STRESZCZENIE"
+.HP \w'\fBlastlog\fR\ 'u
+\fBlastlog\fR [\fIopcje\fR]
+.SH "OPIS"
+.PP
+Polecenie
+\fBlastlog\fR
+formatuje i wyświetla zawartość bazy ostatnich logowań zapisanych w pliku
+/var/log/lastlog\&. Wyświetlone zostaną
+\fInazwa użytkownika\fR,
+\fIport\fR
+i
+\fIczas\fR
+ostatniego logowania\&. Domyślnie (bez flag) pozycje wyświetlane są w kolejności w jakiej są w pliku
+/etc/passwd\&.
+.SH "OPCJE"
+.PP
+Polecenie
+\fBlastlog\fR
+posiada następujące opcje:
+.PP
+\fB\-b\fR, \fB\-\-before\fR\ \&\fIDNI\fR
+.RS 4
+Wyświetlenie rekord\('ow lastlog starszych niż zadana
+\fIDNI\fR\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Wyświetlenie komunikatu pomocy i zakończenie dzia\(/lania\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIDNI\fR
+.RS 4
+Wyświetlenie rekord\('ow lastlog nie starszych niż zadana ilość
+\fIDNI\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIRANGE\fR
+.RS 4
+Print the lastlog record of the specified user(s)\&.
+.sp
+The users can be specified by a login name, a numerical user ID, or a
+\fIRANGE\fR
+of users\&. This
+\fIRANGE\fR
+of users can be specified with a min and max values (\fIUID_MIN\-UID_MAX\fR), a max value (\fI\-UID_MAX\fR), or a min value (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+Jeżeli użytkownik nigdy się nie logowa\(/l to zamiast portu i czasu logowania wyświetlany jest komunikat
+\fI**Nigdy nie zalogowany**\fR
+(użytkownik nigdy się nie logowa\(/l)\&.
+.PP
+Only the entries for the current users of the system will be displayed\&. Other entries may exist for users that were deleted previously\&.
+.SH "UWAGI"
+.PP
+Baza danych
+lastlog
+jest plikiem zawierajacym informacje o ostanim logowaniu każdego użytkowanika\&. Pliku tego nie powinnoa się okresowo kasować i zaką\(/ldać od nowa (rotacja)\&. Plik ten jest plikiem z dziurami tak więc jego rozmiar jest zwykle znacznie mniejszy pokazywany przez polecenie "\fBls \-l\fR" (pokazujące że jest on dużych rozmiar\('ow jeżeli masz w
+passwd
+użytkowanik\('ow z wysokimi wartościami UID)\&. Mozesz wyświetlić rzeczywisty rozmiar tego pliku używając polecenia "\fBls \-s\fR"\&.
+.SH "PLIKI"
+.PP
+/var/log/lastlog
+.RS 4
+Baza danych ostatnich logowań użytkownik\('ow\&.
+.RE
+.SH "OSTRZEŻENIA"
+.PP
+Duże luki w numeracji UID powodują, że program będzie pracowa\(/l d\(/lużej, nie wyświetlając wynik\('ow (np\&. jeśli w bazie lastlog nie ma wpis\('ow dla o UID pomiedzy 170, a 800, to program będzie sprawia\(/l wrażenie zawieszonego w trakcie przetwarzania wpis\('ow dla użytkowanik\('o\(/l o UID 171\-799)\&.

@@ -1,0 +1,94 @@
+'\" t
+.\"     Title: sg
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "SG" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+sg \- esegue un comando con un diverso ID di gruppo
+.SH "SINOSSI"
+.HP \w'\fBsg\fR\ 'u
+\fBsg\fR [\-] [comando\ [\-c]\ group]
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBsg\fR
+funziona in maniera analoga a
+\fBnewgrp\fR, ma accetta un comando che viene eseguito con la shell
+/bin/sh\&. La maggior parte delle shell che permettono l\*(Aquso di
+\fBsg\fR
+richiede che i comandi composti da pi\(`u parole siano inclusi tra apici\&. Un\*(Aqaltra differenza tra
+\fBnewgrp\fR
+e
+\fBsg\fR
+\(`e che alcune shell trattano
+\fBnewgrp\fR
+in maniera speciale, sostituendo se stesse con la shell creata da
+\fBnewgrp\fR\&. Questo non accade con
+\fBsg\fR, per cui all\*(Aquscita del comando
+\fBsg\fR
+si ritorna al precedente ID di gruppo\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBSYSLOG_SG_ENAB\fR (booleano)
+.RS 4
+Abilita il tracciamento dell\*(Aqattivit\(`a di
+\fBsg\fR
+su \(Fosyslog\(Fc\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBnewgrp\fR(1),
+\fBsu\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

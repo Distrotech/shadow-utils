@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: login.access
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formats et conversions de fichiers
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "LOGIN\&.ACCESS" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formats et conversions de fich"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+login.access \- table de contr\(^ole des connexions
+.SH "DESCRIPTION"
+.PP
+Le fichier
+\fIlogin\&.access\fR
+permet de sp\('ecifier des paires (utilisateur, h\(^ote) et/ou (utilisateur, tty) pour lesquelles toute connexion sera soit accept\('ee soit refus\('ee\&.
+.PP
+Lorsqu\*(Aqun utilisateur se connecte, le fichier
+\fIlogin\&.access\fR
+est lu jusqu\*(Aq\(`a la premi\(`ere entr\('ee correspondant \(`a la paire (utilisateur, h\(^ote) ou, dans le cas d\*(Aqune connexion ne passant pas par le r\('eseau, \(`a la premi\(`ere entr\('ee correspondant au couple (utilisateur, tty)\&. Le champ des permissions de la table pour cette entr\('ee d\('etermine alors si la connexion doit \(^etre accept\('ee ou refus\('ee\&.
+.PP
+Chaque ligne de la table de contr\(^ole des connexions (\(Fo\ \&login access control table\ \&\(Fc) est compos\('ee de trois champs s\('epar\('es par le caract\(`ere \(Fo\ \&:\ \&\(Fc\ \&:
+.PP
+\fIpermission\fR:\fIutilisateurs\fR:\fIorigines\fR
+.PP
+Le premier champ est soit un \(Fo\ \&\fI+\fR\ \&\(Fc (acc\(`es autoris\('e), soit un \(Fo\ \&\fI\-\fR\ \&\(Fc (acc\(`es refus\('e)\&. Le second champ est une liste d\*(Aqun ou plusieurs noms d\*(Aqutilisateurs ou de groupes, ou
+\fIALL\fR
+(correspond \(`a tous les utilisateurs)\&. Le troisi\(`eme champ est une liste d\*(Aqun ou plusieurs noms de tty (pour les connexions hors r\('eseau), noms d\*(Aqh\(^otes, noms de domaines (commen\(,cant par un \(Fo\ \&\&.\ \&\(Fc), adresses d\*(Aqh\(^ote, adresses de sous\-r\('eseau (terminant par un \(Fo\ \&\&.\ \&\(Fc),
+\fIALL\fR
+(pour sp\('ecifier n\*(Aqimporte quelle connexion), ou
+\fILOCAL\fR
+(correspond \(`a n\*(Aqimporte quelle cha\(^ine ne contenant pas de \(Fo\ \&\&.\ \&\(Fc)\&. Si vous utilisez NIS, vous pouvez utiliser @nomdegroupe pour les motifs d\*(Aqutilisateur et d\*(Aqh\(^ote\&.
+.PP
+L\*(Aqop\('erateur
+\fIEXCEPT\fR
+permet d\*(Aq\('ecrire des r\(`egles tr\(`es compactes\&.
+.PP
+Le fichier d\*(Aqinformations sur les groupes (/etc/group) n\*(Aqest utilis\('e que lorsqu\*(Aqun nom ne correspond \(`a aucun des utilisateurs connect\('es\&. Seuls les groupes pour lesquels la liste des utilisateurs est sp\('ecifi\('ee sont utilis\('es\ \&: le programme ne recherche pas parmi les groupes primaires des utilisateurs\&.
+.SH "FICHIERS"
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBlogin\fR(1)\&.

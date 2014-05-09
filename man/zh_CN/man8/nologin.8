@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: nologin
+.\"    Author: Nicolas Fran\(,cois <nicolas.francois@centraliens.net>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "NOLOGIN" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+nologin \- 礼貌地拒绝登录
+.SH "大纲"
+.HP \w'\fBnologin\fR\ 'u
+\fBnologin\fR
+.SH "描述"
+.PP
+\fBnologin\fR
+命令显示一个信息，说账户不可用然后返回非零值。它用于代替已经禁用的账户的 shell 字段。
+.PP
+如果要禁用所有登录，请参考
+\fBnologin\fR(5)。
+.SH "参见"
+.PP
+\fBlogin\fR(1),
+\fBnologin\fR(5)\&.
+.SH "历史"
+.PP
+\fBnologin\fR
+首次出现于 BSD 4\&.4。

@@ -1,0 +1,146 @@
+'\" t
+.\"     Title: suauth
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09-05-2014
+.\"    Manual: Filformat och konversioner
+.\"    Source: shadow-utils 4.2
+.\"  Language: Swedish
+.\"
+.TH "SUAUTH" "5" "09-05-2014" "shadow\-utils 4\&.2" "Filformat och konversioner"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAMN"
+suauth \- detaljerad kontrollfil f\(:or su
+.SH "SYNOPSIS"
+.HP \w'\fB/etc/suauth\fR\ 'u
+\fB/etc/suauth\fR
+.SH "BESKRIVNING"
+.PP
+The file
+/etc/suauth
+is referenced whenever the su command is called\&. It can change the behaviour of the su command, based upon:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      1) the user su is targetting
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+2) the user executing the su command (or any groups he might be a member of)
+.PP
+Filen \(:ar i f\(:oljande format, med de rader som inleds med # behandlas som kommentarsrader och ignoreras;
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      till\-id:fr\(oan\-id:\(oATG\(:ARD
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Where to\-id is either the word
+\fIALL\fR, a list of usernames delimited by "," or the words
+\fIALL EXCEPT\fR
+followed by a list of usernames delimited by ","\&.
+.PP
+fr\(oan\-id \(:ar formaterad p\(oa samma s\(:att som till\-id f\(:orutom att det extra ordet
+\fIGROUP\fR
+k\(:anns igen\&.
+\fIALL EXCEPT GROUP\fR
+\(:ar helt giltigt ocks\(oa\&. Efterf\(:oljande till
+\fIGROUP\fR
+kan vara ett eller flera gruppnamn, separerade med ","\&. Det \(:ar inte tillr\(:ackligt att ha prim\(:art grupp\-id f\(:or den relevanta gruppen, en post i
+\fB/etc/group\fR(5)
+\(:ar n\(:odv\(:andigt\&.
+.PP
+\(oAtg\(:arden kan endast vara en av f\(:oljande f\(:or n\(:arvarande st\(:odda flaggor\&.
+.PP
+\fIDENY\fR
+.RS 4
+F\(:ors\(:oket att anv\(:anda su stoppades f\(:ore ett l\(:osenord har efterfr\(oagats\&.
+.RE
+.PP
+\fINOPASS\fR
+.RS 4
+F\(:ors\(:oket att anv\(:anda su lyckades helt automatiskt; inget l\(:osenord har efterfr\(oagats\&.
+.RE
+.PP
+\fIOWNPASS\fR
+.RS 4
+F\(:or att su\-kommandot ska lyckas m\(oaste anv\(:andaren mata in sitt egna l\(:osenord\&. De blir fr\(oagade att g\(:ora detta\&.
+.RE
+.PP
+Note there are three separate fields delimited by a colon\&. No whitespace must surround this colon\&. Also note that the file is examined sequentially line by line, and the first applicable rule is used without examining the file further\&. This makes it possible for a system administrator to exercise as fine control as he or she wishes\&.
+.SH "EXEMPEL"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      # exempelfil f\(:or /etc/suauth
+      #
+      # Ett par priviligerade anv\(:andarnamn som 
+      # kan su till root med sina egna l\(:osenord\&.
+      #
+      root:bosse,birddog:OWNPASS
+      #
+      # Alla andra kan inte su till root om de inte finns
+      # gruppen wheel\&. Det \(:ar s\(oa BSD g\(:or saker\&.
+      #
+      root:ALL EXCEPT GROUP wheel:DENY
+      #
+      # Kanske terry och birddog \(:ar konton som
+      # \(:ags av samma person\&.
+      # Tillg\(oang kan ges mellan dem utan
+      # l\(:osenord\&.
+      #
+      terry:birddog:NOPASS
+      birddog:terry:NOPASS
+      #
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "FILER"
+.PP
+/etc/suauth
+.RS 4
+.RE
+.SH "FEL"
+.PP
+There could be plenty lurking\&. The file parser is particularly unforgiving about syntax errors, expecting no spurious whitespace (apart from beginning and end of lines), and a specific token delimiting different things\&.
+.SH "DIAGNOSTIK"
+.PP
+An error parsing the file is reported using
+\fBsyslogd\fR(8)
+as level ERR on facility AUTH\&.
+.SH "SE OCKS\(oA"
+.PP
+\fBsu\fR(1)\&.

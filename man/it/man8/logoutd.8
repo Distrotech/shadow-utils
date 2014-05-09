@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: logoutd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "LOGOUTD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+logoutd \- impone le limitazioni sugli orari d\*(Aqaccesso
+.SH "SINOSSI"
+.HP \w'\fBlogoutd\fR\ 'u
+\fBlogoutd\fR
+.SH "DESCRIZIONE"
+.PP
+\fBlogoutd\fR
+fa rispettare le limitazioni sugli orari e sulle porte di accesso specificate in
+/etc/porttime\&.
+\fBlogoutd\fR
+andrebbe avviato da
+/etc/rc\&. Il file
+/var/run/utmp
+viene controllato periodicamente per verificare che a ciascun utente sia consentito l\*(Aqaccesso da quella determinata porta e all\*(Aqorario attuale\&. Ogni sessione di login che stia violando le limitazioni in
+/etc/porttime
+viene terminata\&.
+.SH "FILE"
+.PP
+/etc/porttime
+.RS 4
+File contenente gli accessi alle porte\&.
+.RE
+.PP
+/var/run/utmp
+.RS 4
+Elenco delle sessioni attive\&.
+.RE

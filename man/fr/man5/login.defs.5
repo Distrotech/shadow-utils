@@ -1,0 +1,828 @@
+'\" t
+.\"     Title: login.defs
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formats et conversions de fichiers
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "LOGIN\&.DEFS" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formats et conversions de fich"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+login.defs \- configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc
+.SH "DESCRIPTION"
+.PP
+Le fichier
+/etc/login\&.defs
+d\('efinit la configuration de la suite shadow password (mots de passe cach\('es) pour le syst\(`eme\&. Ce fichier est indispensable\&. Son absence n\*(Aqemp\(^echera pas le syst\(`eme de fonctionner, mais aura probablement des cons\('equences ind\('esirables\&.
+.PP
+Ce fichier est un fichier texte, dont chaque ligne d\('ecrit un param\(`etre de configuration\&. Les lignes consistent en un nom et une valeur, s\('epar\('es par une espace\&. Les lignes blanches et les lignes de commentaires sont ignor\('ees\&. Les commentaires commencent par un caract\(`ere \(Fo\ \&#\ \&\(Fc, qui doit \(^etre le premier caract\(`ere non blanc de la ligne\&.
+.PP
+Les valeurs des param\(`etres sont de quatre types\ \&: cha\(^ines de caract\(`eres, bool\('eens, nombres et nombres longs\&. Une cha\(^ine de caract\(`eres est constitu\('ee de n\*(Aqimporte quels caract\(`eres imprimables\&. Un bool\('een est soit
+\fIyes\fR
+(oui), soit
+\fIno\fR
+(non)\&. Un param\(`etre bool\('een non d\('efini, ou d\('efini avec une valeur autre que celles\-l\(`a prendra la valeur
+\fIno\fR\&. Un nombre (normal ou long) peut \(^etre soit d\('ecimal, soit octal (en pr\('ec\('edant la valeur d\*(Aqun
+\fI0\fR), ou encore hexad\('ecimal (en pr\('ec\('edant la valeur de
+\fI0x\fR)\&. La valeur maximale des param\(`etres num\('eriques normaux ou longs d\('epend de la machine\&.
+.PP
+Les param\(`etres de configuration suivants sont fournis\ \&:
+.PP
+\fBCHFN_AUTH\fR (bool\('een)
+.RS 4
+La valeur
+\fIyes\fR
+indique que le programme
+\fBchfn\fR
+n\('ecessitera une authentification avant de proc\('eder \(`a tout changement, \(`a moins qu\*(Aqils ne soient ex\('ecut\('es par le superutilisateur\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Ce param\(`etre pr\('ecise quelles valeurs du champ
+\fIgecos\fR
+du fichier
+passwd
+peuvent \(^etre modifi\('ees par les utilisateurs ordinaires \(`a l\*(Aqaide du programme
+\fBchfn\fR\&. Il est constitu\('e d\*(Aqune combinaison de lettres parmi
+\fIf\fR,
+\fIr\fR,
+\fIw\fR
+et
+\fIh\fR, correspondant respectivement au nom complet, au num\('ero de bureau, au num\('ero de t\('el\('ephone professionnel et au num\('ero de t\('el\('ephone personnel\&. Pour des raisons de compatibilit\('e avec des versions ant\('erieures,
+\fIyes\fR
+est \('equivalent \(`a
+\fIrwh\fR
+et
+\fIno\fR
+\(`a
+\fIfrwh\fR\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, seul le superutilisateur peut effectuer des modifications\&. Pour une configuration encore plus restrictive, il sera pr\('ef\('erable de ne pas installer
+\fBchfn\fR
+avec l\*(Aqindicateur SUID positionn\('e\&.
+.RE
+.PP
+\fBCHSH_AUTH\fR (bool\('een)
+.RS 4
+La valeur
+\fIyes\fR
+indique que le programme
+\fBchsh\fR
+n\('ecessitera une authentification avant de proc\('eder \(`a tout changement, \(`a moins qu\*(Aqils ne soient ex\('ecut\('es par le superutilisateur\&.
+.RE
+.PP
+\fBCONSOLE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, soit un chemin complet du fichier contenant les noms de p\('eriph\('eriques (un par ligne), soit une liste de noms du p\('eriph\('erique d\('elimit\('ee par des \(Fo\ \&:\ \&\(Fc\&. Les connexions d\*(Aqun administrateur ne seront autoris\('ees que depuis ces p\('eriph\('eriques\&.
+.sp
+S\*(Aqil n\*(Aqest pas d\('efini, root pourra se connecter depuis n\*(Aqimporte quel p\('eriph\('erique\&.
+.sp
+Le p\('eriph\('erique doit \(^etre pr\('ecis\('e sans le pr\('efixe /dev/\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Une liste de groupes \(`a rajouter aux groupes suppl\('ementaires de l\*(Aqutilisateur lors d\*(Aqune connexion sur une console (d\('etermin\('e par le param\(`etre CONSOLE)\&. Par d\('efaut, aucun groupe n\*(Aqest ajout\('e\&.
+
+\(`A utiliser avec pr\('ecaution\ \&: il est possible que les utilisateurs aient un acc\(`es permanent \(`a ces groupes, et cela m\(^eme s\*(Aqils ne sont pas connect\('es sur la console\&.
+.RE
+.PP
+\fBCREATE_HOME\fR (boolean)
+.RS 4
+Indiquer si un r\('epertoire personnel doit \(^etre cr\('e\('e par d\('efaut pour les nouveaux utilisateurs\&.
+.sp
+Ce r\('eglage ne s\*(Aqapplique pas pour les utilisateurs syst\(`eme, et peut \(^etre annul\('e sur la ligne de commande\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (bool\('een)
+.RS 4
+Indiquer si la connexion est permise si on ne peut pas acc\('eder au r\('epertoire personnel\&. Le r\('eglage par d\('efaut est \(Fo\ \&no\ \&\(Fc\&.
+.sp
+Si elle est configur\('ee \(`a
+\fIyes\fR, l\*(Aqutilisateur va se connecter dans le r\('epertoire racine (/) s\*(Aqil n\*(Aqest pas possible d\*(Aqacc\('eder \(`a son r\('epertoire personnel\&.
+.RE
+.PP
+\fBENCRYPT_METHOD\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir les algorithmes de chiffrement par d\('efaut du syst\(`eme pour coder les mots de passes (si aucun algorithme n\*(Aqa \('et\('e indiqu\('e sur la ligne de commandes)\&.
+.sp
+Les valeurs suivantes sont accept\('ees\ \&:
+\fIDES\fR
+(par d\('efaut),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Remarque\ \&: ce param\(`etre remplace la variable
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBENV_HZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement HZ lorsqu\*(Aqun utilisateur se connecte\&. La valeur doit \(^etre pr\('ec\('ed\('ee par
+\fIHZ=\fR\&. Une valeur commune sur Linux est
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_PATH\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement PATH quand un utilisateur ordinaire se connecte\&. La valeur est une liste de chemins s\('epar\('es par des deux points (par exemple
+\fI/bin:/usr/bin\fR) et peut \(^etre pr\('ec\('ed\('ee par
+\fIPATH=\fR\&. La valeur par d\('efaut est
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement PATH quand le super\-utilisateur se connecte\&. La valeur est une liste de chemins s\('epar\('es par deux points (par exemple
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) et peut \(^etre pr\('ec\('ed\('ee par
+\fIPATH=\fR\&. La valeur par d\('efaut est
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement TZ quand un utilisateur se connecte\&. La valeur peut \(^etre le nom d\*(Aqun fuseau horaire pr\('ec\('ed\('e par
+\fITZ=\fR
+(par exemple
+\fITZ=CST6CDT\fR), ou le chemin complet vers le fichier contenant la sp\('ecification du fuseau horaire (par exemple
+/etc/tzname)\&.
+.sp
+Si un chemin complet est sp\('ecifi\('e mais que le fichier n\*(Aqexiste pas ou ne peut pas \(^etre lu, la valeur par d\('efaut utilis\('ee est
+\fITZ=CST6CDT\fR\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si ce fichier existe et est lisible, l\*(Aqenvironnement de connexion sera lu \(`a\ \& partir de lui\&. Chaque ligne doit \(^etre sous la forme nom=valeur\&.
+.sp
+Les lignes commen\(,cant par un \(Fo\ \&#\ \&\(Fc sont consid\('er\('ees comme des commentaires, et sont ignor\('ees\&.
+.RE
+.PP
+\fBERASECHAR\fR (nombre)
+.RS 4
+Le caract\(`ere ERASE du terminal (\fI010\fR
+= backspace,
+\fI0177\fR
+= DEL)\&.
+.sp
+La valeur peut \(^etre pr\('efix\('ee par \(Fo\ \&0\ \&\(Fc pour une valeur octale, ou \(Fo\ \&0x\ \&\(Fc pour une valeur hexad\('ecimale\&.
+.RE
+.PP
+\fBFAIL_DELAY\fR (nombre)
+.RS 4
+Le d\('elai en secondes avant qu\*(Aqun nouvel essai soit permis apr\(`es un \('echec de connexion\&.
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (bool\('een)
+.RS 4
+Activer l\*(Aqenregistrement et l\*(Aqaffichage des informations d\*(Aq\('echec de connexion de
+/var/log/faillog
+.RE
+.PP
+\fBFAKE_SHELL\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie,
+\fBlogin\fR
+ex\('ecutera cet interpr\('eteur de commandes au lieu de l\*(Aqinterpr\('eteur de l\*(Aqutilisateur sp\('ecifi\('e dans
+/etc/passwd\&.
+.RE
+.PP
+\fBFTMP_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, les \('echecs de connexion seront enregistr\('es dans le fichier sous le format utmp
+.RE
+.PP
+\fBGID_MAX\fR (nombre), \fBGID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation des groupes normaux\&.
+.sp
+La valeur par d\('efaut pour
+\fBGID_MIN\fR
+(respectivement
+\fBGID_MAX\fR) est 1000 (respectivement 60000)\&.
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, le fichier peut d\('esactiver tous les affichages habituels durant la s\('equence de connexion\&. Si un nom de chemin complet est sp\('ecifi\('e, alors le mode taiseux sera activ\('e si le nom ou l\*(Aqinterpr\('eteur de commandes de l\*(Aqutilisateur sont trouv\('es dans le fichier\&. Si ce n\*(Aqest pas un nom de chemin complet, alors le mode taiseux sera activ\('e si le fichier existe dans le r\('epertoire personnel de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, le fichier sera affich\('e avant chaque invite de connexion\&.
+.RE
+.PP
+\fBKILLCHAR\fR (nombre)
+.RS 4
+Le caract\(`ere KILL du terminal (\fI025\fR
+= CTRL/U)\&.
+.sp
+La valeur peut \(^etre pr\('efix\('ee par \(Fo\ \&0\ \&\(Fc pour une valeur octale, ou \(Fo\ \&0x\ \&\(Fc pour une valeur hexad\('ecimale\&.
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (bool\('een)
+.RS 4
+Activer la journalisation et l\*(Aqaffichage des informations de derni\(`ere connexion de /var/log/lastlog\&.
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (bool\('een)
+.RS 4
+Activer la journalisation des connexions r\('eussies\&.
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (bool\('een)
+.RS 4
+Activer l\*(Aqaffichage des noms d\*(Aqutilisateurs inconnus quand les \('echecs de connexions sont enregistr\('es\&.
+.sp
+Remarque\ \&: la journalisation des noms d\*(Aqutilisateurs inconnus peut \(^etre un probl\(`eme de s\('ecurit\('e si un utilisateur entre son mot de passe au lieu de son nom d\*(Aqutilisateur\&.
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (nombre)
+.RS 4
+Le nombre maximum de tentatives de connexion en cas de mauvais mot de passe\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (cha\(^ine de caract\(`eres)
+.RS 4
+La cha\(^ine de caract\(`eres utilis\('ee pour l\*(Aqinvite de mot de passe\&. La valeur par d\('efaut est d\*(Aqutiliser "Password: " (\(Fo\ \&mot de passe\ \&:\ \&\(Fc), ou une traduction de cette cha\(^ine\&. Si vous d\('efinissez cette variable, l\*(Aqinvite ne sera pas traduite\&.
+.sp
+Si la cha\(^ine contient
+\fI%s\fR, ces caract\(`eres seront remplac\('es par le nom de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (nombre)
+.RS 4
+Le temps maximum en secondes pour la connexion\&.
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (bool\('een)
+.RS 4
+Activer le contr\(^ole et l\*(Aqaffichage du statut de la bo\(^ite aux lettres durant la connexion\&.
+.sp
+Vous devriez le d\('esactiver si les fichiers de d\('emarrage de l\*(Aqinterpr\('eteur de commandes v\('erifient d\('ej\(`a la pr\('esence de courriers (\(Fo\ \&mail \-e\ \&\(Fc ou \('equivalent)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (cha\(^ine de caract\(`eres)
+.RS 4
+R\('epertoire d\*(Aqattente des courriels (\(Fo\ \&mail spool directory\ \&\(Fc)\&. Ce param\(`etre est n\('ecessaire pour manipuler les bo\(^ites \(`a lettres lorsque le compte d\*(Aqun utilisateur est modifi\('e ou supprim\('e\&. S\*(Aqil n\*(Aqest pas sp\('ecifi\('e, une valeur par d\('efaut d\('efinie \(`a la compilation est utilis\('ee\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir l\*(Aqemplacement des bo\(^ites aux lettres des utilisateurs relativement \(`a leur r\('epertoire personnel\&.
+.RE
+.PP
+Les param\(`etres
+\fBMAIL_DIR\fR
+et
+\fBMAIL_FILE\fR
+sont utilis\('es par
+\fBuseradd\fR,
+\fBusermod\fR
+et
+\fBuserdel\fR
+pour cr\('eer, d\('eplacer ou supprimer les bo\(^ites aux lettres des utilisateurs\&.
+.PP
+Si
+\fBMAIL_CHECK_ENAB\fR
+est r\('egl\('e sur
+\fIyes\fR, ces variables servent \('egalement \(`a d\('efinir la variable d\*(Aqenvironnement
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (bool\('een)
+.RS 4
+Indiquer si un mot de passe doit \(^etre chiffr\('e en utilisant l\*(Aqalgorithme bas\('e sur MD5\&. Si configur\('ee \(`a
+\fIyes\fR, les nouveaux mots de passe seront chiffr\('es en utilisant l\*(Aqalgorithme bas\('e sur MD5 compatible avec celui utilis\('e par les versions r\('ecentes de FreeBSD\&. Il g\(`ere des mots de passe de longueur illimit\('ee et des cha\(^ines de salage plus longues\&. Configurez\-la \(`a
+\fIno\fR
+pour copier les mots de passe chiffr\('es sur d\*(Aqautres syst\(`emes qui ne comprennent pas le nouvel algorithme\&. la valeur par d\('efaut est
+\fIno\fR\&.
+.sp
+Cette variable est \('ecras\('ee par la variable
+\fBENCRYPT_METHOD\fR
+ou par toute option de la ligne de commande utilis\('ee pour configurer l\*(Aqalgorithme de chiffrement\&.
+.sp
+Cette variable est obsol\(`ete\&. Vous devriez utiliser
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBMOTD_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, liste d\('elimit\('ee par des \(Fo\ \&:\ \&\(Fc de fichiers de \(Fo\ \&message du jour\ \&\(Fc \(`a afficher lors de la connexion\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, nom de fichier dont la pr\('esence emp\(^echera les connexions de quelqu\*(Aqun d\*(Aqautre que le superutilisateur\&. Le contenu de ces fichiers doit \(^etre un message indiquant pourquoi les connexions sont d\('esactiv\('ees\&.
+.RE
+.PP
+\fBOBSCURE_CHECKS_ENAB\fR (bool\('een)
+.RS 4
+Activer des v\('erifications suppl\('ementaires lors des changements de mot de passe\&.
+.RE
+.PP
+\fBPASS_ALWAYS_WARN\fR (bool\('een)
+.RS 4
+Avertir en cas de mots de passe faibles (mais les accepte quand m\(^eme) si vous \(^etes superutilisateur\&.
+.RE
+.PP
+\fBPASS_CHANGE_TRIES\fR (nombre)
+.RS 4
+Nombre maximum d\*(Aqessais pour changer de mot de passe si refus\('e (trop facile)\&.
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (nombre)
+.RS 4
+Nombre maximum de jours de validit\('e d\*(Aqun mot de passe\&. Apr\(`es cette dur\('ee, une modification du mot de passe est obligatoire\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (nombre)
+.RS 4
+Nombre minimum de jours autoris\('e avant la modification d\*(Aqun mot de passe\&. Toute tentative de modification du mot de passe avant cette dur\('ee est rejet\('ee\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (nombre)
+.RS 4
+Nombre de jours durant lesquels l\*(Aqutilisateur recevra un avertissement avant que son mot de passe n\*(Aqarrive en fin de validit\('e\&. Une valeur n\('egative signifie qu\*(Aqaucun avertissement n\*(Aqest donn\('e\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, aucun avertissement n\*(Aqest donn\('e\&.
+.RE
+.PP
+Les param\(`etres
+\fBPASS_MAX_DAYS\fR,
+\fBPASS_MIN_DAYS\fR
+et
+\fBPASS_WARN_AGE\fR
+ne sont utilis\('es qu\*(Aqau moment de la cr\('eation d\*(Aqun compte\&. Les changements n\*(Aqaffecteront pas les comptes existants\&.
+.PP
+\fBPASS_MAX_LEN\fR (nombre), \fBPASS_MIN_LEN\fR (nombre)
+.RS 4
+Nombre de caract\(`eres significatifs dans le mot de passe pour crypt()\&. La valeur par d\('efaut de
+\fBPASS_MAX_LEN\fR
+est 8\&. Ne la changez pas \(`a moins que votre crypt() ne soit meilleur\&. Ceci est ignor\('e si
+\fBMD5_CRYPT_ENAB\fR
+est configur\('ee \(`a
+\fIyes\fR\&.
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (bool\('een)
+.RS 4
+Activer la v\('erification des restrictions de temps pr\('ecis\('ees dans
+/etc/porttime\&.
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de limites de resources depuis
+/etc/limits
+et ulimit, umask et niveau nice depuis les champs gecos de passwd\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (nombre), \fBSHA_CRYPT_MAX_ROUNDS\fR (nombre)
+.RS 4
+Quand
+\fBENCRYPT_METHOD\fR
+est configur\('ee \(`a
+\fISHA256\fR
+ou
+\fISHA512\fR, cela d\('efinit le nombre de rounds de SHA utilis\('es par l\*(Aqalgorithme de chiffrement par d\('efaut (quand le nombre de rounds n\*(Aqest pas pr\('ecis\('e sur la ligne de commande)\&.
+.sp
+Avec beaucoup de rounds, il est plus difficile de trouver le mot de passe avec une attaque par force brute\&. Veuillez remarquer que plus de ressources processeur seront n\('ecessaires pour authentifier les utilisateurs\&.
+.sp
+Si non pr\('ecis\('ee, la libc utilisera le nombre de rounds par d\('efaut (5000)\&.
+.sp
+Les valeurs doivent \(^etre comprises dans l\*(Aqintervalle 1\ \&000\ \&\-\ \&999\ \&999\ \&999\&.
+.sp
+Si une seule des variables
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+ou
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+est configur\('ee, alors cette valeur sera utilis\('ee\&.
+.sp
+Si
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, la valeur la plus \('elev\('ee sera utilis\('ee\&.
+.RE
+.PP
+\fBSULOG_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, les activit\('es de su seront enregistr\('ees dans le fichier\&.
+.RE
+.PP
+\fBSU_NAME\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, le nom de la commande \(`a afficher lorsque \(Fo\ \&su \-\ \&\(Fc est ex\('ecut\('ee\&. Par exemple, si elle est d\('efinie \(`a \(Fo\ \&su\ \&\(Fc alors un \(Fo\ \&ps\ \&\(Fc affichera la commande comme \(Fo\ \&\-su\ \&\(Fc\&. Si non d\('efinie, alors \(Fo\ \&ps\ \&\(Fc affichera le nom du shell qui sera en fait ex\('ecut\('e, par exemple quelque chose comme \(Fo\ \&\-sh\ \&\(Fc\&.
+.RE
+.PP
+\fBSU_WHEEL_ONLY\fR (bool\('een)
+.RS 4
+Si
+\fIyes\fR, l\*(Aqutilisateur doit faire partie des membres du groupe avec le premier gid 0 dans
+/etc/group
+(appel\('e
+\fIroot\fR
+sur la plupart des syst\(`emes Linux) pour \(^etre capable de
+\fBsu\fR
+vers des comptes \(`a uid 0\&. Si ce groupe n\*(Aqexiste pas ou est vide, personne ne pourra
+\fBsu\fR
+vers un uid 0\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (nombre), \fBSYS_GID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation de groupes syst\(`eme\&.
+.sp
+La valeur par d\('efaut pour
+\fBSYS_GID_MIN\fR
+(respectivement
+\fBSYS_GID_MAX\fR) est 101 (respectivement
+\fBGID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBSYS_UID_MAX\fR (nombre), \fBSYS_UID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques d\*(Aqutilisateurs que les commandes
+\fBuseradd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation d\*(Aqutilisateurs syst\(`eme\&.
+.sp
+La valeur par d\('efaut pour
+\fBSYS_UID_MIN\fR
+(respectivement
+\fBSYS_UID_MAX\fR) est 101 (respectivement
+\fBUID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBSYSLOG_SG_ENAB\fR (bool\('een)
+.RS 4
+Activer la journalisation \(Fo\ \&syslog\ \&\(Fc de l\*(Aqactivit\('e de
+\fBsg\fR\&.
+.RE
+.PP
+\fBSYSLOG_SU_ENAB\fR (bool\('een)
+.RS 4
+Activer la journalisation \(Fo\ \&syslog\ \&\(Fc de l\*(Aqactivit\('e de
+\fBsu\fR
+\- en plus de la journalisation sulog\&.
+.RE
+.PP
+\fBTTYGROUP\fR (cha\(^ine de caract\(`eres), \fBTTYPERM\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Les permissions de terminal\ \&: la connexion tty appartiendra au groupe
+\fBTTYGROUP\fR
+et les permissions seront configur\('ees \(`a
+\fBTTYPERM\fR\&.
+.sp
+Par d\('efaut, le propri\('etaire du terminal est configur\('e au groupe primaire de l\*(Aqutilisateur et les permissions sont configur\('ees \(`a
+\fI0600\fR\&.
+.sp
+\fBTTYGROUP\fR
+peut \(^etre le nom d\*(Aqun groupe ou un identifiant num\('erique de groupe\&.
+.sp
+Si vous avez un programme
+\fBwrite\fR
+qui est \(Fo\ \&setgid\ \&\(Fc \(`a un groupe sp\('ecial auquel les terminaux appartiennent, d\('efinissez TTYGROUP comme l\*(Aqidentifiant num\('erique du groupe et TTYPERM \(`a 0620\&. Autrement laissez TTYGROUP d\('ecomment\('e et TTYPERM configur\('e soit \(`a 622 soit \(`a 600\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, fichier qui lie les lignes de tty \(`a la variable d\*(Aqenvironnement TERM\&. Chaque ligne du fichier est dans un format ressemblant \(`a \(Fo\ \&vt100 tty01\ \&\(Fc\&.
+.RE
+.PP
+\fBUID_MAX\fR (nombre), \fBUID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques d\*(Aqutilisateurs que les commandes
+\fBuseradd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation d\*(Aqutilisateurs normaux\&.
+.sp
+La valeur par d\('efaut de
+\fBUID_MIN\fR
+(respectivement
+\fBUID_MAX\fR) est 1000 (respectivement 60000)\&.
+.RE
+.PP
+\fBULIMIT\fR (nombre)
+.RS 4
+Valeur par d\('efaut d\*(Aq\fBulimit\fR\&.
+.RE
+.PP
+\fBUMASK\fR (nombre)
+.RS 4
+Valeur d\*(Aqinitialisation du masque de permissions\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, le masque des permissions sera initialis\('e \(`a 022\&.
+.sp
+\fBuseradd\fR
+et
+\fBnewusers\fR
+utilisent ce masque pour d\('efinir les permissions d\*(Aqacc\(`es des r\('epertoires personnels qu\*(Aqils cr\('eent\&.
+.sp
+Il est \('egalement utilis\('e par
+\fBlogin\fR
+pour d\('efinir l\*(Aqumask initial de l\*(Aqutilisateur\&. Veuillez noter que cet umask peut \(^etre red\('efini par les GECOS de l\*(Aqutilisateur (si
+\fBQUOTAS_ENAB\fR
+est activ\('e) ou en pr\('ecisant une limite avec l\*(Aqidentifiant
+\fIK\fR
+dans
+\fBlimits\fR(5)\&.
+.RE
+.PP
+\fBUSERDEL_CMD\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, la commande est ex\('ecut\('ee lors de la suppression d\*(Aqun utilisateur\&. Elle pourra supprimer toutes les t\(^aches p\('eriodiques cron ou at, tous les travaux d\*(Aqimpression, etc\&. de l\*(Aqutilisateur (qui sera fourni comme premier param\(`etre)\&.
+.sp
+Le code de retour du script n\*(Aqest pas pris en compte\&.
+.sp
+Voici un script exemple, qui supprime le fichier d\*(Aqentr\('ee de cron et d\*(Aqat ainsi que les travaux d\*(Aqimpression en attente\ \&;
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# Check for the required argument\&.
+if [ $# != 1 ]; then
+	echo "Usage: $0 username"
+	exit 1
+fi
+
+# Remove cron jobs\&.
+crontab \-r \-u $1
+
+# Remove at jobs\&.
+# Note that it will remove any jobs owned by the same UID,
+# even if it was shared by a different username\&.
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# Remove print jobs\&.
+lprm $1
+
+# All done\&.
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de bits de masque de groupe (\(Fo\ \&umask group bits\ \&\(Fc) identiques \(`a ceux du propri\('etaire (exemple\ \&: 022 \-> 002, 077 \-> 007) pour les utilisateurs non privil\('egi\('es, si l\*(AqUID est identique au GID et que l\*(Aqidentifiant de connexion est identique au groupe principal\&.
+.sp
+Si cette variable est configur\('ee \(`a
+\fIyes\fR,
+\fBuserdel\fR
+supprimera le groupe de l\*(Aqutilisateur s\*(Aqil ne contient pas d\*(Aqautres membres, et
+\fBuseradd\fR
+cr\('eera par d\('efaut un groupe portant le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "R\('EF\('ERENCES CROIS\('EES"
+.PP
+Les r\('ef\('erences crois\('ees ci\-dessous montrent quels sont les param\(`etres utilis\('es par les diff\('erents programmes de la suite shadow password\&.
+.PP
+chfn
+.RS 4
+CHFN_AUTH
+CHFN_RESTRICT
+LOGIN_STRING
+.RE
+.PP
+chgpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chpasswd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENABSHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chsh
+.RS 4
+CHSH_AUTH LOGIN_STRING
+.RE
+.PP
+gpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+groupadd
+.RS 4
+GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP SYS_GID_MAX SYS_GID_MIN
+.RE
+.PP
+groupdel
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmems
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmod
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpck
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpunconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+login
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENV_PATH ENV_SUPATH ENV_TZ ENVIRON_FILE
+ERASECHAR FAIL_DELAY
+FAILLOG_ENAB
+FAKE_SHELL
+FTMP_FILE
+HUSHLOGIN_FILE
+ISSUE_FILE
+KILLCHAR
+LASTLOG_ENAB
+LOGIN_RETRIES
+LOGIN_STRING
+LOGIN_TIMEOUT LOG_OK_LOGINS LOG_UNKFAIL_ENAB
+MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE MOTD_FILE NOLOGINS_FILE PORTTIME_CHECKS_ENAB QUOTAS_ENAB
+TTYGROUP TTYPERM TTYTYPE_FILE
+ULIMIT UMASK
+USERGROUPS_ENAB
+.RE
+.PP
+newgrp / sg
+.RS 4
+SYSLOG_SG_ENAB
+.RE
+.PP
+newusers
+.RS 4
+ENCRYPT_METHOD GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+passwd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENAB OBSCURE_CHECKS_ENAB PASS_ALWAYS_WARN PASS_CHANGE_TRIES PASS_MAX_LEN PASS_MIN_LEN
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+pwck
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+pwconv
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+su
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENVIRON_FILE
+ENV_PATH ENV_SUPATH
+ENV_TZ LOGIN_STRING MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE QUOTAS_ENAB
+SULOG_FILE SU_NAME
+SU_WHEEL_ONLY
+SYSLOG_SU_ENAB
+USERGROUPS_ENAB
+.RE
+.PP
+sulogin
+.RS 4
+ENV_HZ
+ENV_TZ
+.RE
+.PP
+useradd
+.RS 4
+CREATE_HOME GID_MAX GID_MIN MAIL_DIR MAX_MEMBERS_PER_GROUP PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+userdel
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP USERDEL_CMD USERGROUPS_ENAB
+.RE
+.PP
+usermod
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBsu\fR(1),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBpam\fR(8)\&.

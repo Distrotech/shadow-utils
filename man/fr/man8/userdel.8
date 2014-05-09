@@ -1,0 +1,295 @@
+'\" t
+.\"     Title: userdel
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "USERDEL" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+userdel \- supprimer un compte utilisateur et les fichiers associ\('es
+.SH "SYNOPSIS"
+.HP \w'\fBuserdel\fR\ 'u
+\fBuserdel\fR [options] \fILOGIN\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBuserdel\fR
+modifie les fichiers d\*(Aqadministration des comptes du syst\(`eme, en supprimant les entr\('ees qui se r\('ef\(`erent \(`a
+\fILOGIN\fR\&. L\*(Aqutilisateur nomm\('e doit exister\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles de la commande
+\fBuserdel\fR
+sont\ \&:
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+Cette option impose la suppression de l\*(Aqutilisateur, m\(^eme s\*(Aqil est encore connect\('e\&. Elle force \('egalement
+\fBuserdel\fR
+\(`a supprimer son r\('epertoire personnel et sa file d\*(Aqattente des courriels, m\(^eme si un autre utilisateur utilise le m\(^eme r\('epertoire personnel ou si l\*(Aqutilisateur pr\('ecis\('e n\*(Aqest pas le propri\('etaire de la file d\*(Aqattente des courriels\&. Si
+\fIUSERGROUPS_ENAB\fR
+vaut
+\fIyes\fR
+dans
+/etc/login\&.defs
+et si un groupe existe avec le m\(^eme nom que l\*(Aqutilisateur supprim\('e, alors ce groupe sera supprim\('e, m\(^eme s\*(Aqil s\*(Aqagit du groupe primaire d\*(Aqun autre utilisateur\&.
+.sp
+\fIRemarque\ \&:\fR
+Cette option est dangereuse, elle peut laisser votre syst\(`eme dans un \('etat incoh\('erent\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-remove\fR
+.RS 4
+Les fichiers pr\('esents dans le r\('epertoire personnel de l\*(Aqutilisateur seront supprim\('es en m\(^eme temps que le r\('epertoire lui\-m\(^eme, ainsi que le r\('epertoire d\*(Aqattente des courriels\&. Vous devrez rechercher et \('eliminer vous\-m\(^eme les fichiers situ\('es dans d\*(Aqautres syst\(`emes de fichiers\&.
+.sp
+Le r\('epertoire d\*(Aqattente des courriels est d\('efini par la variable
+\fBMAIL_DIR\fR
+dans
+login\&.defs\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR
+.RS 4
+\('Elimine toute association avec tout utilisateur SELinux pour la connexion de l\*(Aqutilisateur\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBMAIL_DIR\fR (cha\(^ine de caract\(`eres)
+.RS 4
+R\('epertoire d\*(Aqattente des courriels (\(Fo\ \&mail spool directory\ \&\(Fc)\&. Ce param\(`etre est n\('ecessaire pour manipuler les bo\(^ites \(`a lettres lorsque le compte d\*(Aqun utilisateur est modifi\('e ou supprim\('e\&. S\*(Aqil n\*(Aqest pas sp\('ecifi\('e, une valeur par d\('efaut d\('efinie \(`a la compilation est utilis\('ee\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir l\*(Aqemplacement des bo\(^ites aux lettres des utilisateurs relativement \(`a leur r\('epertoire personnel\&.
+.RE
+.PP
+Les param\(`etres
+\fBMAIL_DIR\fR
+et
+\fBMAIL_FILE\fR
+sont utilis\('es par
+\fBuseradd\fR,
+\fBusermod\fR
+et
+\fBuserdel\fR
+pour cr\('eer, d\('eplacer ou supprimer les bo\(^ites aux lettres des utilisateurs\&.
+.PP
+Si
+\fBMAIL_CHECK_ENAB\fR
+est r\('egl\('e sur
+\fIyes\fR, ces variables servent \('egalement \(`a d\('efinir la variable d\*(Aqenvironnement
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBUSERDEL_CMD\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, la commande est ex\('ecut\('ee lors de la suppression d\*(Aqun utilisateur\&. Elle pourra supprimer toutes les t\(^aches p\('eriodiques cron ou at, tous les travaux d\*(Aqimpression, etc\&. de l\*(Aqutilisateur (qui sera fourni comme premier param\(`etre)\&.
+.sp
+Le code de retour du script n\*(Aqest pas pris en compte\&.
+.sp
+Voici un script exemple, qui supprime le fichier d\*(Aqentr\('ee de cron et d\*(Aqat ainsi que les travaux d\*(Aqimpression en attente\ \&;
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# Check for the required argument\&.
+if [ $# != 1 ]; then
+	echo "Usage: $0 username"
+	exit 1
+fi
+
+# Remove cron jobs\&.
+crontab \-r \-u $1
+
+# Remove at jobs\&.
+# Note that it will remove any jobs owned by the same UID,
+# even if it was shared by a different username\&.
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# Remove print jobs\&.
+lprm $1
+
+# All done\&.
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de bits de masque de groupe (\(Fo\ \&umask group bits\ \&\(Fc) identiques \(`a ceux du propri\('etaire (exemple\ \&: 022 \-> 002, 077 \-> 007) pour les utilisateurs non privil\('egi\('es, si l\*(AqUID est identique au GID et que l\*(Aqidentifiant de connexion est identique au groupe principal\&.
+.sp
+Si cette variable est configur\('ee \(`a
+\fIyes\fR,
+\fBuserdel\fR
+supprimera le groupe de l\*(Aqutilisateur s\*(Aqil ne contient pas d\*(Aqautres membres, et
+\fBuseradd\fR
+cr\('eera par d\('efaut un groupe portant le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBuserdel\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI1\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des mots de passe
+.RE
+.PP
+\fI2\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI6\fR
+.RS 4
+l\*(Aqutilisateur indiqu\('e n\*(Aqexiste pas
+.RE
+.PP
+\fI8\fR
+.RS 4
+l\*(Aqutilisateur est actuellement connect\('e
+.RE
+.PP
+\fI10\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des groupes
+.RE
+.PP
+\fI12\fR
+.RS 4
+impossible de supprimer le r\('epertoire personnel
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+\fBuserdel\fR
+ne permet pas la suppression d\*(Aqun compte si des processus actifs lui appartiennent encore\&. Dans ce cas, il peut \(^etre n\('ecessaire de tuer ces processus ou de simplement verrouiller le mot de passe ou le compte de l\*(Aqutilisateur, afin de supprimer le compte plus tard\&. L\*(Aqoption
+\fB\-f\fR
+permet de forcer la suppression du compte\&.
+.PP
+Vous devez v\('erifier vous\-m\(^eme qu\*(Aqaucun fichier poss\('ed\('e par l\*(Aqutilisateur ne subsiste sur tous les syst\(`emes de fichiers\&.
+.PP
+Vous ne pouvez supprimer aucun attribut NIS d\*(Aqun client NIS\&. Cela doit \(^etre effectu\('e sur le serveur NIS\&.
+.PP
+Si
+\fBUSERGROUPS_ENAB\fR
+vaut
+\fIyes\fR
+(\(Fo\ \&oui\ \&\(Fc) dans
+/etc/login\&.defs,
+\fBuserdel\fR
+supprimera le groupe ayant le m\(^eme nom que l\*(Aqutilisateur\&. Afin d\*(Aq\('eviter des incoh\('erences entre les fichiers passwd et group,
+\fBuserdel\fR
+v\('erifiera que le groupe n\*(Aqest pas utilis\('e comme groupe primaire d\*(Aqun autre utilisateur\ \&; si c\*(Aqest le cas un avertissement sera affich\('e et le groupe ne sera pas supprim\('e\&. L\*(Aqoption
+\fB\-f\fR
+permet d\*(Aqimposer la suppression du groupe\&.
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBlogin.defs\fR(5),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBusermod\fR(8)\&.

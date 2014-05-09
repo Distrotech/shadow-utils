@@ -1,0 +1,237 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 库函数调用
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "SHADOW" "3" "2014-05-09" "shadow\-utils 4\&.2" "库函数调用"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+shadow, getspnam \- 加密密码文件工具函数
+.SH "SYNTAX"
+.PP
+\fI#include <shadow\&.h>\fR
+.PP
+\fIstruct spwd *getspent();\fR
+.PP
+\fIstruct spwd *getspnam(char\fR\fI*name\fR\fI);\fR
+.PP
+\fIvoid setspent();\fR
+.PP
+\fIvoid endspent();\fR
+.PP
+\fIstruct spwd *fgetspent(FILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIstruct spwd *sgetspent(char\fR\fI*cp\fR\fI);\fR
+.PP
+\fIint putspent(struct spwd\fR\fI*p,\fR\fIFILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIint lckpwdf();\fR
+.PP
+\fIint ulckpwdf();\fR
+.SH "描述"
+.PP
+\fIshadow\fR
+处理 shadow 密码文件
+/etc/shadow
+的内容。\fI#include\fR
+文件中的结构是：
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+struct spwd {
+      char		*sp_namp; /* user login name */
+      char		*sp_pwdp; /* encrypted password */
+      long int		sp_lstchg; /* last password change */
+      long int		sp_min; /* days until change allowed\&. */
+      long int		sp_max; /* days before change required */
+      long int		sp_warn; /* days warning for expiration */
+      long int		sp_inact; /* days before account inactive */
+      long int		sp_expire; /* date when account expires */
+      unsigned long int	sp_flag; /* reserved for future use */
+}
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+每个字段的含义是：
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_namp \- 指向以 null 结束的用户名的指针
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_pwdp \- 指向 null 结束的密码的指针
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_lstchg \- 最近更改密码的日期(日期计算方法是从1970年1月1日开始的天数)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_min \- days before which password may not be changed
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_max \- days after which password must be changed
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_warn \- days before password is to expire that user is warned of pending password expiration
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_inact \- days after password expires that account is considered inactive and disabled
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_expire \- days since Jan 1, 1970 when account will be disabled
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_flag \- reserved for future use
+.RE
+.SH "描述"
+.PP
+\fIgetspent\fR,
+\fIgetspname\fR,
+\fIfgetspent\fR, and
+\fIsgetspent\fR
+each return a pointer to a
+\fIstruct spwd\fR\&.
+\fIgetspent\fR
+returns the next entry from the file, and
+\fIfgetspent\fR
+returns the next entry from the given stream, which is assumed to be a file of the proper format\&.
+\fIsgetspent\fR
+returns a pointer to a
+\fIstruct spwd\fR
+using the provided string as input\&.
+\fIgetspnam\fR
+searches from the current position in the file for an entry matching
+\fIname\fR\&.
+.PP
+\fIsetspent\fR
+和
+\fIendspent\fR
+分别用来开始和结束对影子密码文件的访问。
+.PP
+需要使用
+\fIlckpwdf\fR
+和
+\fIulckpwdf\fR
+函数来确保对
+/etc/shadow
+文件的互斥访问。\fIlckpwdf\fR
+使用
+\fIpw_lock\fR
+来获取一个最长为 15 秒的锁，然后继续使用
+\fIspw_lock\fR
+来获取长度为开始的 15 秒时间的剩余量的第二把锁。总计 15 秒之后，无论哪个失败，\fIlckpwdf\fR
+都返回 \-1。两把锁都获取成功时，返回 0。
+.SH "DIAGNOSTICS"
+.PP
+如果没有更多条目了或者处理时出错，此函数返回 NULL。使用
+\fIint\fR
+类型返回值的函数返回 0 表示成功，\-1 表示失败。
+.SH "CAVEATS"
+.PP
+这些函数只能由超级用户使用，因为对影子密码文件的访问是受限的。
+.SH "文件"
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.SH "参见"
+.PP
+\fBgetpwent\fR(3),
+\fBshadow\fR(5)\&.

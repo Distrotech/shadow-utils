@@ -1,0 +1,144 @@
+'\" t
+.\"     Title: suauth
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formati di file e conversioni
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "SUAUTH" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formati di file e conversioni"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+suauth \- file di controllo dettagliato per \(Fosu\(Fc
+.SH "SINOSSI"
+.HP \w'\fB/etc/suauth\fR\ 'u
+\fB/etc/suauth\fR
+.SH "DESCRIZIONE"
+.PP
+Il file
+/etc/suauth
+viene utilizzato all\*(Aqinvocazione del comando \(Fosu\(Fc\&. Pu\(`o cambiare il comportamento del comando in base a:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    1) l\*(Aqutente che \(Fosu\(Fc sta usando come target
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+2) l\*(Aqutente che sta invocando \(Fosu\(Fc (o qualsiasi gruppo del quale questi faccia parte)
+.PP
+Il formato del file \(`e il seguente, con le righe che iniziano con \(Fo#\(Fc trattate come commenti e ignorate;
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    id\-finale:id\-iniziale:AZIONE
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Dove \(Foid\-finale\(Fc \(`e la parola
+\fIALL\fR
+(tutti), un elenco di nomi utenti separati da \(Fo,\(Fc o le parole
+\fIALL EXCEPT\fR
+seguite da una lista di nomi utente separati da \(Fo,\(Fc\&.
+.PP
+\(Foid\-iniziale\(Fc \(`e formattato come \(Foid\-iniziale\(Fc salvo il riconoscimento della parola aggiuntiva
+\fIGROUP\fR\&. Anche
+\fIALL EXCEPT GROUP\fR
+\(`e perfettamente gestito\&. Subito dopo
+\fIGROUP\fR
+appaiono uno o pi\(`u nomi di gruppo separati da \(Fo,\(Fc\&. Non \(`e sufficiente avere come gruppo primario il gruppo specificato, ma deve anche esserci la relativa riga in
+\fB/etc/group\fR(5)\&.
+.PP
+AZIONE pu\(`o essere una delle seguenti opzioni attualmente supportate\&.
+.PP
+\fIDENY\fR
+.RS 4
+Il tentativo di usare \(Fosu\(Fc viene bloccato prima ancora che la password sia chiesta\&.
+.RE
+.PP
+\fINOPASS\fR
+.RS 4
+Il tentativo di usare \(Fosu\(Fc ha successo senza neppure chiedere la password\&.
+.RE
+.PP
+\fIOWNPASS\fR
+.RS 4
+Perch\('e \(Fosu\(Fc abbia successo, l\*(Aqutente deve inserire la propria password che verr\(`a espressamente richiesta\&.
+.RE
+.PP
+Notare che ci sono tre campi diversi separati da \(Fo:\(Fc\&. Nessuno spazio deve affiancare i due punti\&. Notare anche che il file viene esaminato in maniera sequenziale una riga alla volta, e la prima regola applicabile viene utilizzata senza procede con la lettura delle successive\&. Questo permette all\*(Aqamministratore di sistema di impostare dei controlli allargati o puntuali, come preferisce\&.
+.SH "ESEMPIO"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+      # Esempio di file /etc/suauth
+      #
+      # Due utenti privilegiati possono usare
+      # su verso root con la propria password\&.
+      #
+      root:chris,birddog:OWNPASS
+      #
+      # Tutti gli altri non possono farlo a meno di non appartenere
+      # al groppo wheel\&. Questo \(`e come funziona in BSD\&.
+      #
+      root:ALL EXCEPT GROUP wheel:DENY
+      #
+      # Nel caso che terry e birddog siano account
+      # della stessa persona di permettere il passaggio
+      # tra loro senza richiedere la password\&.
+      #
+      terry:birddog:NOPASS
+      birddog:terry:NOPASS
+      #
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "FILE"
+.PP
+/etc/suauth
+.RS 4
+.RE
+.SH "ERRORI"
+.PP
+Ce ne possono essere molti non visti\&. Il parser dei file \(`e particolarmente rigido sugli errori di sintassi, attendendo l\*(Aqassenza di spazi estranei (ad eccezione di inizio e fine riga) e specifici separatori per delimitare oggetti diversi\&.
+.SH "DIAGNOSTICA"
+.PP
+Qualsiasi errore durante le lettura del file viene riportato tramite
+\fBsyslogd\fR(8)
+con livello ERR e \(Fofacility\(Fc AUTH\&.
+.SH "VEDERE ANCHE"
+.PP
+\fBsu\fR(1)\&.

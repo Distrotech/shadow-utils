@@ -1,0 +1,347 @@
+'\" t
+.\"     Title: passwd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 用户命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "PASSWD" "1" "2014-05-09" "shadow\-utils 4\&.2" "用户命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+passwd \- 更改用户密码
+.SH "大纲"
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR [\fI选项\fR] [\fI登录\fR]
+.SH "描述"
+.PP
+\fBpasswd\fR
+命令用来更改用户账户的密码。普通用户通常只更改其自己账户的密码，而超级用户可以更改任何账户的密码。\fBpasswd\fR
+也更改账户或相关的密码有效期。
+.SS "密码更改"
+.PP
+如果有旧密码，首先提示用户输入旧密码。加密这个密码然后和存储的密码进行比较。用户只有一次机会输入正确密码。允许超级用户略过这个步骤，以便更改忘记了的密码。
+.PP
+输入了密码之后，会检查密码年龄信息，以查看此时是否允许用户更改密码。如果不允许，\fBpasswd\fR
+拒绝更改密码，然后退出。
+.PP
+提示用户输入两次新密码。第二次和第一次进行比较，并且需要相同才能更改密码。
+.PP
+然后，测试密码的负责程度。一般来讲，密码应该包含 6 到 8 位字符，从下边的一个或多个集合中选择：
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+小写字母
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+数字 0 到 9
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+标点符号
+.RE
+.PP
+必须要留意不能包含系统默认的擦除和杀死字符。\fBpasswd\fR
+会拒绝复杂度不满足要求的密码。
+.SS "关于用户密码的提示"
+.PP
+密码的安全性依赖于加密算法的强度和密钥空间的大小。旧的
+\fIUNIX\fR
+系统加密算法基于 NBS DES 算法。推荐使用更新的算法(查看
+\fBENCRYPT_METHOD\fR)。密钥空间的大小依赖于选择的密码的随机性。
+.PP
+由于粗心地或处理选择密码，会危及密码的安全。由于这个原因，您不应该选择出现在词典中或者必须要写下来才能记住的密码。密码也不应该是一个名字、许可证号、生日或者街道号。所有这些可以用于猜测来损害系统安全。
+.PP
+您可以在在 http://zh\&.wikipedia\&.org/zh\-cn/密码强度 找到怎样选择强壮密码的建议。
+.SH "选项"
+.PP
+\fBpasswd\fR
+命令可以接受的选项有：
+.PP
+\fB\-a\fR, \fB\-\-all\fR
+.RS 4
+此选项只能和
+\fB\-S\fR
+一起使用，来显示所有用户的状态。
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR
+.RS 4
+删除用户密码(让它为空)。这是禁用一个用户密码的快速方法。它将设置给出名称的账户。
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expire\fR
+.RS 4
+让一个账户的密码立即过期。这可以强制一个用户下次登录时更改密码。
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-i\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+此选项用于在密码过期一定天数之后禁用账户。一个用户账户密码已经过期
+\fIINACTIVE\fR
+天之后，用户将不能再登录进账户。
+.RE
+.PP
+\fB\-k\fR, \fB\-\-keep\-tokens\fR
+.RS 4
+表示密码更改只应该因为认证口令(密码)过期更改。用户希望保持他们尚未过期的口令。
+.RE
+.PP
+\fB\-l\fR, \fB\-\-lock\fR
+.RS 4
+锁定指定账户的密码。此选项通过将密码更改为一个不可能与加密值匹配的值来禁用(它在密码开头添加一个\(lq!\(rq)。
+.sp
+注意，这并没有禁用此账户。用户仍然可以通过其它认证方式(如 SSH 密码)来登录。要禁用此账户，管理员需要使用
+\fBusermod \-\-expiredate 1\fR
+(设置账户的过期时间为1970年1月2日)。
+.sp
+被锁定了密码的用户不允许更改密码。
+.RE
+.PP
+\fB\-n\fR, \fB\-\-mindays\fR\ \&\fIMIN_DAYS\fR
+.RS 4
+在密码更改之间的最小天数设置为
+\fIMIN_DAYS\fR。此字段中的 0 值表示用户可以在任何时间更改其密码。
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+安静模式。
+.RE
+.PP
+\fB\-r\fR, \fB\-\-repository\fR\ \&\fIREPOSITORY\fR
+.RS 4
+在
+\fIREPOSITORY\fR
+中更改密码
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-S\fR, \fB\-\-status\fR
+.RS 4
+显示账户状态信息。状态信息包含 7 个字段。首个字段是用户的登录名，第二个字段表示用户账户是否已经锁定密码(L)、没有密码 (NP)或者密码可用(P)，第三个字段给出最后一次更改密码的日期。接下来的四个字段分别是密码的最小年龄、最大年龄、警告期和禁用期。这些年龄以天为单位计算。
+.RE
+.PP
+\fB\-u\fR, \fB\-\-unlock\fR
+.RS 4
+解锁指定用户的密码。此操作通过将密码改回先前值(改回使用
+\fB\-l\fR
+之前的值)重新启用密码。
+.RE
+.PP
+\fB\-w\fR, \fB\-\-warndays\fR\ \&\fIWARN_DAYS\fR
+.RS 4
+设置在要求更改密码之前警告的天数。\fIWARN_DAYS\fR
+选项是在密码过期之前提前警告的天数。
+.RE
+.PP
+\fB\-x\fR, \fB\-\-maxdays\fR\ \&\fIMAX_DAYS\fR
+.RS 4
+设置密码仍然有效的最大天数。\fIMAX_DAYS\fR
+之后，密码会要求更改。
+.RE
+.SH "CAVEATS"
+.PP
+密码复杂性检查在每台机器间不同。用户应该选择适合的尽量复杂的密码。
+.PP
+在启动了 NIS 的系统上，如果没有登录 NIS 服务器，用户或许不能更改自己的密码。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBENCRYPT_METHOD\fR (string)
+.RS 4
+这定义了系统加密密码的默认算法(如果没有在命令行上指定算法)。
+.sp
+可以使用如下值：\fIDES\fR
+(default),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+注意，此参数会覆盖
+\fBMD5_CRYPT_ENAB\fR
+变量。
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (boolean)
+.RS 4
+表示密码是否必须使用基于 MD5 的算法加密。如果设为
+\fIyes\fR，新密码将使用可以和新版 FreeBSD 兼容的基于 MD5 的算法加密。它支持无限长度的密码以及更长的盐字符串。如果您需要将加密的密码复制到其它不理解新算法的系统，设置为
+\fIno\fR。默认值是
+\fIno\fR。
+.sp
+This variable is superseded by the
+\fBENCRYPT_METHOD\fR
+variable or by any command line option used to configure the encryption algorithm\&.
+.sp
+此变量已经废弃。您应该使用
+\fBENCRYPT_METHOD\fR。
+.RE
+.PP
+\fBOBSCURE_CHECKS_ENAB\fR (boolean)
+.RS 4
+对密码更改启用附加检查。
+.RE
+.PP
+\fBPASS_ALWAYS_WARN\fR (boolean)
+.RS 4
+如果是 root，警告弱密码，但是仍然允许使用。
+.RE
+.PP
+\fBPASS_CHANGE_TRIES\fR (number)
+.RS 4
+可以尝试更改密码的最大次数(太容易)。
+.RE
+.PP
+\fBPASS_MAX_LEN\fR (number), \fBPASS_MIN_LEN\fR (number)
+.RS 4
+crypt() 的有效字符位数。\fBPASS_MAX_LEN\fR
+默认是 8，除非您自己的 crypt() 更好，否则不要更改。如果
+\fBMD5_CRYPT_ENAB\fR
+设为
+\fIyes\fR，会被忽略。
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (number), \fBSHA_CRYPT_MAX_ROUNDS\fR (number)
+.RS 4
+\fBENCRYPT_METHOD\fR
+设为
+\fISHA256\fR
+或
+\fISHA512\fR
+时，此项确定加密算法默认使用 SHA 轮转数目(当轮转数没有通过命令行指定时)。
+.sp
+使用很多轮转，会让暴力破解更加困难。但是需要注意，认证用户时也会需要更多的 CPU 资源。
+.sp
+如果没有指定，libc 会选择默认的轮转数(5000)。
+.sp
+值必须在 1000 \- 999,999,999 之间。
+.sp
+如果只设置了一个
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+或
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+值，就会使用这个值。
+.sp
+如果
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR，将会使用大的那个。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "退出值"
+.PP
+\fBpasswd\fR
+命令退出，并返回如下值：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI1\fR
+.RS 4
+权限不够
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的选项组合
+.RE
+.PP
+\fI3\fR
+.RS 4
+意外的失败，什么也没有做。
+.RE
+.PP
+\fI4\fR
+.RS 4
+意外的失败，passwd
+文件丢失
+.RE
+.PP
+\fI5\fR
+.RS 4
+passwd
+文件忙，请重试
+.RE
+.PP
+\fI6\fR
+.RS 4
+给了选项一个无效的参数
+.RE
+.SH "参见"
+.PP
+\fBchpasswd\fR(8),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBlogin.defs\fR(5),\fBusermod\fR(8)\&.

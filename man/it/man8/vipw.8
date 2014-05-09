@@ -1,0 +1,135 @@
+'\" t
+.\"     Title: vipw
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "VIPW" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+vipw, vigr \- modifica i file delle password, dei gruppi, delle password shadow o dei gruppi shadow
+.SH "SINOSSI"
+.HP \w'\fBvipw\fR\ 'u
+\fBvipw\fR [\fIopzioni\fR]
+.HP \w'\fBvigr\fR\ 'u
+\fBvigr\fR [\fIopzioni\fR]
+.SH "DESCRIZIONE"
+.PP
+I comandi
+\fBvipw\fR
+e
+\fBvigr\fR
+permettono di modificare rispettivamente i file
+/etc/passwd
+e
+/etc/group\&. Con l\*(Aqopzione
+\fB\-s\fR, vengono aperte le versioni shadow di quei file, rispettivamente
+/etc/shadow
+e
+/etc/gshadow\&. I programmi si occupano di impostare i lock necessari per evitare la corruzione dei file\&. Per determinare l\*(Aqeditor da usare, i programmi prima provano con la variabile d\*(Aqambiente
+\fB$VISUAL\fR, poi con la variabile d\*(Aqambiente
+\fB$EDITOR\fR
+e infine con l\*(Aqeditor predefinito,
+\fBvi\fR(1)\&.
+.SH "OPZIONI"
+.PP
+Le opzioni per i comandi
+\fBvipw\fR
+e
+\fBvigr\fR
+sono:
+.PP
+\fB\-g\fR, \fB\-\-group\fR
+.RS 4
+Modifica del database \(Fogroup\(Fc\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-passwd\fR
+.RS 4
+Modifica del database \(Fopasswd\(Fc\&.
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+Modalit\(`a silenziosa\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shadow\fR
+.RS 4
+Modifica del database \(Foshadow\(Fc o \(Fogshadow\(Fc
+.RE
+.SH "VARIABILI D'AMBIENTE"
+.PP
+\fBVISUAL\fR
+.RS 4
+Editor da utilizzare\&.
+.RE
+.PP
+\fBEDITOR\fR
+.RS 4
+Editor da utilizzare se
+\fBVISUAL\fR
+non \(`e impostata\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBvi\fR(1),
+\fBgroup\fR(5),
+\fBgshadow\fR(5), ,
+\fBpasswd\fR(5), ,
+\fBshadow\fR(5)

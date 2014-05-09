@@ -1,0 +1,118 @@
+'\" t
+.\"     Title: chsh
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 05/09/2014
+.\"    Manual: Polecenia użytkownik\('ow
+.\"    Source: shadow-utils 4.2
+.\"  Language: Polish
+.\"
+.TH "CHSH" "1" "05/09/2014" "shadow\-utils 4\&.2" "Polecenia użytkownik\('ow"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAZWA"
+chsh \- zmiana pow\(/loki zg\(/loszeniowej
+.SH "STRESZCZENIE"
+.HP \w'\fBchsh\fR\ 'u
+\fBchsh\fR [\fIopcje\fR] [\fILOGIN\fR]
+.SH "OPIS"
+.PP
+The
+\fBchsh\fR
+command changes the user login shell\&. This determines the name of the user\*(Aqs initial login command\&. A normal user may only change the login shell for her own account; the superuser may change the login shell for any account\&.
+.SH "OPCJE"
+.PP
+Polecenie
+\fBchsh\fR
+posiada następujące opcje:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Wyświetlenie komunikatu pomocy i zakończenie dzia\(/lania\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Nazwa nowej pow\(/loki (shell) użytkownika\&. Ustawienie tego pola na puste powoduje, że system wybierze domyślną pow\(/lokę logowania\&.
+.RE
+.PP
+Jeżeli nie podano opcji
+\fB\-s\fR, to polecenie
+\fBchsh\fR
+dzia\(/la w trybie interaktywnym, proponując użytkownikowi bieżącą pow\(/lokę logowania\&. Wprowadzenie nowej wartości powoduje zmianę pow\(/loki, a podanie wartości pustej pozostawia bieżącą pow\(/lokę\&. Bieżąca pow\(/loka wyświetlana jest w nawiasach
+\fI[ ]\fR
+.SH "UWAGI"
+.PP
+Jedynym ograniczeniem na\(/lożonym na pow\(/lokę zg\(/loszeniową jest to, że jej nazwa musi być wymieniona w
+/etc/shells, chyba że polecenie chsh zosta\(/lo uruchomione przez superużytkownika w\('owczas może być podana dowolna nazwa\&. Użytkownicy kont z ograniczoną pow\(/loką logowania nie mogą jej zmieniać\&. Odradza się z tego powodu umieszczanie
+/bin/rsh
+w pliku
+/etc/shells, gdyż przypadkowa zmiana na pow\(/lokę ograniczoną uniemożliwi użytkownikowi jakąkolwiek zmianę pow\(/loki logowania, nawet z powrotem na dotychczasową\&.
+.SH "CONFIGURATION"
+.PP
+The following configuration variables in
+/etc/login\&.defs
+change the behavior of this tool:
+.PP
+\fBCHSH_AUTH\fR (boolean)
+.RS 4
+If
+\fIyes\fR, the
+\fBchsh\fR
+program will require authentication before making any changes, unless run by the superuser\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (string)
+.RS 4
+The string used for prompting a password\&. The default is to use "Password: ", or a translation of that string\&. If you set this variable, the prompt will not be translated\&.
+.sp
+If the string contains
+\fI%s\fR, this will be replaced by the user\*(Aqs name\&.
+.RE
+.SH "PLIKI"
+.PP
+/etc/passwd
+.RS 4
+Informacja o kontach użytkownik\('ow\&.
+.RE
+.PP
+/etc/shells
+.RS 4
+Lista dozwolonych pow\(/lok zg\(/loszeniowych\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguracja pakietu shadow\&.
+.RE
+.SH "ZOBACZ TAKŻE"
+.PP
+\fBchfn\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

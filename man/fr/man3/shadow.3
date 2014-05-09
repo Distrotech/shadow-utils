@@ -1,0 +1,237 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Appels de biblioth\(`eque
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "SHADOW" "3" "09/05/2014" "shadow\-utils 4\&.2" "Appels de biblioth\(`eque"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+shadow, getspnam \- routines d\*(Aqutilisation des mots de passe cach\('es
+.SH "SYNTAX"
+.PP
+\fI#include <shadow\&.h>\fR
+.PP
+\fIstruct spwd *getspent();\fR
+.PP
+\fIstruct spwd *getspnam(char\fR\fI*nom\fR\fI);\fR
+.PP
+\fIvoid setspent();\fR
+.PP
+\fIvoid endspent();\fR
+.PP
+\fIstruct spwd *fgetspent(FILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIstruct spwd *sgetspent(char\fR\fI*cp\fR\fI);\fR
+.PP
+\fIint putspent(struct spwd\fR\fI*p,\fR\fIFICHIER\fR\fI*fp\fR\fI);\fR
+.PP
+\fIint lckpwdf();\fR
+.PP
+\fIint ulckpwdf();\fR
+.SH "DESCRIPTION"
+.PP
+\fIshadow\fR
+manipule le contenu du fichier des mots de passe cach\('es,
+/etc/shadow\&. La structure d\('efinie dans le fichier inclus est\ \&:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+struct spwd {
+      char		*sp_namp; /* nom de connexion de l\*(Aqutilisateur */
+      char		*sp_pwdp; /* mot de passe chiffr\('e */
+      long int		sp_lstchg; /* dernier changement de mot de passe */
+      long int		sp_min; /* jours avant de pouvoir changer de mot de passe */
+      long int		sp_max; /* jours avant l\*(Aqobligation de changer de mot de passe */
+      long int		sp_warn; /* jours d\*(Aqavertissement avant la fin de validit\('e */
+      long int		sp_inact; /* jours avant que le compte soit inactif */
+      long int		sp_expire; /* date de fin de validit\('e du compte */
+      unsigned long int	sp_flag; /* r\('eserv\('e pour une utilisation future */
+}
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+La signification de chaque champ est la suivante\ \&:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_namp \- pointeur vers le nom d\*(Aqutilisateur termin\('e par un z\('ero binaire (\(Fo\ \&null\-terminated\ \&\(Fc)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_pwdp \- pointeur vers le mot de passe termin\('e par un z\('ero binaire (\(Fo\ \&null\-terminated\ \&\(Fc)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_lstchg \- nombre de jours, compt\('es \(`a partir du 1er\ \&janvier\ \&1970, depuis la derni\(`ere modification du mot de passe
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_min \- nombre de jours pendant lesquels le mot de passe ne peut pas \(^etre chang\('e
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_max \- nombre maximal de jours avant que le mot de passe doive \(^etre chang\('e
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_warn \- nombre de jours avant que le mot de passe n\*(Aqarrive en fin de validit\('e pendant lesquels l\*(Aqutilisateur est averti de la fin prochaine de la validit\('e de son mot de passe
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_inact \- nombre de jours apr\(`es la fin de validit\('e du mot de passe avant de consid\('erer que le compte est inactif et soit d\('esactiv\('e
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_expire \- nombre de jours, compt\('es \(`a partir du 1er\ \&janvier\ \&1970, apr\(`es lesquels le compte sera d\('esactiv\('e
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_flag \- r\('eserv\('e pour une utilisation future
+.RE
+.SH "DESCRIPTION"
+.PP
+\fIGetspent\fR,
+\fIgetspname\fR,
+\fIfgetspent\fR, et
+\fIsgetspent\fR
+renvoient tous un pointeur vers une structure
+\fIstruct spwd\fR\&.
+\fIGetspent\fR
+renvoie l\*(Aqentr\('ee suivante du fichier, et
+\fIfgetspent\fR
+renvoie l\*(Aqentr\('ee suivante du flux qui est consid\('er\('e comme \('etant un fichier au format correct\&.
+\fISgetspent\fR
+renvoie un pointeur vers une structure
+\fIstruct spwd\fR
+en utilisant la cha\(^ine de caract\(`ere fournie en entr\('ee\&.
+\fIGetspnam\fR
+cherche \(`a partir de la position courante une entr\('ee correspondant \(`a
+\fInom\fR
+dans le fichier fourni en entr\('ee\&.
+.PP
+\fISetspent\fR
+et
+\fIendspent\fR
+peuvent \(^etre utilis\('es pour d\('ebuter et terminer l\*(Aqacc\(`es au fichier de mots de passe cach\('es\&.
+.PP
+Les fonctions
+\fIlckpwdf\fR
+et
+\fIulckpwdf\fR
+doivent \(^etre utilis\('ees pour garantir un acc\(`es exclusif au fichier
+/etc/shadow\&.
+\fILckpwdf\fR
+essaie de placer un verrou avec
+\fIpw_lock\fR
+pendant 15 secondes\&. Il essaie ensuite de placer un second verrou en utilisant
+\fIspw_lock\fR
+pendant le reste de ces 15 secondes\&. Si un de ces verrous ne peut \(^etre plac\('e,
+\fIlckpwdf\fR
+renvoie \-1\&. Quand les deux verrous peuvent \(^etre plac\('es, la valeur 0 est renvoy\('ee\&.
+.SH "DIAGNOSTICS"
+.PP
+Les fonctions renvoient NULL si plus aucune entr\('ee n\*(Aqest disponible ou si une erreur est survenue lors du traitement\&. Les fonctions dont la valeur de retour est un
+\fIint\fR
+renvoient 0 en cas de succ\(`es et \-1 en cas d\*(Aq\('echec\&.
+.SH "AVERTISSEMENTS"
+.PP
+Ces fonctions peuvent n\*(Aq\(^etre utilis\('ees que par le superutilisateur car l\*(Aqacc\(`es au fichier de mots de passe cach\('es est restreint\&.
+.SH "FICHIERS"
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgetpwent\fR(3),
+\fBshadow\fR(5)\&.

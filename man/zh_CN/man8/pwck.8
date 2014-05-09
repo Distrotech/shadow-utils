@@ -1,0 +1,318 @@
+'\" t
+.\"     Title: pwck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "PWCK" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+pwck \- 检查密码文件的完整性
+.SH "大纲"
+.HP \w'\fBpwck\fR\ 'u
+\fBpwck\fR [选项] [\fIpasswd\fR\ [\ \fIshadow\fR\ ]]
+.SH "描述"
+.PP
+\fBpwck\fR
+命令检查用户及其认证信息的完整性。它检查
+/etc/passwd
+和
+/etc/shadow
+格式正确、数据有效。将会提示用户删除格式不正确或者有其它错误的项。
+.PP
+检查的项目有：
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+正确的字段数
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+一个唯一且有效的用户名
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+一个有效的用户和组标识符
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+有效的主组
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+有效的主目录
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+有效的登录 shell
+.RE
+.PP
+当指定第二个文件参数或
+/etc/shadow
+在系统中存在时，启用
+shadow
+检查。
+.PP
+这些检查是：
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+每个密码项都有对应的影子相，反之亦然。
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+密码在影子化了的文件中指定
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+影子项有正确的字段数。
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+影子项在影子文件中是唯一的
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+最后一次的密码更改时间不是被设成了一个将来的时间。
+.RE
+.PP
+The checks for correct number of fields and unique user name are fatal\&. If the entry has the wrong number of fields, the user will be prompted to delete the entire line\&. If the user does not answer affirmatively, all further checks are bypassed\&. An entry with a duplicated user name is prompted for deletion, but the remaining checks will still be made\&. All other errors are warning and the user is encouraged to run the
+\fBusermod\fR
+command to correct the error\&.
+.PP
+操作
+/etc/passwd
+文件的这些命令不能警告损坏或重复的条目，这些情况下，应该使用
+\fBpwck\fR
+来移除这写有问题的条目。
+.SH "选项"
+.PP
+\fB\-r\fR
+和
+\fB\-s\fR
+选项不能联合使用。
+.PP
+\fBpwck\fR
+选项可以接受的选项有：
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+只报告错误。不显示那些不需要用户操作的警告。
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+在只读模式下执行
+\fBpwck\fR。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+根据 UID 在
+/etc/passwd
+和
+/etc/shadow
+对项目进行排序。
+.RE
+.PP
+默认上，\fBpwck\fR
+操作文件
+/etc/passwd
+和
+/etc/shadow。用户也可以使用
+\fIpasswd\fR
+和
+\fIshadow\fR
+参数来选择替代文件。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBPASS_MAX_DAYS\fR (number)
+.RS 4
+一个密码可以使用的最大天数。如果密码比这旧，将会强迫更改密码。如果不指定，就假定为 \-1，这会禁用这个限制。
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (number)
+.RS 4
+两次更改密码时间的最小间隔。将会拒绝任何早于此的更改密码的尝试。如果不指定，假定为 \-1，将会禁用这个限制。
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (number)
+.RS 4
+密码过期之前给出警告的天数。0 表示只有只在过期的当天警告，负值表示不警告。如果没有指定，不会给警告。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.SH "退出值"
+.PP
+\fBpwck\fR
+命令有如下返回值：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI1\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI2\fR
+.RS 4
+一个或多个错误的密码条目
+.RE
+.PP
+\fI3\fR
+.RS 4
+无法打开密码文件
+.RE
+.PP
+\fI4\fR
+.RS 4
+无法锁定密码文件
+.RE
+.PP
+\fI5\fR
+.RS 4
+无法更新密码文件
+.RE
+.PP
+\fI6\fR
+.RS 4
+无法在密码文件中排序
+.RE
+.SH "参见"
+.PP
+\fBgroup\fR(5),
+\fBgrpck\fR(8),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBusermod\fR(8)\&.

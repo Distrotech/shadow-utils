@@ -1,0 +1,319 @@
+'\" t
+.\"     Title: pwck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "PWCK" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+pwck \- verifica l\*(Aqintegrit\(`a dei file delle password
+.SH "SINOSSI"
+.HP \w'\fBpwck\fR\ 'u
+\fBpwck\fR [opzioni] [\fIpasswd\fR\ [\ \fIshadow\fR\ ]]
+.SH "DESCRIZIONE"
+.PP
+\fBpwck\fR
+verifica l\*(Aqintegrit\(`a delle informazioni su utenti e autenticazione del sistema\&. Ogni voce in
+/etc/passwd
+e in
+/etc/shadow
+.PP
+Vengono fatti controlli per verificare che ogni voce abbia:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+il corretto numero di campi
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+un nome utente univoco e valido
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+identificatori validi dell\*(Aqutente e del gruppo
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+un gruppo primario valido
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+una home directory valida
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+una shell di login valida
+.RE
+.PP
+Le verifiche sul file
+shadow
+sono abilitate ogni volta che si usa un secondo argomento o quanto esiste nel sistema il file
+/etc/shadow\&.
+.PP
+Le verifiche sono le seguenti:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+ogni elemento del file passwd deve avere un corrispondente elemento in shadow, e viceversa
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+le password sono specificate nel file shadow
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+gli elementi di shadow hanno il corretto numero di campi
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+gli elementi di shadow sono unici
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+le date di ultima modifica non sono nel futuro
+.RE
+.PP
+Gli errori nelle verifiche sul corretto numero di campi e sull\*(Aqunivocit\(`a del nome utente sono irrimediabili\&. Se una voce ha un numero errato di campi, all\*(Aqutente viene chiesto di cancellare l\*(Aqintera riga; se l\*(Aqutente non risponde affermativamente, vengono omessi tutti gli ulteriori controlli\&. Viene richiesta la cancellazione anche per le voci aventi il nome utente duplicato, ma i rimanenti controlli vengono ugualmente effettuati\&. Tutti gli altri errori non sono gravi e l\*(Aqutente \(`e invitato a eseguire il comando
+\fBusermod\fR
+per correggerli\&.
+.PP
+I comandi che operano sul file
+/etc/passwd
+non sono in grado di modificare voci corrotte o duplicate; in tali circostanze va usato
+\fBpwck\fR
+per rimuovere la voce scorretta\&.
+.SH "OPZIONI"
+.PP
+Le opzioni
+\fB\-r\fR
+e
+\fB\-s\fR
+non possono essere combinate\&.
+.PP
+Il comando
+\fBpwck\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+Riporta solo gli errori\&. Gli avvisi che non richiedono azioni da parte dell\*(Aqutente non sono mostrati\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+Esegue il comando
+\fBpwck\fR
+in sola lettura\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+Ordina gli elementi di
+/etc/passwd
+e
+/etc/shadow
+per UID\&.
+.RE
+.PP
+Come impostazione predefinita,
+\fBpwck\fR
+opera sui file
+/etc/passwd
+e in
+/etc/shadow\&. L\*(Aqutente pu\(`o selezionare file alternativi con i parametri
+\fIpasswd\fR
+e
+\fIshadow\fR\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBPASS_MAX_DAYS\fR (numerico)
+.RS 4
+Il numero massimo di giorni che una password pu\(`o essere utilizzata\&. Se la password \(`e pi\(`u vecchia verr\(`a imposto il suo cambiamento\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (numerico)
+.RS 4
+Il numero minimo di giorni tra due cambiamenti di password\&. Ogni tentativo di cambiare la password prima di questo periodo verr\(`a rifiutato\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (numerico)
+.RS 4
+Il numero di giorni per i quali un utente va avvisato che la sua password sta per scadere\&. Se zero l\*(Aqutente viene avvisato solo alla scadenza\&. Un valore negativo indica che non si deve avvisare mai\&. Se non specificato allora non c\*(Aq\(`e nessun avviso\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+Il comando
+\fBpwck\fR
+restituisce i seguenti valori:
+.PP
+\fI0\fR
+.RS 4
+successo
+.RE
+.PP
+\fI1\fR
+.RS 4
+sintassi del comando errata
+.RE
+.PP
+\fI2\fR
+.RS 4
+una o pi\(`u voci di password conengono errori
+.RE
+.PP
+\fI3\fR
+.RS 4
+impossibile aprire i file delle password
+.RE
+.PP
+\fI4\fR
+.RS 4
+impossibile fare il lock dei file delle password
+.RE
+.PP
+\fI5\fR
+.RS 4
+impossibile aggiornare i file delle password
+.RE
+.PP
+\fI6\fR
+.RS 4
+impossibile ordinare i file delle password
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBgroup\fR(5),
+\fBgrpck\fR(8),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBusermod\fR(8)\&.

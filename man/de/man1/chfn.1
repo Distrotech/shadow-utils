@@ -1,0 +1,161 @@
+'\" t
+.\"     Title: chfn
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dienstprogramme f\(:ur Benutzer
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "CHFN" "1" "09.05.2014" "shadow\-utils 4\&.2" "Dienstprogramme f\(:ur Benutzer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+chfn \- \(:andert den vollst\(:andigen Namen eines Benutzers und sonstige Informationen
+.SH "\(:UBERSICHT"
+.HP \w'\fBchfn\fR\ 'u
+\fBchfn\fR [\fIOptionen\fR] [\fIANMELDENAME\fR]
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBchfn\fR
+\(:andert den vollst\(:andigen Namen, die B\(:urozimmernummer sowie die berufliche und private Telefonnummer f\(:ur ein Benutzerkonto\&. Diese Informationen werden typischerweise von
+\fBfinger\fR(1)
+und \(:ahnlichen Programmen verwendet\&. Ein normaler Benutzer darf nur die Felder seines eigenen Kontos \(:andern und muss dabei zudem die Einschr\(:ankungen in
+/etc/login\&.defs
+beachten\&. So ist es Benutzern standardm\(:a\(ssig nicht m\(:oglich, ihren vollst\(:andigen Namen zu \(:andern\&. Root kann die Felder aller Konten ver\(:andern\&. Au\(sserdem darf nur Root mittels der Option
+\fB\-o\fR
+die undefinierten Teile des GECOS\-Feldes \(:andern\&.
+.PP
+Diese Felder d\(:urfen keinen Doppelpunkt enthalten\&. Mit Ausnahme des Feldes
+\fIsonstiges\fR
+sollten sie kein Komma oder Gleichheitszeichen enthalten\&. Au\(sserdem wird abgeraten, andere Zeichen als US\-ASCII zu verwenden, aber nur f\(:ur die Telefonnummern ist dies zwingend\&. Das Feld
+\fIsonstiges\fR
+wird von anderen Anwendungen verwendet, um dort Informationen \(:uber das Konto abzuspeichern\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBchfn\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-f\fR, \fB\-\-full\-name\fR\ \&\fIVOLLST\(:ANDIGER_NAME\fR
+.RS 4
+ver\(:andert den vollst\(:andigen Namen des Benutzers
+.RE
+.PP
+\fB\-h\fR, \fB\-\-home\-phone\fR\ \&\fITEL_PRIV\fR
+.RS 4
+\(:andert die private Telefonnummer des Benutzers
+.RE
+.PP
+\fB\-o\fR, \fB\-\-other\fR\ \&\fISONSTIGES\fR
+.RS 4
+Ver\(:andert die sonstigen Informationen \(:uber den Benutzer in der GECOS\-Zeile\&. In diesem Feld werden Kontoinformationen anderer Anwendungen gespeichert\&. Es kann nur vom Superuser ver\(:andert werden\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-room\fR\ \&\fIZIMMER_NUMMER\fR
+.RS 4
+\(:andert die Zimmernummer des Benutzers
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-u\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-w\fR, \fB\-\-work\-phone\fR\ \&\fITEL_BERUF\fR
+.RS 4
+ver\(:andert die berufliche Telefonnummer des Benutzers
+.RE
+.PP
+Wenn keine Option ausgew\(:ahlt wird, arbeitet
+\fBchfn\fR
+interaktiv\&. Dabei wird der Benutzer nach den aktuellen Werten f\(:ur alle Felder befragt\&. Bei Eingabe eines neuen Wertes wird dieser verwendet, bei keiner Eingabe stattdessen der Originalwert beibehalten\&. Der aktuelle Wert wird zwischen einem Paar von
+\fB[ ]\fR
+angezeigt\&. Ohne Optionen fragt
+\fBchfn\fR
+nach einem Benutzerkonto\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBCHFN_AUTH\fR (boolesch)
+.RS 4
+Falls
+\fIyes\fR, ben\(:otigt das Programm
+\fBchfn\fR
+eine Authentifizierung, bevor es \(:Anderungen vornimmt, sofern es nicht von Root ausgef\(:uhrt wird\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (Zeichenkette)
+.RS 4
+Der Parameter bestimmt, welcher Wert in dem
+\fIgecos\fR\-Feld von
+/etc/passwd
+von gew\(:ohnlichen Benutzern mittels des Programms
+\fBchfn\fR
+ge\(:andert werden darf\&. Er kann aus jeder Kombination der Buchstaben
+\fIf\fR
+,\fIr\fR,
+\fIw\fR
+und
+\fIh\fR
+bestehen\&. Diese Buchstaben stehen f\(:ur den vollst\(:andigen Namen, die Zimmernummer, die gesch\(:aftliche Telefonnummer und die private Telefonnummer\&. Zum Zweck der Abw\(:artskompatibilit\(:at entspricht
+\fIyes\fR\fIrwh\fR
+und
+\fIno\fR\fIfrwh\fR\&. Falls nichts festgelegt wird, kann nur Root \(:Anderungen vornehmen\&. Die gr\(:o\(sste Einschr\(:ankung erreicht man besser, indem
+chfn
+nicht mit SUID\-Rechten ausgestattet wird\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (Zeichenkette)
+.RS 4
+Diese Zeichenkette wird bei der Eingabeaufforderung des Passworts (Prompt) verwendet\&. Standardm\(:a\(ssig wird \(FcPassword: \(Fo oder eine \(:Ubersetzung davon benutzt\&. Wenn Sie diese Variable definieren, wird die Eingabeaufforderung nicht \(:ubersetzt\&.
+.sp
+Wenn die Zeichenkette ein
+\fI%s\fR
+enth\(:alt, wird dies durch den Benutzernamen ersetzt\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchsh\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

@@ -1,0 +1,437 @@
+'\" t
+.\"     Title: usermod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "USERMOD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+usermod \- Modifier un compte utilisateur
+.SH "SYNOPSIS"
+.HP \w'\fBusermod\fR\ 'u
+\fBusermod\fR [\fIoptions\fR] \fILOGIN\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBusermod\fR
+modifie les fichiers d\*(Aqadministration des comptes du syst\(`eme selon les modifications qui ont \('et\('e indiqu\('ees sur la ligne de commande\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBusermod\fR
+sont\ \&:
+.PP
+\fB\-a\fR, \fB\-\-append\fR
+.RS 4
+Ajouter l\*(Aqutilisateur aux groupes suppl\('ementaires\&. N\*(Aqutilisez cette option qu\*(Aqavec l\*(Aqoption
+\fB\-G\fR\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fICOMMENT\fR
+.RS 4
+La nouvelle valeur du champ de commentaire du fichier de mots de passe pour l\*(Aqutilisateur\&. Il est normalement modifi\('e en utilisant l\*(Aqutilitaire
+\fBchfn\fR(1)\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\fR\ \&\fIHOME_DIR\fR
+.RS 4
+Le nouveau r\('epertoire personnel de l\*(Aqutilisateur\&.
+.sp
+Si l\*(Aqoption
+\fB\-m\fR
+est fournie, le contenu du r\('epertoire personnel actuel sera d\('eplac\('e dans le nouveau r\('epertoire personnel, qui sera cr\('e\('e si n\('ecessaire\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+Date \(`a laquelle le compte utilisateur sera d\('esactiv\('e\&. La date est indiqu\('ee dans le format
+\fIAAAA\-MM\-JJ\fR\&.
+.sp
+Un param\(`etre
+\fIDATE_FIN_VALIDIT\('E\fR
+vide d\('esactivera l\*(Aqexpiration du compte\&.
+.sp
+Cette option n\('ecessite un fichier
+/etc/shadow\&. Une entr\('ee
+/etc/shadow
+sera cr\('e\('ee si il n\*(Aqy en avait pas\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+Nombre de jours suivant la fin de validit\('e d\*(Aqun mot de passe apr\(`es lequel le compte est d\('efinitivement d\('esactiv\('e\&.
+.sp
+Une valeur de 0 d\('esactive le compte d\(`es que le mot de passe a d\('epass\('e sa fin de validit\('e, et une valeur de \-1 d\('esactive cette fonctionnalit\('e\&.
+.sp
+Cette option n\('ecessite un fichier
+/etc/shadow\&. Une entr\('ee
+/etc/shadow
+sera cr\('e\('ee si il n\*(Aqy en avait pas\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+Nom du groupe ou identifiant num\('erique du groupe de connexion initial de l\*(Aqutilisateur\&. Le groupe doit exister\&.
+.sp
+Tout fichier du r\('epertoire personnel de l\*(Aqutilisateur appartenant au groupe primaire pr\('ec\('edent de l\*(Aqutilisateur appartiendra \(`a ce nouveau groupe\&.
+.sp
+Le groupe propri\('etaire des fichiers en dehors du r\('epertoire personnel de l\*(Aqutilisateur doit \(^etre modifi\('e manuellement\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGROUP1\fR[\fI,GROUP2,\&.\&.\&.\fR[\fI,GROUPN\fR]]]
+.RS 4
+Liste de groupes suppl\('ementaires auxquels appartient \('egalement l\*(Aqutilisateur\&. Chaque groupe est s\('epar\('e du suivant par une virgule, sans espace entre eux\&. Les groupes sont soumis aux m\(^emes restrictions que celles de l\*(Aqoption
+\fB\-g\fR\&.
+.sp
+Si l\*(Aqutilisateur fait actuellement partie d\*(Aqun groupe qui n\*(Aqest pas list\('e, l\*(Aqutilisateur sera supprim\('e du groupe\&. Ce comportement peut \(^etre modifi\('e par l\*(Aqoption
+\fB\-a\fR, qui permet d\*(Aqajouter l\*(Aqutilisateur \(`a la liste actuelle des groupes suppl\('ementaires\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-login\fR\ \&\fINEW_LOGIN\fR
+.RS 4
+Le nom de l\*(Aqutilisateur passera de
+\fILOGIN\fR
+\(`a
+\fINOUVEAU_LOGIN\fR\&. Rien d\*(Aqautre ne sera modifi\('e\&. En particulier, le nom du r\('epertoire personnel et l\*(Aqemplacement de la bo\(^ite aux lettres de l\*(Aqutilisateur devrontprobablement \(^etre chang\('es pour refl\('eter le nouveau nom de connexion\&.
+.RE
+.PP
+\fB\-L\fR, \fB\-\-lock\fR
+.RS 4
+Verrouiller le mot de passe d\*(Aqun utilisateur\&. Cette option ajoute un \(Fo\ \&!\ \&\(Fc devant le mot de passe chiffr\('e, ce qui d\('esactive le mot de passe\&. Vous ne pouvez pas utiliser cette option avec
+\fB\-p\fR
+ou
+\fB\-U\fR\&.
+.sp
+Remarque\ \&: pour verrouiller le compte (et pas seulement l\*(Aqacc\(`es au compte par un mot de passe), il est \('egalement n\('ecessaire de placer
+\fIDATE_FIN_VALIDIT\('E\fR
+\(`a
+\fI1\fR\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-move\-home\fR
+.RS 4
+D\('eplacer le contenu du r\('epertoire personnel de l\*(Aqutilisateur vers un nouvel emplacement\&.
+.sp
+Cette option ne fonctionne que lorsqu\*(Aqelle est combin\('ee avec l\*(Aqoption
+\fB\-d\fR
+(ou
+\fB\-\-home\fR)\&.
+.sp
+\fBusermod\fR
+essayera d\*(Aqadapter les permissions des fichiers et de copier les modes, ACL et attributs \('etendus\&. Cependant, vous risquez de devoir proc\('eder \(`a des modifications vous\-m\(^eme\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+En combinaison avec l\*(Aqoption
+\fB\-u\fR, cette option permet de changer l\*(Aqidentifiant utilisateur vers une valeur d\('ej\(`a utilis\('ee\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+Mot de passe chiffr\('e, comme renvoy\('e par
+\fBcrypt\fR(3)\&.
+.sp
+\fBRemarque\ \&:\fR
+l\*(Aqutilisation de cette option est d\('econseill\('ee car le mot de passe (ou le mot de passe chiffr\('e) peut \(^etre visible des utilisateurs qui affichent la liste des processus\&.
+.sp
+Il est n\('ecessaire de v\('erifier si le mot de passe respecte la politique de mots de passe du syst\(`eme\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Nom du nouvel interpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc) de l\*(Aqutilisateur\&. Si ce champ est vide, le syst\(`eme s\('electionnera l\*(Aqinterpr\('eteur de commandes initial par d\('efaut\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+La valeur num\('erique de l\*(Aqidentifiant de l\*(Aqutilisateur\&.
+.sp
+Cette valeur doit \(^etre unique, \(`a moins que l\*(Aqoption
+\fB\-o\fR
+ne soit utilis\('ee\&. La valeur ne doit pas \(^etre n\('egative\&.
+.sp
+La bo\(^ite aux lettres et tous les fichiers poss\('ed\('es par l\*(Aqutilisateur et qui sont situ\('es dans son r\('epertoire personnel verront leur identifiant d\*(Aqutilisateur automatiquement modifi\('e\&.
+.sp
+Le propri\('etaire des fichiers en dehors du r\('epertoire personnel de l\*(Aqutilisateur doit \(^etre modifi\('e manuellement\&.
+.sp
+Aucun contr\(^ole ne sera effectu\('e sur les valeurs de
+\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBSYS_UID_MIN\fR, ou
+\fBSYS_UID_MAX\fR
+du fichier
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-unlock\fR
+.RS 4
+D\('everrouiller le mot de passe d\*(Aqun utilisateur\&. Cela supprime le \(Fo\ \&!\ \&\(Fc situ\('e devant le mot de passe chiffr\('e\&. Vous ne pouvez pas utiliser cette option avec
+\fB\-p\fR
+ou
+\fB\-L\fR\&.
+.sp
+Remarque\ \&: pour d\('everrouiller le compte (et pas seulement l\*(Aqacc\(`es au compte via un mot de passe), vous devriez d\('efinir la valeur
+\fIDATE_FIN_VALIDIT\('E\fR
+(par exemple \(`a
+\fI99999\fR
+ou \(`a la valeur
+\fBEXPIRE\fR
+dans
+/etc/default/useradd)\&.
+.RE
+.PP
+\fB\-v\fR, \fB\-\-add\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate uids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-del\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate uids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-uids\fR
+and
+\fB\-\-add\-sub\-uids\fR
+are specified, the removal of all subordinate uid ranges happens before any subordinate uid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-add\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate gids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-del\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate gids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-gids\fR
+and
+\fB\-\-add\-sub\-gids\fR
+are specified, the removal of all subordinate gid ranges happens before any subordinate gid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISEUSER\fR
+.RS 4
+Le nouvel utilisateur SELinux utilis\('e pour la connexion de l\*(Aqutilisateur\&.
+.sp
+Un param\(`etre
+\fISEUSER\fR
+vide \('eliminera l\*(Aqassociation de l\*(Aqutilisateur SELinux pour l\*(Aqutilisateur
+\fILOGIN\fR
+(si sp\('ecifi\('ee)
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+Il est n\('ecessaire de contr\(^oler que l\*(Aqidentifiant indiqu\('e n\*(Aqa pas de processus en cours d\*(Aqex\('ecution si cette commande est utilis\('ee pour modifier l\*(Aqidentifiant num\('erique de l\*(Aqutilisateur, son identifiant (login) ou son r\('epertoire personnel\&.
+\fBusermod\fR
+effectue ce contr\(^ole sous Linux mais v\('erifie seulement les informations d\*(Aqutmp sur les autres architectures\&.
+.PP
+Il est n\('ecessaire de changer manuellement le propri\('etaire des fichiers
+\fBcrontab\fR
+ou des travaux programm\('es par
+\fBat\fR\&.
+.PP
+Les modifications qui concernent NIS doivent \(^etre effectu\('ees sur le serveur NIS\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBMAIL_DIR\fR (cha\(^ine de caract\(`eres)
+.RS 4
+R\('epertoire d\*(Aqattente des courriels (\(Fo\ \&mail spool directory\ \&\(Fc)\&. Ce param\(`etre est n\('ecessaire pour manipuler les bo\(^ites \(`a lettres lorsque le compte d\*(Aqun utilisateur est modifi\('e ou supprim\('e\&. S\*(Aqil n\*(Aqest pas sp\('ecifi\('e, une valeur par d\('efaut d\('efinie \(`a la compilation est utilis\('ee\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir l\*(Aqemplacement des bo\(^ites aux lettres des utilisateurs relativement \(`a leur r\('epertoire personnel\&.
+.RE
+.PP
+Les param\(`etres
+\fBMAIL_DIR\fR
+et
+\fBMAIL_FILE\fR
+sont utilis\('es par
+\fBuseradd\fR,
+\fBusermod\fR
+et
+\fBuserdel\fR
+pour cr\('eer, d\('eplacer ou supprimer les bo\(^ites aux lettres des utilisateurs\&.
+.PP
+Si
+\fBMAIL_CHECK_ENAB\fR
+est r\('egl\('e sur
+\fIyes\fR, ces variables servent \('egalement \(`a d\('efinir la variable d\*(Aqenvironnement
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBuserdel\fR(8)\&.

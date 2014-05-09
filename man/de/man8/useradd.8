@@ -1,0 +1,770 @@
+'\" t
+.\"     Title: useradd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "USERADD" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+useradd \- erstellt einen neuen Benutzer oder aktualisiert die Standardwerte f\(:ur neue Benutzer
+.SH "\(:UBERSICHT"
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR [\fIOptionen\fR] \fIANMELDENAME\fR
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D [\fIOptionen\fR]
+.SH "BESCHREIBUNG"
+.PP
+Wenn der Befehl
+\fBuseradd\fR
+ohne die Option
+\fB\-D\fR
+aufgerufen wird, wird ein neues Benutzerkonto mit den Werten erstellt, die auf der Befehlszeile angegeben wurden, und den Standardwerten des Systems\&. Je nach den Optionen auf der Befehlszeile aktualisiert der Befehl
+\fBuseradd\fR
+Systemdateien, erstellt ein Home\-Verzeichnis f\(:ur den neuen Benutzer und kopiert Dateien\&.
+.PP
+Standardm\(:a\(ssig wird auch eine Gruppe f\(:ur den neuen Benutzer erstellt (vergleiche
+\fB\-g\fR,
+\fB\-N\fR,
+\fB\-U\fR
+und
+\fBUSERGROUPS_ENAB\fR)\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBuseradd\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIWURZEL_VERZ\fR
+.RS 4
+Das standardm\(:a\(ssige Wurzelverzeichnis des Systems, wenn nicht eines mit
+\fB\-d\fR\ \&\fIHOME_VERZ\fR
+festgelegt wurde\&. Der Name des Home\-Verzeichnisses besteht aus der Verbindung von
+\fIWURZEL_VERZ\fR
+und dem Kontonamen\&. Wenn die Option
+\fB\-m\fR
+nicht verwendet wird, muss
+\fIWURZEL_VERZ\fR
+existieren\&.
+.sp
+Falls diese Option nicht angegeben wird, verwendet
+\fBuseradd\fR
+das Wurzelverzeichnis, das mit der Variable
+\fBHOME\fR
+in
+/etc/default/useradd
+festgelegt wurde, anderenfalls
+/home\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fIKOMMENTAR\fR
+.RS 4
+Eine beliebige Zeichenkette\&. Dies ist f\(:ur gew\(:ohnlich eine kurze Beschreibung des Logins und wird im Moment im Feld f\(:ur den vollst\(:andigen Namen des Benutzers gespeichert\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\-dir\fR\ \&\fIHOME_DIR\fR
+.RS 4
+Beim Anlegen des neuen Benutzers wird
+\fIHOME_VERZ\fR
+als das Anmeldeverzeichnis des Benutzers verwendet\&. Um den Namen des Anmeldeverzeichnisses zu erhalten, wird standardm\(:a\(ssig der
+\fIANMELDE\fR\-Name an
+\fIWURZEL_VERZ\fR
+angeh\(:angt\&. Das Verzeichnis
+\fIHOME_VERZ\fR
+muss nicht vorhanden sein, sondern wird gegebenenfalls angelegt\&.
+.RE
+.PP
+\fB\-D\fR, \fB\-\-defaults\fR
+.RS 4
+Lesen Sie dazu unten den Abschnitt \(FcDie Standardwerte ver\(:andern\(Fo\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIVERFALLS_DATUM\fR
+.RS 4
+Das Datum, an welchem das Benutzerkonto deaktiviert wird\&. Das Datum muss im Format
+\fIJJJJ\-MM\-TT\fR
+angegeben werden\&.
+.sp
+Falls nicht definiert, verwendet
+\fBuseradd\fR
+das Standardverfallsdatum, das mit der Variable
+\fBEXPIRE\fR
+in
+/etc/default/useradd
+bestimmt wurde, anderenfalls eine leere Zeichenkette (kein Verfall)\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINAKTIV\fR
+.RS 4
+Die Anzahl von Tagen nach Ablaufen des Passworts bis das Konto dauerhaft deaktiviert wird\&. Ein Wert von 0 deaktiviert das Konto, sobald das Passwort abl\(:auft\&. Ein Wert von \-1 schaltet diese Funktion ab\&.
+.sp
+Falls nicht definiert, verwendet
+\fBuseradd\fR
+die Standarddauer der Inaktivit\(:at, die mit der Variable
+\fBINACTIVE\fR
+in
+/etc/default/useradd
+bestimmt wurde, anderenfalls \-1\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGRUPPE\fR
+.RS 4
+Der Name oder die Nummer der anf\(:anglichen Anmeldegruppe des Benutzers\&. Der Gruppenname muss existieren\&. Die Gruppenzahl muss auf eine bereits vorhandene Gruppe verweisen\&.
+.sp
+Falls nicht definiert, h\(:angt das Verhalten von
+\fBuseradd\fR
+von der Variable
+\fBUSERGROUPS_ENAB\fR
+in
+/etc/default/useradd
+ab\&. Wenn diese Variable auf
+\fIyes\fR
+gesetzt ist (oder auf der Befehlszeile
+\fB\-U/\-\-user\-group\fR
+angegeben wurde), wird f\(:ur den Benutzer eine Gruppe, die auf seinen Namen lautet, erstellt\&. Wenn die Variable auf
+\fIno\fR
+gesetzt ist (oder auf der Befehlszeile
+\fB\-N/\-\-no\-user\-group\fR
+angegeben wurde), legt useradd als Hauptgruppe des neuen Benutzers diejenige fest, die mit der Variable
+\fBGROUP\fR
+in
+/etc/default/useradd
+definiert wurde, anderenfalls 100\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGRUPPE_1\fR[\fI,GRUPPE_2, \&.\&.\&.\fR[\fI,GRUPPE_N\fR]]]
+.RS 4
+Eine Liste der zus\(:atzlichen Gruppen, denen der Benutzer ebenfalls angeh\(:ort\&. Die Gruppen sind durch Kommata ohne Leerzeichen voneinander zu trennen\&. Die Gruppen unterliegen denselben Beschr\(:ankungen wie die Gruppe, die mit der Option
+\fB\-g\fR
+bestimmt wurde\&. Standardm\(:a\(ssig ist der Benutzer nur Mitglied der Ausgangsgruppe\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-k\fR, \fB\-\-skel\fR\ \&\fIGER\(:UST_VERZ\fR
+.RS 4
+Das Ger\(:ustverzeichnis, das die Dateien und Verzeichnisse enth\(:alt, die in das Home\-Verzeichnis des Benutzers kopiert werden, wenn es von
+\fBuseradd\fR
+erstellt wird\&.
+.sp
+Diese Option ist nur zul\(:assig, wenn auch die Option
+\fB\-m\fR
+(oder
+\fB\-\-create\-home\fR) angegeben wird\&.
+.sp
+Wenn diese Option nicht angegeben wird, wird das Ger\(:ustverzeichnis durch die Variable
+\fBSKEL\fR
+in
+/etc/default/useradd
+festgelegt, anderenfalls ist dieses
+/etc/skel\&.
+.sp
+Soweit m\(:oglich, werden die ACLs und erweiterten Attribute kopiert\&.
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fISCHL\(:USSEL\fR=\fIWERT\fR
+.RS 4
+\(:Uberschreibt die Standardwerte aus
+/etc/login\&.defs
+(\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBUMASK\fR,
+\fBPASS_MAX_DAYS\fR
+und andere)\&.
+
+Beispiel:
+\fB\-K\fR\ \&\fIPASS_MAX_TAGE\fR=\fI\-1\fR
+kann eingesetzt werden, wenn ein Systemkonto erstellt wird, um den Verfall des Passworts abzuschalten, selbst wenn das Systemkonto \(:uberhaupt kein Passwort besitzt\&. Die Option
+\fB\-K\fR
+kann mehrmals verwendet werden, z\&.B\&.:
+\fB\-K\fR\ \&\fIUID_MIN\fR=\fI100\fR\ \&\fB\-K\fR\ \&\fIUID_MAX\fR=\fI499\fR
+.RE
+.PP
+\fB\-l\fR, \fB\-\-no\-log\-init\fR
+.RS 4
+F\(:ugt den Benutzer nicht zu den Datenbanken lastlog und faillog hinzu\&.
+.sp
+Standardm\(:a\(ssig werden die Benutzereintr\(:age in den Datenbanken lastlog und faillog zur\(:uckgesetzt, um zu vermeiden, dass der Eintrag eines fr\(:uher gel\(:oschten Benutzers verwendet wird\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-create\-home\fR
+.RS 4
+Erstellt das Home\-Verzeichnis des Benutzers, wenn es nicht vorhanden ist\&. Die Dateien und Verzeichnisse im Ger\(:ustverzeichnis, das mit der Option
+\fB\-k\fR
+festgelegt werden kann, werden in das Home\-Verzeichnis kopiert\&.
+.sp
+Wenn diese Option nicht angegeben wird und
+\fBCREATE_HOME\fR
+nicht aktiviert wurde, wird standardm\(:a\(ssig kein Home\-Verzeichnis erstellt\&.
+.RE
+.PP
+\fB\-M\fR
+.RS 4
+Erstellt nicht das Home\-Verzeichnis des Benutzers, selbst wenn die systemweite Option
+\fBCREATE_HOME\fR
+in
+/etc/login\&.defs
+auf
+\fIyes\fR
+gesetzt ist\&.
+.RE
+.PP
+\fB\-N\fR, \fB\-\-no\-user\-group\fR
+.RS 4
+Erstellt keine Gruppe mit dem gleichen Namen wie der Benutzer, aber f\(:ugt ihn der Gruppe hinzu, die mit der Option
+\fB\-g\fR
+oder mit der Variable
+\fBGROUP\fR
+in
+/etc/default/useradd
+angegeben wurde\&.
+.sp
+Wenn die Optionen
+\fB\-g\fR,
+\fB\-N\fR
+und
+\fB\-U\fR
+nicht angegeben werden, wird das Verhalten durch die Variable
+\fBUSERGROUPS_ENAB\fR
+in
+/etc/login\&.defs
+bestimmt\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Erlaubt das Erstellen eines Benutzerkontos mit einer schon vergebenen (nicht eindeutigen) UID\&.
+.sp
+Diese Option kann nur in Verbindung mit der Option
+\fB\-u\fR
+verwendet werden\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORT\fR
+.RS 4
+Das verschl\(:usselte Passwort, wie es von
+\fBcrypt\fR(3)
+zur\(:uckgegeben wird\&. Standardm\(:a\(ssig ist das Passwort deaktiviert\&.
+.sp
+\fBHinweis:\fR
+Diese Option ist nicht empfehlenswert, weil das Passwort (auch wenn es verschl\(:usselt ist) f\(:ur Benutzer sichtbar ist, die sich den Prozess anzeigen lassen\&.
+.sp
+Sie sollten sicherstellen, dass das Passwort den Passwortrichtlinien des Systems entspricht\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+erstellt ein Systemkonto
+.sp
+Systembenutzer werden ohne Hinterlegung ihres Alters in
+/etc/shadow
+erstellt\&. Ihre numerische Kennung wird aus der Spanne
+\fBSYS_UID_MIN\fR
+bis
+\fBSYS_UID_MAX\fR
+anstelle von
+\fBUID_MIN\fR
+bis
+\fBUID_MAX\fR
+gew\(:ahlt (gleiches gilt f\(:ur die GID bei der Erstellung von Gruppen)\&.
+.sp
+Beachten Sie, dass
+\fBuseradd\fR
+f\(:ur einen solchen Benutzer unabh\(:angig von der Einstellung in
+/etc/login\&.defs
+(\fBCREATE_HOME\fR) kein Home\-Verzeichnis erzeugen wird\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Der Name der Anmelde\-Shell des Benutzers\&. Standardm\(:a\(ssig wird dieses Feld leer gelassen\&. Das System verwendet dann die Standard\-Anmelde\-Shell, die mit der Variable
+\fBSHELL\fR
+in
+/etc/default/useradd
+definiert wird, anderenfalls bleibt das Feld leer\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+Der zahlenm\(:a\(ssige Wert der Benutzer\-ID\&. Dieser Wert muss eindeutig sein, sofern nicht die Option
+\fB\-o\fR
+verwendet wird\&. Der Wert darf nicht negativ sein\&. Standardm\(:a\(ssig wird der kleinste Wert gr\(:o\(sser als oder gleich
+\fBUID_MIN\fR
+und gr\(:o\(sser als jeder andere Wert eines Benutzers verwendet\&.
+.sp
+Vergleichen Sie auch die Option
+\fB\-r\fR
+und die Ausf\(:uhrungen zu
+\fBUID_MAX\fR\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-user\-group\fR
+.RS 4
+erstellt eine Gruppe mit dem gleichen Name wie der Benutzer und f\(:ugt diesen der Gruppe hinzu
+.sp
+Wenn die Optionen
+\fB\-g\fR,
+\fB\-N\fR
+und
+\fB\-U\fR
+nicht angegeben werden, wird das Verhalten durch die Variable
+\fBUSERGROUPS_ENAB\fR
+in
+/etc/login\&.defs
+bestimmt\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISE\-BENUTZER\fR
+.RS 4
+Der SELinux\-Benutzer f\(:ur den Benutzer nach seiner Anmeldung\&. Standardm\(:a\(ssig bleibt dieses Feld leer und es wird dem System \(:uberlassen, den SELinux\-Benutzer zu bestimmen\&.
+.RE
+.SS "Die Standardwerte ver\(:andern"
+.PP
+Wenn
+\fBuseradd\fR
+nur mit der Option
+\fB\-D\fR
+aufgerufen wird, werden die aktuellen Standardwerte angezeigt\&. Wenn
+\fBuseradd\fR
+neben der Option
+\fB\-D\fR
+mit weiteren Optionen aufgerufen wird, werden deren Standardwerte entsprechend angepasst\&. Die g\(:ultigen Optionen, um Standardwerte zu \(:andern, sind:
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIWURZEL_VERZ\fR
+.RS 4
+Das Wurzelverzeichnis des Home\-Verzeichnisses eines neuen Benutzers\&. Der Benutzername wird an
+\fIWURZEL_VERZ\fR
+angeh\(:angt, um den Namen des Home\-Verzeichnisses zu erhalten, falls nicht die Option
+\fB\-d\fR
+bei der Erstellung eines neuen Kontos verwendet wird\&.
+.sp
+Diese Option ver\(:andert die Variable
+\fBHOME\fR
+in
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIVERFALLS_DATUM\fR
+.RS 4
+das Datum, an dem das Benutzerkonto abgeschaltet wird
+.sp
+Diese Option ver\(:andert die Variable
+\fBEXPIRE\fR
+in
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINAKTIV\fR
+.RS 4
+die Anzahl von Tagen nach dem Ablaufen des Passworts bis das Konto deaktiviert wird
+.sp
+Diese Option ver\(:andert die Variable
+\fBINACTIVE\fR
+in
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGRUPPE\fR
+.RS 4
+Der Gruppenname oder die GID f\(:ur die Anfangsgruppe eines neuen Benutzers (wenn
+\fB\-N/\-\-no\-user\-group\fR
+verwendet wird oder wenn in
+/etc/login\&.defs
+die Variable
+\fBUSERGROUPS_ENAB\fR
+auf
+\fIno\fR
+gesetzt ist)\&. Die bezeichnete Gruppe und die GID m\(:ussen existieren\&.
+.sp
+Diese Option ver\(:andert die Variable
+\fBGROUP\fR
+in
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+der Name der Anmelde\-Shell des neuen Benutzers
+.sp
+Diese Option ver\(:andert die Variable
+\fBSHELL\fR
+in
+/etc/default/useradd\&.
+.RE
+.SH "ANMERKUNGEN"
+.PP
+Der Systemadministrator ist daf\(:ur verantwortlich, die standardm\(:a\(ssigen Benutzerdateien im Verzeichnis
+/etc/skel/
+(oder in einem anderen Ger\(:ustverzeichnis, das in
+/etc/default/useradd
+oder \(:uber die Befehlszeile definiert wurde), anzulegen\&.
+.SH "WARNUNGEN"
+.PP
+Sie d\(:urfen einen Benutzer nicht einer NIS\- oder LDAP\-Gruppe hinzuf\(:ugen\&. Dies muss auf dem entsprechenden Server durchgef\(:uhrt werden\&.
+.PP
+Ebenso wird
+\fBuseradd\fR
+ablehnen, ein neues Benutzerkonto zu erstellen, wenn der Benutzername schon in einer externen Benutzerdatenbank wie z\&.B\&. NIS oder LDAP vorhanden ist\&.
+.PP
+Benutzernamen m\(:ussen mit einem Kleinbuchstaben oder einem Unterstrich beginnen\&. Sie d\(:urfen nur Kleinbuchstaben, Zahlen, Unterstriche oder Gedankenstriche enthalten\&. Sie k\(:onnen mit einem Dollarzeichen enden\&. Als regul\(:arer Ausdruck: [a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+Benutzernamen d\(:urfen nur bis zu 32 Zeichen lang sein\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBCREATE_HOME\fR (boolesch)
+.RS 4
+bestimmt, ob standardm\(:a\(ssig ein Home\-Verzeichnis f\(:ur neue Benutzer erstellt werden soll
+.sp
+Diese Einstellung trifft nicht auf Systembenutzer zu\&. Sie kann auf der Befehlszeile \(:uberschrieben werden\&.
+.RE
+.PP
+\fBGID_MAX\fR (Zahl), \fBGID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung normaler Gruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBGID_MIN\fR
+ist 1000, f\(:ur
+\fBGID_MAX\fR
+60\&.000\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (Zeichenkette)
+.RS 4
+Das Verzeichnis des Mail\-Spools\&. Diese Angabe wird ben\(:otigt, um die Mailbox zu bearbeiten, nachdem das entsprechende Benutzerkonto ver\(:andert oder gel\(:oscht wurde\&. Falls nicht angegeben, wird ein Standard verwendet, der beim Kompilieren festgelegt wurde\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (Zeichenkette)
+.RS 4
+Legt den Ort der Mail\-Spool\-Dateien eines Benutzers relativ zu seinem Home\-Verzeichnis fest\&.
+.RE
+.PP
+Die Variablen
+\fBMAIL_DIR\fR
+und
+\fBMAIL_FILE\fR
+werden von
+\fBuseradd\fR,
+\fBusermod\fR
+und
+\fBuserdel\fR
+verwendet, um den Mail\-Spool eines Benutzers zu erstellen, zu verschieben oder zu l\(:oschen\&.
+.PP
+Falls
+\fBMAIL_CHECK_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, werden sie auch verwendet, um die Umgebungsvariable
+\fBMAIL\fR
+festzulegen\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (Zahl)
+.RS 4
+Die maximale Anzahl von Tagen, f\(:ur die ein Passwort verwendet werden darf\&. Wenn das Passwort \(:alter ist, wird ein Wechsel des Passworts erzwungen\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (Zahl)
+.RS 4
+Die Mindestanzahl von Tagen, bevor ein Wechsel des Passworts zugelassen wird\&. Ein vorheriger Versuch, das Passwort zu \(:andern, wird abgelehnt\&. Falls nicht angegeben, wird \-1 angenommen (was zur Folge hat, dass diese Beschr\(:ankung abgeschaltet ist)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (Zahl)
+.RS 4
+Die Anzahl von Tagen, an denen der Benutzer vorgewarnt wird, bevor das Passwort verf\(:allt\&. Eine Null bedeutet, dass eine Warnung nur am Tag des Verfalls ausgegeben wird\&. Ein negativer Wert bedeutet, dass keine Vorwarnung erfolgt\&. Falls nicht angegeben, wird keine Vorwarnung ausgegeben\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (Zahl), \fBSYS_GID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung von Systemgruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBSYS_GID_MIN\fR
+ist 101, f\(:ur
+\fBSYS_GID_MAX\fR\fBGID_MIN\fR\-1\&.
+.RE
+.PP
+\fBSYS_UID_MAX\fR (Zahl), \fBSYS_UID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Benutzer\-IDs, aus dem die Programme
+\fBuseradd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung von Systembenutzern ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBSYS_UID_MIN\fR
+ist 101, f\(:ur
+\fBSYS_UID_MAX\fR\fBUID_MIN\fR\-1\&.
+.RE
+.PP
+\fBUID_MAX\fR (Zahl), \fBUID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Benutzer\-IDs, aus dem die Programme
+\fBuseradd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung normaler Benutzer ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBUID_MIN\fR
+ist 1000, f\(:ur
+\fBUID_MAX\fR
+60\&.000\&.
+.RE
+.PP
+\fBUMASK\fR (Zahl)
+.RS 4
+Die Bit\-Gruppe, welche die Rechte von erstellten Dateien bestimmt, wird anf\(:anglich auf diesen Wert gesetzt\&. Falls nicht angegeben, wird sie auf 022 gesetzt\&.
+.sp
+\fBuseradd\fR
+und
+\fBnewusers\fR
+verwenden diese Bit\-Gruppe, um die Rechte des von ihnen erstellten Home\-Verzeichnisses zu setzen\&.
+.sp
+Sie wird auch von
+\fBlogin\fR
+verwendet, um die anf\(:angliche Umask eines Benutzers zu bestimmen\&. Beachten Sie, dass diese Bit\-Gruppe durch die GECOS\-Zeile des Benutzers (wenn
+\fBQUOTAS_ENAB\fR
+gesetzt wurde) oder die Festlegung eines Limits in
+\fBlimits\fR(5)
+mit der Kennung
+\fIK\fR
+\(:uberschrieben werden kann\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolesch)
+.RS 4
+Erlaubt Benutzern, die nicht Root sind, die Umask\-Gruppen\-Bits auf ihre Umask\-Bits zu setzen (Beispiel: 022 \-> 002, 077 \-> 007), falls die UID mit der GID identisch ist sowie der Benutzername mit dem Gruppennamen \(:ubereinstimmt\&.
+.sp
+Wenn der Wert
+\fIyes\fR
+ist, wird
+\fBuserdel\fR
+die Gruppe des Benutzers entfernen, falls sie keine Mitglieder mehr hat, und
+\fBuseradd\fR
+wird standardm\(:a\(ssig eine Gruppe mit dem Namen des Benutzers erstellen\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/default/useradd
+.RS 4
+Standardwerte f\(:ur die Erstellung eines Kontos
+.RE
+.PP
+/etc/skel/
+.RS 4
+Verzeichnis, das die Standarddateien enth\(:alt
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBuseradd\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI1\fR
+.RS 4
+Die Passwortdatei kann nicht aktualisieren werden\&.
+.RE
+.PP
+\fI2\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI3\fR
+.RS 4
+ung\(:ultiges Argument f\(:ur Option
+.RE
+.PP
+\fI4\fR
+.RS 4
+UID ist schon vergeben (und kein
+\fB\-o\fR)
+.RE
+.PP
+\fI6\fR
+.RS 4
+angegebene Gruppe ist nicht vorhanden
+.RE
+.PP
+\fI9\fR
+.RS 4
+Benutzername ist schon vergeben
+.RE
+.PP
+\fI10\fR
+.RS 4
+Die Gruppendatei kann nicht aktualisieren werden\&.
+.RE
+.PP
+\fI12\fR
+.RS 4
+Home\-Verzeichnis kann nicht erstellt werden\&.
+.RE
+.PP
+\fI14\fR
+.RS 4
+Die Zuordnung von SELinux\-Benutzern kann nicht aktualisiert werden\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBnewusers\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

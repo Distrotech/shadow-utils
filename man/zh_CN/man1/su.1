@@ -1,0 +1,425 @@
+'\" t
+.\"     Title: su
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 用户命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "SU" "1" "2014-05-09" "shadow\-utils 4\&.2" "用户命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+su \- 更改用户 ID 或成为超级用户
+.SH "大纲"
+.HP \w'\fBsu\fR\ 'u
+\fBsu\fR [\fI选项\fR] [\fI用户名\fR]
+.SH "描述"
+.PP
+\fBsu\fR
+用于让用户在登录期间变成另外一个用户。后边不带
+\fBusername\fR
+使用时，\fBsu\fR
+默认会变成超级用户。可选的选项
+\fB\-\fR，可以用于提供一个类似于用户直接登录的环境，用户可能期望是这样的。
+.PP
+附加参数可以在用户名之后提供，这时，将会把他们提供给用户的登录 shell。特别地，参数
+\fB\-c\fR
+将会使下一个参数被多数命令解释器视为命令。这个命令会被
+/etc/passwd
+中为目标用户指定的 shell 执行。
+.PP
+您可以使用
+\fB\-\-\fR
+参数将
+\fBsu\fR
+选项和提供给 shell 的参数分隔开来。
+.PP
+如果合适，将提示用户输入一个密码。输入无效的密码会产生一个错误消息。所有的尝试，无论成功还是失败，都会被记录，以检测对系统的滥用。
+.PP
+当前环境会传递给新 shell。对于普通用户，\fB$PATH\fR
+的值重置为
+/bin:/usr/bin，而对于超级用户则是
+/sbin:/bin:/usr/sbin:/usr/bin。这会随
+/etc/login\&.defs
+中的
+\fBENV_PATH\fR
+和
+\fBENV_SUPATH\fR
+值改变。
+.PP
+在登录 shell 中以第一个字符是\(lq*\(rq标注的是子系统登录。给定的主目录将被用于用户实际登录的新文件系统的根。
+.SH "选项"
+.PP
+\fBsu\fR
+命令可以接受的选项有：
+.PP
+\fB\-c\fR, \fB\-\-command\fR\ \&\fICOMMAND\fR
+.RS 4
+通过使用其
+\fB\-c\fR
+选项，指定一个由 shell 运行的命令。
+.sp
+The executed command will have no controlling terminal\&. This option cannot be used to execute interactive programs which need a controlling TTY\&.
+.RE
+.PP
+\fB\-\fR, \fB\-l\fR, \fB\-\-login\fR
+.RS 4
+提供一个类似于用户直接登录的环境，用户可能会希望这样。
+.sp
+When
+\fB\-\fR
+is used, it must be specified before any
+\fBusername\fR\&. For portability it is recommended to use it as last option, before any
+\fBusername\fR\&. The other forms (\fB\-l\fR
+and
+\fB\-\-login\fR) do not have this restriction\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+将使用的 shell。
+.sp
+使用的 shell 在如下中选择(高优先级在前)：.PP
+.RS 4
+通过 \-\-shell 指定的 shell。
+.RE
+.PP
+.RS 4
+如果使用了
+\fB\-\-preserve\-environment\fR，shell 将由
+\fB$SHELL\fR
+环境变量指定。
+.RE
+.PP
+.RS 4
+在
+/etc/passwd
+的相应项中为目标用户指定的 shell。
+.RE
+.PP
+.RS 4
+如果无法通过以上办法找到一个 shell，则使用
+/bin/sh。
+.RE
+.sp
+如果目标用户的 shell 是有限制的(即，/etc/passwd
+中用户项中的 shell 字段没有在
+/etc/shells
+中列出)，那么
+\fB\-\-shell\fR
+选项或
+\fB$SHELL\fR
+环境变量不会带入账户，除非
+\fBsu\fR
+是被 root 调用的。
+.RE
+.PP
+\fB\-m\fR, \fB\-p\fR, \fB\-\-preserve\-environment\fR
+.RS 4
+保留当前环境，除非：.PP
+\fB$PATH\fR
+.RS 4
+根据
+/etc/login\&.defs
+中的
+\fBENV_PATH\fR
+or
+\fBENV_SUPATH\fR
+选项重设 (请往下看)
+.RE
+.PP
+\fB$IFS\fR
+.RS 4
+如果已经设置了，重设
+\(lq<space><tab><newline>\(rq。
+.RE
+.sp
+如果用户的 shell 受限，此选项无效 (除非是 root 调用的
+\fBsu\fR)。
+.sp
+注意，环境的默认行为如下：.PP
+.RS 4
+The
+\fB$HOME\fR,
+\fB$SHELL\fR,
+\fB$USER\fR,
+\fB$LOGNAME\fR,
+\fB$PATH\fR, 和
+\fB$IFS\fR
+这些环境变量会被重置。
+.RE
+.PP
+.RS 4
+如果没有使用
+\fB\-\-login\fR，复制环境，上述几个变量除外。
+.RE
+.PP
+.RS 4
+如果使用了
+\fB\-\-login\fR，如果设置了
+\fB$TERM\fR,
+\fB$COLORTERM\fR,
+\fB$DISPLAY\fR
+和
+\fB$XAUTHORITY\fR，这些环境变量也会被重置。
+.RE
+.PP
+.RS 4
+如果使用了
+\fB\-\-login\fR，环境变量
+\fB$TZ\fR,
+\fB$HZ\fR, and
+\fB$MAIL\fR
+也会根据
+/etc/login\&.defs
+中的选项
+\fBENV_TZ\fR,
+\fBENV_HZ\fR,
+\fBMAIL_DIR\fR
+和
+\fBMAIL_FILE\fR
+重置 (请看下边)。
+.RE
+.PP
+.RS 4
+如果使用了
+\fB\-\-login\fR，其它环境变量可能会根据
+\fBENVIRON_FILE\fR
+文件来设置(请看下边)。
+.RE
+.RE
+.SH "CAVEATS"
+.PP
+此版本的
+\fBsu\fR
+有很多编译选项，在某些机器上，可能只使用了其中的一部分。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBCONSOLE\fR (string)
+.RS 4
+如果定义了，或者是包含设备名(没行一个)的文件的完整路径名，或者是\(lq:\(rq分隔的设备名列表。将只会在这写设备上允许 root 登录。
+.sp
+如果没有定义，可以在任何设备上使用 root。
+.sp
+指定的设备时不带 /dev/ 前缀。
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (string)
+.RS 4
+在控制台登录时，添加到用户附加组集中的组列表(就如 CONSOLE 所确定的)。默认是无。
+使用时需要注意：这可能使用户获取这些组的永久权限，甚至登录到的不是此控制台时。
+.RE
+.PP
+\fBDEFAULT_HOME\fR (boolean)
+.RS 4
+如果不能 cd 到主目录时，说明是否允许登录。默认是否。
+.sp
+如果设置为
+\fIyes\fR，如果不能 cd 到主目录时，用户将会登录到根目录(/)。
+.RE
+.PP
+\fBENV_HZ\fR (string)
+.RS 4
+如果设置了，将会用于在用户登录时定义 HZ 环境变量。值必须以
+\fIHZ=\fR
+开头。Linux 上的常用值是
+\fIHZ=100\fR。
+.RE
+.PP
+\fBENVIRON_FILE\fR (string)
+.RS 4
+如果此文件存在，并且可读，将会从中读取登录环境。所有行都必须是 name=value 的格式。
+.sp
+以 # 开头的行将视为注释，并被忽略。
+.RE
+.PP
+\fBENV_PATH\fR (string)
+.RS 4
+If set, it will be used to define the PATH environment variable when a regular user login\&. The value is a colon separated list of paths (for example
+\fI/bin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (string)
+.RS 4
+If set, it will be used to define the PATH environment variable when the superuser login\&. The value is a colon separated list of paths (for example
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (string)
+.RS 4
+如果设置了，它将用于在用户登录时定义 TZ 环境变量。此值可以是以
+\fITZ=\fR
+开头的时区名(例如
+\fITZ=CST6CDT\fR)，或者是包含时区规则的文件完整路径(例如
+/etc/tzname)。
+.sp
+如果将完整路径指定为了一个不存在或不可读的文件，则默认使用
+\fITZ=CST6CDT\fR。
+.RE
+.PP
+\fBLOGIN_STRING\fR (string)
+.RS 4
+此字符串用于提示输入密码。默认是 "Password: "，或者翻译了的结果(汉语中翻译为了\(lq密码：\(rq)。如果设置了此变量，提示不会被翻译。
+.sp
+如果字符串包含
+\fI%s\fR，将会被用户名替换。
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (boolean)
+.RS 4
+启用登录时检查和现实邮箱状态。
+.sp
+如果 shell 的启动文件已经检查了邮件("mailx \-e" 或者其它同功能的工具)，您应该禁用它。
+.RE
+.PP
+\fBMAIL_DIR\fR (string)
+.RS 4
+邮箱目录。修改或删除用户账户时需要处理邮箱，如果没有指定，将使用编译时指定的默认值。
+.RE
+.PP
+\fBMAIL_FILE\fR (string)
+.RS 4
+定义用户邮箱文件的位置(相对于主目录)。
+.RE
+.PP
+\fBMAIL_DIR\fR
+and
+\fBMAIL_FILE\fR
+变量由
+\fBuseradd\fR，\fBusermod\fR
+和
+\fBuserdel\fR
+用于创建、移动或删除用户邮箱。
+.PP
+如果
+\fBMAIL_CHECK_ENAB\fR
+设置为
+\fIyes\fR，它们也被用于定义
+\fBMAIL\fR
+环境变量。
+.PP
+\fBQUOTAS_ENAB\fR (boolean)
+.RS 4
+Enable setting of resource limits from
+/etc/limits
+and ulimit, umask, and niceness from the user\*(Aqs passwd gecos field\&.
+.RE
+.PP
+\fBSULOG_FILE\fR (string)
+.RS 4
+如果定义了，所有的 su 活动都会记录到此文件。
+.RE
+.PP
+\fBSU_NAME\fR (string)
+.RS 4
+如果定义了，就是运行\(lqsu \-\(rq时显示的命令名称。例如，如果定义为\(lqsu\(rq，那么\(lqps\(rq会显示此命令为\(lq\-su\(rq。如果没有定义，\(lqps\(rq将会显示实际执行的 shell，例如类似于\(lq\-sh\(rq。
+.RE
+.PP
+\fBSU_WHEEL_ONLY\fR (boolean)
+.RS 4
+如果为
+\fIyes\fR，用户必须在
+/etc/group
+中别设定为 GID 为 0 的组(在大部分 Linux 上叫
+\fIroot\fR)的成员。
+.RE
+.PP
+\fBSYSLOG_SU_ENAB\fR (boolean)
+.RS 4
+除了 sulog 文件日志，也为
+\fBsu\fR
+活动启用\(lqsyslog\(rq日志。
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolean)
+.RS 4
+如果 uid 和 gid 相同，用户名和主用户名也相同，使非 root 组的组掩码位和属主位相同 (如：022 \-> 002, 077 \-> 007)。
+.sp
+如果设置为
+\fIyes\fR，如果组中没有成员了，\fBuserdel\fR
+将移除此用户组，\fBuseradd\fR
+创建用户时，也会创建一个同名的默认组。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "退出值"
+.PP
+成功时，\fBsu\fR
+返回执行的命令的退出值。
+.PP
+如果命令被信号结束，\fBsu\fR
+返回此信号的编号加 128。
+.PP
+如果 su 必须要杀死此命令(因为已经要求它结束，可是却没有及时结束)，\fBsu\fR
+返回 255。
+.PP
+\fBsu\fR
+中的某些退出值与执行的命令无关：
+.PP
+\fI0\fR
+.RS 4
+成功 (只有
+\fB\-\-help\fR)
+.RE
+.PP
+\fI1\fR
+.RS 4
+系统或者认证失败
+.RE
+.PP
+\fI126\fR
+.RS 4
+要求的命令不存在
+.RE
+.PP
+\fI127\fR
+.RS 4
+请求的命令不能执行
+.RE
+.SH "参见"
+.PP
+\fBlogin\fR(1),
+\fBlogin.defs\fR(5),
+\fBsg\fR(1),
+\fBsh\fR(1)\&.

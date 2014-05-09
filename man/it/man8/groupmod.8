@@ -1,0 +1,171 @@
+'\" t
+.\"     Title: groupmod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "GROUPMOD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+groupmod \- modifica la definizione di un gruppo del sistema
+.SH "SINOSSI"
+.HP \w'\fBgroupmod\fR\ 'u
+\fBgroupmod\fR [\fIopzioni\fR] \fIGRUPPO\fR
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBgroupmod\fR
+cambia la definizione del
+\fIGRUPPO\fR
+modificando appropriatamente il database dei gruppi\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBgroupmod\fR
+accetta le seguenti opzioni:
+.PP
+"\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+Verr\(`a modificato l\*(AqID del
+\fIGRUPPO\fR
+in
+\fIGID\fR\&.
+.sp
+Il valore
+\fIGID\fR
+deve essere un numero intero decimale non negativo\&. Deve essere univoco, a meno che non venga usata l\*(Aqopzione
+\fB\-o\fR\&.
+.sp
+Gli utenti che hanno il gruppo come gruppo primario verranno aggiornati per mantenere tale gruppo come loro gruppo primario\&.
+.sp
+Tutti i file che hanno il vecchio ID di gruppo e devono continuare ad appartenere a
+\fIGRUPPO\fR, devono essere aggiornati manualmente\&.
+.sp
+Non verr\(`a effettuato nessun controllo riguardo i limiti
+\fBGID_MIN\fR,
+\fBGID_MAX\fR,
+\fBSYS_GID_MIN\fR
+o
+\fBSYS_GID_MAX\fR
+definiti in
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-n\fR, \fB\-\-new\-name\fR\ \&\fINUOVO_GRUPPO\fR
+.RS 4
+Il nome del gruppo verr\(`a modificato da
+\fIGRUPPO\fR
+a
+\fINUOVO_GRUPPO\fR\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Quando \(`e usato con l\*(Aqopzione
+\fB\-g\fR, permette di cambiare il
+\fIGID\fR
+in un valore non univoco\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+La passwird cifrata, cos\(`i come viene restituita da
+\fBcrypt\fR(3)\&.
+.sp
+\fBNota:\fR
+questa opzione non \(`e consigliata perch\('e la password (o password cifrata) sar\(`a visibile agli utenti che elencano i processi\&.
+.sp
+Ci si deve accertare che la password rispetti le norme delle password del sistema\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.SH "FILE"
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+Il comando
+\fBgroupmod\fR
+esce con i seguenti valori:
+.SH "VEDERE ANCHE"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

@@ -1,0 +1,254 @@
+'\" t
+.\"     Title: groupadd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "GROUPADD" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+groupadd \- erstellt eine neue Gruppe
+.SH "\(:UBERSICHT"
+.HP \w'\fBgroupadd\fR\ 'u
+\fBgroupadd\fR [\fIOptionen\fR] \fIGruppe\fR
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBgroupadd\fR
+erstellt ein neues Gruppenkonto\&. Dabei verwendet er die Werte, die auf der Befehlszeile angegeben wurden, oder die Standardwerte des Systems\&. Soweit es notwendig ist, wird die neue Gruppe den Systemdateien hinzugef\(:ugt\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBgroupadd\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+Die Option f\(:uhrt dazu, dass der Befehl nur dann erfolgreich beendet wird, wenn die angegebene Gruppe existiert\&. Falls diese Option zusammen mit der Option
+\fB\-g\fR
+verwendet wird und die angegebene GID schon vergeben ist, wird eine andere, eindeutige GID gew\(:ahlt (d\&.h\&.
+\fB\-g\fR
+wird nicht beachtet)\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+Der zahlenm\(:a\(ssige Wert der Gruppen\-ID\&. Dieser Wert muss eindeutig sein, sofern nicht die Option
+\fB\-o\fR
+verwendet wird\&. Der Wert darf nicht negativ sein\&. Standardm\(:a\(ssig wird der kleinste Wert gr\(:o\(sser als oder gleich
+\fBGID_MIN\fR
+und gr\(:o\(sser als jeder andere Wert einer Gruppe verwendet\&.
+.sp
+Vergleichen Sie auch die Option
+\fB\-r\fR
+und die Ausf\(:uhrungen zu
+\fBGID_MAX\fR\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fISCHL\(:USSEL\fR=\fIWERT\fR
+.RS 4
+\(:Uberschreibt die Standardwerte von
+/etc/login\&.defs
+(GID_MIN, GID_MAX und weitere)\&. Diese Option kann mehrfach verwendet werden\&.
+.sp
+Beispiel:
+\fB\-K\fR\ \&\fIGID_MIN\fR=\fI100\fR\ \&\fB\-K\fR\ \&\fIGID_MAX\fR=\fI499\fR
+.sp
+Hinweis:
+\fB\-K\fR\ \&\fIGID_MIN\fR=\fI10\fR,\fIGID_MAX\fR=\fI499\fR
+funktioniert noch nicht\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Diese Option erlaubt es, eine Gruppe mit einer nicht eindeutigen GID zu erstellen\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORT\fR
+.RS 4
+Das verschl\(:usselte Passwort, wie es von
+\fBcrypt\fR(3)
+zur\(:uckgegeben wird\&. Standardm\(:a\(ssig ist das Passwort deaktiviert\&.
+.sp
+\fBHinweis:\fR
+Diese Option ist nicht empfehlenswert, weil das Passwort (auch wenn es verschl\(:usselt ist) f\(:ur Benutzer sichtbar ist, die sich den Prozess anzeigen lassen\&.
+.sp
+Sie sollten sicherstellen, dass das Passwort den Passwortrichtlinien des Systems entspricht\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+erstellt eine neue Systemgruppe
+.sp
+Die zahlenm\(:a\(ssige Kennung einer neuen Systemgruppe wird aus der Spanne von
+\fBSYS_GID_MIN\fR
+bis
+\fBSYS_GID_MAX\fR
+gew\(:ahlt, welche in
+login\&.defs
+festgelegt wird, anstelle von
+\fBGID_MIN\fR
+bis
+\fBGID_MAX\fR\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBGID_MAX\fR (Zahl), \fBGID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung normaler Gruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBGID_MIN\fR
+ist 1000, f\(:ur
+\fBGID_MAX\fR
+60\&.000\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (Zahl), \fBSYS_GID_MIN\fR (Zahl)
+.RS 4
+der Bereich von Gruppen\-IDs, aus dem die Programme
+\fBuseradd\fR,
+\fBgroupadd\fR
+oder
+\fBnewusers\fR
+bei der Erstellung von Systemgruppen ausw\(:ahlen d\(:urfen
+.sp
+Der Standardwert f\(:ur
+\fBSYS_GID_MIN\fR
+ist 101, f\(:ur
+\fBSYS_GID_MAX\fR\fBGID_MIN\fR\-1\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.SH "WARNUNGEN"
+.PP
+Gruppennamen m\(:ussen mit einem Kleinbuchstaben oder einem Unterstrich beginnen\&. Nachfolgend d\(:urfen sie Kleinbuchstaben, Zahlen, Unterstriche und Gedankenstriche enthalten\&. Das letzte Zeichen darf auch ein Dollarzeichen sein\&. Als regul\(:arer Ausdruck: [a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+Gruppennamen d\(:urfen nur bis zu 16 Zeichen lang sein\&.
+.PP
+Sie k\(:onnen einen Benutzer nicht einer NIS\- oder LDAP\-Gruppe hinzuf\(:ugen\&. Dies m\(:ussen Sie auf dem entsprechenden Server durchf\(:uhren\&.
+.PP
+Falls der Gruppenname bereits in einer externen Datenbank (wie etwa NIS oder LDAP) vergeben ist, wird
+\fBgroupadd\fR
+die Gruppe nicht erstellen\&.
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBgroupadd\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI2\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI3\fR
+.RS 4
+ung\(:ultiges Argument f\(:ur Option
+.RE
+.PP
+\fI4\fR
+.RS 4
+GID nicht eindeutig (wenn
+\fB\-o\fR
+nicht angegeben wird)
+.RE
+.PP
+\fI9\fR
+.RS 4
+Gruppenname nicht eindeutig
+.RE
+.PP
+\fI10\fR
+.RS 4
+Die Gruppendatei kann nicht aktualisieren werden\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

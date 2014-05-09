@@ -1,0 +1,204 @@
+'\" t
+.\"     Title: groupmod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GROUPMOD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+groupmod \- Modifier la d\('efinition d\*(Aqun groupe du syst\(`eme
+.SH "SYNOPSIS"
+.HP \w'\fBgroupmod\fR\ 'u
+\fBgroupmod\fR [\fIoptions\fR] \fIGROUPE\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBgroupmod\fR
+modifie la d\('efinition du
+\fIGROUPE\fR
+sp\('ecifi\('e en modifiant l\*(Aqentr\('ee correspondante de la base de donn\('ees des groupes\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBgroupmod\fR
+sont\ \&:
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+L\*(Aqidentifiant num\('erique du groupe
+\fIGROUPE\fR
+sera modifi\('e vers
+\fIGID\fR\&.
+.sp
+La valeur de
+\fIGID\fR
+doit \(^etre un nombre d\('ecimal positif\&. Cette valeur doit \(^etre unique, \(`a moins que l\*(Aqoption
+\fB\-o\fR
+ne soit utilis\('ee\&.
+.sp
+Les utilisateurs qui utilisent ce groupe comme groupe primaire seront mis \(`a jour pour garder le groupe comme groupe primaire\&.
+.sp
+Vous devrez modifier vous\-m\(^eme l\*(Aqidentifiant de groupe des fichiers ayant l\*(Aqancien identifiant de groupe qui doivent continuer \(`a appartenir au
+\fIGROUPE\fR\&.
+.sp
+Aucun contr\(^ole ne sera effectu\('e sur les valeurs de
+\fBGID_MIN\fR,
+\fBGID_MAX\fR,
+\fBSYS_GID_MIN\fR, ou
+\fBSYS_GID_MAX\fR
+du fichier
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-n\fR, \fB\-\-new\-name\fR\ \&\fINEW_GROUP\fR
+.RS 4
+Le nom du groupe sera modifi\('e de
+\fIGROUPE\fR
+vers
+\fINOUVEAU_NOM_GROUPE\fR\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+En combinaison avec l\*(Aqoption
+\fB\-g\fR, cette option permet de changer l\*(Aqidentifiant du groupe (\fIGID\fR) vers une valeur d\('ej\(`a utilis\('ee\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+Mot de passe chiffr\('e, comme renvoy\('e par
+\fBcrypt\fR(3)\&.
+.sp
+\fBRemarque\ \&:\fR
+l\*(Aqutilisation de cette option est d\('econseill\('ee car le mot de passe (ou le mot de passe chiffr\('e) peut \(^etre visible des utilisateurs qui affichent la liste des processus\&.
+.sp
+Il est n\('ecessaire de v\('erifier si le mot de passe respecte la politique de mots de passe du syst\(`eme\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBgroupmod\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI2\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI3\fR
+.RS 4
+param\(`etre non valable pour l\*(Aqoption
+.RE
+.PP
+\fI4\fR
+.RS 4
+le groupe sp\('ecifi\('e n\*(Aqexiste pas
+.RE
+.PP
+\fI6\fR
+.RS 4
+le groupe sp\('ecifi\('e n\*(Aqexiste pas
+.RE
+.PP
+\fI9\fR
+.RS 4
+nom de groupe d\('ej\(`a utilis\('e
+.RE
+.PP
+\fI10\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des groupes
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

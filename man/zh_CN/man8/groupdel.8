@@ -1,0 +1,134 @@
+'\" t
+.\"     Title: groupdel
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "GROUPDEL" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+groupdel \- 删除一个组
+.SH "大纲"
+.HP \w'\fBgroupdel\fR\ 'u
+\fBgroupdel\fR [\fI选项\fR] \fIGROUP\fR
+.SH "描述"
+.PP
+\fBuserdel\fR
+修改系统账户文件，删除与
+\fIGROUP\fR
+相关的所有项目。给出的组名必须存在。
+.SH "选项"
+.PP
+\fBgroupdel\fR
+命令可以接受的选项有：
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.SH "CAVEATS"
+.PP
+您不能移除现有用户的主组。在移除此组之前，必须先移除此用户。
+.PP
+您需要手动检查所有文件系统，以确保没有遗留的属于此组的文件。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.SH "退出值"
+.PP
+\fBgroupdel\fR
+命令以如下值退出：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI6\fR
+.RS 4
+指定的组不存在
+.RE
+.PP
+\fI8\fR
+.RS 4
+不能移除用户的主组
+.RE
+.PP
+\fI10\fR
+.RS 4
+无法更新组文件
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupmod\fR(8),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

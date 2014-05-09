@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formati di file e conversioni
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "SHADOW" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formati di file e conversioni"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+shadow \- file delle password shadow
+.SH "DESCRIZIONE"
+.PP
+shadow
+\(`e un file che contiene le informazioni sulle password per gli account degli utenti e, opzionalmente, le informazioni sulla durata delle password (\(Foaging\(Fc)\&.
+.PP
+Questo file non deve essere leggibile dagli utenti normali se si vuole mantenere la sicurezza sulle password\&.
+.PP
+Ciascuna riga di questo file contiene 9 campi separati da due punti (\(Fo:\(Fc), nel seguente ordine:
+.PP
+\fBnome di login\fR
+.RS 4
+Deve essere un nome valido di un account esistente nel sistema\&.
+.RE
+.PP
+\fBpassword cifrata\fR
+.RS 4
+Fare riferimento a
+\fBcrypt\fR(3)
+per dettagli sul modo in cui questa stringa viene interpretata\&.
+.sp
+Se il campo password contiene un testo che non \(`e un risultato valido di
+\fBcrypt\fR(3), come ad esempio ! o *, l\*(Aqutente non potr\(`a accedere al sistema utilizzando la password unix (ma potr\(`a accedere al sistema in altri modi)\&.
+.sp
+Questo campo pu\(`o essere vuoto, nel qual caso nessuna password \(`e richiesta per l\*(Aqautenticazione di questo specifico nome di login\&. Tuttavia alcune applicazioni che leggono
+/etc/shadow
+possono decidere di non permettere nessun accesso se il campo password \(`e vuoto\&.
+.sp
+Se il campo password inizia con un punto esclamativo vuol dire che la password \(`e bloccata\&. I restanti caratteri del campo sono il contenuto del campo password prima che venisse bloccata\&.
+.RE
+.PP
+\fBdata dell\*(Aqultimo cambio di password\fR
+.RS 4
+Data dell\*(Aqultimo cambio di password espressa in numero di giorni a partire dal 1 gennaio 1970\&.
+.sp
+Il valore 0 ha un significato speciale, vale a dire che l\*(Aqutente deve cambiare la propria password al prossimo accesso al sistema\&.
+.sp
+Un campo vuoto implica che la scadenza della password \(`e disabilitata\&.
+.RE
+.PP
+\fBet\(`a minima password\fR
+.RS 4
+L\*(Aqet\(`a minima password \(`e il numero di giorni che l\*(Aqutente dovr\(`a attendere prima di poter cambiare nuovamente la propria password\&.
+.sp
+Un campo vuoto o con valore 0 indica che non c\*(Aq\(`e una et\(`a minima della password\&.
+.RE
+.PP
+\fBet\(`a massima password\fR
+.RS 4
+L\*(Aqet\(`a massima password \(`e il numero di giorni dopo il quale l\*(Aqutente deve cambiare la propria password\&.
+.sp
+Quando questo numero di giorni \(`e passato, la password pu\(`o ancora essere valida\&. All\*(Aqutente verr\(`a chiesto di cambiare la password durante il successivo accesso\&.
+.sp
+Un campo vuoto indica che non ci sono una et\(`a massima password, un periodo di avviso e nessun periodo di inattivit\(`a (vedere oltre)\&.
+.sp
+Se l\*(Aqet\(`a massima password \(`e minore dell\*(Aqet\(`a minima password, l\*(Aqutente non pu\(`o cambiare la propria password\&.
+.RE
+.PP
+\fBperiodo avviso password\fR
+.RS 4
+Il numero di giorni prima della scadenza di una password (vedere et\(`a massima password, sopra) durante il quale l\*(Aqutente riceve un avviso\&.
+.sp
+Un campo vuoto e il valore 0 indicano che non c\*(Aq\(`e un periodo di avviso password\&.
+.RE
+.PP
+\fBperiodo inattivit\(`a password\fR
+.RS 4
+Il numero di giorni dopo la scadenza della password (vedere et\(`a massima password, sopra) durante il quale la password \(`e ancora accettata (e l\*(Aqutente dovrebbe aggiornare la propria password al primo accesso)\&.
+.sp
+Dopo la scadenza della password e di questo periodo, l\*(Aqutente non potr\(`a accedere usando questa password, ma dovr\(`a contattare l\*(Aqamministratore\&.
+.sp
+Un campo vuoto implica che non \(`e applicato il periodo di inattivit\(`a\&.
+.RE
+.PP
+\fBdata scadenza account\fR
+.RS 4
+La data di scadenza dell\*(Aqaccount, espressa in numero di giorni dal 1 gennaio 1970\&.
+.sp
+Notare che la scadenza dell\*(Aqaccount differisce da quella della password\&. Nel caso di un account scaduto l\*(Aqutente non deve poter accedere ulteriormente al sistema\&. Nel caso di password scaduta invece l\*(Aqutente non \(`e abilitato ad accedere con la propria password\&.
+.sp
+Un campo vuoto implica che l\*(Aqaccount non scade mai\&.
+.sp
+Il valore 0 non andrebbe usato perch\('e potrebbe essere interpretato come account che non scade o come scaduto il 1 gennaio 1970\&.
+.RE
+.PP
+\fBcampo riservato\fR
+.RS 4
+Questo campo \(`e riservato per uso futuro\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/shadow\-
+.RS 4
+Copia di backup per /etc/shadow\&.
+.sp
+Notare che questo file viene usato dagli strumenti del pacchetto shadow, ma non da tutti gli strumenti per la gestione di utenti e password\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBchage\fR(1),
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBpasswd\fR(5),
+\fBpwck\fR(8),
+\fBpwconv\fR(8),
+\fBpwunconv\fR(8),
+\fBsu\fR(1),
+\fBsulogin\fR(8)

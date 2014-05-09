@@ -1,0 +1,160 @@
+'\" t
+.\"     Title: faillog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "FAILLOG" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+faillog \- mostra le registrazioni e imposta i limiti degli accessi falliti
+.SH "SINOSSI"
+.HP \w'\fBfaillog\fR\ 'u
+\fBfaillog\fR [\fIopzioni\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBfaillog\fR
+mostra il contentuto del database degli accessi falliti (/var/log/faillog); pu\(`o anche essere usato per impostare i conteggi e i limiti dei tentativi falliti\&. Eseguire
+\fBfaillog\fR
+senza argomenti per ottenere un elenco degli utenti che hanno fallito almeno un tentativo di accesso\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBfaillog\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-a\fR, \fB\-\-all\fR
+.RS 4
+Mostra (o opera su) registrazioni faillog per tutti gli utenti presenti nel database
+faillog\&.
+.sp
+L\*(Aqintervallo di utenti pu\(`o essere ristretto con l\*(Aqopzione
+\fB\-u\fR\&.
+.sp
+Nella modalit\(`a di visualizzazione, questo \(`e gi\(`a ristretto ai soli utenti esistenti, ma vengono mostrate anche eventuali registrazioni vuote\&.
+.sp
+Con le opzioni
+\fB\-l\fR,
+\fB\-m\fR,
+\fB\-r\fR
+e
+\fB\-t\fR, le registrazioni degli utenti sono modificate anche se l\*(Aqutente non esiste nel sistema\&. Questo \(`e utile quando si vogliono azzerare le registrazioni degli utenti cancellati, o per definire in anticipo delle norme per intervalli di utenti\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-lock\-secs\fR\ \&\fISEC\fR
+.RS 4
+Blocca l\*(Aqaccount per
+\fISEC\fR
+secondi dopo un tentativo di accesso fallito\&.
+.sp
+Per questa opzione \(`e necessario l\*(Aqaccesso in scrittura a
+/var/log/faillog\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-maximum\fR\ \&\fIMAX\fR
+.RS 4
+Imposta a
+\fIMAX\fR
+il massimo numero di accessi falliti prima che l\*(Aqaccount sia disabilitato\&.
+.sp
+Impostare
+\fIMAX\fR
+al valore 0 ha l\*(Aqeffetto di non porre nessun limite al numero di accessi falliti\&.
+.sp
+Il numero massimo di fallimenti dovrebbe sempre essere 0 per
+\fIroot\fR
+in modo da evitare attacchi al sistema di tipo \(Fodenial of service\(Fc\&.
+.sp
+Per questa opzione \(`e necessario l\*(Aqaccesso in scrittura a
+/var/log/faillog\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-reset\fR
+.RS 4
+Azzera i contatori degli accessi falliti\&.
+.sp
+Per questa opzione \(`e necessario l\*(Aqaccesso in scrittura a
+/var/log/faillog\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIGIORNI\fR
+.RS 4
+Visualizza le registrazioni faillog pi\(`u recenti di
+\fIGIORNI\fR
+giorni\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIINTERVALLO\fR
+.RS 4
+Mostra la registrazione degli accessi falliti o, se sono state usate le opzioni
+\fB\-r\fR,
+\fB\-m\fR
+o
+\fB\-l\fR, imposta contatori e limiti solo gli utenti specificati\&.
+.sp
+Gli utenti possono essere specificati utilizzando il loro nome oppure l\*(AqID numerico o tramite un
+\fIINTERVALLO\fR
+di utenti\&. Questo
+\fIINTERVALLO\fR
+di utenti ha tre forme: tra minimo e massimo (\fIUID_MIN\-UID_MAX\fR), fino ad un valore massimo (\fI\-UID_MAX\fR) o da un valore minimo (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+Quando nessuna tra le opzioni
+\fB\-l\fR,
+\fB\-m\fR
+o
+\fB\-r\fR
+\(`e utilizzata,
+\fBfaillog\fR
+mostra le voci dei fallimenti degli utenti specificati\&.
+.SH "AVVISI/CAVEAT"
+.PP
+\fBfaillog\fR
+mostra solo gli utenti che non hanno effettuato nessun accesso corretto dopo l\*(Aqultimo tentativo fallito\&. Un utente che abbia completato correttamente un accesso dopo l\*(Aqultimo tentativo fallito \(`e mostrato solo se viene richiesto esplicitamente con l\*(Aqopzione
+\fB\-u\fR
+o se viene richiesto di mostrare tutti gli utenti con l\*(Aqopzione
+\fB\-a\fR\&.
+.SH "FILE"
+.PP
+/var/log/faillog
+.RS 4
+File per tracciare gli accessi falliti\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBlogin\fR(1),
+\fBfaillog\fR(5)\&.

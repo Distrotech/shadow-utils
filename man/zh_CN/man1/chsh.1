@@ -1,0 +1,119 @@
+'\" t
+.\"     Title: chsh
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 用户命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "CHSH" "1" "2014-05-09" "shadow\-utils 4\&.2" "用户命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+chsh \- 更改登录 shell
+.SH "大纲"
+.HP \w'\fBchsh\fR\ 'u
+\fBchsh\fR [\fI选项\fR] [\fI登录\fR]
+.SH "描述"
+.PP
+The
+\fBchsh\fR
+command changes the user login shell\&. This determines the name of the user\*(Aqs initial login command\&. A normal user may only change the login shell for her own account; the superuser may change the login shell for any account\&.
+.SH "选项"
+.PP
+\fBchsh\fR
+命令可以接受的选项有：
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+用户的新登录 shell 的名称。将此字段设置为空会让系统选择默认的登录 shell。
+.RE
+.PP
+If the
+\fB\-s\fR
+option is not selected,
+\fBchsh\fR
+operates in an interactive fashion, prompting the user with the current login shell\&. Enter the new value to change the shell, or leave the line blank to use the current one\&. The current shell is displayed between a pair of
+\fI[ ]\fR
+marks\&.
+.SH "注意"
+.PP
+The only restriction placed on the login shell is that the command name must be listed in
+/etc/shells, unless the invoker is the superuser, and then any value may be added\&. An account with a restricted login shell may not change her login shell\&. For this reason, placing
+/bin/rsh
+in
+/etc/shells
+is discouraged since accidentally changing to a restricted shell would prevent the user from ever changing her login shell back to its original value\&.
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBCHSH_AUTH\fR (boolean)
+.RS 4
+如果
+\fIyes\fR，\fBchsh\fR
+程序在做任何更改之前都会要求认证，除非是以超级用户身份运行的。
+.RE
+.PP
+\fBLOGIN_STRING\fR (string)
+.RS 4
+此字符串用于提示输入密码。默认是 "Password: "，或者翻译了的结果(汉语中翻译为了\(lq密码：\(rq)。如果设置了此变量，提示不会被翻译。
+.sp
+如果字符串包含
+\fI%s\fR，将会被用户名替换。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shells
+.RS 4
+可用的登录 shell 的列表。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

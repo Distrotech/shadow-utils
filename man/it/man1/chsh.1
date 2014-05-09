@@ -1,0 +1,117 @@
+'\" t
+.\"     Title: chsh
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "CHSH" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+chsh \- cambia la shell di login
+.SH "SINOSSI"
+.HP \w'\fBchsh\fR\ 'u
+\fBchsh\fR [\fIopzioni\fR] [\fILOGIN\fR]
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBchsh\fR
+cambia la shell di login dell\*(Aqutente, in altre parole determina il comando iniziale eseguito quando un utente accede al sistema\&. Chiunque pu\(`o cambiare la propria shell di login, mentre l\*(Aqamministratore pu\(`o cambiare la shell di login per ogni account\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBchsh\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Il nome della nuova shell di login dell\*(Aqutente\&. Lasciando questo campo vuoto si fa in modo che il sistema selezioni la shell di login predefinita\&.
+.RE
+.PP
+Se non viene usata l\*(Aqopzione
+\fB\-s\fR,
+\fBchsh\fR
+opera in maniera interattiva, mostrando all\*(Aqutente la shell attuale\&. Inserire il nuovo valore oppure lasciare la riga vuota per non modificare il valore attuale\&. La shell attuale \(`e mostrata tra parentesi
+\fI[ ]\fR\&.
+.SH "NOTA"
+.PP
+L\*(Aqunica limitazione sulla scelta della shell di login \(`e che il nome del comando deve essere presente in
+/etc/shells; fa eccezione l\*(Aqamministratore di sistema, che \(`e libero di scegliere qualsiasi valore\&. Un account con una shell di login limitata non pu\(`o cambiare la propria shell di login\&. Per questo motivo \(`e sconsigliato includere
+/bin/rsh
+in
+/etc/shells: se accidentalmente un utente selezionasse una shell limitata, non potrebbe pi\(`u tornare alla shell di login che usava originariamente\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBCHSH_AUTH\fR (booleano)
+.RS 4
+Se
+\fIyes\fR, il comando
+\fBchsh\fR
+richieder\(`a l\*(Aqautenticazione prima di apportare qualsiasi modifica, a meno che sia utilizzato dal super utente\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (testo)
+.RS 4
+Il testo da utilizzare per richiedere la password\&. Il valore predefinito \(`e \(FoPassword: \(Fc o una sua traduzione\&. Se si imposta questa variabile allora il testo non verr\(`a tradotto\&.
+.sp
+Se il testo contiene
+\fI%s\fR, questo verr\(`a sostituito dal nome dell\*(Aqutente\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shells
+.RS 4
+Elenco delle shell di login ammesse\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBchfn\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

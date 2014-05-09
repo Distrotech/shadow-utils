@@ -1,0 +1,297 @@
+'\" t
+.\"     Title: userdel
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "USERDEL" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+userdel \- l\(:oscht ein Benutzerkonto und die dazugeh\(:origen Dateien
+.SH "\(:UBERSICHT"
+.HP \w'\fBuserdel\fR\ 'u
+\fBuserdel\fR [Optionen] \fIANMELDENAME\fR
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBuserdel\fR
+bearbeitet die Kontodateien des Systems und l\(:oscht darin alle Eintr\(:age, die auf den
+\fIANMELDENAMEN\fR
+verweisen\&. Der bezeichnete Benutzer muss existieren\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBuserdel\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+Diese Option erzwingt, dass der Benutzer entfernt wird, selbst wenn er noch angemeldet ist\&. Sie f\(:uhrt auch dazu, dass
+\fBuserdel\fR
+das Home\-Verzeichnis und den Mailspool des Benutzers entfernt, sogar wenn ein anderer Benutzer dasselbe Home\-Verzeichnis hat oder der Mailspool nicht dem angegebenen Benutzer geh\(:ort\&. Falls in
+/etc/login\&.defs\fBUSERGROUPS_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist und eine Gruppe mit dem gleichen Namen wie der gel\(:oschte Benutzer vorhanden ist, wird auch diese Gruppe entfernt, selbst wenn sie die Hauptgruppe anderer Benutzer ist\&.
+.sp
+\fIHinweis:\fR
+Diese Option ist gef\(:ahrlich und kann dazu f\(:uhren, dass Ihr System nicht mehr ordnungsgem\(:a\(ss funktioniert\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-r\fR, \fB\-\-remove\fR
+.RS 4
+Die Dateien im Home\-Verzeichnis des Benutzers werden zusammen mit dem Home\-Verzeichnis und dem Mailspool entfernt\&. Dateien, die sich nicht unterhalb des Home\-Verzeichnisses befinden, m\(:ussen per Hand gesucht und gel\(:oscht werden\&.
+.sp
+Der Mailspool wird durch die Variable
+\fBMAIL_DIR\fR
+in der Datei
+login\&.defs
+definiert\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR
+.RS 4
+entfernt die Zuordnung von SELinux\-Benutzern aus den Anmeldeinformationen des Benutzers
+.RE
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBMAIL_DIR\fR (Zeichenkette)
+.RS 4
+Das Verzeichnis des Mail\-Spools\&. Diese Angabe wird ben\(:otigt, um die Mailbox zu bearbeiten, nachdem das entsprechende Benutzerkonto ver\(:andert oder gel\(:oscht wurde\&. Falls nicht angegeben, wird ein Standard verwendet, der beim Kompilieren festgelegt wurde\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (Zeichenkette)
+.RS 4
+Legt den Ort der Mail\-Spool\-Dateien eines Benutzers relativ zu seinem Home\-Verzeichnis fest\&.
+.RE
+.PP
+Die Variablen
+\fBMAIL_DIR\fR
+und
+\fBMAIL_FILE\fR
+werden von
+\fBuseradd\fR,
+\fBusermod\fR
+und
+\fBuserdel\fR
+verwendet, um den Mail\-Spool eines Benutzers zu erstellen, zu verschieben oder zu l\(:oschen\&.
+.PP
+Falls
+\fBMAIL_CHECK_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, werden sie auch verwendet, um die Umgebungsvariable
+\fBMAIL\fR
+festzulegen\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+\fBUSERDEL_CMD\fR (Zeichenkette)
+.RS 4
+Falls angegeben, wird dieser Befehl ausgef\(:uhrt, wenn ein Benutzer entfernt wird\&. Damit k\(:onnen At\-, Cron\- und Druckauftr\(:age etc\&. des entfernten Benutzers (wird als erstes Argument \(:ubergeben) gel\(:oscht werden\&.
+.sp
+Der R\(:uckgabewert des Skripts wird nicht ausgewertet\&.
+.sp
+Dies ist ein Beispielsskript, das die cron\-, at\- und Druckauftr\(:age des Benutzers entfernt:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# Pr\(:ufen, ob das ben\(:otigte Argument angegeben wurde
+if [ $# != 1 ]; then
+	echo "Verwendungsweise: $0 Benutzername"
+	exit 1
+fi
+
+# cron\-Auftr\(:age entfernen
+crontab \-r \-u $1
+
+# at\-Auftr\(:age entfernen\&.
+# Hinweis: Dies wird alle Auftr\(:age entfernen, die der gleichen UID
+# geh\(:oren, selbst wenn sie von einem Benutzer mit einem anderen Namen
+# eingerichtet wurden\&.
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# Druck\-Auftr\(:age entfernen
+lprm $1
+
+# Fertig
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolesch)
+.RS 4
+Erlaubt Benutzern, die nicht Root sind, die Umask\-Gruppen\-Bits auf ihre Umask\-Bits zu setzen (Beispiel: 022 \-> 002, 077 \-> 007), falls die UID mit der GID identisch ist sowie der Benutzername mit dem Gruppennamen \(:ubereinstimmt\&.
+.sp
+Wenn der Wert
+\fIyes\fR
+ist, wird
+\fBuserdel\fR
+die Gruppe des Benutzers entfernen, falls sie keine Mitglieder mehr hat, und
+\fBuseradd\fR
+wird standardm\(:a\(ssig eine Gruppe mit dem Namen des Benutzers erstellen\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBuserdel\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI1\fR
+.RS 4
+Die Passwortdatei kann nicht aktualisieren werden\&.
+.RE
+.PP
+\fI2\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI6\fR
+.RS 4
+Der angegebene Benutzer ist nicht vorhanden\&.
+.RE
+.PP
+\fI8\fR
+.RS 4
+Benutzer ist im Moment angemeldet\&.
+.RE
+.PP
+\fI10\fR
+.RS 4
+Die Gruppendatei kann nicht aktualisieren werden\&.
+.RE
+.PP
+\fI12\fR
+.RS 4
+Das Home\-Verzeichnis kann nicht gel\(:oscht werden\&.
+.RE
+.SH "WARNUNGEN"
+.PP
+\fBuserdel\fR
+l\(:oscht ein Benutzerkonto nicht, wenn Prozesse laufen, die diesem Konto geh\(:oren\&. In diesem Fall m\(:ussen Sie entweder diese Prozesse beenden oder das Passwort oder Konto des Benutzers sperren und das Konto sp\(:ater entfernen\&. Die Option
+\fB\-f\fR
+erzwingt das L\(:oschen eines Kontos\&.
+.PP
+Sie sollten von Hand alle Systemdateien \(:uberpr\(:ufen, um sicherzustellen, dass keine Dateien vorhanden sind, die dem gel\(:oschten Benutzer geh\(:oren\&.
+.PP
+Sie sollten keine NIS\-Attribute auf einem NIS\-Client l\(:oschen\&. Dies muss auf dem NIS\-Server durchgef\(:uhrt werden\&.
+.PP
+Falls in
+/etc/login\&.defs\fBUSERGROUPS_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, wird
+\fBuserdel\fR
+die Gruppe mit dem gleichen Namen wie der Benutzer entfernen\&. Um Unstimmigkeiten in der Passwort\- und Gruppendatenbank zu vermeiden, \(:uberpr\(:uft
+\fBuserdel\fR, ob diese Gruppe die Hauptgruppe f\(:ur andere Benutzer ist\&. Gegebenenfalls wird eine Warnung angezeigt und die betreffende Gruppe nicht entfernt\&. Mit der Option
+\fB\-f\fR
+kann das L\(:oschen dieser Gruppe erzwungen werden\&.
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBlogin.defs\fR(5),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBusermod\fR(8)\&.

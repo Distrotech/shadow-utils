@@ -1,0 +1,174 @@
+'\" t
+.\"     Title: groupmems
+.\"    Author: George Kraft, IV
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "GROUPMEMS" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+groupmems \- verwaltet die Mitglieder der Hauptgruppe eines Benutzers
+.SH "\(:UBERSICHT"
+.HP \w'\fBgroupmems\fR\ 'u
+\fBgroupmems\fR \-a\ \fIBenutzer_Name\fR | \-d\ \fIBenutzer_Name\fR | [\-g\ \fIGruppen_Name\fR] | \-l | \-p 
+.SH "BESCHREIBUNG"
+.PP
+Mit dem Befehl
+\fBgroupmems\fR
+kann ein Benutzer die Mitgliederliste seiner eigenen Gruppe verwalten, ohne Root\-Rechte zu ben\(:otigen\&. Das Werkzeug
+\fBgroupmems\fR
+ist f\(:ur Systeme gedacht, auf denen die Hauptgruppe eines Benutzers den gleichen Namen hat wie der Benutzer (z\&.B\&. fritz/fritz)\&.
+.PP
+Nur Root als Administrator kann mit
+\fBgroupmems\fR
+die Mitgliederlisten anderer Gruppen bearbeiten\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBgroupmems\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-a\fR, \fB\-\-add\fR\ \&\fIBenutzer_Name\fR
+.RS 4
+F\(:ugt einen Benutzer der Mitgliederliste der Gruppe hinzu\&.
+.sp
+Wenn die Datei
+/etc/gshadow
+vorhanden ist, die Gruppe darin aber keinen Eintrag hat, wird ein solcher erstellt\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR\ \&\fIBenutzer_Name\fR
+.RS 4
+L\(:oscht einen Benutzer aus der Mitgliederliste der Gruppe\&.
+.sp
+Wenn
+/etc/gshadow
+vorhanden ist, wird der Benutzer aus der Liste der Mitglieder und Gruppenverwalter entfernt\&.
+.sp
+Wenn die Datei
+/etc/gshadow
+vorhanden ist, die Gruppe darin aber keinen Eintrag hat, wird ein solcher erstellt\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-group\fR\ \&\fIGruppen_Name\fR
+.RS 4
+Root kann eine Gruppen bestimmen, deren Mitgliederliste er bearbeiten will\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+gibt die Mitgliederliste aus
+.RE
+.PP
+\fB\-p\fR, \fB\-\-purge\fR
+.RS 4
+l\(:oscht alle Benutzer aus der Mitgliederliste der Gruppe
+.sp
+Wenn die Datei
+/etc/gshadow
+vorhanden ist, die Gruppe darin aber keinen Eintrag hat, wird ein solcher erstellt\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.SH "EINRICHTUNG"
+.PP
+Die ausf\(:uhrbare Datei
+\fBgroupmems\fR
+sollte die Rechte
+2770
+haben und dem Benutzer
+\fIroot\fR
+und der Gruppe
+\fIgroups\fR
+geh\(:oren\&. Der Systemadministrator kann Benutzer der Gruppe
+\fIgroups\fR
+hinzuf\(:ugen, um ihnen zu erm\(:oglichen, mit
+\fBgroupmems\fR
+die Mitgliederliste ihrer eigenen Gruppe zu verwalten\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+	$ groupadd \-r groups
+	$ chmod 2770 groupmems
+	$ chown root\&.groups groupmems
+	$ groupmems \-g groups \-a gk4
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+verschl\(:usselte Informationen zu den Gruppenkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

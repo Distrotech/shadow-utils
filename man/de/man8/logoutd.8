@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: logoutd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "LOGOUTD" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+logoutd \- richtet Beschr\(:ankung von Anmeldezeiten ein
+.SH "\(:UBERSICHT"
+.HP \w'\fBlogoutd\fR\ 'u
+\fBlogoutd\fR
+.SH "BESCHREIBUNG"
+.PP
+\fBlogoutd\fR
+setzt die Anmeldezeiten und Portbeschr\(:ankungen aus
+/etc/porttime
+um\&.
+\fBlogoutd\fR
+sollte aus
+/etc/rc
+gestartet werden\&. Die Datei
+/var/run/utmp
+wird regelm\(:a\(ssig abgerufen, wobei jeder Benutzername darauf \(:uberpr\(:uft wird, ob er f\(:ur den jeweiligen Port zur jeweiligen Zeit zugelassen ist\&. Alle angemeldeten Sitzungen, die gegen die Beschr\(:ankungen in
+/etc/porttime
+versto\(ssen, werden beendet\&.
+.SH "DATEIEN"
+.PP
+/etc/porttime
+.RS 4
+Datei, die den Port\-Zugriff enth\(:alt\&.
+.RE
+.PP
+/var/run/utmp
+.RS 4
+Liste der aktuellen angemeldeten Sitzungen
+.RE

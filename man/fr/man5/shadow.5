@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formats et conversions de fichiers
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "SHADOW" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formats et conversions de fich"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+shadow \- fichier des mots de passe cach\('es
+.SH "DESCRIPTION"
+.PP
+shadow
+est un fichier qui contient les informations cach\('ees concernant les mots de passe des utilisateurs et leurs dates de validit\('e\&.
+.PP
+Ce fichier ne doit pas \(^etre accessible en lecture par les utilisateurs normaux afin de maintenir la s\('ecurit\('e des mots de passe, en particuliers pour pr\('evenir les attaques par dictionnaires\&.
+.PP
+Chaque ligne de ce fichier contient 9\ \&champs, s\('epar\('es par des deux\-points (\(Fo\ \&:\ \&\(Fc), dans l\*(Aqordre suivant\ \&:
+.PP
+\fBnom de connexion de l\*(Aqutilisateur (\(Fo\ \&login\ \&\(Fc)\fR
+.RS 4
+Ce doit \(^etre un nom de compte valable, qui existe sur le syst\(`eme\&.
+.RE
+.PP
+\fBmot de passe chiffr\('e\fR
+.RS 4
+Consultez
+\fBcrypt\fR(3)
+pour plus d\*(Aqinformations sur le traitement de cette cha\(^ine\&.
+.sp
+Si le champ du mot de passe contient une cha\(^ine qui ne peut pas \(^etre un r\('esultat valable de
+\fBcrypt\fR(3), par exemple si elle contient les caract\(`eres ! ou *, alors l\*(Aqutilisateur ne pourra pas utiliser son mot de passe UNIX pour se connecter (mais il se peut que l\*(Aqutilisateur puisse se connecter au syst\(`eme par d\*(Aqautres moyens)\&.
+.sp
+Ce champ peut \(^etre vide\&. Dans ce cas aucun mot de passe n\*(Aqest n\('ecessaire pour s\*(Aqauthentifier avec l\*(Aqidentifiant de connexion indiqu\('e\&. Cependant, certaines applications qui lisent le fichier
+/etc/shadow
+peuvent n\*(Aqautoriser aucun acc\(`es si le mot de passe est vide\&.
+.sp
+Un champ de mot de passe qui commence avec un point d\*(Aqexclamation indique que le mot de passe est bloqu\('e\&. Les caract\(`eres restants sur la ligne repr\('esentent le champ de mot de passe avant que le mot de passe n\*(Aqait \('et\('e bloqu\('e\&.
+.RE
+.PP
+\fBdate du dernier changement de mot de passe\fR
+.RS 4
+La date du dernier changement de mot de passe, exprim\('ee en nombre de jours depuis le 1er\ \&janvier\ \&1970\&.
+.sp
+La valeur 0 a une signification particuli\(`ere\ \&: l\*(Aqutilisateur devra changer son mot de passe la prochaine fois qu\*(Aqil se connectera au syst\(`eme\&.
+.sp
+Un champ vide indique que les fonctionnalit\('es de vieillissement de mot de passe sont d\('esactiv\('ees\&.
+.RE
+.PP
+\fB\(^age minimum du mot de passe\fR
+.RS 4
+L\*(Aq\(^age minimum du mot de passe est la dur\('ee (en jour) que l\*(Aqutilisateur devra attendre avant de pouvoir le changer de nouveau\&.
+.sp
+Un champ vide ou une valeur de 0 signifie qu\*(Aqil n\*(Aqy a pas d\*(Aq\(^age minimum pour le mot de passe\&.
+.RE
+.PP
+\fB\(^age maximum du mot de passe\fR
+.RS 4
+L\*(Aq\(^age maximum du mot de passe est la dur\('ee (en jour) apr\(`es laquelle l\*(Aqutilisateur devra changer son mot de passe\&.
+.sp
+Une fois cette dur\('ee \('ecoul\('ee, le mot de passe restera valable\&. Il sera demand\('e \(`a l\*(Aqutilisateur de le changer la prochaine fois qu\*(Aqil se connectera\&.
+.sp
+Un champ vide signifie qu\*(Aqil n\*(Aqy a pour le mot de passe aucune limite d\*(Aq\(^age, aucune p\('eriode d\*(Aqavertissement d\*(Aqexpiration et aucune p\('eriode d\*(Aqinactivit\('e (voir ci\-dessous)\&.
+.sp
+Si l\*(Aq\(^age maximum du mot de passe est plus petit que l\*(Aq\(^age minimum du mot de passe, l\*(Aqutilisateur ne pourra pas changer son mot de passe\&.
+.RE
+.PP
+\fBp\('eriode d\*(Aqavertissement d\*(Aqexpiration du mot de passe\fR
+.RS 4
+La dur\('ee (en jour) pendant laquelle l\*(Aqutilisateur sera averti avant que le mot de passe n\*(Aqexpire (voir l\*(Aq\(^age maximum du mot de passe ci\-dessus)\&.
+.sp
+Un champ vide ou une valeur de 0 signifie qu\*(Aqil n\*(Aqy aura pas de p\('eriode d\*(Aqavertissement d\*(Aqexpiration du mot de passe\&.
+.RE
+.PP
+\fBp\('eriode d\*(Aqinactivit\('e du mot de passe\fR
+.RS 4
+La dur\('ee (en jour) pendant laquelle le mot de passe sera quand m\(^eme accept\('e apr\(`es son expiration (voir l\*(Aq\(^age maximum du mot de passe ci\-dessus)\&. L\*(Aqutilisateur devra mettre \(`a jour son mot de passe \(`a la prochaine connexion\&.
+.sp
+Apr\(`es expiration du mot de passe suivie de la p\('eriode d\*(Aqexpiration, plus aucune connexion n\*(Aqest possible en utilisant le mot de passe de l\*(Aqutilisateur\&. L\*(Aqutilisateur doit contacter son administrateur\&.
+.sp
+Un champ vide signifie qu\*(Aqaucune p\('eriode d\*(Aqinactivit\('e n\*(Aqest impos\('ee\&.
+.RE
+.PP
+\fBdate de fin de validit\('e du compte\fR
+.RS 4
+La date d\*(Aqexpiration du compte, exprim\('e en nombre de jours depuis le 1er\ \&janvier\ \&1970\&.
+.sp
+Veuillez noter que l\*(Aqexpiration d\*(Aqun compte diff\(`ere de l\*(Aqexpiration d\*(Aqun mot de passe\&. En cas d\*(Aqexpiration d\*(Aqun compte, l\*(Aqutilisateur ne sera plus autoris\('e \(`a se connecter\&. En cas d\*(Aqexpiration d\*(Aqun mot de passe, l\*(Aqutilisateur n\*(Aqest pas autoris\('e \(`a se connecter en utilisant son mot de passe\&.
+.sp
+Un champ vide signifie que le compte n\*(Aqexpirera jamais\&.
+.sp
+La valeur 0 ne doit pas \(^etre utilis\('ee puisqu\*(Aqelle peut \(^etre interpr\('et\('ee soit comme un compte sans expiration, soit comme ayant expir\('e le 1er\ \&janvier\ \&1970\&.
+.RE
+.PP
+\fBchamp r\('eserv\('e\fR
+.RS 4
+Ce champ est r\('eserv\('e pour une utilisation future\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/shadow\-
+.RS 4
+Fichier de sauvegarde pour /etc/shadow\&.
+.sp
+Notez que ce fichier est utilis\('e par les outils de la suite d\*(Aqoutils shadow, mais pas par tous les outils de gestion d\*(Aqutilisateurs et de mot de passes\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchage\fR(1),
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBpasswd\fR(5),
+\fBpwck\fR(8),
+\fBpwconv\fR(8),
+\fBpwunconv\fR(8),
+\fBsu\fR(1),
+\fBsulogin\fR(8)\&.

@@ -1,0 +1,745 @@
+'\" t
+.\"     Title: useradd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "USERADD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+useradd \- cr\('eer un nouvel utilisateur ou modifier les informations par d\('efaut appliqu\('ees aux nouveaux utilisateurs
+.SH "SYNOPSIS"
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR [\fIoptions\fR] \fILOGIN\fR
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D
+.HP \w'\fBuseradd\fR\ 'u
+\fBuseradd\fR \-D [\fIoptions\fR]
+.SH "DESCRIPTION"
+.PP
+Quand elle est invoqu\('ee sans l\*(Aqoption
+\fB\-D\fR, la commande
+\fBuseradd\fR
+cr\('ee un nouveau compte utilisateur qui utilise les valeurs indiqu\('ees sur la ligne de commande et les valeurs par d\('efaut du syst\(`eme\&. En fonction des options de la ligne de commande, la commande
+\fBuseradd\fR
+fera la mise \(`a jour des fichiers du syst\(`eme, elle pourra cr\('eer le r\('epertoire personnel et copier les fichiers initiaux\&.
+.PP
+Par d\('efaut, un groupe sera \('egalement cr\('e\('e pour le nouvel utilisateur (voir
+\fB\-g\fR,
+\fB\-N\fR,
+\fB\-U\fR, et
+\fBUSERGROUPS_ENAB\fR)
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBuseradd\fR
+sont\ \&:
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIBASE_DIR\fR
+.RS 4
+The default base directory for the system if
+\fB\-d\fR\ \&\fIHOME_DIR\fR
+is not specified\&.
+\fIBASE_DIR\fR
+is concatenated with the account name to define the home directory\&. If the
+\fB\-m\fR
+option is not used,
+\fIBASE_DIR\fR
+must exist\&.
+.sp
+Si cette option n\*(Aqest pas pr\('ecis\('ee,
+\fBuseradd\fR
+utilisera le r\('epertoire de base pr\('ecis\('e par la variable
+\fBHOME\fR
+dans
+/etc/default/useradd
+ou
+/home
+par d\('efaut\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fICOMMENT\fR
+.RS 4
+Toute cha\(^ine de texte\&. C\*(Aqest g\('en\('eralement une description courte du compte, elle est actuellement utilis\('ee comme champ pour le nom complet de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\-dir\fR\ \&\fIHOME_DIR\fR
+.RS 4
+Le nouvel utilisateur sera cr\('e\('e en utilisant
+\fIR\('EP_PERSO\fR
+comme valeur de r\('epertoire de connexion de l\*(Aqutilisateur\&. Le comportement par d\('efaut est de concat\('ener
+\fIUTILISATEUR\fR
+au r\('epertoire
+\fIR\('EP_BASE\fR, et de l\*(Aqutiliser en tant que nom de r\('epertoire de connexion\&. Il n\*(Aqest pas n\('ecessaire que le r\('epertoire
+\fIR\('EP_PERSO\fR
+existe mais il ne sera pas cr\('e\('e s\*(Aqil n\*(Aqexiste pas\&.
+.RE
+.PP
+\fB\-D\fR, \fB\-\-defaults\fR
+.RS 4
+Consultez ci\-dessous la sous\-section \(Fo\ \&Modifier les valeurs par d\('efaut\ \&\(Fc\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+Date \(`a laquelle le compte utilisateur sera d\('esactiv\('e\&. La date est indiqu\('ee dans le format
+\fIAAAA\-MM\-JJ\fR\&.
+.sp
+Si non pr\('ecis\('e,
+\fBuseradd\fR
+utilisera la date d\*(Aqexpiration par d\('efaut pr\('ecis\('ee par la variable
+\fBEXPIRE\fR
+dans
+/etc/default/useradd
+ou une cha\(^ine vide (pas d\*(Aqexpiration) par d\('efaut\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+Nombre de jours suivant la fin de validit\('e d\*(Aqun mot de passe apr\(`es lequel le compte est d\('efinitivement d\('esactiv\('e\&. Une valeur de 0 d\('esactive le compte d\(`es que le mot de passe a d\('epass\('e sa fin de validit\('e, et une valeur de \-1 d\('esactive cette fonctionnalit\('e\&.
+.sp
+Si non pr\('ecis\('e,
+\fBuseradd\fR
+utilisera la p\('eriode d\*(Aqinactivit\('e par d\('efaut pr\('ecis\('ee par la variable
+\fBINACTIVE\fR
+dans
+/etc/default/useradd, ou \-1 par d\('efaut\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+Nom du groupe ou identifiant num\('erique du groupe de connexion initial de l\*(Aqutilisateur\&. Le nom du groupe doit exister\&. Un num\('ero de groupe doit se r\('ef\('erer \(`a un groupe d\('ej\(`a existant\&.
+.sp
+Si non pr\('ecis\('e, le comportement de
+\fBuseradd\fR
+d\('ependra de la variable
+\fBUSERGROUPS_ENAB\fR
+dans
+/etc/login\&.defs\&. Si cette variable est configur\('ee \(`a
+\fIyes\fR
+(ou si
+\fB\-U/\-\-user\-group\fR
+est pr\('ecis\('ee sur la ligne de commandes), un groupe sera cr\('e\('e pour l\*(Aqutilisateur, avec le m\(^eme nom que son identifiant\&. Si la variable est configur\('ee \(`a
+\fIno\fR
+(ou si
+\fB\-N/\-\-no\-user\-group\fR
+est pr\('ecis\('e sur la ligne de commandes), useradd configurera le groupe primaire du nouvel utilisateur \(`a la valeur pr\('ecis\('ee par la variable
+\fBGROUP\fR
+dans
+/etc/default/useradd, ou 100 par d\('efaut\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGROUP1\fR[\fI,GROUP2,\&.\&.\&.\fR[\fI,GROUPN\fR]]]
+.RS 4
+Liste de groupes suppl\('ementaires auxquels appartient \('egalement l\*(Aqutilisateur\&. Chaque groupe est s\('epar\('e du suivant par une virgule, sans espace entre eux\&. Les groupes sont soumis aux m\(^emes restrictions que celles de l\*(Aqoption
+\fB\-g\fR\&. Le comportement par d\('efaut pour l\*(Aqutilisateur est de n\*(Aqappartenir qu\*(Aqau groupe initial\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-k\fR, \fB\-\-skel\fR\ \&\fISKEL_DIR\fR
+.RS 4
+Le r\('epertoire squelette, qui contient les fichiers et r\('epertoires qui seront copi\('es dans le r\('epertoire personnel de l\*(Aqutilisateur, quand le r\('epertoire personnel est cr\('e\('e par
+\fBuseradd\fR\&.
+.sp
+Cette option n\*(Aqest valable que si l\*(Aqoption
+\fB\-m\fR
+(ou
+\fB\-\-create\-home\fR) est utilis\('ee\&.
+.sp
+Si cette option n\*(Aqest pas pr\('ecis\('ee, le r\('epertoire squelette est d\('efini par la variable
+\fBSKEL\fR
+dans
+/etc/default/useradd
+ou, par d\('efaut,
+/etc/skel\&.
+.sp
+Si possible, les ACL et les attributs \('etendus seront copi\('es\&.
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fIKEY\fR=\fIVALUE\fR
+.RS 4
+Overrides
+/etc/login\&.defs
+defaults (\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBUMASK\fR,
+\fBPASS_MAX_DAYS\fR
+and others)\&.
+
+Example:
+\fB\-K\fR\ \&\fIPASS_MAX_DAYS\fR=\fI\-1\fR
+can be used when creating system account to turn off password ageing, even though system account has no password at all\&. Multiple
+\fB\-K\fR
+options can be specified, e\&.g\&.:
+\fB\-K\fR\ \&\fIUID_MIN\fR=\fI100\fR\ \&
+\fB\-K\fR\ \&\fIUID_MAX\fR=\fI499\fR
+.RE
+.PP
+\fB\-l\fR, \fB\-\-no\-log\-init\fR
+.RS 4
+N\*(Aqajoute pas l\*(Aqutilisateur aux bases de donn\('ees lastlog et faillog\&.
+.sp
+Par d\('efaut, les entr\('ees de l\*(Aqutilisateur dans les bases de donn\('ees lastlog et faillog sont remises \(`a z\('ero pour \('eviter de r\('eutiliser les entr\('ees d\*(Aqun utilisateur pr\('ec\('edemment supprim\('e\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-create\-home\fR
+.RS 4
+Cr\('e\('e le r\('epertoire personnel de l\*(Aqutilisateur s\*(Aqil n\*(Aqexiste pas\&. Les fichiers et les r\('epertoires contenus dans le r\('epertoire squelette (qui peut \(^etre d\('efini avec l\*(Aqoption
+\fB\-k\fR) sera copi\('e dans le r\('epertoire personnel\&.
+.sp
+Par d\('efaut, si cette option n\*(Aqest pas pr\('ecis\('ee et si
+\fBCREATE_HOME\fR
+n\*(Aqest pas activ\('ee, aucun r\('epertoire personnel ne sera cr\('e\('e\&.
+.RE
+.PP
+\fB\-M\fR
+.RS 4
+Ne cr\('ee pas le r\('epertoire personnel de l\*(Aqutilisateur, m\(^eme si la configuration globale au syst\(`eme contenue dans
+/etc/login\&.defs
+(\fBCREATE_HOME\fR) est configur\('ee \(`a
+\fIyes\fR\&.
+.RE
+.PP
+\fB\-N\fR, \fB\-\-no\-user\-group\fR
+.RS 4
+Ne cr\('ee pas de groupe avec le m\(^eme nom que celui de l\*(Aqutilisateur, mais ajoute l\*(Aqutilisateur au groupe pr\('ecis\('e par l\*(Aqoption
+\fB\-g\fR
+ou par la variable
+\fBGROUP\fR
+dans
+/etc/default/useradd\&.
+.sp
+Le comportement par d\('efaut (si les options
+\fB\-g\fR,
+\fB\-N\fR, et
+\fB\-U\fR
+ne sont pas pr\('ecis\('ees) est d\('efini par la variable
+\fBUSERGROUPS_ENAB\fR
+dans
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Permet de cr\('eer un compte d\*(Aqutilisateur avec un identifiant (\(Fo\ \&UID\ \&\(Fc) dupliqu\('e (non unique)\&.
+.sp
+Cette option n\*(Aqest valable qu\*(Aqavec l\*(Aqoption
+\fB\-u\fR\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+Le mot de passe chiffr\('e, comme renvoy\('e par
+\fBcrypt\fR(3)\&. Le comportement par d\('efaut est de d\('esactiver le mot de passe\&.
+.sp
+\fBRemarque\ \&:\fR
+l\*(Aqutilisation de cette option est d\('econseill\('ee car le mot de passe (ou le mot de passe chiffr\('e) peut \(^etre visible des utilisateurs qui affichent la liste des processus\&.
+.sp
+Il est n\('ecessaire de v\('erifier si le mot de passe respecte la politique de mots de passe du syst\(`eme\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+Cr\('eer un compte syst\(`eme\&.
+.sp
+Les utilisateurs syst\(`eme seront cr\('e\('es sans information d\*(Aqexpiration dans
+/etc/shadow, et leur identifiant num\('erique est choisi dans l\*(Aqintervalle
+\fBSYS_UID_MIN\fR\-\fBSYS_UID_MAX\fR, d\('efini dans
+/etc/login\&.defs, au lieu de
+\fBUID_MIN\fR\-\fBUID_MAX\fR
+(et leurs \('equivalents
+\fBGID\fR
+pour la cr\('eation des groupes)\&.
+.sp
+Notez que
+\fBuseradd\fR
+ne cr\('eera pas de r\('epertoire personnel pour ces utilisateurs, ind\('ependamment de la configuration par d\('efaut dans
+/etc/login\&.defs
+(\fBCREATE_HOME\fR)\&. Vous devez pr\('eciser l\*(Aqoption
+\fB\-m\fR
+si vous voulez qu\*(Aqun r\('epertoire personnel soit cr\('e\('e pour un compte syst\(`eme\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Le nom de l\*(Aqinterpr\('eteur de commandes initial de l\*(Aqutilisateur (\(Fo\ \&login shell\ \&\(Fc)\&. Le comportement par d\('efaut est de laisser ce champ vide\&. Le syst\(`eme s\('electionnera alors l\*(Aqinterpr\('eteur par d\('efaut indiqu\('e par la variable
+\fBSHELL\fR
+dans
+/etc/default/useradd, ou une cha\(^ine vide par d\('efaut\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+La valeur num\('erique de l\*(Aqidentifiant de l\*(Aqutilisateur\&. Cette valeur doit \(^etre unique, sauf si l\*(Aqoption
+\fB\-o\fR
+est utilis\('ee\&. La valeur ne doit pas \(^etre n\('egative\&. Le comportement par d\('efaut est d\*(Aqutiliser la plus petite valeur d\*(Aqidentifiant \(`a la fois sup\('erieure ou \('egale \(`a
+\fBUID_MIN\fR
+et sup\('erieure aux identifiants de tous les autres utilisateurs\&.
+.sp
+Voir aussi aussi l\*(Aqoption
+\fB\-r\fR
+et la description de
+\fBUID_MAX\fR\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-user\-group\fR
+.RS 4
+Cr\('ee un groupe avec le m\(^eme nom que celui de l\*(Aqutilisateur, et ajoute l\*(Aqutilisateur \(`a ce groupe\&.
+.sp
+Le comportement par d\('efaut (si les options
+\fB\-g\fR,
+\fB\-N\fR, et
+\fB\-U\fR
+ne sont pas pr\('ecis\('ees) est d\('efini par la variable
+\fBUSERGROUPS_ENAB\fR
+dans
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISEUSER\fR
+.RS 4
+L\*(Aqutilisateur SELinux utilis\('e pour la connexion de l\*(Aqutilisateur\&. Le comportement par d\('efaut est de laisser ce champ vide\&. Le syst\(`eme s\('electionnera alors l\*(Aqutilisateur SELinux par d\('efaut\&.
+.RE
+.SS "Modifier les valeurs par d\('efaut"
+.PP
+Quand il est invoqu\('e avec seulement l\*(Aqoption
+\fB\-D\fR,
+\fBuseradd\fR
+affichera les valeurs actuelles par d\('efaut\&. Quand il est invoqu\('e avec l\*(Aqoption
+\fB\-D\fR
+et d\*(Aqautres options,
+\fBuseradd\fR
+mettra \(`a jour les valeurs par d\('efaut des options pr\('ecis\('ees\&. Les options valables sont\ \&:
+.PP
+\fB\-b\fR, \fB\-\-base\-dir\fR\ \&\fIBASE_DIR\fR
+.RS 4
+Pr\('efixe du chemin des r\('epertoires personnels pour les nouveaux utilisateurs\&. Le nom de l\*(Aqutilisateur sera attach\('e \(`a la fin de
+\fIR\('EP_PERSO\fR
+pour cr\('eer le nom du nouveau r\('epertoire personnel si l\*(Aqoption
+\fB\-d\fR
+n\*(Aqest pas utilis\('ee pendant la cr\('eation d\*(Aqun nouveau compte\&.
+.sp
+Cette option configure la variable
+\fBHOME\fR
+dans
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+Date \(`a laquelle le compte utilisateur sera d\('esactiv\('e\&.
+.sp
+Cette option configure la variable
+\fBEXPIRE\fR
+dans
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+Nombre de jours apr\(`es la fin de validit\('e d\*(Aqun mot de passe avant que le compte ne soit d\('esactiv\('e\&.
+.sp
+Cette option configure la variable
+\fBINACTIVE\fR
+dans
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGROUP\fR
+.RS 4
+Le nom ou l\*(Aqidentifiant du groupe pour le groupe principal d\*(Aqun nouvel utilisateur (quand l\*(Aqoption
+\fB\-N/\-\-no\-user\-group\fR
+est utilis\('ee ou quand la variable
+\fBUSERGROUPS_ENAB\fR
+est configur\('ee \(`a
+\fIno\fR
+dans
+/etc/login\&.defs)\&. Le nom du groupe doit exister, et un identifiant de groupe num\('erique doit avoir une entr\('ee existante\&.
+.sp
+Cette option configure la variable
+\fBGROUP\fR
+dans
+/etc/default/useradd\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Le nom de l\*(Aqinterpr\('eteur de commandes du nouvel utilisateur\&.
+.sp
+Cette option configure la variable
+\fBSHELL\fR
+dans
+/etc/default/useradd\&.
+.RE
+.SH "NOTES"
+.PP
+L\*(Aqadministrateur syst\(`eme doit se charger de placer les fichiers par d\('efaut dans le r\('epertoire
+/etc/skel
+(ou tout autre r\('epertoire de mod\(`eles indiqu\('e dans
+/etc/default/useradd
+ou sur la ligne de commande)\&.
+.SH "AVERTISSEMENTS"
+.PP
+Vous ne pouvez pas ajouter d\*(Aqutilisateur \(`a un groupe NIS ou LDAP\&. Cela doit \(^etre effectu\('e sur le serveur correspondant\&.
+.PP
+De la m\(^eme fa\(,con, si le nom de l\*(Aqutilisateur existe dans une base de donn\('ees externe, telle que NIS ou LDAP,
+\fBuseradd\fR
+refusera de cr\('eer le compte d\*(Aqutilisateur\&.
+.PP
+Les noms d\*(Aqutilisateur doivent commencer par une lettre minuscule ou un tiret bas (\(Fo\ \&underscore\ \&\(Fc), et seuls des lettres minuscules, des chiffres, des \(Fo\ \&underscore\ \&\(Fc, ou des tirets peuvent suivre\&. Ils peuvent se terminer par un signe dollar\&. Soit, sous la forme d\*(Aqune expression rationnelle\ \&: [a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+Les noms d\*(Aqutilisateur sont limit\('es \(`a 16 caract\(`eres\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBCREATE_HOME\fR (boolean)
+.RS 4
+Indiquer si un r\('epertoire personnel doit \(^etre cr\('e\('e par d\('efaut pour les nouveaux utilisateurs\&.
+.sp
+Ce r\('eglage ne s\*(Aqapplique pas pour les utilisateurs syst\(`eme, et peut \(^etre annul\('e sur la ligne de commande\&.
+.RE
+.PP
+\fBGID_MAX\fR (nombre), \fBGID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation des groupes normaux\&.
+.sp
+La valeur par d\('efaut pour
+\fBGID_MIN\fR
+(respectivement
+\fBGID_MAX\fR) est 1000 (respectivement 60000)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (cha\(^ine de caract\(`eres)
+.RS 4
+R\('epertoire d\*(Aqattente des courriels (\(Fo\ \&mail spool directory\ \&\(Fc)\&. Ce param\(`etre est n\('ecessaire pour manipuler les bo\(^ites \(`a lettres lorsque le compte d\*(Aqun utilisateur est modifi\('e ou supprim\('e\&. S\*(Aqil n\*(Aqest pas sp\('ecifi\('e, une valeur par d\('efaut d\('efinie \(`a la compilation est utilis\('ee\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir l\*(Aqemplacement des bo\(^ites aux lettres des utilisateurs relativement \(`a leur r\('epertoire personnel\&.
+.RE
+.PP
+Les param\(`etres
+\fBMAIL_DIR\fR
+et
+\fBMAIL_FILE\fR
+sont utilis\('es par
+\fBuseradd\fR,
+\fBusermod\fR
+et
+\fBuserdel\fR
+pour cr\('eer, d\('eplacer ou supprimer les bo\(^ites aux lettres des utilisateurs\&.
+.PP
+Si
+\fBMAIL_CHECK_ENAB\fR
+est r\('egl\('e sur
+\fIyes\fR, ces variables servent \('egalement \(`a d\('efinir la variable d\*(Aqenvironnement
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (nombre)
+.RS 4
+Nombre maximum de jours de validit\('e d\*(Aqun mot de passe\&. Apr\(`es cette dur\('ee, une modification du mot de passe est obligatoire\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (nombre)
+.RS 4
+Nombre minimum de jours autoris\('e avant la modification d\*(Aqun mot de passe\&. Toute tentative de modification du mot de passe avant cette dur\('ee est rejet\('ee\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (nombre)
+.RS 4
+Nombre de jours durant lesquels l\*(Aqutilisateur recevra un avertissement avant que son mot de passe n\*(Aqarrive en fin de validit\('e\&. Une valeur n\('egative signifie qu\*(Aqaucun avertissement n\*(Aqest donn\('e\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, aucun avertissement n\*(Aqest donn\('e\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (nombre), \fBSYS_GID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques de groupes que les commandes
+\fBuseradd\fR,
+\fBgroupadd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation de groupes syst\(`eme\&.
+.sp
+La valeur par d\('efaut pour
+\fBSYS_GID_MIN\fR
+(respectivement
+\fBSYS_GID_MAX\fR) est 101 (respectivement
+\fBGID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBSYS_UID_MAX\fR (nombre), \fBSYS_UID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques d\*(Aqutilisateurs que les commandes
+\fBuseradd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation d\*(Aqutilisateurs syst\(`eme\&.
+.sp
+La valeur par d\('efaut pour
+\fBSYS_UID_MIN\fR
+(respectivement
+\fBSYS_UID_MAX\fR) est 101 (respectivement
+\fBUID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBUID_MAX\fR (nombre), \fBUID_MIN\fR (nombre)
+.RS 4
+Plage d\*(Aqidentifiants num\('eriques d\*(Aqutilisateurs que les commandes
+\fBuseradd\fR
+ou
+\fBnewusers\fR
+peuvent utiliser pour la cr\('eation d\*(Aqutilisateurs normaux\&.
+.sp
+La valeur par d\('efaut de
+\fBUID_MIN\fR
+(respectivement
+\fBUID_MAX\fR) est 1000 (respectivement 60000)\&.
+.RE
+.PP
+\fBUMASK\fR (nombre)
+.RS 4
+Valeur d\*(Aqinitialisation du masque de permissions\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, le masque des permissions sera initialis\('e \(`a 022\&.
+.sp
+\fBuseradd\fR
+et
+\fBnewusers\fR
+utilisent ce masque pour d\('efinir les permissions d\*(Aqacc\(`es des r\('epertoires personnels qu\*(Aqils cr\('eent\&.
+.sp
+Il est \('egalement utilis\('e par
+\fBlogin\fR
+pour d\('efinir l\*(Aqumask initial de l\*(Aqutilisateur\&. Veuillez noter que cet umask peut \(^etre red\('efini par les GECOS de l\*(Aqutilisateur (si
+\fBQUOTAS_ENAB\fR
+est activ\('e) ou en pr\('ecisant une limite avec l\*(Aqidentifiant
+\fIK\fR
+dans
+\fBlimits\fR(5)\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de bits de masque de groupe (\(Fo\ \&umask group bits\ \&\(Fc) identiques \(`a ceux du propri\('etaire (exemple\ \&: 022 \-> 002, 077 \-> 007) pour les utilisateurs non privil\('egi\('es, si l\*(AqUID est identique au GID et que l\*(Aqidentifiant de connexion est identique au groupe principal\&.
+.sp
+Si cette variable est configur\('ee \(`a
+\fIyes\fR,
+\fBuserdel\fR
+supprimera le groupe de l\*(Aqutilisateur s\*(Aqil ne contient pas d\*(Aqautres membres, et
+\fBuseradd\fR
+cr\('eera par d\('efaut un groupe portant le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.PP
+/etc/default/useradd
+.RS 4
+Valeurs par d\('efaut pour la cr\('eation de comptes\&.
+.RE
+.PP
+/etc/skel/
+.RS 4
+R\('epertoire contenant les fichiers par d\('efaut\&.
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBuseradd\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI1\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des mots de passe
+.RE
+.PP
+\fI2\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI3\fR
+.RS 4
+param\(`etre non valable pour l\*(Aqoption
+.RE
+.PP
+\fI4\fR
+.RS 4
+UID d\('ej\(`a utilis\('e (et pas d\*(Aqoption
+\fB\-o\fR)
+.RE
+.PP
+\fI6\fR
+.RS 4
+le groupe sp\('ecifi\('e n\*(Aqexiste pas
+.RE
+.PP
+\fI9\fR
+.RS 4
+nom d\*(Aqutilisateur d\('ej\(`a utilis\('e
+.RE
+.PP
+\fI10\fR
+.RS 4
+impossible de mettre \(`a jour le fichier des groupes
+.RE
+.PP
+\fI12\fR
+.RS 4
+impossible de cr\('eer le r\('epertoire personnel
+.RE
+.PP
+\fI14\fR
+.RS 4
+Impossible de mettre \(`a jour la correspondance d\*(Aqutilisateur SELinux
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBnewusers\fR(8),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

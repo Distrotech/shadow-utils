@@ -1,0 +1,111 @@
+'\" t
+.\"     Title: lastlog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "LASTLOG" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lastlog \- berichtet die letzte Anmeldung f\(:ur alle oder einen bestimmten Benutzer
+.SH "\(:UBERSICHT"
+.HP \w'\fBlastlog\fR\ 'u
+\fBlastlog\fR [\fIOptionen\fR]
+.SH "BESCHREIBUNG"
+.PP
+\fBlastlog\fR
+formatiert und gibt den Inhalt der Datei mit den letzten Anmeldungen,
+/var/log/lastlog, aus\&. Der
+\fIAnmeldename\fR, der
+\fIPort\fR
+und der
+\fIZeitpunkt der letzten Anmeldung\fR
+werden angezeigt\&. Standardm\(:a\(ssig (keine Optionen) werden die Lastlog\-Eintr\(:age in der Reihenfolge, wie sie sich in
+/etc/passwd
+befinden, ausgegeben\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBlastlog\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-b\fR, \fB\-\-before\fR\ \&\fITAGE\fR
+.RS 4
+gibt nur Lastlog\-Eintr\(:age aus, die \(:alter als
+\fITAGE\fR
+sind
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fITAGE\fR
+.RS 4
+gibt nur Lastlog\-Eintr\(:age aus, die neuer als
+\fITAGE\fR
+sind
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIMENGE\fR
+.RS 4
+gibt nur die Lastlog\-Eintr\(:age f\(:ur die angegebenen Benutzer aus
+.sp
+Die Bestimmung der Benutzer erfolgt durch ihren Anmeldenamen, ihrer zahlenm\(:a\(ssigen Benutzer\-ID oder einer
+\fIMENGE\fR
+von Benutzern\&. Diese
+\fIMENGE\fR
+kann mit Minimum\- und Maximumwerten (\fIUID_MIN\-UID_MAX\fR), nur mit einem Maximumwert (\fIUID_MIN\-UID_MAX\fR) oder nur einem Minimumwert (\fIUID_MIN\-\fR) bestimmt werden\&.
+.RE
+.PP
+Wenn sich ein Benutzer noch nie angemeldet hat, wird die Meldung
+\fI** Never logged in**\fR
+anstatt von Port und Zeit angezeigt\&.
+.PP
+Es werden nur Eintr\(:age f\(:ur auf dem System vorhandene Benutzer angezeigt, selbst wenn Eintr\(:age \(:uber gel\(:oschte Benutzer noch vorhanden sind\&.
+.SH "ANMERKUNGEN"
+.PP
+Bei der Datei
+lastlog
+handelt es sich um eine Datenbank, die Informationen zur letzten Anmeldung der Benutzer enth\(:alt\&. Sie sollten sie nicht austauschen\&. Es handelt sich um eine Sparse\-Datei, so dass die tats\(:achliche Gr\(:o\(sse auf dem Speichermedium gew\(:ohnlich viel kleiner ist als von \(Fc\fBls \-l\fR\(Fo angezeigt wird (was eine sehr gro\(sse Datei anzeigen kann, wenn sich Benutzer mit einer gro\(ssen UID in
+passwd
+befinden)\&. Die wirkliche Dateigr\(:o\(sse l\(:asst sich mit \(Fc\fBls \-s\fR\(Fo anzeigen\&.
+.SH "DATEIEN"
+.PP
+/var/log/lastlog
+.RS 4
+Datenbank mit Zeiten der letzten Anmeldung der Benutzer
+.RE
+.SH "WARNUNGEN"
+.PP
+Gro\(sse L\(:ucken in den UID\-Zahlen haben zur Folge, dass das Lastlog\-Programm l\(:angere Zeit ohne Bildschirmausgabe l\(:auft\&. Wenn sich z\&.B\&. in der Datenbank von Lastlog kein Eintrag f\(:ur Benutzer mit der UID zwischen 170 und 800 befindet, wird es scheinen, als ob lastlog stehen geblieben ist, w\(:ahrend es die Eintr\(:age mit der UID 171 bis 799 verarbeitet\&.

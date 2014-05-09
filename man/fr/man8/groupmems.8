@@ -1,0 +1,173 @@
+'\" t
+.\"     Title: groupmems
+.\"    Author: George Kraft, IV
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GROUPMEMS" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+groupmems \- Administrer les membres du groupe primaire d\*(Aqun utilisateur
+.SH "SYNOPSIS"
+.HP \w'\fBgroupmems\fR\ 'u
+\fBgroupmems\fR \-a\ \fInom_utilisateur\fR | \-d\ \fInom_utilisateur\fR | [\-g\ \fInom_groupe\fR] | \-l | \-p 
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBgroupmems\fR
+permet \(`a un utilisateur d\*(Aqadministrer la liste des membres de son propre groupe sans avoir les privil\(`eges du superutilisateur\&. L\*(Aqutilitaire
+\fBgroupmems\fR
+a \('et\('e con\(,cu pour les syst\(`emes qui configurent leurs utilisateurs de telle sorte qu\*(Aqils soient responsables de leur groupe primaire (par exemple guest/guest)\&.
+.PP
+Seul le superutilisateur, en tant qu\*(Aqadministrateur, peut utiliser
+\fBgroupmems\fR
+pour modifier la liste des membres d\*(Aqun autre groupe\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBgroupmems\fR
+sont\ \&:
+.PP
+\fB\-a\fR, \fB\-\-add\fR\ \&\fIuser_name\fR
+.RS 4
+Ajouter un utilisateur \(`a la liste des membres du groupe\&.
+.sp
+Si le fichier
+/etc/gshadow
+existe, et que le groupe n\*(Aqy a pas d\*(Aqentr\('ee, une nouvelle entr\('ee sera cr\('e\('ee\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR\ \&\fIuser_name\fR
+.RS 4
+Supprimer un utilisateur de la liste des membres du groupe\&.
+.sp
+Si le fichier
+/etc/gshadow
+existe, l\*(Aqutilisateur sera retir\('e de la liste des membres et des administrateurs du groupe\&.
+.sp
+Si le fichier
+/etc/gshadow
+existe, et que le groupe n\*(Aqy a pas d\*(Aqentr\('ee, une nouvelle entr\('ee sera cr\('e\('ee\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-group\fR\ \&\fIgroup_name\fR
+.RS 4
+Le superutilisateur peut pr\('eciser la liste des membres du groupe \(`a modifier\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+Afficher la liste des membres du groupe\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-purge\fR
+.RS 4
+Supprimer tous les utilisateurs de la liste des membres du groupe\&.
+.sp
+Si le fichier
+/etc/gshadow
+existe, et que le groupe n\*(Aqy a pas d\*(Aqentr\('ee, une nouvelle entr\('ee sera cr\('e\('ee\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+L\*(Aqex\('ecutable
+\fBgroupmems\fR
+doit \(^etre install\('e en mode
+2770
+avec pour utilisateur
+\fIroot\fR
+et pour groupe
+\fIgroups\fR\&. L\*(Aqadministrateur syst\(`eme peut ajouter des utilisateurs au groupe
+\fIgroups\fR
+pour leur permettre ou leur interdire d\*(Aqutiliser
+\fBgroupmems\fR
+pour g\('erer leur propre liste de membres du groupe\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+	$ groupadd \-r groups
+	$ chmod 2770 groupmems
+	$ chown root\&.groups groupmems
+	$ groupmems \-g groups \-a gk4
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (nombre)
+.RS 4
+Nombre maximum de membres par entr\('ee de groupe\&. Lorsque le maximum est atteint, une nouvelle entr\('ee de groupe (ligne) est d\('emarr\('ee dans
+/etc/group
+(avec le m\(^eme nom, m\(^eme mot de passe, et m\(^eme GID)\&.
+.sp
+La valeur par d\('efaut est 0, ce qui signifie qu\*(Aqil n\*(Aqy a pas de limites pour le nombre de membres dans un groupe\&.
+.sp
+Cette fonctionnalit\('e (groupe d\('ecoup\('e) permet de limiter la longueur des lignes dans le fichier de groupes\&. Ceci est utile pour s\*(Aqassurer que les lignes pour les groupes NIS ne sont pas plus grandes que 1024 caract\(`eres\&.
+.sp
+Si vous avez besoin de configurer cette limite, vous pouvez utiliser 25\&.
+.sp
+Remarque\ \&: les groupes d\('ecoup\('es ne sont peut\-\(^etre pas pris en charge par tous les outils (m\(^eme dans la suite d\*(Aqoutils Shadow)\&. Vous ne devriez pas utiliser cette variable, sauf si vous en avez vraiment besoin\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+informations cach\('ees sur les groupes
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

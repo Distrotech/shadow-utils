@@ -1,0 +1,183 @@
+'\" t
+.\"     Title: chage
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dienstprogramme f\(:ur Benutzer
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "CHAGE" "1" "09.05.2014" "shadow\-utils 4\&.2" "Dienstprogramme f\(:ur Benutzer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+chage \- \(:andert die Information zum Passwortverfall
+.SH "\(:UBERSICHT"
+.HP \w'\fBchage\fR\ 'u
+\fBchage\fR [\fIOptionen\fR] \fIANMELDENAME\fR
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBchage\fR
+ver\(:andert die Anzahl der Tage zwischen dem letzten Wechsel des Passworts und dem n\(:achsten Wechsel\&. Mit dieser Information bestimmt das System, wann ein Benutzer sein Passwort ver\(:andern muss\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBchage\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-d\fR, \fB\-\-lastday\fR\ \&\fILETZTER_TAG\fR
+.RS 4
+Legt die Anzahl der Tage, gerechnet ab dem 1\&. Januar 1970, fest, seit denen das Passwort das letzte Mal gewechselt wurde\&. Das Datum kann auch im Format JJJJ\-MM\-TT (oder in dem Format, das in Ihrer Region verbreitet ist) angegeben werden\&.
+.RE
+.PP
+\fB\-E\fR, \fB\-\-expiredate\fR\ \&\fIVERFALLSDATUM\fR
+.RS 4
+Setzt das Datum oder die Anzahl der Tage seit dem 1\&. Januar 1970, ab dem auf das Benutzerkonto nicht mehr zugegriffen werden kann\&. Das Datum kann auch im Format JJJJ\-MM\-TT (oder in dem Format, das in Ihrer Region verbreitet ist) angegeben werden\&. Ein Benutzer, dessen Konto gesperrt ist, muss sich mit dem Systemadministrator in Verbindung setzen, ehe er sich wieder am System anmelden kann\&.
+.sp
+Wenn
+\fI\-1\fR
+als
+\fIVERFALLSDATUM\fR
+angegeben wird, wird das Verfallsdatum f\(:ur das Konto entfernt\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-I\fR, \fB\-\-inactive\fR\ \&\fIINAKTIV\fR
+.RS 4
+Legt die Anzahl der Tage der Unt\(:atigkeit fest, nach denen ein Passwort abgelaufen ist, bevor das Konto gesperrt wird\&. Die Option
+\fIINAKTIV\fR
+bezeichnet die Anzahl der Tage, f\(:ur die das Konto inaktiv ist\&. Ein Benutzer, dessen Konto gesperrt ist, muss sich mit dem Systemadministrator in Verbindung setzen, ehe er sich wieder am System anmelden kann\&.
+.sp
+Wenn
+\fI\-1\fR
+als
+\fIINAKTIV\fR
+angegeben wird, wird die \(:Uberwachung der fehlenden Verwendung des Kontos entfernt\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+zeigt Informationen zur Kontoalterung an
+.RE
+.PP
+\fB\-m\fR, \fB\-\-mindays\fR\ \&\fIMIN_TAGE\fR
+.RS 4
+Setzt die Anzahl von Tagen, die mindestens zwischen zwei \(:Anderungen eines Passworts vergehen m\(:ussen, auf
+\fIMIN_TAGE\fR\&. Ein Wert von Null in diesem Feld bedeutet, dass der Benutzer sein Passwort jederzeit \(:andern darf\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-maxdays\fR\ \&\fIMAX_TAGE\fR
+.RS 4
+Bestimmt die maximale Anzahl von Tagen, die das Passwort g\(:ultig bleibt\&. Wenn
+\fIMAX_TAGE\fR
+plus
+\fILETZTER_TAG\fR
+\(:alter als das aktuelle Datum ist, muss der Benutzer sein Passwort \(:andern, ehe er sein Konto benutzen kann\&. Mit der Option
+\fB\-W\fR
+werden die Benutzer vor dem drohenden Verfall ihres Passworts gewarnt\&.
+.sp
+Wenn
+\fI\-1\fR
+als
+\fIMAX_TAGE\fR
+angegeben wird, wird der Passwortverfall entfernt\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-W\fR, \fB\-\-warndays\fR\ \&\fIWARN_TAGE\fR
+.RS 4
+Legt die Anzahl der Tage fest, an denen der Benutzer eine Warnung erh\(:alt, bevor sein Passwort ge\(:andert werden muss\&. Die Option
+\fIWARN_TAGE\fR
+bezeichnet die Anzahl der Tage, f\(:ur die ein Benutzer vor Verfall seines Passworts gewarnt wird\&.
+.RE
+.PP
+Wenn keine Option ausgew\(:ahlt wird, arbeitet
+\fBchage\fR
+interaktiv\&. Dabei wird der Benutzer nach den aktuellen Werten f\(:ur alle Felder befragt\&. Bei Eingabe eines neuen Wertes wird dieser verwendet, bei Eingabe einer Leerzeile stattdessen der Originalwert beibehalten\&. Der aktuelle Wert wird zwischen einem Paar von
+\fB[ ]\fR
+angezeigt\&.
+.SH "ANMERKUNGEN"
+.PP
+F\(:ur das Programm
+\fBchage\fR
+ist es notwendig, dass eine Shadow\-Passwort\-Datei vorhanden ist\&.
+.PP
+Der Befehl
+\fBchage\fR
+kann nur von Root ausgef\(:uhrt werden\&. Alle anderen Benutzer k\(:onnen nur die Option
+\fB\-l\fR
+verwenden, um die Verfallsdaten f\(:ur ihr Konto einzusehen\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.SH "DATEIEN"
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBchage\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI1\fR
+.RS 4
+Berechtigung verweigert
+.RE
+.PP
+\fI2\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI15\fR
+.RS 4
+Eine Shadow\-Passwort\-Datei kann nicht gefunden werden\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBpasswd\fR(5),
+\fBshadow\fR(5)\&.

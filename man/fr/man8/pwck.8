@@ -1,0 +1,319 @@
+'\" t
+.\"     Title: pwck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "PWCK" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+pwck \- V\('erifier l\*(Aqint\('egrit\('e des fichiers de mots de passe
+.SH "SYNOPSIS"
+.HP \w'\fBpwck\fR\ 'u
+\fBpwck\fR [options] [\fIpasswd\fR\ [\ \fIshadow\fR\ ]]
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBpwck\fR
+v\('erifie l\*(Aqint\('egrit\('e des informations du syst\(`eme concernant les utilisateurs et leur mots de passe\&. Toutes les entr\('ees des fichiers
+/etc/passwd
+et
+/etc/shadow
+sont v\('erifi\('ees afin de s\*(Aqassurer qu\*(Aqelles ont le bon format et qu\*(Aqelles contiennent des donn\('ees valables dans chaque champ\&. Une confirmation de l\*(Aqutilisateur sera demand\('ee pour d\('etruire les entr\('ees mal format\('ees ou ayant d\*(Aqautres erreurs non r\('ecup\('erables\&.
+.PP
+Voici les v\('erifications effectu\('ees\ \&:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+nombre correct de champs\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+unicit\('e et validit\('e des noms d\*(Aqutilisateur\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e des identifiants d\*(Aqutilisateur et de groupe\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e du groupe primaire\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e du r\('epertoire personnel\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+validit\('e de l\*(Aqinterpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc)\&.
+.RE
+.PP
+Les v\('erifications de
+shadow
+sont activ\('ees quand un second param\(`etre de fichier est indiqu\('e ou quand
+/etc/shadow
+existe sur le syst\(`eme\&.
+.PP
+Ces v\('erifications sont les suivantes\ \&:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+chaque entr\('ee de passwd a une entr\('ee correspondante dans shadow, et chaque entr\('ee shadow a une entr\('ee passwd correspondante\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+les mots de passe sont indiqu\('es dans le fichier des mot de passe cach\('es\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+les entr\('ees de shadow ont le bon nombre de champs\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+les entr\('ees de shadow sont uniques dans shadow\ \&;
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+la date du dernier changement de mot de passe n\*(Aqest pas dans le futur\&.
+.RE
+.PP
+Une erreur dans le nombre de champs ou la non unicit\('e d\*(Aqun nom d\*(Aqutilisateur sera fatale\&. Si le nombre de champs n\*(Aqest pas correct, il sera demand\('e \(`a l\*(Aqutilisateur de supprimer la ligne\&. Si l\*(Aqutilisateur ne r\('epond pas par l\*(Aqaffirmative, les v\('erifications suivantes ne seront pas effectu\('ees\&. Il sera \('egalement demand\('e de supprimer les entr\('ees correspondant aux noms d\*(Aqutilisateur redondants, mais dans ce cas, les autres v\('erifications seront effectu\('ees\&. Toutes les autres erreurs ne sont que des avertissements et l\*(Aqutilisateur est encourag\('e \(`a utiliser
+\fBusermod\fR
+pour les corriger\&.
+.PP
+Les commandes qui op\(`erent sur le fichier
+/etc/passwd
+ne peuvent pas modifier les entr\('ees corrompues ou redondantes\&.
+\fBpwck\fR
+doit \(^etre utilis\('e dans ce cas pour retirer ces entr\('ees\&.
+.SH "OPTIONS"
+.PP
+Les options
+\fB\-r\fR
+et
+\fB\-s\fR
+ne peuvent pas \(^etre combin\('ees\&.
+.PP
+Les options disponibles pour la commande
+\fBpwck\fR
+sont\ \&:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+Ne signaler que les erreurs\&. Les avertissements qui ne n\('ecessitent pas une action de la part de l\*(Aqutilisateur ne seront pas affich\('es\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+Permet d\*(Aqex\('ecuter
+\fBpwck\fR
+dans le mode lecture seule\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+Trie les entr\('ees de
+/etc/passwd
+et
+/etc/shadow
+par UID\&.
+.RE
+.PP
+Par d\('efaut,
+\fBpwck\fR
+op\(`ere sur les fichiers
+/etc/passwd
+et
+/etc/shadow
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBPASS_MAX_DAYS\fR (nombre)
+.RS 4
+Nombre maximum de jours de validit\('e d\*(Aqun mot de passe\&. Apr\(`es cette dur\('ee, une modification du mot de passe est obligatoire\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (nombre)
+.RS 4
+Nombre minimum de jours autoris\('e avant la modification d\*(Aqun mot de passe\&. Toute tentative de modification du mot de passe avant cette dur\('ee est rejet\('ee\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, la valeur de \-1 est utilis\('ee (ce qui enl\(`eve toute restriction)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (nombre)
+.RS 4
+Nombre de jours durant lesquels l\*(Aqutilisateur recevra un avertissement avant que son mot de passe n\*(Aqarrive en fin de validit\('e\&. Une valeur n\('egative signifie qu\*(Aqaucun avertissement n\*(Aqest donn\('e\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, aucun avertissement n\*(Aqest donn\('e\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBpwck\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI1\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI2\fR
+.RS 4
+une entr\('ee de mot de passe ou plus est incorrecte
+.RE
+.PP
+\fI3\fR
+.RS 4
+impossible d\*(Aqouvrir les fichiers de mots de passe
+.RE
+.PP
+\fI4\fR
+.RS 4
+impossible de verrouiller les fichiers de mots de passe
+.RE
+.PP
+\fI5\fR
+.RS 4
+impossible de mettre \(`a jour les fichiers des mots de passe
+.RE
+.PP
+\fI6\fR
+.RS 4
+impossible de trier les fichiers de mots de passe
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgroup\fR(5),
+\fBgrpck\fR(8),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBusermod\fR(8)\&.

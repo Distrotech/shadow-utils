@@ -1,0 +1,141 @@
+'\" t
+.\"     Title: vipw
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 05/09/2014
+.\"    Manual: Polecenia Zarządzania Systemem
+.\"    Source: shadow-utils 4.2
+.\"  Language: Polish
+.\"
+.TH "VIPW" "8" "05/09/2014" "shadow\-utils 4\&.2" "Polecenia Zarządzania Systemem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAZWA"
+vipw, vigr \- edytuj plik hase\(/l, grup lub ich wersji chronionych
+.SH "STRESZCZENIE"
+.HP \w'\fBvipw\fR\ 'u
+\fBvipw\fR [\fIopcje\fR]
+.HP \w'\fBvigr\fR\ 'u
+\fBvigr\fR [\fIopcje\fR]
+.SH "OPIS"
+.PP
+Polecenia
+\fBvipw\fR
+i
+\fBvigr\fR
+umożliwiają modyfikację plik\('ow odpowiednio
+/etc/passwd
+i
+/etc/group\&. Przy zastosowaniu flagi
+\fB\-s\fR
+modyfikują także dodatkowe wersje chronione tych plik\('ow \- odpowiednio
+/etc/shadow
+i
+/etc/gshadow\&. Dla ochrony przed uszkodzeniem w trakcie modyfikacji tych plik\('ow programy te ustawiają odpowiednie blokady\&. Szukając edytora programy te używają w pierwszej kolejności zmiennej środowiska
+\fB$VISUAL\fR, a następnie
+\fB$EDITOR\fR, a na końcu a na końcu domyślnego edytora
+\fBvi\fR(1)\&.
+.SH "OPCJE"
+.PP
+Polecenia
+\fBvipw\fR
+i
+\fBvigr\fR
+posiadają następujące opcje:Polecenia
+\fBvipw\fR
+i
+\fBvigr\fR
+posiadają następujące opcje:
+.PP
+\fB\-g\fR, \fB\-\-group\fR
+.RS 4
+Edycja bazy grup\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Wyświetlenie komunikatu pomocy i zakończenie dzia\(/lania\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-passwd\fR
+.RS 4
+Edycja bazy passwd\&.
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+Cichy tryb pracy\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shadow\fR
+.RS 4
+Edycja bazy shadow lub gshadow\&.
+.RE
+.SH "ENVIRONMENT"
+.PP
+\fBVISUAL\fR
+.RS 4
+Editor to be used\&.
+.RE
+.PP
+\fBEDITOR\fR
+.RS 4
+Editor to be used if
+\fBVISUAL\fR
+is not set\&.
+.RE
+.SH "PLIKI"
+.PP
+/etc/group
+.RS 4
+Informacje o grupach użytkownik\('ow\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informacje chronione o grupach użytkownik\('ow\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informacja o kontach użytkownik\('ow\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informacje chronione o użytkownikach\&.
+.RE
+.SH "ZOBACZ TAKŻE"
+.PP
+\fBvi\fR(1),
+\fBgroup\fR(5),
+\fBgshadow\fR(5)
+,
+\fBpasswd\fR(5), ,
+\fBshadow\fR(5)\&.

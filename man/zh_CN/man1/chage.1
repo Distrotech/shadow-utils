@@ -1,0 +1,176 @@
+'\" t
+.\"     Title: chage
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 用户命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "CHAGE" "1" "2014-05-09" "shadow\-utils 4\&.2" "用户命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+chage \- 更改用户密码过期信息
+.SH "大纲"
+.HP \w'\fBchage\fR\ 'u
+\fBchage\fR [\fI选项\fR] \fI登录\fR
+.SH "描述"
+.PP
+The
+\fBchage\fR
+command changes the number of days between password changes and the date of the last password change\&. This information is used by the system to determine when a user must change his/her password\&.
+.SH "选项"
+.PP
+\fBchage\fR
+命令可以接受的选项有：
+.PP
+\fB\-d\fR, \fB\-\-lastday\fR\ \&\fILAST_DAY\fR
+.RS 4
+Set the number of days since January 1st, 1970 when the password was last changed\&. The date may also be expressed in the format YYYY\-MM\-DD (or the format more commonly used in your area)\&.
+.RE
+.PP
+\fB\-E\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+Set the date or number of days since January 1, 1970 on which the user\*(Aqs account will no longer be accessible\&. The date may also be expressed in the format YYYY\-MM\-DD (or the format more commonly used in your area)\&. A user whose account is locked must contact the system administrator before being able to use the system again\&.
+.sp
+\fIEXPIRE_DATE\fR
+设置为
+\fI\-1\fR
+会移除账户的过期日期。
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-I\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+Set the number of days of inactivity after a password has expired before the account is locked\&. The
+\fIINACTIVE\fR
+option is the number of days of inactivity\&. A user whose account is locked must contact the system administrator before being able to use the system again\&.
+.sp
+\fIINACTIVE\fR
+设置为
+\fI\-1\fR
+会移除账户禁用功能。
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+现实账户年龄信息。
+.RE
+.PP
+\fB\-m\fR, \fB\-\-mindays\fR\ \&\fIMIN_DAYS\fR
+.RS 4
+在密码更改之间的最小天数设置为
+\fIMIN_DAYS\fR。此字段中的 0 值表示用户可以在任何时间更改其密码。
+.RE
+.PP
+\fB\-M\fR, \fB\-\-maxdays\fR\ \&\fIMAX_DAYS\fR
+.RS 4
+Set the maximum number of days during which a password is valid\&. When
+\fIMAX_DAYS\fR
+plus
+\fILAST_DAY\fR
+is less than the current day, the user will be required to change his/her password before being able to use his/her account\&. This occurrence can be planned for in advance by use of the
+\fB\-W\fR
+option, which provides the user with advance warning\&.
+.sp
+\fIMAX_DAYS\fR
+设置为
+\fI\-1\fR
+会移除密码有效性检查。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-warndays\fR\ \&\fIWARN_DAYS\fR
+.RS 4
+Set the number of days of warning before a password change is required\&. The
+\fIWARN_DAYS\fR
+option is the number of days prior to the password expiring that a user will be warned his/her password is about to expire\&.
+.RE
+.PP
+如果没有选择任何选项，\fBchage\fR
+会进入交互模式，以所有字段的当前值提示用户。输入一个新值可以更改这些字段，或者留空使用当前值。当前值出现在
+\fI[ ]\fR
+标记对里。
+.SH "注意"
+.PP
+\fBchage\fR
+需要有一个影子密码文件才可用。
+.PP
+只有 root 才可以使用
+\fBchage\fR，一个特殊情况是
+\fB\-l\fR
+选项，用来让非特权用户觉得自己的密码或账户何时过期。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.SH "退出值"
+.PP
+\fBchage\fR
+命令有如下退出值：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI1\fR
+.RS 4
+权限不够
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI15\fR
+.RS 4
+无法找到影子密码文件
+.RE
+.SH "参见"
+.PP
+\fBpasswd\fR(5),
+\fBshadow\fR(5)\&.

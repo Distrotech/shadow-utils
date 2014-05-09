@@ -1,0 +1,184 @@
+'\" t
+.\"     Title: chage
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09-05-2014
+.\"    Manual: Anv\(:andarkommandon
+.\"    Source: shadow-utils 4.2
+.\"  Language: Swedish
+.\"
+.TH "CHAGE" "1" "09-05-2014" "shadow\-utils 4\&.2" "Anv\(:andarkommandon"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAMN"
+chage \- \(:andra \(oaldringsinformation f\(:or anv\(:andarl\(:osenord
+.SH "SYNOPSIS"
+.HP \w'\fBchage\fR\ 'u
+\fBchage\fR [\fIflaggor\fR] \fIINLOGGNINGSNAMN\fR
+.SH "BESKRIVNING"
+.PP
+The
+\fBchage\fR
+command changes the number of days between password changes and the date of the last password change\&. This information is used by the system to determine when a user must change his/her password\&.
+.SH "FLAGGOR"
+.PP
+Flaggorna som g\(:aller f\(:or kommandot
+\fBchage\fR
+\(:ar:
+.PP
+\fB\-d\fR, \fB\-\-lastday\fR\ \&\fISISTA_DAG\fR
+.RS 4
+Set the number of days since January 1st, 1970 when the password was last changed\&. The date may also be expressed in the format YYYY\-MM\-DD (or the format more commonly used in your area)\&.
+.RE
+.PP
+\fB\-E\fR, \fB\-\-expiredate\fR\ \&\fIUTG\(oANGSDATUM\fR
+.RS 4
+Set the date or number of days since January 1, 1970 on which the user\*(Aqs account will no longer be accessible\&. The date may also be expressed in the format YYYY\-MM\-DD (or the format more commonly used in your area)\&. A user whose account is locked must contact the system administrator before being able to use the system again\&.
+.sp
+Passing the number
+\fI\-1\fR
+as the
+\fIEXPIRE_DATE\fR
+will remove an account expiration date\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Visa hj\(:alpmeddelande och avsluta\&.
+.RE
+.PP
+\fB\-I\fR, \fB\-\-inactive\fR\ \&\fIINAKTIV\fR
+.RS 4
+Set the number of days of inactivity after a password has expired before the account is locked\&. The
+\fIINACTIVE\fR
+option is the number of days of inactivity\&. A user whose account is locked must contact the system administrator before being able to use the system again\&.
+.sp
+Passing the number
+\fI\-1\fR
+as the
+\fIINACTIVE\fR
+will remove an account\*(Aqs inactivity\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+Visa kontots \(oaldringsinformation
+.RE
+.PP
+\fB\-m\fR, \fB\-\-mindays\fR\ \&\fIMIN_DAGAR\fR
+.RS 4
+S\(:atter minimalt antal dagar mellan l\(:osenords\(:andringar till
+\fIMIN_DAGAR\fR\&. Ett nollv\(:arde f\(:or detta f\(:alt betyder att anv\(:andaren kan \(:andra sitt l\(:osenord n\(:ar som helst\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-maxdays\fR\ \&\fIMAX_DAGAR\fR
+.RS 4
+Set the maximum number of days during which a password is valid\&. When
+\fIMAX_DAYS\fR
+plus
+\fILAST_DAY\fR
+is less than the current day, the user will be required to change his/her password before being able to use his/her account\&. This occurrence can be planned for in advance by use of the
+\fB\-W\fR
+option, which provides the user with advance warning\&.
+.sp
+Passing the number
+\fI\-1\fR
+as
+\fIMAX_DAYS\fR
+will remove checking a password\*(Aqs validity\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-warndays\fR\ \&\fIVARN_DAGAR\fR
+.RS 4
+Set the number of days of warning before a password change is required\&. The
+\fIWARN_DAYS\fR
+option is the number of days prior to the password expiring that a user will be warned his/her password is about to expire\&.
+.RE
+.PP
+If none of the options are selected,
+\fBchage\fR
+operates in an interactive fashion, prompting the user with the current values for all of the fields\&. Enter the new value to change the field, or leave the line blank to use the current value\&. The current value is displayed between a pair of
+\fI[ ]\fR
+marks\&.
+.SH "NOTERA"
+.PP
+Programmet
+\fBchage\fR
+kr\(:aver att en skuggl\(:osenordsfil finns tillg\(:anglig\&.
+.PP
+The
+\fBchage\fR
+command is restricted to the root user, except for the
+\fB\-l\fR
+option, which may be used by an unprivileged user to determine when his/her password or account is due to expire\&.
+.SH "CONFIGURATION"
+.PP
+The following configuration variables in
+/etc/login\&.defs
+change the behavior of this tool:
+.SH "FILER"
+.PP
+/etc/passwd
+.RS 4
+Anv\(:andarkontoinformation\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+S\(:aker anv\(:andarkontoinformation\&.
+.RE
+.SH "AVSLUTNINGSV\(:ARDEN"
+.PP
+Kommandot
+\fBchage\fR
+avslutas med f\(:oljande v\(:arden:
+.PP
+\fI0\fR
+.RS 4
+lyckad
+.RE
+.PP
+\fI1\fR
+.RS 4
+\(oatkomst nekad
+.RE
+.PP
+\fI2\fR
+.RS 4
+ogiltig kommandosyntax
+.RE
+.PP
+\fI15\fR
+.RS 4
+kan inte hitta skuggl\(:osenordsfilen
+.RE
+.SH "SE OCKS\(oA"
+.PP
+\fBpasswd\fR(5),
+\fBshadow\fR(5)\&.

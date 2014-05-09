@@ -1,0 +1,209 @@
+'\" t
+.\"     Title: chpasswd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "CHPASSWD" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+chpasswd \- aggiorna le password in modo non interattivo
+.SH "SINOSSI"
+.HP \w'\fBchpasswd\fR\ 'u
+\fBchpasswd\fR [\fIopzioni\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBchpasswd\fR
+legge da standard input un elenco di coppie di nomi utente e password e usa queste informazioni per aggiornare un gruppo di utenti esistenti\&. Ciascuna riga usa il formato:
+.PP
+\fInome_utente\fR:\fIpassword\fR
+.PP
+Come impostazione predefinita, si devono fornire password in chiaro che vengono poi cifrate da
+\fBchpasswd\fR\&. Vengono aggiornate, se presenti, anche le informazioni sulla durata delle password\&.
+.PP
+L\*(Aqalgoritmo di cifratura predefinito pu\(`o essere impostato con le variabili
+\fBENCRYPT_METHOD\fR
+e
+\fBMD5_CRYPT_ENAB\fR
+in
+/etc/login\&.defs, e pu\(`o essere ulteriormente modificato con le opzioni
+\fB\-e\fR,
+\fB\-m\fR
+o
+\fB\-c\fR\&.
+.PP
+\fBchpasswd\fR
+prima aggiorna tutte le passwor in memoria, e poi scrive tutto su disco se non trova errori per nessun utente\&.
+.PP
+Questo comando \(`e appositamente pensato per grossi sistemi in cui si abbia la necessit\(`a di creare molti account nello stesso momento\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBchpasswd\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-c\fR, \fB\-\-crypt\-method\fR\ \&\fIMETODO\fR
+.RS 4
+Utilizza il metodo specificato per cifrare le password\&.
+.sp
+I metodi disponibili sono DES, MD5, NONE e SHA256 o SHA512 se la propria libc lo consente\&.
+.sp
+Normalmente (se nessuna delle opzioni
+\fB\-c\fR,
+\fB\-m\fR
+o
+\fB\-e\fR
+viene specificata), il metodo di cifratura \(`e definito dalle variabili
+\fBENCRYPT_METHOD\fR
+o
+\fBMD5_CRYPT_ENAB\fR
+in
+/etc/login\&.defs\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-encrypted\fR
+.RS 4
+Le password fornite sono in forma cifrata\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-md5\fR
+.RS 4
+Usa la cifratura MD5 anzich\('e DES quando le password fornite non sono cifrate\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sha\-rounds\fR\ \&\fICICLI\fR
+.RS 4
+Usa il numero specificato di cicli per cifrare la password\&.
+.sp
+Il valore 0 indica che il sistema utilizzer\(`a il numero predefinito di cicli per il metodo crypt (5000)\&.
+.sp
+I valori minimo di 1\&.000 e massimo di 999\&.999\&.999 sono forzati\&.
+.sp
+Si pu\(`o utilizzare questa opzione solo con i metodi di cifratura SHA256 o SHA512\&.
+.sp
+Il numero di cicli \(`e definito dalle variabili
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+e
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+in
+/etc/login\&.defs\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Ricordarsi di impostare i permessi o umask in modo da prevenire la lettura in chiaro da parte di altri utenti\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBENCRYPT_METHOD\fR (testo)
+.RS 4
+Definisce l\*(Aqalgoritmo di cifratura predefinito per le password (se non ne viene specificato uno a riga di comando)\&.
+.sp
+Pu\(`o avere uno dei seguenti valori:
+\fIDES\fR
+(predefinito),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Nota: questo parametro ha la precedenza sulla variabile
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (booleano)
+.RS 4
+Indica se le password vanno cifrate usando l\*(Aqalgoritmo basato su MD5\&. Se impostato a
+\fIyes\fR
+le nuove password saranno cifrate usando un algoritmo basato su MD5 e compatibile con quello delle versioni pi\(`u recenti di FreeBSD\&. Supporta password di lunghezza qualsiasi e testi \(Fosalt\(Fc pi\(`u lunghi\&. Impostare a
+\fIno\fR
+se si devono copiare password su altri sistemi che non gestiscono l\*(Aqalgoritmo\&. Il valore predefinito \(`e
+\fIno\fR\&.
+.sp
+Questa variabile ha meno priorit\(`a della variabile
+\fBENCRYPT_METHOD\fR
+e di qualsiasi opzione a riga di comando che imposta un algoritmo di cifratura\&.
+.sp
+Questa variabile non \(`e pi\(`u usata\&. Si dovrebbe utilizzare
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (numerico), \fBSHA_CRYPT_MAX_ROUNDS\fR (numerico)
+.RS 4
+Quando
+\fBENCRYPT_METHOD\fR
+vale
+\fISHA256\fR
+o
+\fISHA512\fR, questo definisce il numero di cicli SHA usati per l\*(Aqalgoritmo di cifratura (quando il numero di cicli non \(`e impostato a riga di comando)\&.
+.sp
+Con molti cicli \(`e pi\(`u difficile trovare una password usando la forza bruta\&. Ma va notato che \(`e richiesta maggiore potenza di calcolo per autenticare gli utenti\&.
+.sp
+Se non specificato sar\(`a la libc a scegliere il numero di cicli (5000)\&.
+.sp
+Il valore deve essere compreso tra 1\&.000 e 999\&.999\&.999\&.
+.sp
+Se viene impostato solo uno tra
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+e
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora l\*(Aqunico valore viene utilizzato\&.
+.sp
+Se
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora viene utilizzato il maggiore\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBpasswd\fR(1),
+\fBnewusers\fR(8),
+\fBlogin.defs\fR(5),\fBuseradd\fR(8)\&.

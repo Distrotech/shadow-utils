@@ -1,0 +1,240 @@
+'\" t
+.\"     Title: grpck
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "GRPCK" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+grpck \- \(:uberpr\(:uft die Stimmigkeit der Gruppendateien
+.SH "\(:UBERSICHT"
+.HP \w'\fBgrpck\fR\ 'u
+\fBgrpck\fR [Optionen] [\fIGruppe\fR\ [\ \fIshadow\fR\ ]]
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBgrpwck\fR
+\(:uberpr\(:uft die Stimmigkeit der Informationen \(:uber die Gruppen\&. Alle Eintr\(:age in
+/etc/groupund /etc/gshadow
+werden darauf \(:uberpr\(:uft, ob sie das richtige Format haben und g\(:ultige Daten enthalten\&. Bei einem Eintrag, der falsch formatiert ist oder andere unbehebbare Fehler enth\(:alt, wird der Benutzer aufgefordert, ihn zu l\(:oschen\&.
+.PP
+Es wird \(:uberpr\(:uft, ob jeder Eintrag folgende Eigenschaften aufweist:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+die richtige Anzahl von Feldern
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+einen eindeutigen und g\(:ultigen Gruppennamen
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+eine g\(:ultige Gruppenkennung
+(nur f\(:ur /etc/group)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+eine g\(:ultige Liste der Mitglieder
+und Gruppenverwalter
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+einen passenden Eintrag in der Datei
+/etc/gshadow
+(oder in
+/etc/group
+bei der \(:Uberpr\(:ufung von
+gshadow)
+.RE
+.PP
+Fehler bei der \(:Uberpr\(:ufung der richtigen Anzahl der Felder und des eindeutigen Benutzernamens sind schwerwiegend\&. Wenn ein Eintrag die falsche Anzahl von Feldern aufweist, wird der Benutzer aufgefordert, die gesamte Zeile zu l\(:oschen\&. Wenn er dies ablehnt, werden alle weiteren Tests ausgelassen\&. Bei einem Eintrag mit einem mehrfach verwendeten Benutzernamen wird der Benutzer aufgefordert, diesen Eintrag zu l\(:oschen\&. Sollte er dies ablehnen, werden dennoch die \(:ubrigen Tests ausgef\(:uhrt\&. Bei allen anderen Fehlern wird eine Warnung ausgegeben und der Benutzer aufgefordert, den Fehler mittels des Befehls
+\fBgroupmod\fR
+zu beheben\&.
+.PP
+Die Befehle, welche die
+Dateien /etc/group und /etc/gshadow
+bearbeiten, k\(:onnen falsche oder doppelte Eintr\(:age nicht ver\(:andern\&. In solchen F\(:allen sollte
+\fBgrpwck\fR
+verwendet werden, um die betreffenden Eintr\(:age zu entfernen\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen
+\fB\-r\fR
+und
+\fB\-s\fR
+k\(:onnen nicht zusammen verwendet werden\&.
+.PP
+Die Optionen, die vom Befehl
+\fBgrpck\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+zeigt die Hilfe an und beendet das Programm
+.RE
+.PP
+\fB\-r\fR, \fB\-\-read\-only\fR
+.RS 4
+F\(:uhrt den Befehl
+\fBgrpck\fR
+im Modus Nur\-Lesen aus\&. Dies hat zur Folge, dass alle Fragen, ob Ver\(:anderungen vorgenommen werden sollen, mit
+\fIno\fR
+beantworteten werden, ohne dass der Benutzer einzugreifen braucht\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sort\fR
+.RS 4
+Ordnet die Eintr\(:age in
+/etc/groupund /etc/gshadow
+nach der GID\&.
+.RE
+.PP
+Standardm\(:a\(ssig arbeitet
+\fBgrpck\fR
+mit
+/etc/groupund /etc/gshadow\&. Der Benutzer kann andere Dateien mit
+den Parametern \fIgroup\fR und \fIshadow\fR
+ausw\(:ahlen\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.SH "R\(:UCKGABEWERTE"
+.PP
+Der Befehl
+\fBgrpck\fR
+gibt beim Beenden folgende Werte zur\(:uck:
+.PP
+\fI0\fR
+.RS 4
+Erfolg
+.RE
+.PP
+\fI1\fR
+.RS 4
+unzul\(:assige Syntax f\(:ur diesen Befehl
+.RE
+.PP
+\fI2\fR
+.RS 4
+ein oder mehrere fehlerhafte Gruppeneintr\(:age
+.RE
+.PP
+\fI3\fR
+.RS 4
+Die Gruppendateien k\(:onnen nicht ge\(:offnet werden\&.
+.RE
+.PP
+\fI4\fR
+.RS 4
+Die Gruppendateien k\(:onnen nicht gesperrt werden\&.
+.RE
+.PP
+\fI5\fR
+.RS 4
+Die Gruppendateien k\(:onnen nicht aktualisiert werden\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBgroup\fR(5),
+\fBgroupmod\fR(8),
+\fBgshadow\fR(5),\fBpasswd\fR(5),
+\fBpwck\fR(8),
+\fBshadow\fR(5)\&.

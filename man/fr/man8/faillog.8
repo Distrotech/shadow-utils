@@ -1,0 +1,162 @@
+'\" t
+.\"     Title: faillog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "FAILLOG" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+faillog \- Examiner le fichier faillog, et configurer les limites d\*(Aq\('echecs de connexion
+.SH "SYNOPSIS"
+.HP \w'\fBfaillog\fR\ 'u
+\fBfaillog\fR [\fIoptions\fR]
+.SH "DESCRIPTION"
+.PP
+\fBfaillog\fR
+affiche le contenu du journal des \('echecs de connexion (/var/log/faillog)\&. Il peut aussi configurer le d\('ecompte et les limitations de ces \('echecs\&. Ex\('ecuter
+\fBfaillog\fR
+sans argument n\*(Aqaffiche que la liste des \('echecs des utilisateurs qui ont d\('ej\(`a eu un \('echec de connexion\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBfaillog\fR
+sont\ \&:
+.PP
+\fB\-a\fR, \fB\-\-all\fR
+.RS 4
+Afficher (ou agir sur) les enregistrements d\*(Aqerreurs de connexion pour tous les utilisateurs ayant une entr\('ee dans la base de donn\('ees
+faillog\&.
+.sp
+La liste des utilisateurs peut \(^etre limit\('ee avec l\*(Aqoption
+\fB\-u\fR\&.
+.sp
+En mode affichage, toujours limit\('ee aux utilisateurs existants, mais l\*(Aqaffichage des entr\('ees d\*(Aqerreur de connexion est impos\('e m\(^eme si elles sont vides\&.
+.sp
+Avec les options
+\fB\-l\fR,
+\fB\-m\fR,
+\fB\-r\fR
+ou
+\fB\-t\fR
+les enregistrements des utilisateurs sont modifi\('es, m\(^eme si l\*(Aqutilisateur n\*(Aqexiste pas sur le syst\(`eme\&. C\*(Aqest utile pour remettre \(`a z\('ero les enregistrements des utilisateurs qui ont \('et\('e supprim\('es ou pour mettre en place une politique pr\('eventive pour un ensemble d\*(Aqutilisateurs\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-lock\-secs\fR\ \&\fISEC\fR
+.RS 4
+Verrouiller le compte pendant
+\fISEC\fR
+secondes apr\(`es un \('echec de connexion\&.
+.sp
+L\*(Aqacc\(`es en \('ecriture sur
+/var/log/faillog
+est n\('ecessaire pour cette option\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-maximum\fR\ \&\fIMAX\fR
+.RS 4
+Configurer le nombre maximum d\*(Aq\('echecs de connexion apr\(`es lequel le compte sera d\('esactiv\('e \(`a
+\fIMAX\fR\&.
+.sp
+S\('electionner une valeur
+\fIMAX\fR
+de 0 a pour effet de ne placer aucune limite sur le nombre d\*(Aq\('echecs de connexion\&.
+.sp
+Le compteur d\*(Aqerreurs maximum doit toujours \(^etre 0 pour
+\fIroot\fR
+afin d\*(Aq\('eviter les attaques de type d\('eni de service sur le syst\(`eme\&.
+.sp
+L\*(Aqacc\(`es en \('ecriture sur
+/var/log/faillog
+est n\('ecessaire pour cette option\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-reset\fR
+.RS 4
+Remettre \(`a z\('ero le compteur d\*(Aq\('echecs de connexion\&.
+.sp
+L\*(Aqacc\(`es en \('ecriture sur
+/var/log/faillog
+est n\('ecessaire pour cette option\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIDAYS\fR
+.RS 4
+Afficher les entr\('ees de faillog plus r\('ecentes que
+\fIJOURS\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIRANGE\fR
+.RS 4
+Afficher l\*(Aqentr\('ee de faillog ou maintient le d\('ecompte et les limitations (suivant que l\*(Aqoption
+\fB\-l\fR,
+\fB\-m\fR
+ou
+\fB\-r\fR
+est utilis\('ee) seulement pour les utilisateurs indiqu\('es\&.
+.sp
+Les utilisateurs peuvent \(^etre pr\('ecis\('es par un nom de connexion, un identifiant num\('erique d\*(Aqutilisateur ou un
+\fIINTERVALLE\fR
+d\*(Aqutilisateurs\&. Cet
+\fIINTERVALLE\fR
+d\*(Aqutilisateurs peut \(^etre pr\('ecis\('e avec des valeurs minimale et maximale (\fIUID_MIN\-UID_MAX\fR), seulement une valeur maximale (\fI\-UID_MAX\fR) ou une valeur minimale (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+Quand aucune des options
+\fB\-l\fR,
+\fB\-m\fR
+ou
+\fB\-r\fR
+n\*(Aqest utilis\('ee,
+\fBfaillog\fR
+affiche l\*(Aqenregistrement des \('echecs de connexion des utilisateurs pr\('ecis\('es\&.
+.SH "AVERTISSEMENTS"
+.PP
+\fBfaillog\fR
+n\*(Aqaffiche que les utilisateurs n\*(Aqayant pas eu de connexion r\('eussie depuis leur dernier \('echec\&. Pour afficher un utilisateur ayant eu une connexion r\('eussie depuis son dernier \('echec, vous devez explicitement demander cet utilisateur avec l\*(Aqoption
+\fB\-u\fR, ou demander l\*(Aqaffichage de tous les utilisateurs avec l\*(Aqoption
+\fB\-a\fR\&.
+.SH "FICHIERS"
+.PP
+/var/log/faillog
+.RS 4
+Journal des \('echecs de connexion\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBlogin\fR(1),
+\fBfaillog\fR(5)\&.

@@ -1,0 +1,812 @@
+'\" t
+.\"     Title: login.defs
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 文件格式和转化
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "LOGIN\&.DEFS" "5" "2014-05-09" "shadow\-utils 4\&.2" "文件格式和转化"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+login.defs \- 影子密码套件配置
+.SH "描述"
+.PP
+The
+/etc/login\&.defs
+file defines the site\-specific configuration for the shadow password suite\&. This file is required\&. Absence of this file will not prevent system operation, but will probably result in undesirable operation\&.
+.PP
+This file is a readable text file, each line of the file describing one configuration parameter\&. The lines consist of a configuration name and value, separated by whitespace\&. Blank lines and comment lines are ignored\&. Comments are introduced with a "#" pound sign and the pound sign must be the first non\-white character of the line\&.
+.PP
+Parameter values may be of four types: strings, booleans, numbers, and long numbers\&. A string is comprised of any printable characters\&. A boolean should be either the value
+\fIyes\fR
+or
+\fIno\fR\&. An undefined boolean parameter or one with a value other than these will be given a
+\fIno\fR
+value\&. Numbers (both regular and long) may be either decimal values, octal values (precede the value with
+\fI0\fR) or hexadecimal values (precede the value with
+\fI0x\fR)\&. The maximum value of the regular and long numeric parameters is machine\-dependent\&.
+.PP
+提供如下配置项：
+.PP
+\fBCHFN_AUTH\fR (boolean)
+.RS 4
+如果为
+\fIyes\fR，\fBchfn\fR
+进行任何更改前都要要求认证，除非由超级用户运行。
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (string)
+.RS 4
+This parameter specifies which values in the
+\fIgecos\fR
+field of the
+/etc/passwd
+file may be changed by regular users using the
+\fBchfn\fR
+program\&. It can be any combination of letters
+\fIf\fR,
+\fIr\fR,
+\fIw\fR,
+\fIh\fR, for Full name, Room number, Work phone, and Home phone, respectively\&. For backward compatibility,
+\fIyes\fR
+is equivalent to
+\fIrwh\fR
+and
+\fIno\fR
+is equivalent to
+\fIfrwh\fR\&. If not specified, only the superuser can make any changes\&. The most restrictive setting is better achieved by not installing
+\fBchfn\fR
+SUID\&.
+.RE
+.PP
+\fBCHSH_AUTH\fR (boolean)
+.RS 4
+如果
+\fIyes\fR，\fBchsh\fR
+程序在做任何更改之前都会要求认证，除非是以超级用户身份运行的。
+.RE
+.PP
+\fBCONSOLE\fR (string)
+.RS 4
+如果定义了，或者是包含设备名(没行一个)的文件的完整路径名，或者是\(lq:\(rq分隔的设备名列表。将只会在这写设备上允许 root 登录。
+.sp
+如果没有定义，可以在任何设备上使用 root。
+.sp
+指定的设备时不带 /dev/ 前缀。
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (string)
+.RS 4
+在控制台登录时，添加到用户附加组集中的组列表(就如 CONSOLE 所确定的)。默认是无。
+使用时需要注意：这可能使用户获取这些组的永久权限，甚至登录到的不是此控制台时。
+.RE
+.PP
+\fBCREATE_HOME\fR (boolean)
+.RS 4
+指示是否应该为新用户默认创建主目录。
+.sp
+此设置并不应用到系统用户，并且可以使用命令行覆盖。
+.RE
+.PP
+\fBDEFAULT_HOME\fR (boolean)
+.RS 4
+如果不能 cd 到主目录时，说明是否允许登录。默认是否。
+.sp
+如果设置为
+\fIyes\fR，如果不能 cd 到主目录时，用户将会登录到根目录(/)。
+.RE
+.PP
+\fBENCRYPT_METHOD\fR (string)
+.RS 4
+这定义了系统加密密码的默认算法(如果没有在命令行上指定算法)。
+.sp
+可以使用如下值：\fIDES\fR
+(default),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+注意，此参数会覆盖
+\fBMD5_CRYPT_ENAB\fR
+变量。
+.RE
+.PP
+\fBENV_HZ\fR (string)
+.RS 4
+如果设置了，将会用于在用户登录时定义 HZ 环境变量。值必须以
+\fIHZ=\fR
+开头。Linux 上的常用值是
+\fIHZ=100\fR。
+.RE
+.PP
+\fBENV_PATH\fR (string)
+.RS 4
+If set, it will be used to define the PATH environment variable when a regular user login\&. The value is a colon separated list of paths (for example
+\fI/bin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (string)
+.RS 4
+If set, it will be used to define the PATH environment variable when the superuser login\&. The value is a colon separated list of paths (for example
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) and can be preceded by
+\fIPATH=\fR\&. The default value is
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (string)
+.RS 4
+如果设置了，它将用于在用户登录时定义 TZ 环境变量。此值可以是以
+\fITZ=\fR
+开头的时区名(例如
+\fITZ=CST6CDT\fR)，或者是包含时区规则的文件完整路径(例如
+/etc/tzname)。
+.sp
+如果将完整路径指定为了一个不存在或不可读的文件，则默认使用
+\fITZ=CST6CDT\fR。
+.RE
+.PP
+\fBENVIRON_FILE\fR (string)
+.RS 4
+如果此文件存在，并且可读，将会从中读取登录环境。所有行都必须是 name=value 的格式。
+.sp
+以 # 开头的行将视为注释，并被忽略。
+.RE
+.PP
+\fBERASECHAR\fR (number)
+.RS 4
+终端擦除字符 (\fI010\fR
+= backspace,
+\fI0177\fR
+= DEL)。
+.sp
+此值可以使用前缀\(lq0\(rq表示八进制，\(lq0x\(rq表示十六进制。
+.RE
+.PP
+\fBFAIL_DELAY\fR (number)
+.RS 4
+登录失败后，等待多少秒才再允许登录。
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (boolean)
+.RS 4
+允许登录并显示
+/var/log/faillog
+登录失败信息。
+.RE
+.PP
+\fBFAKE_SHELL\fR (string)
+.RS 4
+如果设置了，\fBlogin\fR
+将执行此 shell 而不是在
+/etc/passwd
+中指定的用户 shell。
+.RE
+.PP
+\fBFTMP_FILE\fR (string)
+.RS 4
+如果定义，登录失败会以 utmp 格式记录在此文件中。
+.RE
+.PP
+\fBGID_MAX\fR (number), \fBGID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR，\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的常规组的组 ID 的范围。
+.sp
+\fBGID_MIN\fR
+和
+\fBGID_MAX\fR
+的默认值分别是 1000 和 60000。
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (string)
+.RS 4
+If defined, this file can inhibit all the usual chatter during the login sequence\&. If a full pathname is specified, then hushed mode will be enabled if the user\*(Aqs name or shell are found in the file\&. If not a full pathname, then hushed mode will be enabled if the file exists in the user\*(Aqs home directory\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (string)
+.RS 4
+如果定义了，此文件将在每次的登录提示之前现实。
+.RE
+.PP
+\fBKILLCHAR\fR (number)
+.RS 4
+终端 KILL 字符 (\fI025\fR
+= CTRL/U)。
+.sp
+此值可以使用前缀\(lq0\(rq表示八进制，\(lq0x\(rq表示十六进制。
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (boolean)
+.RS 4
+允许记录和显示 /var/log/lastlog 登录时间信息。
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (boolean)
+.RS 4
+允许记录成功登录。
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (boolean)
+.RS 4
+在记录到登录失败时，允许记录未知用户名。
+.sp
+注意：如果用户不小心将密码输入到了登录名中，记录未知用户名可能是一个安全隐患。
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (number)
+.RS 4
+密码错误时，重试的最大次数。
+.RE
+.PP
+\fBLOGIN_STRING\fR (string)
+.RS 4
+此字符串用于提示输入密码。默认是 "Password: "，或者翻译了的结果(汉语中翻译为了\(lq密码：\(rq)。如果设置了此变量，提示不会被翻译。
+.sp
+如果字符串包含
+\fI%s\fR，将会被用户名替换。
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (number)
+.RS 4
+最大登录时间(以秒为单位)。
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (boolean)
+.RS 4
+启用登录时检查和现实邮箱状态。
+.sp
+如果 shell 的启动文件已经检查了邮件("mailx \-e" 或者其它同功能的工具)，您应该禁用它。
+.RE
+.PP
+\fBMAIL_DIR\fR (string)
+.RS 4
+邮箱目录。修改或删除用户账户时需要处理邮箱，如果没有指定，将使用编译时指定的默认值。
+.RE
+.PP
+\fBMAIL_FILE\fR (string)
+.RS 4
+定义用户邮箱文件的位置(相对于主目录)。
+.RE
+.PP
+\fBMAIL_DIR\fR
+and
+\fBMAIL_FILE\fR
+变量由
+\fBuseradd\fR，\fBusermod\fR
+和
+\fBuserdel\fR
+用于创建、移动或删除用户邮箱。
+.PP
+如果
+\fBMAIL_CHECK_ENAB\fR
+设置为
+\fIyes\fR，它们也被用于定义
+\fBMAIL\fR
+环境变量。
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (boolean)
+.RS 4
+表示密码是否必须使用基于 MD5 的算法加密。如果设为
+\fIyes\fR，新密码将使用可以和新版 FreeBSD 兼容的基于 MD5 的算法加密。它支持无限长度的密码以及更长的盐字符串。如果您需要将加密的密码复制到其它不理解新算法的系统，设置为
+\fIno\fR。默认值是
+\fIno\fR。
+.sp
+This variable is superseded by the
+\fBENCRYPT_METHOD\fR
+variable or by any command line option used to configure the encryption algorithm\&.
+.sp
+此变量已经废弃。您应该使用
+\fBENCRYPT_METHOD\fR。
+.RE
+.PP
+\fBMOTD_FILE\fR (string)
+.RS 4
+If defined, ":" delimited list of "message of the day" files to be displayed upon login\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (string)
+.RS 4
+If defined, name of file whose presence will inhibit non\-root logins\&. The contents of this file should be a message indicating why logins are inhibited\&.
+.RE
+.PP
+\fBOBSCURE_CHECKS_ENAB\fR (boolean)
+.RS 4
+对密码更改启用附加检查。
+.RE
+.PP
+\fBPASS_ALWAYS_WARN\fR (boolean)
+.RS 4
+如果是 root，警告弱密码，但是仍然允许使用。
+.RE
+.PP
+\fBPASS_CHANGE_TRIES\fR (number)
+.RS 4
+可以尝试更改密码的最大次数(太容易)。
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (number)
+.RS 4
+一个密码可以使用的最大天数。如果密码比这旧，将会强迫更改密码。如果不指定，就假定为 \-1，这会禁用这个限制。
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (number)
+.RS 4
+两次更改密码时间的最小间隔。将会拒绝任何早于此的更改密码的尝试。如果不指定，假定为 \-1，将会禁用这个限制。
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (number)
+.RS 4
+密码过期之前给出警告的天数。0 表示只有只在过期的当天警告，负值表示不警告。如果没有指定，不会给警告。
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR,
+\fBPASS_MIN_DAYS\fR
+and
+\fBPASS_WARN_AGE\fR
+are only used at the time of account creation\&. Any changes to these settings won\*(Aqt affect existing accounts\&.
+.PP
+\fBPASS_MAX_LEN\fR (number), \fBPASS_MIN_LEN\fR (number)
+.RS 4
+crypt() 的有效字符位数。\fBPASS_MAX_LEN\fR
+默认是 8，除非您自己的 crypt() 更好，否则不要更改。如果
+\fBMD5_CRYPT_ENAB\fR
+设为
+\fIyes\fR，会被忽略。
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (boolean)
+.RS 4
+Enable checking of time restrictions specified in
+/etc/porttime\&.
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (boolean)
+.RS 4
+Enable setting of resource limits from
+/etc/limits
+and ulimit, umask, and niceness from the user\*(Aqs passwd gecos field\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (number), \fBSHA_CRYPT_MAX_ROUNDS\fR (number)
+.RS 4
+\fBENCRYPT_METHOD\fR
+设为
+\fISHA256\fR
+或
+\fISHA512\fR
+时，此项确定加密算法默认使用 SHA 轮转数目(当轮转数没有通过命令行指定时)。
+.sp
+使用很多轮转，会让暴力破解更加困难。但是需要注意，认证用户时也会需要更多的 CPU 资源。
+.sp
+如果没有指定，libc 会选择默认的轮转数(5000)。
+.sp
+值必须在 1000 \- 999,999,999 之间。
+.sp
+如果只设置了一个
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+或
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+值，就会使用这个值。
+.sp
+如果
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR，将会使用大的那个。
+.RE
+.PP
+\fBSULOG_FILE\fR (string)
+.RS 4
+如果定义了，所有的 su 活动都会记录到此文件。
+.RE
+.PP
+\fBSU_NAME\fR (string)
+.RS 4
+如果定义了，就是运行\(lqsu \-\(rq时显示的命令名称。例如，如果定义为\(lqsu\(rq，那么\(lqps\(rq会显示此命令为\(lq\-su\(rq。如果没有定义，\(lqps\(rq将会显示实际执行的 shell，例如类似于\(lq\-sh\(rq。
+.RE
+.PP
+\fBSU_WHEEL_ONLY\fR (boolean)
+.RS 4
+如果为
+\fIyes\fR，用户必须在
+/etc/group
+中别设定为 GID 为 0 的组(在大部分 Linux 上叫
+\fIroot\fR)的成员。
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (number), \fBSYS_GID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR、\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的系统组的组 ID 的范围。
+.sp
+\fBSYS_GID_MIN\fR
+和
+\fBSYS_GID_MAX\fR
+的默认值分别是 101 和
+\fBGID_MIN\fR\-1。
+.RE
+.PP
+\fBSYS_UID_MAX\fR (number), \fBSYS_UID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR
+或
+\fBnewusers\fR
+创建的系统用户的用户 ID 的范围。
+.sp
+\fBSYS_UID_MIN\fR
+和
+\fBSYS_UID_MAX\fR
+的默认值分别是 101 和
+\fBUID_MIN\fR\-1。
+.RE
+.PP
+\fBSYSLOG_SG_ENAB\fR (boolean)
+.RS 4
+允许\(lqsyslog\(rq记录
+\fBsg\fR
+的活动。
+.RE
+.PP
+\fBSYSLOG_SU_ENAB\fR (boolean)
+.RS 4
+除了 sulog 文件日志，也为
+\fBsu\fR
+活动启用\(lqsyslog\(rq日志。
+.RE
+.PP
+\fBTTYGROUP\fR (string), \fBTTYPERM\fR (string)
+.RS 4
+The terminal permissions: the login tty will be owned by the
+\fBTTYGROUP\fR
+group, and the permissions will be set to
+\fBTTYPERM\fR\&.
+.sp
+By default, the ownership of the terminal is set to the user\*(Aqs primary group and the permissions are set to
+\fI0600\fR\&.
+.sp
+\fBTTYGROUP\fR
+can be either the name of a group or a numeric group identifier\&.
+.sp
+If you have a
+\fBwrite\fR
+program which is "setgid" to a special group which owns the terminals, define TTYGROUP to the group number and TTYPERM to 0620\&. Otherwise leave TTYGROUP commented out and assign TTYPERM to either 622 or 600\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (string)
+.RS 4
+If defined, file which maps tty line to TERM environment parameter\&. Each line of the file is in a format something like "vt100 tty01"\&.
+.RE
+.PP
+\fBUID_MAX\fR (number), \fBUID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR
+或
+\fBnewusers\fR
+创建的普通用户的用户 ID 的范围。
+.sp
+\fBUID_MIN\fR
+和
+\fBUID_MAX\fR
+的默认值分别是 1000 和 60000。
+.RE
+.PP
+\fBULIMIT\fR (number)
+.RS 4
+默认
+\fBulimit\fR
+值。
+.RE
+.PP
+\fBUMASK\fR (number)
+.RS 4
+文件模式创建掩码初始化为此值。如果没有指定，掩码初始化为 022。
+.sp
+\fBuseradd\fR
+和
+\fBnewusers\fR
+使用此掩码设置它们创建的用户主目录的模式。
+.sp
+也被
+\fBlogin\fR
+用于指定用户的初始 umask。注意，此掩码可以被用户的 GECOS 行覆盖(当设置了
+\fBQUOTAS_ENAB\fR
+时)，也可以被带
+\fIK\fR
+指示符的
+\fBlimits\fR(5)
+定义的限制值覆盖。
+.RE
+.PP
+\fBUSERDEL_CMD\fR (string)
+.RS 4
+如果定义了，这是删除账户时执行的命令。它应该移除所有属于此用户的的 at/cron/print 等作业(作为第一个参数传递)。
+.sp
+这个脚本的返回值并不被带到账户中去。
+.sp
+这是一个示例脚本，它移除用户的 cron、at 和 print 作业：
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#! /bin/sh
+
+# 检查需要的参数
+if [ $# != 1 ]; then
+	echo "Usage: $0 username"
+	exit 1
+fi
+
+# 移除 cron 作业
+crontab \-r \-u $1
+
+# 移除 at 作业
+# 注意这将移除所有属于同一个 UID 的作业
+# 即使此 ID 由多个用户名共享
+AT_SPOOL_DIR=/var/spool/cron/atjobs
+find $AT_SPOOL_DIR \-name "[^\&.]*" \-type f \-user $1 \-delete \e;
+
+# 移除 print 作业
+lprm $1
+
+# 全部完成
+exit 0
+      
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (boolean)
+.RS 4
+如果 uid 和 gid 相同，用户名和主用户名也相同，使非 root 组的组掩码位和属主位相同 (如：022 \-> 002, 077 \-> 007)。
+.sp
+如果设置为
+\fIyes\fR，如果组中没有成员了，\fBuserdel\fR
+将移除此用户组，\fBuseradd\fR
+创建用户时，也会创建一个同名的默认组。
+.RE
+.SH "交叉引用"
+.PP
+如下交叉引用显示影子密码套件哪个程序使用哪个参数。
+.PP
+chfn
+.RS 4
+CHFN_AUTH
+CHFN_RESTRICT
+LOGIN_STRING
+.RE
+.PP
+chgpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chpasswd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENABSHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+chsh
+.RS 4
+CHSH_AUTH LOGIN_STRING
+.RE
+.PP
+gpasswd
+.RS 4
+ENCRYPT_METHOD MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+groupadd
+.RS 4
+GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP SYS_GID_MAX SYS_GID_MIN
+.RE
+.PP
+groupdel
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmems
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+groupmod
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpck
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+grpunconv
+.RS 4
+MAX_MEMBERS_PER_GROUP
+.RE
+.PP
+login
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENV_PATH ENV_SUPATH ENV_TZ ENVIRON_FILE
+ERASECHAR FAIL_DELAY
+FAILLOG_ENAB
+FAKE_SHELL
+FTMP_FILE
+HUSHLOGIN_FILE
+ISSUE_FILE
+KILLCHAR
+LASTLOG_ENAB
+LOGIN_RETRIES
+LOGIN_STRING
+LOGIN_TIMEOUT LOG_OK_LOGINS LOG_UNKFAIL_ENAB
+MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE MOTD_FILE NOLOGINS_FILE PORTTIME_CHECKS_ENAB QUOTAS_ENAB
+TTYGROUP TTYPERM TTYTYPE_FILE
+ULIMIT UMASK
+USERGROUPS_ENAB
+.RE
+.PP
+newgrp / sg
+.RS 4
+SYSLOG_SG_ENAB
+.RE
+.PP
+newusers
+.RS 4
+ENCRYPT_METHOD GID_MAX GID_MIN MAX_MEMBERS_PER_GROUP MD5_CRYPT_ENAB PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+passwd
+.RS 4
+ENCRYPT_METHOD MD5_CRYPT_ENAB OBSCURE_CHECKS_ENAB PASS_ALWAYS_WARN PASS_CHANGE_TRIES PASS_MAX_LEN PASS_MIN_LEN
+SHA_CRYPT_MAX_ROUNDS SHA_CRYPT_MIN_ROUNDS
+.RE
+.PP
+pwck
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+pwconv
+.RS 4
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.RE
+.PP
+su
+.RS 4
+CONSOLE
+CONSOLE_GROUPS DEFAULT_HOME
+ENV_HZ ENVIRON_FILE
+ENV_PATH ENV_SUPATH
+ENV_TZ LOGIN_STRING MAIL_CHECK_ENAB MAIL_DIR MAIL_FILE QUOTAS_ENAB
+SULOG_FILE SU_NAME
+SU_WHEEL_ONLY
+SYSLOG_SU_ENAB
+USERGROUPS_ENAB
+.RE
+.PP
+sulogin
+.RS 4
+ENV_HZ
+ENV_TZ
+.RE
+.PP
+useradd
+.RS 4
+CREATE_HOME GID_MAX GID_MIN MAIL_DIR MAX_MEMBERS_PER_GROUP PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE SUB_GID_COUNT SUB_GID_MAX SUB_GID_MIN SUB_UID_COUNT SUB_UID_MAX SUB_UID_MIN SYS_GID_MAX SYS_GID_MIN SYS_UID_MAX SYS_UID_MIN UID_MAX UID_MIN UMASK
+.RE
+.PP
+userdel
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP USERDEL_CMD USERGROUPS_ENAB
+.RE
+.PP
+usermod
+.RS 4
+MAIL_DIR MAIL_FILE MAX_MEMBERS_PER_GROUP
+.RE
+.SH "参见"
+.PP
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBsu\fR(1),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBpam\fR(8)\&.

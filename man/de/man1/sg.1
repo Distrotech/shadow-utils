@@ -1,0 +1,96 @@
+'\" t
+.\"     Title: sg
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dienstprogramme f\(:ur Benutzer
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "SG" "1" "09.05.2014" "shadow\-utils 4\&.2" "Dienstprogramme f\(:ur Benutzer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sg \- f\(:uhrt einen Befehl unter einer anderen Gruppen\-ID aus
+.SH "\(:UBERSICHT"
+.HP \w'\fBsg\fR\ 'u
+\fBsg\fR [\-] [Gruppe\ [\-c]\ Befehl]
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBsg\fR
+funktioniert so \(:ahnlich wie der Befehl
+\fBnewgrp\fR, \(:ubernimmt aber auch einen Befehl\&. Dieser Befehl wird in der Shell
+/bin/sh
+ausgef\(:uhrt\&. Bei den meisten Shells, in denen Sie
+\fBsg\fR
+ausf\(:uhren, m\(:ussen Sie die Befehle, die aus mehrere W\(:ortern bestehen, in Anf\(:uhrungszeichen einfassen\&. Ein weiterer Unterschied zwischen
+\fBnewgrp\fR
+und
+\fBsg\fR
+ist, dass einige Shells
+\fBnewgrp\fR
+besonders behandeln: sie ersetzen sich mit einer neuen Instanz der Shell, die von
+\fBnewgrp\fR
+erzeugt wurde\&. Dies geschieht nicht mit
+\fBsg\fR, daher werden Sie nach Beenden des Befehls
+\fBsg\fR
+zu Ihrer vorherigen Gruppen\-ID zur\(:uckkehren\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBSYSLOG_SG_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Protokollieren der Aktivit\(:aten von
+\fBsg\fR
+in \(Fcsyslog\(Fo
+.RE
+.SH "DATEIEN"
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBnewgrp\fR(1),
+\fBsu\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

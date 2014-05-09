@@ -1,0 +1,96 @@
+'\" t
+.\"     Title: newgrp
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dienstprogramme f\(:ur Benutzer
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "NEWGRP" "1" "09.05.2014" "shadow\-utils 4\&.2" "Dienstprogramme f\(:ur Benutzer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+newgrp \- als neue Gruppe anmelden
+.SH "\(:UBERSICHT"
+.HP \w'\fBnewgrp\fR\ 'u
+\fBnewgrp\fR [\-] [\fIGruppe\fR]
+.SH "BESCHREIBUNG"
+.PP
+Mit dem Befehl
+\fBnewgrp\fR
+kann w\(:ahrend einer angemeldeten Sitzung die aktuelle Gruppen\-ID ge\(:andert werden\&. Wenn zus\(:atzlich der Schalter
+\fB\-\fR
+angegeben wird, wird die Benutzerumgebung neu gestartet, so als ob sich der Benutzer neu angemeldet h\(:atte\&. Anderenfalls bleibt die aktuelle Umgebung einschlie\(sslich des aktuellen Arbeitsverzeichnisses unver\(:andert\&.
+.PP
+\fBnewgrp\fR
+wechselt von der aktuellen echten Gruppen\-ID zu der angegeben Gruppe oder, falls kein Gruppenname angegeben wird, zu der Standardgruppe, wie sie in
+/etc/passwd
+festgelegt ist\&. Zudem versucht
+\fBnewgrp\fR, die Gruppe der Gruppensammlung des Benutzers hinzuzuf\(:ugen\&. Wenn der Benutzer nicht Root ist und die Gruppe ein Passwort hat und der Benutzer nicht Mitglied der Gruppe ist oder kein Passwort hat (in
+/etc/shadow, falls er einen Eintrag in der Shadow\-Passwort\-Datei hat, anderenfalls in
+/etc/passwd), wird er nach einem Passwort gefragt\&.
+.PP
+Wenn sich in
+/etc/gshadow
+ein Eintrag f\(:ur diese Gruppe befindet, wird die Mitgliederliste und das Passwort der Gruppe dieser Datei entnommen\&. Anderenfalls wird der Eintrag in
+/etc/group
+ausgewertet\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBSYSLOG_SG_ENAB\fR (boolesch)
+.RS 4
+aktiviert das Protokollieren der Aktivit\(:aten von
+\fBsg\fR
+in \(Fcsyslog\(Fo
+.RE
+.SH "DATEIEN"
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBsu\fR(1),
+\fBsg\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

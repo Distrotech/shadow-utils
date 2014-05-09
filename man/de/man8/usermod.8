@@ -1,0 +1,450 @@
+'\" t
+.\"     Title: usermod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Befehle zur Systemverwaltung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "USERMOD" "8" "09.05.2014" "shadow\-utils 4\&.2" "Befehle zur Systemverwaltung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usermod \- ver\(:andert ein Benutzerkonto
+.SH "\(:UBERSICHT"
+.HP \w'\fBusermod\fR\ 'u
+\fBusermod\fR [\fIOptionen\fR] \fIANMELDENAME\fR
+.SH "BESCHREIBUNG"
+.PP
+Der Befehl
+\fBusermod\fR
+ver\(:andert die Kontodateien des Systems, so dass sie die \(:Anderungen enthalten, die in der Befehlszeile eingegeben wurden\&.
+.SH "OPTIONEN"
+.PP
+Die Optionen, die vom Befehl
+\fBusermod\fR
+unterst\(:utzt werden, sind:
+.PP
+\fB\-a\fR, \fB\-\-append\fR
+.RS 4
+F\(:ugt den Benutzer weiteren Gruppen hinzu\&. Kann nur zusammen mit der Option
+\fB\-G\fR
+verwendet werden\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fIKOMMENTAR\fR
+.RS 4
+Der neue Wert des Kommentarfelds in der Passwortdatei des Benutzers\&. Er wird normalerweise mit dem Werkzeug
+\fBchfn\fR(1)
+ver\(:andert\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\fR\ \&\fIHOME_VERZ\fR
+.RS 4
+das neue Home\-Verzeichnis des Benutzers
+.sp
+Wenn die Option
+\fB\-m\fR
+verwendet wurde, wird der Inhalt des aktuellen Home\-Verzeichnisses in das neue Home\-Verzeichnis verschoben\&. Falls dieses nicht existiert, wird es angelegt\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR\ \&\fIVERFALLS_DATUM\fR
+.RS 4
+Das Datum, an welchem das Benutzerkonto deaktiviert wird\&. Das Datum muss im Format
+\fIJJJJ\-MM\-TT\fR
+angegeben werden\&.
+.sp
+Wenn das Argument
+\fIVERFALLS_DATUM\fR
+leer bleibt, wird der Verfall des Kontos deaktiviert\&.
+.sp
+Diese Option ben\(:otigt die Datei
+/etc/shadow\&. Falls die Datei
+/etc/shadow
+leer sein sollte, wird ein Eintrag erstellt\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIINAKTIV\fR
+.RS 4
+Die Anzahl von Tagen, nach denen ein Passwort abgelaufen ist, bis das Konto deaktiviert wird\&.
+.sp
+Ein Wert von 0 deaktiviert das Konto, sobald das Passwort abl\(:auft\&. Ein Wert von \-1 schaltet diese Funktion ab\&.
+.sp
+Diese Option ben\(:otigt die Datei
+/etc/shadow\&. Falls die Datei
+/etc/shadow
+leer sein sollte, wird ein Eintrag erstellt\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGRUPPE\fR
+.RS 4
+Der Name oder die Zahl der anf\(:anglichen Anmeldegruppe eines neuen Benutzers\&. Der Gruppenname muss existieren\&.
+.sp
+Jede Datei im Home\-Verzeichnis des Benutzers, die der alten Hauptgruppe des Benutzers geh\(:orte, wird dieser neuen Gruppe geh\(:oren\&.
+.sp
+Die Gruppenzugeh\(:origkeit von Dateien au\(sserhalb des Home\-Verzeichnisses des Benutzers muss per Hand angepasst werden\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIGRUPPE_1\fR[\fI,GRUPPE_2, \&.\&.\&.\fR[\fI,GRUPPE_N\fR]]]
+.RS 4
+Eine Liste zus\(:atzlicher Gruppen, denen der Benutzer ebenfalls angeh\(:ort\&. Die Gruppen sind durch Kommata ohne Leerzeichen von einander zu trennen\&. Die Gruppen unterliegen denselben Beschr\(:ankungen wie die Gruppe, die mit der Option
+\fB\-g\fR
+bestimmt wurde\&.
+.sp
+Wenn der Benutzer aktuell Mitglied einer Gruppe ist, die nicht angegeben ist, wird er aus dieser Gruppe entfernt\&. Dieses Verhalten kann mit der Option
+\fB\-a\fR
+abgeschaltet werden\&. Damit wird der Benutzer nur den angegebenen Gruppen hinzugef\(:ugt, ohne aus den \(:ubrigen gel\(:oscht zu werden\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-login\fR\ \&\fINEUER_ANMELDENAME\fR
+.RS 4
+Der Benutzername wird von
+\fIANMELDENAME\fR
+zu
+\fINEUER_ANMELDENAME\fR
+ver\(:andert\&. Andere Ver\(:anderungen werden nicht vorgenommen\&. Daher sollte wahrscheinlich der Name des Home\-Verzeichnisses des Benutzers per Hand ge\(:andert werden, um dem neuen Anmeldenamen Rechnung zu tragen\&.
+.RE
+.PP
+\fB\-L\fR, \fB\-\-lock\fR
+.RS 4
+Sperrt das Passwort eines Benutzers\&. Dadurch wird ein \(Fc!\(Fo vor das verschl\(:usselte Passwort gesetzt, wodurch im Ergebnis das Passwort abgeschaltet wird\&. Sie k\(:onnen diese Option nicht mit
+\fB\-p\fR
+oder
+\fB\-U\fR
+verwenden\&.
+.sp
+Hinweis: Wenn Sie das Konto sperren wollen (und nicht nur den Zugang mit einem Passwort), m\(:ussen Sie auch das
+\fIVERFALLSDATUM\fR
+auf
+\fI1\fR
+setzen\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-move\-home\fR
+.RS 4
+verschiebt den Inhalt des Home\-Verzeichnisses eines Benutzers zu dem neuen Ziel
+.sp
+Diese Option ist nur in Verbindung mit der Option
+\fB\-d\fR
+(oder
+\fB\-\-home\fR) zul\(:assig\&.
+.sp
+\fBusermod\fR
+versucht, den Eigent\(:umer der Dateien anzupassen und die Rechte, ACL und erweiterten Attribute zu \(:ubernehmen, aber Anpassungen per Hand k\(:onnen dennoch notwendig sein\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+Wenn es mit der Option
+\fB\-u\fR
+verwendet wird, kann mit dieser Option der Wert der Benutzer\-ID auf einen nicht eindeutigen Wert gesetzt werden\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORT\fR
+.RS 4
+das verschl\(:usselte Passwort, wie es von
+\fBcrypt\fR(3)
+zur\(:uckgegeben wird
+.sp
+\fBHinweis:\fR
+Diese Option ist nicht empfehlenswert, weil das Passwort (auch wenn es verschl\(:usselt ist) f\(:ur Benutzer sichtbar ist, die sich den Prozess anzeigen lassen\&.
+.sp
+Sie sollten sicherstellen, dass das Passwort den Passwortrichtlinien des Systems entspricht\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_VERZ\fR
+.RS 4
+f\(:uhrt die Ver\(:anderungen in dem Verzeichnis
+\fICHROOT_VERZ\fR
+durch und verwendet die Konfigurationsdateien aus dem Verzeichnis
+\fICHROOT_VERZ\fR
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fISHELL\fR
+.RS 4
+Der Name der neuen Anmelde\-Shell des Benutzers\&. Falls dieses Feld leer gelassen wird, verwendet das System die Standard\-Anmelde\-Shell\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+der neue numerische Wert der UID des Benutzers
+.sp
+Dieser Wert muss eindeutig sein, sofern nicht die Option
+\fB\-o\fR
+verwendet wird\&. Der Wert darf nicht negativ sein\&.
+.sp
+F\(:ur die Mailbox des Benutzers und alle Dateien, die ihm geh\(:oren und sich in seinem Home\-Verzeichnis befinden, wird die ID des Eigent\(:umers automatisch angepasst\&.
+.sp
+Der Eigent\(:umer von Dateien au\(sserhalb des Home\-Verzeichnisses des Benutzers muss per Hand angepasst werden\&.
+.sp
+Die Werte von
+\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBSYS_UID_MIN\fR
+und
+\fBSYS_UID_MAX\fR
+aus
+/etc/login\&.defs
+werden nicht gepr\(:uft\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-unlock\fR
+.RS 4
+Gibt das Passwort eines Benutzers frei\&. Dies entfernt das \(Fc!\(Fo vor dem verschl\(:usselten Passwort\&. Sie k\(:onnen diese Option nicht mit
+\fB\-p\fR
+oder
+\fB\-U\fR
+verwenden\&.
+.sp
+Hinweis: Falls Sie das Benutzerkonto freigeben wollen (und nicht nur den Zugang mit einem Passwort), sollten Sie auch das
+\fIVERFALLSDATUM\fR
+bearbeiten (zum Beispiel auf
+\fI99999\fR
+oder den Wert von
+\fBEXPIRE\fR
+aus
+/etc/default/useradd
+setzen)\&.
+.RE
+.PP
+\fB\-v\fR, \fB\-\-add\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate uids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-del\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate uids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-uids\fR
+and
+\fB\-\-add\-sub\-uids\fR
+are specified, the removal of all subordinate uid ranges happens before any subordinate uid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-add\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate gids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-del\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate gids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-gids\fR
+and
+\fB\-\-add\-sub\-gids\fR
+are specified, the removal of all subordinate gid ranges happens before any subordinate gid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISE\-BENUTZER\fR
+.RS 4
+der neue SELinux\-Benutzer f\(:ur den Anmeldenamen des Benutzers
+.sp
+Wenn
+\fISEBENUTZER\fR
+leer ist, wird die Zuordnung von SELinux\-Benutzern (sofern vorhanden) aus den Anmeldeinformationen des Benutzers entfernt
+.RE
+.SH "WARNUNGEN"
+.PP
+Wenn Sie mit diesem Befehl die numerische UID, den Namen oder das Home\-Verzeichnis eines Benutzers ver\(:andern wollen, m\(:ussen Sie sicherstellen, dass dieser Benutzer keine Prozesse laufen l\(:asst\&. Bei Linux stellt dies
+\fBusermod\fR
+sicher, auf anderen Architekturen \(:uberpr\(:uft es nur, ob der Benutzer laut utmp eingeloggt ist\&.
+.PP
+Sie m\(:ussen den Eigent\(:umer von
+\fBcrontab\fR\-Dateien oder
+\fBat\fR\-Auftr\(:agen per Hand \(:andern\&.
+.PP
+Sie m\(:ussen alle \(:Anderung in Bezug auf NIS auf dem NIS\-Server vornehmen\&.
+.SH "KONFIGURATION"
+.PP
+Die folgenden Konfigurationsvariablen in
+/etc/login\&.defs
+beeinflussen das Verhalten dieses Werkzeugs:
+.PP
+\fBMAIL_DIR\fR (Zeichenkette)
+.RS 4
+Das Verzeichnis des Mail\-Spools\&. Diese Angabe wird ben\(:otigt, um die Mailbox zu bearbeiten, nachdem das entsprechende Benutzerkonto ver\(:andert oder gel\(:oscht wurde\&. Falls nicht angegeben, wird ein Standard verwendet, der beim Kompilieren festgelegt wurde\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (Zeichenkette)
+.RS 4
+Legt den Ort der Mail\-Spool\-Dateien eines Benutzers relativ zu seinem Home\-Verzeichnis fest\&.
+.RE
+.PP
+Die Variablen
+\fBMAIL_DIR\fR
+und
+\fBMAIL_FILE\fR
+werden von
+\fBuseradd\fR,
+\fBusermod\fR
+und
+\fBuserdel\fR
+verwendet, um den Mail\-Spool eines Benutzers zu erstellen, zu verschieben oder zu l\(:oschen\&.
+.PP
+Falls
+\fBMAIL_CHECK_ENAB\fR
+auf
+\fIyes\fR
+gesetzt ist, werden sie auch verwendet, um die Umgebungsvariable
+\fBMAIL\fR
+festzulegen\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (Zahl)
+.RS 4
+Maximale Anzahl von Mitgliedern je Gruppeneintrag\&. Wenn das Maximum erreicht wird, wird ein weiterer Eintrag in
+/etc/group
+(mit dem gleichen Namen, dem gleichen Passwort und der gleichen GID) erstellt\&.
+.sp
+Der Standardwert ist 0, was zur Folge hat, dass die Anzahl der Mitglieder einer Gruppe nicht begrenzt ist\&.
+.sp
+Diese F\(:ahigkeit (der aufgeteilten Gruppe) erm\(:oglicht es, die Zeilenl\(:ange in der Gruppendatei zu begrenzen\&. Damit kann sichergestellt werden, dass die Zeilen f\(:ur NIS\-Gruppen nicht l\(:anger als 1024 Zeichen sind\&.
+.sp
+Falls Sie eine solche Begrenzung ben\(:otigen, k\(:onnen Sie 25 verwenden\&.
+.sp
+Hinweis: Aufgeteilte Gruppen werden m\(:oglicherweise nicht von allen Werkzeugen unterst\(:utzt, selbst nicht aus der Shadow\-Werkzeugsammlung\&. Sie sollten diese Variable nur setzen, falls Sie zwingend darauf angewiesen sind\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.SH "DATEIEN"
+.PP
+/etc/group
+.RS 4
+Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/gshadow
+.RS 4
+sichere Informationen zu den Gruppenkonten
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Konfiguration der Shadow\-Passwort\-Werkzeugsammlung
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/shadow
+.RS 4
+verschl\(:usselte Informationen zu den Benutzerkonten
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBuserdel\fR(8)\&.

@@ -1,0 +1,316 @@
+'\" t
+.\"     Title: passwd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "PASSWD" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+passwd \- cambia la password utente
+.SH "SINOSSI"
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR [\fIopzioni\fR] [\fILOGIN\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBpasswd\fR
+cambia la password per account utente\&. Un utente normale pu\(`o solo cambiare la password per il proprio account, mentre il super utente pu\(`o cambiarla per qualsiasi account\&.
+\fBpasswd\fR
+modifica anche l\*(Aqaccount o il periodo di validit\(`a della password associata\&.
+.SS "Modifiche delle password"
+.PP
+All\*(Aqutente viene prima chiesta la propria password attuale, se presente\&. Questa password viene cifrata e confrontata con quella memorizzata\&. All\*(Aqutente viene data solo una possibilit\(`a di inserire la password corretta\&. Il super utente salta questo passo in modo da poter modificare password dimenticate\&.
+.PP
+Dopo che la password \(`e stata inserita, vengono controllati i parametri dell\*(Aqinvecchiamento delle password per verificare che l\*(Aqutente possa modificarla in questo momento\&. In caso negativo
+\fBpasswd\fR
+non fa cambiare la password ed esce\&.
+.PP
+All\*(Aqutente viene quindi chiesto di inserire la nuova password due volte\&. Le due password sono confrontate e devono essere uguali affinch\('e la password venga accettata\&.
+.PP
+Quindi viene misurata la complessit\(`a della password\&. In linea di massima le password dovrebbero contenere dai 6 agli 8 caratteri, includendovi uno o pi\(`u caratteri da ciascuno dei seguenti insiemi:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+lettere minuscole
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+numeri da 0 a 9
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+segni di punteggiatura
+.RE
+.PP
+Si deve fare attenzione a non inserire il carattere di cancellazione o di kill (azzeramento della riga)\&.
+\fBpasswd\fR
+non accetta password non sufficientemente complesse\&.
+.SS "Suggerimenti per password utente"
+.PP
+La sicurezza di una password dipende dalla forza dell\*(Aqalgoritmo e dalla dimensione della chiave utilizzata\&. Il metodo originale di cifratura del sistema
+\fIUNIX\fR
+si basa sull\*(Aqalgoritmo NBS DES\&. Adesso sono da preferisi metodi di cifratura pi\(`u recenti (vedere
+\fBENCRYPT_METHOD\fR)\&. La dimensione della chiave dipende dall\*(Aqaleatoriet\(`a della password indicata\&.
+.PP
+La compromissione di una password avviene normalmente a seguito di incuria nella scelta o nella gestione della password\&. Per questo motivo non si devono utilizzare password che appaiono nei dizionari o che devono essere scritte\&. La password non deve essere uno nome proprio, il numero della patente, la data di nascita o l\*(Aqindirizzo\&. Uno qualunque di questi potrebbe essere indovinato per violare la sicurezza del sistema\&.
+.PP
+Si possono trovare indicazioni su come scegliere una password forte su http://en\&.wikipedia\&.org/wiki/Password_strength
+.SH "OPZIONI"
+.PP
+Il comando
+\fBpasswd\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-a\fR, \fB\-\-all\fR
+.RS 4
+Questa opzione pu\(`o essere utilizzata solo con
+\fB\-S\fR
+e mostra lo stato per ogni utente\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-delete\fR
+.RS 4
+Cancella la password utente (la rende vuota)\&. Questo \(`e un metodo veloce per disabilitare la password per l\*(Aqaccount\&. Imposta l\*(Aqaccount indicato come senza password\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expire\fR
+.RS 4
+Fa scadere subito la password dell\*(Aqutente\&. Il che ha l\*(Aqeffetto di forzare un cambio password al successivo accesso da parte dell\*(Aqutente\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-i\fR, \fB\-\-inactive\fR\ \&\fIINATTIVO\fR
+.RS 4
+Questa opzione viene utilizzata per disabilitare un account dopo che la password \(`e scaduta da un certo numero di giorni\&. Dopo che un account ha una password che \(`e scaduta da
+\fIINATTIVO\fR
+giorni, l\*(Aqutente non pu\(`o pi\(`u accedere con l\*(Aqaccount\&.
+.RE
+.PP
+\fB\-k\fR, \fB\-\-keep\-tokens\fR
+.RS 4
+Indica che il cambio password va effettuato solo per i token (password) di autenticazione scaduti\&. L\*(Aqutente vuole mantenere inalterati i token non scaduti\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-lock\fR
+.RS 4
+Blocca la password dell\*(Aqaccount indicato\&. Questa opzione disabilita una password modificandola in modo che non corrisponda a nessun valore cifrato (aggiunge un \(Fo!\(Fc all\*(Aqinizio della password)\&.
+.sp
+Notare che questo non disabilita l\*(Aqaccount\&. L\*(Aqutente pu\(`o sempre accedere al sistema tramite altri token di autenticazione (ad esempio una chiave SSH)\&. Per disabilitare l\*(Aqaccount l\*(Aqamministratore deve usare
+\fBusermod \-\-expiredate 1\fR
+(che imposta la data di scadenza al 2 gennaio 1970)\&.
+.sp
+Gli utenti con password bloccata non la possono cambiare\&.
+.RE
+.PP
+\fB\-n\fR, \fB\-\-mindays\fR\ \&\fIMIN_GIORNI\fR
+.RS 4
+Imposta il numero minimo di giorni tra i cambi di password a
+\fIMIN_GIORNI\fR\&. Un valore pari a zero indica che l\*(Aqutente pu\(`o cambiare la propria password in qualsiasi momento\&.
+.RE
+.PP
+\fB\-q\fR, \fB\-\-quiet\fR
+.RS 4
+Modalit\(`a silenziosa\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-repository\fR\ \&\fIREPOSITORY\fR
+.RS 4
+cambia la password nel repository
+\fIREPOSITORY\fR
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-S\fR, \fB\-\-status\fR
+.RS 4
+Visualizza le informazioni sullo stato di un account\&. Lo stato consiste di 7 campi\&. Il primo campo \(`e il nome dell\*(Aqutente\&. Il secondo campo indica se l\*(Aqaccount ha una password bloccata (L), non ha password (NP) o ha una password valida (P)\&. Il terzo campo contiene la data di ultima modifica della password\&. I successivi quattro campi sono l\*(Aqet\(`a minima, la massima, il periodo di avviso e quello di inattivit\(`a\&. Queste et\(`a sono espresse in giorni\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-unlock\fR
+.RS 4
+Sblocca la password dell\*(Aqaccount indicato\&. Questa opzione riabilita la password riportandola al suo valore precedente (il valore che c\*(Aqera prima di usare l\*(Aqopzione
+\fB\-l\fR)\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-warndays\fR\ \&\fIAVVISO_GIORNI\fR
+.RS 4
+Imposta il numero di giorni di preavviso prima che sia obbligatorio cambiare la password\&. L\*(Aqopzione
+\fIAVVISO_GIORNI\fR
+indica il numero di giorni precedenti alla scadenza della password durante i quali l\*(Aqutente viene avvertito dell\*(Aqimminente scadenza\&.
+.RE
+.PP
+\fB\-x\fR, \fB\-\-maxdays\fR\ \&\fIMAX_GIORNI\fR
+.RS 4
+Imposta il massimo numero di giorni che una password rimane valida\&. Dopo
+\fIMAX_GIORNI\fR
+viene richiesto di cambiare la password\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Il controllo della complessit\(`a delle password varia da sistema a sistema\&. All\*(Aqutente \(`e caldamente consigliato si utilizzare una password che ritenga sufficientemente complessa\&.
+.PP
+Gli utenti possono non essere in grado di cambiare la propria password se NIS \(`e abilitato ed essi non sono collegati al server NIS\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBENCRYPT_METHOD\fR (testo)
+.RS 4
+Definisce l\*(Aqalgoritmo di cifratura predefinito per le password (se non ne viene specificato uno a riga di comando)\&.
+.sp
+Pu\(`o avere uno dei seguenti valori:
+\fIDES\fR
+(predefinito),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Nota: questo parametro ha la precedenza sulla variabile
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (booleano)
+.RS 4
+Indica se le password vanno cifrate usando l\*(Aqalgoritmo basato su MD5\&. Se impostato a
+\fIyes\fR
+le nuove password saranno cifrate usando un algoritmo basato su MD5 e compatibile con quello delle versioni pi\(`u recenti di FreeBSD\&. Supporta password di lunghezza qualsiasi e testi \(Fosalt\(Fc pi\(`u lunghi\&. Impostare a
+\fIno\fR
+se si devono copiare password su altri sistemi che non gestiscono l\*(Aqalgoritmo\&. Il valore predefinito \(`e
+\fIno\fR\&.
+.sp
+Questa variabile ha meno priorit\(`a della variabile
+\fBENCRYPT_METHOD\fR
+e di qualsiasi opzione a riga di comando che imposta un algoritmo di cifratura\&.
+.sp
+Questa variabile non \(`e pi\(`u usata\&. Si dovrebbe utilizzare
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBOBSCURE_CHECKS_ENAB\fR (booleano)
+.RS 4
+Abilita controlli addizionali durante il cambio password\&.
+.RE
+.PP
+\fBPASS_ALWAYS_WARN\fR (booleano)
+.RS 4
+Avvisa riguardo password deboli (anche se le permette egualmente) se si \(`e root\&.
+.RE
+.PP
+\fBPASS_CHANGE_TRIES\fR (numerico)
+.RS 4
+Massimo numero di tentativi per cambiare una password (troppo facile)\&.
+.RE
+.PP
+\fBPASS_MAX_LEN\fR (numerico), \fBPASS_MIN_LEN\fR (numerico)
+.RS 4
+Numero di caratteri significativi della password per crypt()\&.
+\fBPASS_MAX_LEN\fR
+\(`e normalmente 8\&. Da non cambiare a meno che la propria crypt() sia migliore\&. Questo viene ignorato se
+\fBMD5_CRYPT_ENAB\fR
+\(`e impostata a
+\fIyes\fR\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (numerico), \fBSHA_CRYPT_MAX_ROUNDS\fR (numerico)
+.RS 4
+Quando
+\fBENCRYPT_METHOD\fR
+vale
+\fISHA256\fR
+o
+\fISHA512\fR, questo definisce il numero di cicli SHA usati per l\*(Aqalgoritmo di cifratura (quando il numero di cicli non \(`e impostato a riga di comando)\&.
+.sp
+Con molti cicli \(`e pi\(`u difficile trovare una password usando la forza bruta\&. Ma va notato che \(`e richiesta maggiore potenza di calcolo per autenticare gli utenti\&.
+.sp
+Se non specificato sar\(`a la libc a scegliere il numero di cicli (5000)\&.
+.sp
+Il valore deve essere compreso tra 1\&.000 e 999\&.999\&.999\&.
+.sp
+Se viene impostato solo uno tra
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+e
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora l\*(Aqunico valore viene utilizzato\&.
+.sp
+Se
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora viene utilizzato il maggiore\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VALORI RESTITUITI"
+.PP
+Il comando
+\fBpasswd\fR
+restituisce i seguenti valori:
+.SH "VEDERE ANCHE"
+.PP
+\fBchpasswd\fR(8),
+\fBpasswd\fR(5),
+\fBshadow\fR(5),
+\fBlogin.defs\fR(5),\fBusermod\fR(8)\&.

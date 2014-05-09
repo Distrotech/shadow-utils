@@ -1,0 +1,206 @@
+'\" t
+.\"     Title: chgpasswd
+.\"    Author: Thomas K\(/loczko <kloczek@pld.org.pl>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "CHGPASSWD" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+chgpasswd \- 批量更新组密码
+.SH "大纲"
+.HP \w'\fBchgpasswd\fR\ 'u
+\fBchgpasswd\fR [\fI选项\fR]
+.SH "描述"
+.PP
+\fBchgpasswd\fR
+命令从标准输入读取一系列组名和密码对，并使用此信息更新这些存在的组。每行的格式如下：
+.PP
+\fIgroup_name\fR:\fIpassword\fR
+.PP
+默认上，提供的密码必须是明码文本，然后由
+\fBchgpasswd\fR
+加密。
+.PP
+The default encryption algorithm can be defined for the system with the
+\fBENCRYPT_METHOD\fR
+variable of
+/etc/login\&.defs, and can be overwiten with the
+\fB\-e\fR,
+\fB\-m\fR, or
+\fB\-c\fR
+options\&.
+.PP
+此命令一般用于需要一次创建很多用户的大型系统。
+.SH "选项"
+.PP
+\fBchgpasswd\fR
+可以接受的选项有：
+.PP
+\fB\-c\fR, \fB\-\-crypt\-method\fR
+.RS 4
+使用指定的方法加密密码。
+.sp
+可用的方法有 DES, MD5, NONE, and SHA256 或 SHA512，前提是您的 libc 支持这写方法。
+.RE
+.PP
+\fB\-e\fR, \fB\-\-encrypted\fR
+.RS 4
+提供的密码是已经加密了的
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-m\fR, \fB\-\-md5\fR
+.RS 4
+如果提供的密码没有加密，则使用 MD5 加密而不是 DES。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sha\-rounds\fR
+.RS 4
+使用指定次数的轮转来加密密码。
+.sp
+值 0 表示让系统为加密方法选择默认的轮转次数 (5000)。
+.sp
+会强制最小 1,000，最大 9,9999,9999
+.sp
+您只可以对 SHA256 或 SHA512 使用此选项。
+.sp
+默认，轮转数由
+/etc/login\&.defs
+文件中的 SHA_CRYPT_MIN_ROUNDS 和 SHA_CRYPT_MAX_ROUNDS 变量确定。
+.RE
+.SH "CAVEATS"
+.PP
+记住要设置权限或者掩码来阻止其它用户对未加密文件的读取。
+.PP
+您需要确保你吗和加密方法符合系统的密码策略。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBENCRYPT_METHOD\fR (string)
+.RS 4
+这定义了系统加密密码的默认算法(如果没有在命令行上指定算法)。
+.sp
+可以使用如下值：\fIDES\fR
+(default),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+注意，此参数会覆盖
+\fBMD5_CRYPT_ENAB\fR
+变量。
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (boolean)
+.RS 4
+表示密码是否必须使用基于 MD5 的算法加密。如果设为
+\fIyes\fR，新密码将使用可以和新版 FreeBSD 兼容的基于 MD5 的算法加密。它支持无限长度的密码以及更长的盐字符串。如果您需要将加密的密码复制到其它不理解新算法的系统，设置为
+\fIno\fR。默认值是
+\fIno\fR。
+.sp
+This variable is superseded by the
+\fBENCRYPT_METHOD\fR
+variable or by any command line option used to configure the encryption algorithm\&.
+.sp
+此变量已经废弃。您应该使用
+\fBENCRYPT_METHOD\fR。
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (number), \fBSHA_CRYPT_MAX_ROUNDS\fR (number)
+.RS 4
+\fBENCRYPT_METHOD\fR
+设为
+\fISHA256\fR
+或
+\fISHA512\fR
+时，此项确定加密算法默认使用 SHA 轮转数目(当轮转数没有通过命令行指定时)。
+.sp
+使用很多轮转，会让暴力破解更加困难。但是需要注意，认证用户时也会需要更多的 CPU 资源。
+.sp
+如果没有指定，libc 会选择默认的轮转数(5000)。
+.sp
+值必须在 1000 \- 999,999,999 之间。
+.sp
+如果只设置了一个
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+或
+\fBSHA_CRYPT_MAX_ROUNDS\fR
+值，就会使用这个值。
+.sp
+如果
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR，将会使用大的那个。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "参见"
+.PP
+\fBgpasswd\fR(1),
+\fBgroupadd\fR(8),
+\fBlogin.defs\fR(5)\&.

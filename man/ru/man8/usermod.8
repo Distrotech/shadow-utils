@@ -1,0 +1,436 @@
+'\" t
+.\"     Title: usermod
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 05/09/2014
+.\"    Manual: Команды управления системой
+.\"    Source: shadow-utils 4.2
+.\"  Language: Russian
+.\"
+.TH "usermod" "8" "05/09/2014" "shadow\-utils 4\&.2" "Команды управления системой"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "НАЗВАНИЕ"
+usermod \- изменяет учётную запись пользователя
+.SH "СИНТАКСИС"
+.HP \w'\fBusermod\fR\ 'u
+\fBusermod\fR [\fIпараметры\fR] \fIУЧЁТНАЯ_ЗАПИСЬ\fR
+.SH "ОПИСАНИЕ"
+.PP
+Команда
+\fBusermod\fR
+изменяет системные файлы учётных записей согласно переданным в командной строке параметрам\&.
+.SH "ПАРАМЕТРЫ"
+.PP
+Параметры команды
+\fBusermod\fR:
+.PP
+\fB\-a\fR, \fB\-\-append\fR
+.RS 4
+Добавить пользователя в дополнительную группу(ы)\&. Использовать только вместе с параметром
+\fB\-G\fR\&.
+.RE
+.PP
+\fB\-c\fR, \fB\-\-comment\fR\ \&\fIКОММЕНТАРИЙ\fR
+.RS 4
+Новое значение поля комментария в файле пользовательских паролей\&. Обычно его изменяют с помощью программы
+\fBchfn\fR(1)\&.
+.RE
+.PP
+\fB\-d\fR, \fB\-\-home\fR\ \&\fIHOME_DIR\fR
+.RS 4
+Домашний каталог нового пользователя\&.
+.sp
+Если указан параметр
+\fB\-m\fR, то содержимое текущего домашнего каталога будет перемещено в новый домашний каталог, который будет создан, если он ещё не существует\&.
+.RE
+.PP
+\fB\-e\fR, \fB\-\-expiredate\fR \fIДАТА_УСТАРЕВАНИЯ\fR
+.RS 4
+Дата, когда учётная запись пользователя будет заблокирована\&. Дата задаётся в формате
+\fIГГГГ\-ММ\-ДД\fR\&.
+.sp
+Пустое значение аргумента
+\fIДАТА_УСТАРЕВАНИЯ\fR
+отключает устаревание учётной записи\&.
+.sp
+Для этого параметра требуется файл
+/etc/shadow\&. При отсутствии в
+/etc/shadow
+создаётся необходимая запись\&.
+.RE
+.PP
+\fB\-f\fR, \fB\-\-inactive\fR\ \&\fIДНЕЙ\fR
+.RS 4
+Количество дней, которые должны пройти после устаревания пароля, чтобы учётная запись заблокировалась навсегда\&.
+.sp
+Если указано значение 0, то учётная запись блокируется сразу после устаревания пароля, а при значении \-1 данная возможность не используется\&.
+.sp
+Для этого параметра требуется файл
+/etc/shadow\&. При отсутствии в
+/etc/shadow
+создаётся необходимая запись\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIГРУППА\fR
+.RS 4
+Имя или числовой идентификатор новой первичной группы пользователя\&. Группа с таким именем должна существовать\&.
+.sp
+Все файлы в домашнем каталоге пользователя, принадлежавшие предыдущей первичной группе пользователя, будут принадлежать новой группе\&.
+.sp
+Группового владельца файлов вне домашнего каталога нужно изменить вручную\&.
+.RE
+.PP
+\fB\-G\fR, \fB\-\-groups\fR\ \&\fIГРУППА1\fR[\fI,ГРУППА2,\&...\fR[\fI,ГРУППАN\fR]]]
+.RS 4
+Список дополнительных групп, в которых числится пользователь\&. Перечисление групп осуществляется через запятую, без промежуточных пробелов\&. На указанные группы действуют те же ограничения, что и для группы указанной в параметре
+\fB\-g\fR\&.
+.sp
+Если пользователь \(em член группы, которой в указанном списке нет, то пользователь удаляется из этой группы\&. Такое поведение можно изменить с помощью параметра
+\fB\-a\fR, при указании которого к уже имеющемуся списку групп пользователя добавляется список указанных дополнительных групп\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-login\fR\ \&\fIНОВОЕ_ИМЯ\fR
+.RS 4
+Имя пользователя будет изменено с
+\fIИМЯ\fR
+на
+\fIНОВОЕ_ИМЯ\fR\&. Больше ничего не меняется\&. В частности, вероятно, должно быть изменено имя домашнего каталога и почтового ящика, чтобы отразить изменение имени пользователя\&.
+.RE
+.PP
+\fB\-L\fR, \fB\-\-lock\fR
+.RS 4
+Заблокировать пароль пользователя\&. Это делается помещением символа \(Fo!\(Fc в начало шифрованного пароля, чтобы приводит к блокировке пароля\&. Не используйте этот параметр вместе с
+\fB\-p\fR
+или
+\fB\-U\fR\&.
+.sp
+Замечание: если вы хотите заблокировать учётную запись (не только доступ по паролю), также установите значение
+\fIEXPIRE_DATE\fR
+в
+\fI1\fR\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-move\-home\fR
+.RS 4
+Переместить содержимое домашнего каталога в новое место\&.
+.sp
+Этот параметр можно использовать только с параметром
+\fB\-d\fR
+(или
+\fB\-\-home\fR)\&.
+.sp
+Команда
+\fBusermod\fR
+пытается изменить владельцев файлов и копирует права, ACL и расширенные атрибуты, но после неё всё равно могут потребоваться некоторые ручные действия\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+При использовании с параметром
+\fB\-u\fR, этот параметр позволяет указывать не уникальный числовой идентификатор пользователя\&.
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIПАРОЛЬ\fR
+.RS 4
+Шифрованное значение пароля, которое возвращает функция
+\fBcrypt\fR(3)\&.
+.sp
+\fBЗамечание:\fR
+Этот параметр использовать не рекомендуется, так как пароль (или не шифрованный пароль) будет видим другими пользователям в списке процессов\&.
+.sp
+Вы должны проверить, что пароль соответствует политике системных паролей\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fIКАТ_CHROOT\fR
+.RS 4
+Выполнить изменения в каталоге
+\fIКАТ_CHROOT\fR
+и использовать файлы настройки из каталога
+\fIКАТ_CHROOT\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-shell\fR\ \&\fIОБОЛОЧКА\fR
+.RS 4
+Имя новой регистрационной оболочки пользователя\&. Если задать пустое значение, то будет использована регистрационная оболочка по умолчанию\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-uid\fR\ \&\fIUID\fR
+.RS 4
+Новый числовой идентификатор пользователя (UID)\&.
+.sp
+Оно должно быть уникальным, если не используется параметр
+\fB\-o\fR\&. Значение должно быть неотрицательным\&.
+.sp
+Для почтового ящика и всех файлов, которыми владеет пользователь и которые расположены в его домашнем каталоге, идентификатор владельца файла будет изменён автоматически\&.
+.sp
+Для файлов, расположенных вне домашнего каталога, идентификатор нужно изменять вручную\&.
+.sp
+Никаких проверок по
+\fBUID_MIN\fR,
+\fBUID_MAX\fR,
+\fBSYS_UID_MIN\fR
+или
+\fBSYS_UID_MAX\fR
+из
+/etc/login\&.defs
+не производится\&.
+.RE
+.PP
+\fB\-U\fR, \fB\-\-unlock\fR
+.RS 4
+Разблокировать пароль пользователя\&. Это выполняется удалением символа \(Fo!\(Fc из начала шифрованного пароля\&. Не используйте этот параметр вместе с
+\fB\-p\fR
+или
+\fB\-L\fR\&.
+.sp
+Замечание: если вы хотите разблокировать учётную запись (не только доступ по паролю), также установите значение
+\fIEXPIRE_DATE\fR
+(например, в to
+\fI99999\fR
+или равным значению
+\fBEXPIRE\fR
+из файла
+/etc/default/useradd)\&.
+.RE
+.PP
+\fB\-v\fR, \fB\-\-add\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate uids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-V\fR, \fB\-\-del\-sub\-uids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate uids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-uids\fR
+and
+\fB\-\-add\-sub\-uids\fR
+are specified, the removal of all subordinate uid ranges happens before any subordinate uid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR, or
+\fBSUB_UID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-add\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Add a range of subordinate gids to the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to add multiple ranges to a users account\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-del\-sub\-gids\fR\ \&\fIFIRST\fR\-\fILAST\fR
+.RS 4
+Remove a range of subordinate gids from the user\*(Aqs account\&.
+.sp
+This option may be specified multiple times to remove multiple ranges to a users account\&. When both
+\fB\-\-del\-sub\-gids\fR
+and
+\fB\-\-add\-sub\-gids\fR
+are specified, the removal of all subordinate gid ranges happens before any subordinate gid range is added\&.
+.sp
+No checks will be performed with regard to
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR, or
+\fBSUB_GID_COUNT\fR
+from /etc/login\&.defs\&.
+.RE
+.PP
+\fB\-Z\fR, \fB\-\-selinux\-user\fR\ \&\fISEUSER\fR
+.RS 4
+Новый пользователь SELinux для пользовательского входа\&.
+.sp
+При пустом значении
+\fISEUSER\fR
+пользовательское сопоставление SELinux для пользователя
+\fILOGIN\fR
+удаляется (если есть)\&.
+.RE
+.SH "ПРЕДОСТЕРЕЖЕНИЯ"
+.PP
+Вы должны убедиться, что от указанного пользователя не запущено никаких процессов, если при выполнении этой команды изменяется числовой пользовательский ID, имя пользователя или домашний каталог пользователя\&. В Linux команда
+\fBusermod\fR
+выполняет такую проверку, но на других архитектурах проверяется только присутствие пользователя в системе согласно данным utmp\&.
+.PP
+Вы должны вручную изменить владельца всех файлов
+\fBcrontab\fR
+или заданий
+\fBat\fR\&.
+.PP
+Вы должны сделать все изменения NIS на сервере NIS самостоятельно\&.
+.SH "НАСТРОЙКА"
+.PP
+На работу этого инструмента влияют следующие переменные настройки из
+/etc/login\&.defs:
+.PP
+\fBMAIL_DIR\fR (строка)
+.RS 4
+Почтовый каталог\&. Данный параметр нужен для управления почтовым ящиком при изменении или удалении учётной записи пользователя\&. Если параметр не задан, то используется значение указанное при сборке\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (строка)
+.RS 4
+Определяет расположение почтовых файлов пользователя относительно домашнего каталога\&.
+.RE
+.PP
+Переменные
+\fBMAIL_DIR\fR
+и
+\fBMAIL_FILE\fR
+используются командами
+\fBuseradd\fR,
+\fBusermod\fR
+и
+\fBuserdel\fR
+для создания, перемещения или удаления почты пользователя\&.
+.PP
+Если значение
+\fBMAIL_CHECK_ENAB\fR
+равно
+\fIyes\fR, то они также используются для определения переменной окружения
+\fBMAIL\fR\&.
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (число)
+.RS 4
+Максимальное количество членов в записи о группе\&. При достижения максимума заводится новая запись группы (строка) в
+/etc/group
+(с тем же именем, паролем и тем же GID)\&.
+.sp
+Значение по умолчанию равно 0, означающее, что ограничения на количество членов в группе нет\&.
+.sp
+Данная возможность (разделение группы) позволяет ограничить длину строк в файле групп\&. Это полезно для ограничения длины строк групп NIS в 1024 символа\&.
+.sp
+Если вам нужно такое ограничение, укажите значение 25\&.
+.sp
+Замечание: разделение групп поддерживается не всеми инструментами (даже в наборе инструментов Shadow)\&. Вы не должны использовать эту переменную, если вам действительно это ненужно\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.SH "ФАЙЛЫ"
+.PP
+/etc/group
+.RS 4
+содержит информацию о группах
+.RE
+.PP
+/etc/gshadow
+.RS 4
+содержит защищаемую информацию о группах
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+содержит конфигурацию подсистемы теневых паролей
+.RE
+.PP
+/etc/passwd
+.RS 4
+содержит информацию о пользователях
+.RE
+.PP
+/etc/shadow
+.RS 4
+содержит защищаемую информацию о пользователях
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "СМОТРИТЕ ТАКЖЕ"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBcrypt\fR(3),
+\fBgpasswd\fR(8),
+\fBgroupadd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8),
+\fBuserdel\fR(8)\&.

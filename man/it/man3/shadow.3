@@ -1,0 +1,240 @@
+'\" t
+.\"     Title: shadow
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Chiamate di libreria
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "SHADOW" "3" "09/05/2014" "shadow\-utils 4\&.2" "Chiamate di libreria"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+shadow, getspnam \- routine per file delle password cifrate
+.SH "SINTASSI"
+.PP
+\fI#include <shadow\&.h>\fR
+.PP
+\fIstruct spwd *getspent();\fR
+.PP
+\fIstruct spwd *getspnam(char\fR\fI*nome\fR\fI);\fR
+.PP
+\fIvoid setspent();\fR
+.PP
+\fIvoid endspent();\fR
+.PP
+\fIstruct spwd *fgetspent(FILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIstruct spwd *sgetspent(char\fR\fI*cp\fR\fI);\fR
+.PP
+\fIint putspent(struct spwd\fR\fI*p,\fR\fIFILE\fR\fI*fp\fR\fI);\fR
+.PP
+\fIint lckpwdf();\fR
+.PP
+\fIint ulckpwdf();\fR
+.SH "DESCRIZIONE"
+.PP
+\fIshadow\fR
+manipola il contenuto del file delle password shadow,
+/etc/shadow\&. La struttura nel file
+\fI#include\fR
+\(`e la seguente:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+struct spwd {
+      char		*sp_namp; /* login dell\*(Aqutente */
+      char		*sp_pwdp; /* password cifrata */
+      long int		sp_lstchg; /* ultimo cambio della password */
+      long int		sp_min; /* giorni minimi tra i cambi */
+      long int		sp_max; /* giorni massimi tra i cambi */
+      long int		sp_warn; /* giorni di preavviso */
+      long int		sp_inact; /* giorni di inattivit\(`a */
+      long int		sp_expire; /* data di scadenza dell\*(Aqaccount */
+      unsigned long int	sp_flag; /* riservato per uso futuro */
+}
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Ciascun campo significa:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_namp \- puntatore a una stringa null\-terminated che contiene il nome utente\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_pwdp \- puntatore a una stringa null\-terminated che contiene la password\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_lstchg \- giorni trascorsi dal 1 gennaio 1970 al momento in cui la password \(`e stata cambiata l\*(Aqultima volta\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_min \- giorni prima dei quali la password non pu\(`o essere cambiata\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_max \- giorni dopo i quali la password deve essere cambiata\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_warn \- giorni prima della scadenza della password in cui l\*(Aqutente viene avvertito\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_inact \- giorni dopo la scadenza della password dopo i quali l\*(Aqaccount viene considerato inattivo e disabilitato\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_expire \- giorni a partire dal 1 gennaio 1970 dopo i quali l\*(Aqaccount viene disabilitato\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+sp_flag \- riservato per uso futuro\&.
+.RE
+.SH "DESCRIZIONE"
+.PP
+\fIgetspent\fR,
+\fIgetspname\fR,
+\fIfgetspent\fR
+e
+\fIsgetspent\fR
+restituiscono tutte un puntatore a uno
+\fIstruct spwd\fR\&.
+\fIgetspent\fR
+restituisce la voce successiva nel file,
+\fIfgetspent\fR
+la voce successiva nello stream specificato, che si suppone sia un file nel formato corretto\&.
+\fIsgetspent\fR
+restituisce un puntatore a uno
+\fIstruct spwd\fR
+usando come input la stringa fornita\&.
+\fIgetspnam\fR
+cerca una voce che corrisponde a
+\fIname\fR
+partendo dalla posizione corrente nel file\&.
+.PP
+\fIsetspent\fR
+e
+\fIendspent\fR
+sono usate rispettivamente per iniziare e terminare l\*(Aqaccesso al file delle password shadow\&.
+.PP
+Le funzioni
+\fIlckpwdf\fR
+e
+\fIulckpwdf\fR
+si usano per garantire l\*(Aqaccesso esclusivo al file
+/etc/shadow\&.
+\fIlckpwdf\fR
+prova ad acquisire il lock tramite
+\fIpw_lock\fR
+per un massimo di 15 secondi, dopodich\('e tenta di ottenere un secondo lock usando
+\fIspw_lock\fR
+per il tempo che rimane dei 15 secondi iniziali\&. Se anche uno solo dei due tentativi fallisce dopo un totale di 15 secondi,
+\fIlckpwdf\fR
+restituisce \-1, mentre restituisce 0 se riesce ad acquisire entrambi i lock\&.
+.SH "DIAGNOSTICA"
+.PP
+Le funzioni restituiscono NULL se non ci sono altre voci disponibili o se si verifica un errore durante l\*(Aqelaborazione\&. Le funzioni di tipo
+\fIint\fR
+restituiscono 0 in caso di successo e \-1 in caso di errore\&.
+.SH "AVVISI/CAVEAT"
+.PP
+Queste funzioni possono essere usate solo dall\*(Aqamministratore, perch\('e l\*(Aqaccesso al file delle password shadow \(`e riservato\&.
+.SH "FILE"
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBgetpwent\fR(3),
+\fBshadow\fR(5)\&.

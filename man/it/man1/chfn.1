@@ -1,0 +1,159 @@
+'\" t
+.\"     Title: chfn
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "CHFN" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+chfn \- cambia il nome dell\*(Aqutente e altre informazioni
+.SH "SINOSSI"
+.HP \w'\fBchfn\fR\ 'u
+\fBchfn\fR [\fIopzioni\fR] [\fILOGIN\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBchfn\fR
+\(`e usato per cambiare il nome completo dell\*(Aqutilizzatore, il numero di stanza dell\*(Aqufficio, quello di telefono dell\*(Aqufficio e di casa\&. Questi dati sono normalmente stampati dal programma
+\fBfinger\fR(1)
+o equivalenti\&. Un utente normale pu\(`o cambiare solo i dati relativi al proprio account, con eventuali altre limitazioni specificate in
+/etc/login\&.defs\&. (La configurazione predefinita impedisce la modifica del proprio nome completo\&.) Il super utente pu\(`o cambiare tutte le informazioni di ciascun utente\&. Inoltre, solo il super utente pu\(`o usare l\*(Aqopzione
+\fB\-o\fR
+per la modifica delle parti non definite del campo GECOS\&.
+.PP
+Questi campi non possono contenere nessun carattere due punti\&. Ad eccezione del campo
+\fIother\fR, non dovrebbero contenere nessuna virgola e nessun segno uguale\&. \(`E anche consigliato di evitare caratteri non US\-ACII, ma su questo viene fatto un controllo solo per il numero di telefono\&. Il campo
+\fIother\fR
+viene utilizzato per memorizzare informazioni sull\*(Aq\(Foaccounting\(Fc da altre applicazioni\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBchfn\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-f\fR, \fB\-\-full\-name\fR\ \&\fINOME_COMPLETO\fR
+.RS 4
+Cambia il nome completo dell\*(Aqutente\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-home\-phone\fR\ \&\fITELEFONO_CASA\fR
+.RS 4
+Cambia il numero di telefono di casa dell\*(Aqutente\&.
+.RE
+.PP
+\fB\-o\fR, \fB\-\-other\fR\ \&\fIALTRO\fR
+.RS 4
+Cambia il campo GECOS per le altre informazioni\&. Questo campo viene utilizzato per memorizzare informazioni di \(Foaccounting\(Fc usate da altre applicazioni, e pu\(`o essere modificato solo dal super utente\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-room\fR\ \&\fINUMERO_STANZA\fR
+.RS 4
+Cambia il numero della stanza dell\*(Aqutente\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-w\fR, \fB\-\-work\-phone\fR\ \&\fITELEFONO_LAVORO\fR
+.RS 4
+Cambia il numero di telefono di lavoro dell\*(Aqutente\&.
+.RE
+.PP
+Se nessuna delle opzioni \(`e selezionata,
+\fBchfn\fR
+opera in maniera interattiva, chiedendo all\*(Aqutente il valore da impostare per ogni campo\&. Inserire un nuovo valore per sostituire il contenuto attuale, oppure lasciare la riga vuota per non cambiarlo\&. Il valore attuale \(`e mostrato tra le parentesi
+\fB[ ]\fR\&. Senza nessuna opzione,
+\fBchfn\fR
+opera sull\*(Aqaccount corrente\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBCHFN_AUTH\fR (booleano)
+.RS 4
+Se
+\fIyes\fR, il programma
+\fBchfn\fR
+richieder\(`a l\*(Aqautenticazione prima di apportare qualsiasi modifica, a meno che non sia eseguito dal super utente\&.
+.RE
+.PP
+\fBCHFN_RESTRICT\fR (testo)
+.RS 4
+Questo parametro specifica quali valori del campo
+\fIgecos\fR
+del file
+/etc/passwd
+possono essere cambiati da utenti normali usando il programma
+\fBchfn\fR\&. Pu\(`o essere una combinazione qualsiasi delle lettere
+\fIf\fR,
+\fIr\fR,
+\fIw\fR,
+\fIh\fR
+per \(FoNome completo (f)\(Fc, \(FoNumero stanza (r)\(Fc, \(FoTelefono di lavoro (w)\(Fc e \(FoTelefono di casa (h)\(Fc\&. Per compatibilit\(`a con precedenti versioni,
+\fIyes\fR
+\(`e quivalente a
+\fIrwh\fR
+e
+\fIno\fR
+\(`e equivalente a
+\fIfrwh\fR\&. Se non specificato, solo il super utente pu\(`o effettuare modifiche\&. Le impostazioni pi\(`u stringenti si ottengono installando
+\fBchfn\fR
+non SUID\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (testo)
+.RS 4
+Il testo da utilizzare per richiedere la password\&. Il valore predefinito \(`e \(FoPassword: \(Fc o una sua traduzione\&. Se si imposta questa variabile allora il testo non verr\(`a tradotto\&.
+.sp
+Se il testo contiene
+\fI%s\fR, questo verr\(`a sostituito dal nome dell\*(Aqutente\&.
+.RE
+.SH "FILE"
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBchsh\fR(1),
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(5)\&.

@@ -1,0 +1,109 @@
+'\" t
+.\"     Title: lastlog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes de gestion du syst\(`eme
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "LASTLOG" "8" "09/05/2014" "shadow\-utils 4\&.2" "Commandes de gestion du syst\(`em"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+lastlog \- signaler les connexions les plus r\('ecentes de tous les utilisateurs ou d\*(Aqun utilisateur donn\('e
+.SH "SYNOPSIS"
+.HP \w'\fBlastlog\fR\ 'u
+\fBlastlog\fR [\fIoptions\fR]
+.SH "DESCRIPTION"
+.PP
+\fBlastlog\fR
+affiche le contenu du journal des derni\(`eres connexions (/var/log/lastlog)\&. Les champs
+\fIUtilisateur\fR,
+\fIPort\fR, date de
+\fIDerni\(`ere\fR
+connexion sont affich\('es\&. Par d\('efaut (aucune option de sp\('ecifi\('ee), les entr\('ees de lastlog sont affich\('ees tri\('ees par ordre d\*(Aqapparition dans
+/etc/passwd\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBlastlog\fR
+sont\ \&:
+.PP
+\fB\-b\fR, \fB\-\-before\fR\ \&\fIDAYS\fR
+.RS 4
+N\*(Aqafficher que les entr\('ees du fichier lastlog plus anciennes que
+\fIJOURS\fR\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIDAYS\fR
+.RS 4
+Afficher les entr\('ees du fichier lastlog plus r\('ecentes que
+\fIJOURS\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIRANGE\fR
+.RS 4
+N\*(Aqafficher que les entr\('ees correspondant aux utilisateurs indiqu\('es\&.
+.sp
+Les utilisateurs peuvent \(^etre pr\('ecis\('es par un nom de connexion, un identifiant num\('erique d\*(Aqutilisateur ou un
+\fIINTERVALLE\fR
+d\*(Aqutilisateurs\&. Cet
+\fIINTERVALLE\fR
+d\*(Aqutilisateurs peut \(^etre pr\('ecis\('e avec des valeurs minimale et maximale (\fIUID_MIN\-UID_MAX\fR), seulement une valeur maximale (\fI\-UID_MAX\fR) ou une valeur minimale (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+Dans le cas o\(`u l\*(Aqutilisateur ne s\*(Aqest jamais connect\('e, le message \(Fo\ \&\fI**Never logged in**\fR\ \&\(Fc (\(Fo\ \&\fI**Jamais connect\('e**\fR\ \&\(Fc) est affich\('e \(`a la place des champs
+\fIPort\fR
+et date de
+\fIDerni\(`ere\fR
+connexion\&.
+.PP
+Seules les entr\('ees pour les utilisateurs actuels du syst\(`eme seront affich\('ees\&. D\*(Aqautres entr\('ees peuvent exister pour les utilisateurs supprim\('es pr\('ec\('edemment\&.
+.SH "NOTE"
+.PP
+Le fichier
+lastlog
+est une base de donn\('ees qui contient des informations concernant la derni\(`ere connexion de chaque utilisateur\&. Vous n\*(Aqavez pas \(`a faire de rotation (avec
+\fBlogrotate\fR) sur ce fichier\&. C\*(Aqest un fichier \(Fo\ \&creux\ \&\(Fc, donc sa taille sur le disque est bien plus petite que celle affich\('ee par \(Fo\ \&\fBls \-l\fR\ \&\(Fc (qui peut indiquer un tr\(`es gros fichier si vous avez des utilisateurs avec des UID \('elev\('es)\&. Vous pouvez afficher sa taille r\('eelle avec \(Fo\ \&\fBls \-s\fR\ \&\(Fc\&.
+.SH "FICHIERS"
+.PP
+/var/log/lastlog
+.RS 4
+Base de donn\('ees de l\*(Aqheure des connexions pr\('ec\('edentes des utilisateurs\&.
+.RE
+.SH "AVERTISSEMENTS"
+.PP
+S\*(Aqil y a des trous importants dans les valeurs des UID,
+\fBlastlog\fR
+s\*(Aqex\('ecutera plus lentement, sans affichage \(`a l\*(Aq\('ecran (par exemple, s\*(Aqil n\*(Aqy a pas d\*(Aqentr\('ee pour les utilisateurs ayant un UID compris entre 170 et 800 dans base de donn\('ees lastlog, le programme lastlog semblera bloqu\('e comme s\*(Aqil traitait les entr\('ees correspondant aux UID 171 \(`a 799)\&.

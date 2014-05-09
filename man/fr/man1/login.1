@@ -1,0 +1,476 @@
+'\" t
+.\"     Title: login
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "LOGIN" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+login \- D\('emarrer une session sur le syst\(`eme
+.SH "SYNOPSIS"
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fIh\(^ote\fR] [\fInom_utilisateur\fR] [\fIENV=VAR\fR...]
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] [\-h\ \fIh\(^ote\fR] \-f \fInom_utilisateur\fR
+.HP \w'\fBlogin\fR\ 'u
+\fBlogin\fR [\-p] \-r\ \fIh\(^ote\fR
+.SH "DESCRIPTION"
+.PP
+Le programme
+\fBlogin\fR
+permet d\*(Aq\('etablir une nouvelle session sur le syst\(`eme\&. Il est g\('en\('eralement invoqu\('e apr\(`es avoir r\('epondu \(`a l\*(Aqinvite de connexion
+\fIlogin:\fR
+sur le terminal de l\*(Aqutilisateur\&.
+\fBlogin\fR
+peut \(^etre sp\('ecifique \(`a l\*(Aqinterpr\('eteur de commandes et ne devrait pas \(^etre invoqu\('e comme un sous\-processus\&. Lorsqu\*(Aqil est appel\('e depuis un interpr\('eteur de commande,
+\fBlogin\fR
+doit \(^etre ex\('ecut\('e comme
+\fB>exec login\fR, ce qui entra\(^ine la sortie de l\*(Aqinterpr\('eteur de commandes en cours (et ainsi emp\(^eche le nouvel utilisateur connect\('e de retourner \(`a la session de l\*(Aqappelant)\&. L\*(Aqex\('ecution de
+\fBlogin\fR
+depuis un interpr\('eteur de commandes autre qu\*(Aqun interpr\('eteur de commandes initial (\(Fo\ \&login shell\ \&\(Fc) produira un message d\*(Aqerreur\&.
+.PP
+Un mot de passe est ensuite demand\('e \(`a l\*(Aqutilisateur\&. L\*(Aqaffichage du mot de passe est d\('esactiv\('e pour \('eviter de r\('ev\('eler le mot de passe\&. Seul un petit nombre d\*(Aq\('echecs est permis avant que
+\fBlogin\fR
+ne quitte et que la liaison ne soit interrompue\&.
+.PP
+Si une date de fin de validit\('e du mot de passe a \('et\('e d\('efinie pour ce compte, un nouveau mot de passe pourra vous \(^etre demand\('e\&. Votre ancien mot de passe et votre nouveau mot de passe vous seront alors demand\('es avant de pouvoir continuer\&. Veuillez lire la page de manuel
+\fBpasswd\fR(1)
+pour plus d\*(Aqinformations\&.
+.PP
+Apr\(`es une connexion r\('eussie, vous serez inform\('e des messages du syst\(`eme et de la pr\('esence de courrier\&. Vous pouvez d\('esactiver l\*(Aqaffichage du message du syst\(`eme (/etc/motd), en cr\('eant un fichier vide
+\&.hushlogin
+dans le r\('epertoire de votre compte\&. Le message concernant les courriers sera \(Fo\ \&\fIYou have new mail\&.\fR\ \&\(Fc, \(Fo\ \&\fIYou have mail\&.\fR\ \&\(Fc, ou \(Fo\ \&\fINo Mail\&.\fR\ \&\(Fc suivant l\*(Aq\('etat de votre bo\(^ite aux lettres\&.
+.PP
+Vos identifiants d\*(Aqutilisateur et de groupe seront d\('efinis en fonction des valeurs sp\('ecifi\('ees dans le fichier
+/etc/passwd\&. Les valeurs des variables d\*(Aqenvironnement
+\fI$HOME\fR,
+\fI$SHELL\fR,
+\fI$PATH\fR,
+\fI$LOGNAME\fR, et
+\fI$MAIL\fR
+seront d\('efinies en fonction des champs appropri\('es de l\*(Aqentr\('ee qui vous correspond\&. Les valeurs d\*(Aqulimit, d\*(Aqumask et de nice pourront \('egalement \(^etre affect\('ees en fonction des entr\('ees du champ GECOS\&.
+.PP
+Sur certains syst\(`emes, la variable d\*(Aqenvironnement
+\fI$TERM\fR
+sera initialis\('ee au type de terminal de votre tty, comme sp\('ecifi\('e dans
+/etc/ttytype\&.
+.PP
+Un script d\*(Aqinitialisation pour votre interpr\('eteur de commandes pourra \('egalement \(^etre ex\('ecut\('e\&. Veuillez vous r\('ef\('erer \(`a la section de manuel appropri\('ee pour plus d\*(Aqinformations sur cette fonctionnalit\('e\&.
+.PP
+Une connexion \(`a un sous\-syst\(`eme est indiqu\('ee par la pr\('esence d\*(Aqun \(Fo\ \&*\ \&\(Fc comme premier caract\(`ere de l\*(Aqinterpr\('eteur de commandes initial\&. Le r\('epertoire personnel sera utilis\('e comme racine d\*(Aqun nouveau syst\(`eme de fichiers dans lequel l\*(Aqutilisateur sera connect\('e\&.
+.PP
+Le programme
+\fBlogin\fR
+n\*(Aqest PAS responsable de la suppression d\*(Aqutilisateurs dans le fichier utmp\&. Les responsables du nettoyage de l\*(Aqappartenance des sessions de terminal sont
+\fBgetty\fR(8)
+et
+\fBinit\fR(8)\&. Si vous utilisez
+\fBlogin\fR
+depuis un interpr\('eteur de commandes sans
+\fBexec\fR, l\*(Aqutilisateur que vous utilisez continuera \(`a appara\(^itre comme \('etant connect\('e m\(^eme apr\(`es s\*(Aq\(^etre d\('econnect\('e de cette \(Fo\ \&sous\-session\ \&\(Fc\&.
+.SH "OPTIONS"
+.PP
+\fB\-f\fR
+.RS 4
+Ne pas r\('ealiser d\*(Aqauthentification\&. L\*(Aqutilisateur est pr\('e\-authentifi\('e\&.
+.sp
+Remarque\ \&: Dans ce cas,
+\fIusername\fR
+est n\('ecessaire\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Nom de l\*(Aqh\(^ote distant pour cette connexion\&.
+.RE
+.PP
+\fB\-p\fR
+.RS 4
+Pr\('eserver l\*(Aqenvironnement\&.
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+Ex\('ecuter le protocole de connexion automatique (autologin) pour rlogin\&.
+.RE
+.PP
+Les options
+\fB\-r\fR,
+\fB\-h\fR
+et
+\fB\-f\fR
+ne peuvent \(^etre utilis\('ees que par root\&.
+.SH "AVERTISSEMENTS"
+.PP
+Cette version de
+\fBlogin\fR
+comporte de nombreuses options de compilation\&. Seules certaines d\*(Aqentre elles peuvent avoir \('et\('e activ\('ees sur votre site\&.
+.PP
+L\*(Aqemplacement des fichiers peut varier suivant la configuration du syst\(`eme\&.
+.PP
+Le programme
+\fBlogin\fR
+n\*(Aqest PAS responsable de la suppression d\*(Aqutilisateurs dans le fichier utmp\&. Les responsables du nettoyage de l\*(Aqappartenance des sessions de terminal sont
+\fBgetty\fR(8)
+et
+\fBinit\fR(8)\&. Si vous utilisez
+\fBlogin\fR
+depuis un interpr\('eteur de commandes sans
+\fBexec\fR, l\*(Aqutilisateur que vous utilisez continuera \(`a appara\(^itre comme \('etant connect\('e m\(^eme apr\(`es s\*(Aq\(^etre d\('econnect\('e de cette \(Fo\ \&sous\-session\ \&\(Fc\&.
+.PP
+Comme pour n\*(Aqimporte quel programme, l\*(Aqapparence de
+\fBlogin\fR
+peut \(^etre imit\('ee\&. Si des utilisateurs non s\(^urs ont un acc\(`es physique \(`a la machine, un attaquant pourrait utiliser cet acc\(`es pour obtenir le mot de passe de la personne qui s\*(Aqassi\('erait ensuite face \(`a l\*(Aq\('ecran\&. Sous Linux, le m\('ecanisme SAK peut \(^etre utilis\('e par les utilisateurs pour initier un chemin de confiance et pr\('evenir ce genre d\*(Aqattaques\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.PP
+\fBCONSOLE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, soit un chemin complet du fichier contenant les noms de p\('eriph\('eriques (un par ligne), soit une liste de noms du p\('eriph\('erique d\('elimit\('ee par des \(Fo\ \&:\ \&\(Fc\&. Les connexions d\*(Aqun administrateur ne seront autoris\('ees que depuis ces p\('eriph\('eriques\&.
+.sp
+S\*(Aqil n\*(Aqest pas d\('efini, root pourra se connecter depuis n\*(Aqimporte quel p\('eriph\('erique\&.
+.sp
+Le p\('eriph\('erique doit \(^etre pr\('ecis\('e sans le pr\('efixe /dev/\&.
+.RE
+.PP
+\fBCONSOLE_GROUPS\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Une liste de groupes \(`a rajouter aux groupes suppl\('ementaires de l\*(Aqutilisateur lors d\*(Aqune connexion sur une console (d\('etermin\('e par le param\(`etre CONSOLE)\&. Par d\('efaut, aucun groupe n\*(Aqest ajout\('e\&.
+
+\(`A utiliser avec pr\('ecaution\ \&: il est possible que les utilisateurs aient un acc\(`es permanent \(`a ces groupes, et cela m\(^eme s\*(Aqils ne sont pas connect\('es sur la console\&.
+.RE
+.PP
+\fBDEFAULT_HOME\fR (bool\('een)
+.RS 4
+Indiquer si la connexion est permise si on ne peut pas acc\('eder au r\('epertoire personnel\&. Le r\('eglage par d\('efaut est \(Fo\ \&no\ \&\(Fc\&.
+.sp
+Si elle est configur\('ee \(`a
+\fIyes\fR, l\*(Aqutilisateur va se connecter dans le r\('epertoire racine (/) s\*(Aqil n\*(Aqest pas possible d\*(Aqacc\('eder \(`a son r\('epertoire personnel\&.
+.RE
+.PP
+\fBENV_HZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement HZ lorsqu\*(Aqun utilisateur se connecte\&. La valeur doit \(^etre pr\('ec\('ed\('ee par
+\fIHZ=\fR\&. Une valeur commune sur Linux est
+\fIHZ=100\fR\&.
+.RE
+.PP
+\fBENV_PATH\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement PATH quand un utilisateur ordinaire se connecte\&. La valeur est une liste de chemins s\('epar\('es par des deux points (par exemple
+\fI/bin:/usr/bin\fR) et peut \(^etre pr\('ec\('ed\('ee par
+\fIPATH=\fR\&. La valeur par d\('efaut est
+\fIPATH=/bin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_SUPATH\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement PATH quand le super\-utilisateur se connecte\&. La valeur est une liste de chemins s\('epar\('es par deux points (par exemple
+\fI/sbin:/bin:/usr/sbin:/usr/bin\fR) et peut \(^etre pr\('ec\('ed\('ee par
+\fIPATH=\fR\&. La valeur par d\('efaut est
+\fIPATH=/sbin:/bin:/usr/sbin:/usr/bin\fR\&.
+.RE
+.PP
+\fBENV_TZ\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, sera utilis\('ee pour d\('efinir la variable d\*(Aqenvironnement TZ quand un utilisateur se connecte\&. La valeur peut \(^etre le nom d\*(Aqun fuseau horaire pr\('ec\('ed\('e par
+\fITZ=\fR
+(par exemple
+\fITZ=CST6CDT\fR), ou le chemin complet vers le fichier contenant la sp\('ecification du fuseau horaire (par exemple
+/etc/tzname)\&.
+.sp
+Si un chemin complet est sp\('ecifi\('e mais que le fichier n\*(Aqexiste pas ou ne peut pas \(^etre lu, la valeur par d\('efaut utilis\('ee est
+\fITZ=CST6CDT\fR\&.
+.RE
+.PP
+\fBENVIRON_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si ce fichier existe et est lisible, l\*(Aqenvironnement de connexion sera lu \(`a\ \& partir de lui\&. Chaque ligne doit \(^etre sous la forme nom=valeur\&.
+.sp
+Les lignes commen\(,cant par un \(Fo\ \&#\ \&\(Fc sont consid\('er\('ees comme des commentaires, et sont ignor\('ees\&.
+.RE
+.PP
+\fBERASECHAR\fR (nombre)
+.RS 4
+Le caract\(`ere ERASE du terminal (\fI010\fR
+= backspace,
+\fI0177\fR
+= DEL)\&.
+.sp
+La valeur peut \(^etre pr\('efix\('ee par \(Fo\ \&0\ \&\(Fc pour une valeur octale, ou \(Fo\ \&0x\ \&\(Fc pour une valeur hexad\('ecimale\&.
+.RE
+.PP
+\fBFAIL_DELAY\fR (nombre)
+.RS 4
+Le d\('elai en secondes avant qu\*(Aqun nouvel essai soit permis apr\(`es un \('echec de connexion\&.
+.RE
+.PP
+\fBFAILLOG_ENAB\fR (bool\('een)
+.RS 4
+Activer l\*(Aqenregistrement et l\*(Aqaffichage des informations d\*(Aq\('echec de connexion de
+/var/log/faillog
+.RE
+.PP
+\fBFAKE_SHELL\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie,
+\fBlogin\fR
+ex\('ecutera cet interpr\('eteur de commandes au lieu de l\*(Aqinterpr\('eteur de l\*(Aqutilisateur sp\('ecifi\('e dans
+/etc/passwd\&.
+.RE
+.PP
+\fBFTMP_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, les \('echecs de connexion seront enregistr\('es dans le fichier sous le format utmp
+.RE
+.PP
+\fBHUSHLOGIN_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, le fichier peut d\('esactiver tous les affichages habituels durant la s\('equence de connexion\&. Si un nom de chemin complet est sp\('ecifi\('e, alors le mode taiseux sera activ\('e si le nom ou l\*(Aqinterpr\('eteur de commandes de l\*(Aqutilisateur sont trouv\('es dans le fichier\&. Si ce n\*(Aqest pas un nom de chemin complet, alors le mode taiseux sera activ\('e si le fichier existe dans le r\('epertoire personnel de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fBISSUE_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, le fichier sera affich\('e avant chaque invite de connexion\&.
+.RE
+.PP
+\fBKILLCHAR\fR (nombre)
+.RS 4
+Le caract\(`ere KILL du terminal (\fI025\fR
+= CTRL/U)\&.
+.sp
+La valeur peut \(^etre pr\('efix\('ee par \(Fo\ \&0\ \&\(Fc pour une valeur octale, ou \(Fo\ \&0x\ \&\(Fc pour une valeur hexad\('ecimale\&.
+.RE
+.PP
+\fBLASTLOG_ENAB\fR (bool\('een)
+.RS 4
+Activer la journalisation et l\*(Aqaffichage des informations de derni\(`ere connexion de /var/log/lastlog\&.
+.RE
+.PP
+\fBLOGIN_RETRIES\fR (nombre)
+.RS 4
+Le nombre maximum de tentatives de connexion en cas de mauvais mot de passe\&.
+.RE
+.PP
+\fBLOGIN_STRING\fR (cha\(^ine de caract\(`eres)
+.RS 4
+La cha\(^ine de caract\(`eres utilis\('ee pour l\*(Aqinvite de mot de passe\&. La valeur par d\('efaut est d\*(Aqutiliser "Password: " (\(Fo\ \&mot de passe\ \&:\ \&\(Fc), ou une traduction de cette cha\(^ine\&. Si vous d\('efinissez cette variable, l\*(Aqinvite ne sera pas traduite\&.
+.sp
+Si la cha\(^ine contient
+\fI%s\fR, ces caract\(`eres seront remplac\('es par le nom de l\*(Aqutilisateur\&.
+.RE
+.PP
+\fBLOGIN_TIMEOUT\fR (nombre)
+.RS 4
+Le temps maximum en secondes pour la connexion\&.
+.RE
+.PP
+\fBLOG_OK_LOGINS\fR (bool\('een)
+.RS 4
+Activer la journalisation des connexions r\('eussies\&.
+.RE
+.PP
+\fBLOG_UNKFAIL_ENAB\fR (bool\('een)
+.RS 4
+Activer l\*(Aqaffichage des noms d\*(Aqutilisateurs inconnus quand les \('echecs de connexions sont enregistr\('es\&.
+.sp
+Remarque\ \&: la journalisation des noms d\*(Aqutilisateurs inconnus peut \(^etre un probl\(`eme de s\('ecurit\('e si un utilisateur entre son mot de passe au lieu de son nom d\*(Aqutilisateur\&.
+.RE
+.PP
+\fBMAIL_CHECK_ENAB\fR (bool\('een)
+.RS 4
+Activer le contr\(^ole et l\*(Aqaffichage du statut de la bo\(^ite aux lettres durant la connexion\&.
+.sp
+Vous devriez le d\('esactiver si les fichiers de d\('emarrage de l\*(Aqinterpr\('eteur de commandes v\('erifient d\('ej\(`a la pr\('esence de courriers (\(Fo\ \&mail \-e\ \&\(Fc ou \('equivalent)\&.
+.RE
+.PP
+\fBMAIL_DIR\fR (cha\(^ine de caract\(`eres)
+.RS 4
+R\('epertoire d\*(Aqattente des courriels (\(Fo\ \&mail spool directory\ \&\(Fc)\&. Ce param\(`etre est n\('ecessaire pour manipuler les bo\(^ites \(`a lettres lorsque le compte d\*(Aqun utilisateur est modifi\('e ou supprim\('e\&. S\*(Aqil n\*(Aqest pas sp\('ecifi\('e, une valeur par d\('efaut d\('efinie \(`a la compilation est utilis\('ee\&.
+.RE
+.PP
+\fBMAIL_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+D\('efinir l\*(Aqemplacement des bo\(^ites aux lettres des utilisateurs relativement \(`a leur r\('epertoire personnel\&.
+.RE
+.PP
+Les param\(`etres
+\fBMAIL_DIR\fR
+et
+\fBMAIL_FILE\fR
+sont utilis\('es par
+\fBuseradd\fR,
+\fBusermod\fR
+et
+\fBuserdel\fR
+pour cr\('eer, d\('eplacer ou supprimer les bo\(^ites aux lettres des utilisateurs\&.
+.PP
+Si
+\fBMAIL_CHECK_ENAB\fR
+est r\('egl\('e sur
+\fIyes\fR, ces variables servent \('egalement \(`a d\('efinir la variable d\*(Aqenvironnement
+\fBMAIL\fR\&.
+.PP
+\fBMOTD_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, liste d\('elimit\('ee par des \(Fo\ \&:\ \&\(Fc de fichiers de \(Fo\ \&message du jour\ \&\(Fc \(`a afficher lors de la connexion\&.
+.RE
+.PP
+\fBNOLOGINS_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, nom de fichier dont la pr\('esence emp\(^echera les connexions de quelqu\*(Aqun d\*(Aqautre que le superutilisateur\&. Le contenu de ces fichiers doit \(^etre un message indiquant pourquoi les connexions sont d\('esactiv\('ees\&.
+.RE
+.PP
+\fBPORTTIME_CHECKS_ENAB\fR (bool\('een)
+.RS 4
+Activer la v\('erification des restrictions de temps pr\('ecis\('ees dans
+/etc/porttime\&.
+.RE
+.PP
+\fBQUOTAS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de limites de resources depuis
+/etc/limits
+et ulimit, umask et niveau nice depuis les champs gecos de passwd\&.
+.RE
+.PP
+\fBTTYGROUP\fR (cha\(^ine de caract\(`eres), \fBTTYPERM\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Les permissions de terminal\ \&: la connexion tty appartiendra au groupe
+\fBTTYGROUP\fR
+et les permissions seront configur\('ees \(`a
+\fBTTYPERM\fR\&.
+.sp
+Par d\('efaut, le propri\('etaire du terminal est configur\('e au groupe primaire de l\*(Aqutilisateur et les permissions sont configur\('ees \(`a
+\fI0600\fR\&.
+.sp
+\fBTTYGROUP\fR
+peut \(^etre le nom d\*(Aqun groupe ou un identifiant num\('erique de groupe\&.
+.sp
+Si vous avez un programme
+\fBwrite\fR
+qui est \(Fo\ \&setgid\ \&\(Fc \(`a un groupe sp\('ecial auquel les terminaux appartiennent, d\('efinissez TTYGROUP comme l\*(Aqidentifiant num\('erique du groupe et TTYPERM \(`a 0620\&. Autrement laissez TTYGROUP d\('ecomment\('e et TTYPERM configur\('e soit \(`a 622 soit \(`a 600\&.
+.RE
+.PP
+\fBTTYTYPE_FILE\fR (cha\(^ine de caract\(`eres)
+.RS 4
+Si d\('efinie, fichier qui lie les lignes de tty \(`a la variable d\*(Aqenvironnement TERM\&. Chaque ligne du fichier est dans un format ressemblant \(`a \(Fo\ \&vt100 tty01\ \&\(Fc\&.
+.RE
+.PP
+\fBULIMIT\fR (nombre)
+.RS 4
+Valeur par d\('efaut d\*(Aq\fBulimit\fR\&.
+.RE
+.PP
+\fBUMASK\fR (nombre)
+.RS 4
+Valeur d\*(Aqinitialisation du masque de permissions\&. S\*(Aqil n\*(Aqest pas pr\('ecis\('e, le masque des permissions sera initialis\('e \(`a 022\&.
+.sp
+\fBuseradd\fR
+et
+\fBnewusers\fR
+utilisent ce masque pour d\('efinir les permissions d\*(Aqacc\(`es des r\('epertoires personnels qu\*(Aqils cr\('eent\&.
+.sp
+Il est \('egalement utilis\('e par
+\fBlogin\fR
+pour d\('efinir l\*(Aqumask initial de l\*(Aqutilisateur\&. Veuillez noter que cet umask peut \(^etre red\('efini par les GECOS de l\*(Aqutilisateur (si
+\fBQUOTAS_ENAB\fR
+est activ\('e) ou en pr\('ecisant une limite avec l\*(Aqidentifiant
+\fIK\fR
+dans
+\fBlimits\fR(5)\&.
+.RE
+.PP
+\fBUSERGROUPS_ENAB\fR (bool\('een)
+.RS 4
+Activer la mise en place de bits de masque de groupe (\(Fo\ \&umask group bits\ \&\(Fc) identiques \(`a ceux du propri\('etaire (exemple\ \&: 022 \-> 002, 077 \-> 007) pour les utilisateurs non privil\('egi\('es, si l\*(AqUID est identique au GID et que l\*(Aqidentifiant de connexion est identique au groupe principal\&.
+.sp
+Si cette variable est configur\('ee \(`a
+\fIyes\fR,
+\fBuserdel\fR
+supprimera le groupe de l\*(Aqutilisateur s\*(Aqil ne contient pas d\*(Aqautres membres, et
+\fBuseradd\fR
+cr\('eera par d\('efaut un groupe portant le nom de l\*(Aqutilisateur\&.
+.RE
+.SH "FICHIERS"
+.PP
+/var/run/utmp
+.RS 4
+Liste des sessions de connexion en cours\&.
+.RE
+.PP
+/var/log/wtmp
+.RS 4
+Liste des sessions de connexion pr\('ec\('edentes\&.
+.RE
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.PP
+/etc/motd
+.RS 4
+Fichier contenant le message du syst\(`eme\&.
+.RE
+.PP
+/etc/nologin
+.RS 4
+Emp\(^echer les utilisateurs non\-root de se connecter\&.
+.RE
+.PP
+/etc/ttytype
+.RS 4
+Liste des types de terminaux\&.
+.RE
+.PP
+$HOME/\&.hushlogin
+.RS 4
+Supprimer l\*(Aqaffichage des messages du syst\(`eme\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configuration de la suite des mots de passe cach\('es \(Fo\ \&shadow password\ \&\(Fc\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBmail\fR(1),
+\fBpasswd\fR(1),
+\fBsh\fR(1),
+\fBsu\fR(1),
+\fBlogin.defs\fR(5),
+\fBnologin\fR(5),
+\fBpasswd\fR(5),
+\fBsecuretty\fR(5),
+\fBgetty\fR(8)\&.

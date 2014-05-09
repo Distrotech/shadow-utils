@@ -1,0 +1,187 @@
+'\" t
+.\"     Title: pwconv
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "PWCONV" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+pwconv, pwunconv, grpconv, grpunconv \- 在影子密码和组以及其它直接转换
+.SH "大纲"
+.HP \w'\fBpwconv\fR\ 'u
+\fBpwconv\fR [\fI选项\fR]
+.HP \w'\fBpwunconv\fR\ 'u
+\fBpwunconv\fR [\fI选项\fR]
+.HP \w'\fBgrpconv\fR\ 'u
+\fBgrpconv\fR [\fI选项\fR]
+.HP \w'\fBgrpunconv\fR\ 'u
+\fBgrpunconv\fR [\fI选项\fR]
+.SH "描述"
+.PP
+\fBpwconv\fR
+命令使用
+\fIpasswd\fR
+以及可选并已经存在的
+\fIshadow\fR
+来创建
+\fIshadow\fR。
+.PP
+\fBpwunconv\fR
+命令使用
+\fIpasswd\fR
+和
+\fIshadow\fR
+来创建
+\fIpasswd\fR，然后移除
+\fIshadow\fR。
+.PP
+\fBgrpconv\fR
+从
+\fIgroup\fR
+和可能存在的
+\fIgshadow\fR
+创建
+\fIgshadow\fR。
+.PP
+\fBgrpunconv\fR
+命令从
+\fIgroup\fR
+和
+\fIgshadow\fR
+创建
+\fIgroup\fR，然后移除
+\fIgshadow\fR。
+.PP
+这四个程序都可以操作普通或影子密码和组文件：/etc/passwd,
+/etc/group,
+/etc/shadow
+和
+/etc/gshadow。
+.PP
+转换前，每个程序都会获取需要的锁。\fBpwconv\fR
+和
+\fBgrpconv\fR
+也类似。首先删除，存在于在影子文件中，但在主文件中却没有的条目；然后，更新在主文件中不使用\(lqx\(rq作为密码的影子条目，会添加所有缺失的条目；最后，将主文件中的密码替换为\(lqx\(rq。这两个工具可以用于初始转换以及根据手动编辑的主文件更新影子文件。
+.PP
+\fBpwconv\fR
+向
+/etc/shadow
+添加条目时，将使用/etc/login\&.defs
+中的
+\fIPASS_MIN_DAYS\fR,
+\fIPASS_MAX_DAYS\fR
+和
+\fIPASS_WARN_AGE\fR
+值。
+.PP
+\fBpwunconv\fR
+和
+\fBgrpunconv\fR
+与此类似。主文件中的密码会根据影子文件更新。在主文件中存在，但不在影子文件中的条目单独留下。最后，移除影子文件。一些密码年龄信息会因为
+\fBpwunconv\fR
+而丢失。它只转换它可以转换的。
+.SH "选项"
+.PP
+\fBpwconv\fR,
+\fBpwunconv\fR,
+\fBgrpconv\fR
+和
+\fBgrpunconv\fR
+命令可以接受的选项有：
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.SH "缺陷"
+.PP
+在 passwd 或 group 文件中有错误(比如，有重复条目)可能会造成这些程序死循环或者以奇怪的方式失败。在转换自，或转换到影子密码或组文件前，请运行
+\fBpwck\fR
+和
+\fBgrpck\fR
+来修正此类错误。
+.SH "配置文件"
+.PP
+/etc/login\&.defs
+中的如下配置变量改变
+\fBgrpconv\fR
+和
+\fBgrpunconv\fR
+的行为：
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+/etc/login\&.defs
+中的如下配置变量改变
+\fBpwconv\fR
+的行为：
+.PP
+\fBPASS_MAX_DAYS\fR (number)
+.RS 4
+一个密码可以使用的最大天数。如果密码比这旧，将会强迫更改密码。如果不指定，就假定为 \-1，这会禁用这个限制。
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (number)
+.RS 4
+两次更改密码时间的最小间隔。将会拒绝任何早于此的更改密码的尝试。如果不指定，假定为 \-1，将会禁用这个限制。
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (number)
+.RS 4
+密码过期之前给出警告的天数。0 表示只有只在过期的当天警告，负值表示不警告。如果没有指定，不会给警告。
+.RE
+.SH "文件"
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "参见"
+.PP
+\fBgrpck\fR(8),
+\fBlogin.defs\fR(5),
+\fBpwck\fR(8)\&.

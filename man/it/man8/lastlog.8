@@ -1,0 +1,106 @@
+'\" t
+.\"     Title: lastlog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "LASTLOG" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+lastlog \- riepiloga gli accessi pi\(`u recenti di tutti gli utenti o dell\*(Aqutente dato
+.SH "SINOSSI"
+.HP \w'\fBlastlog\fR\ 'u
+\fBlastlog\fR [\fIopzioni\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBlastlog\fR
+formatta e mostra il log degli ultimi accessi, contenuto nel file
+/var/log/lastlog\&. Le informazioni mostrate sono il
+\fInome utente\fR, la
+\fIporta\fR
+e la
+\fIdata dell\*(Aqultimo accesso\fR\&. Il comportamento predefinito (nessuna opzione specificata) \(`e di mostrare i record di ultimo accesso per tutti gli utenti, nell\*(Aqordine in cui compaiono in
+/etc/passwd\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBlastlog\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-b\fR, \fB\-\-before\fR\ \&\fIGIORNI\fR
+.RS 4
+Mostra solo i record di ultimo accesso pi\(`u vecchi di
+\fIGIORNI\fR
+giorni\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-t\fR, \fB\-\-time\fR\ \&\fIGIORNI\fR
+.RS 4
+Mostra solo i record di ultimo accesso pi\(`u recenti di
+\fIGIORNI\fR\&.
+.RE
+.PP
+\fB\-u\fR, \fB\-\-user\fR\ \&\fILOGIN\fR|\fIINTERVALLO\fR
+.RS 4
+Mostra il record di ultimo accesso per l\*(Aqutente o gli utenti specificati da
+\fILOGIN\fR\&.
+.sp
+Gli utenti possono essere specificati utilizzando il loro nome oppure l\*(AqID numerico o tramite un
+\fIINTERVALLO\fR
+di utenti\&. Questo
+\fIINTERVALLO\fR
+di utenti ha tre forme: tra minimo e massimo (\fIUID_MIN\-UID_MAX\fR), fino ad un valore massimo (\fI\-UID_MAX\fR) o da un valore minimo (\fIUID_MIN\-\fR)\&.
+.RE
+.PP
+Se l\*(Aqutente non ha mai effettuato accessi al sistema viene mostrato, al posto della porta e della data, il messaggio \(Fo\fI**Nessun accesso effettuato**\fR\(Fc\&.
+.PP
+Solo le registrazioni degli utenti correnti del sistema verranno mostrate\&. Ci potrebbero essere altre registrazioni per utenti cancellati in precedenza\&.
+.SH "NOTA"
+.PP
+Il file
+lastlog
+\(`e un database che contiene informazioni sull\*(Aqultimo accesso di ogni utente\&. Non deve essere ruotato\&. Si tratta di un file \(Fosparse\(Fc, quindi la sua dimensione \(`e minore di quanto normalmente mostrato da \(Fo\fBls \-l\fR\(Fc (che potrebbe indicare una dimensione veramente grande se si hanno utenti con grandi UID in
+passwd)\&. Si pu\(`o vedere la dimensione effettiva con \(Fo\fBls \-s\fR\(Fc\&.
+.SH "FILE"
+.PP
+/var/log/lastlog
+.RS 4
+Database degli orari dei precedenti accessi utente\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Se ci sono dei grossi scarti tra i valori di UID, il programma lastlog pu\(`o restare in esecuzione per un tempo prolungato senza produrre output sullo schermo (ad es\&. se nel database lastlog non ci sono registrazioni per UID tra 170 e 800, il programma sembrer\(`a bloccato mentre esamina gli UID tra 171 e 799)\&.

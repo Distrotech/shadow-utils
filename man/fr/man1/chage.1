@@ -1,0 +1,180 @@
+'\" t
+.\"     Title: chage
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Commandes utilisateur
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "CHAGE" "1" "09/05/2014" "shadow\-utils 4\&.2" "Commandes utilisateur"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+chage \- Modifier les informations de validit\('e d\*(Aqun mot de passe
+.SH "SYNOPSIS"
+.HP \w'\fBchage\fR\ 'u
+\fBchage\fR [\fIoptions\fR] \fILOGIN\fR
+.SH "DESCRIPTION"
+.PP
+La commande
+\fBchage\fR
+modifie le nombre de jours entre les changements de mot de passe et la date du dernier changement\&. Ces informations sont utilis\('ees par le syst\(`eme pour d\('eterminer si un utilisateur doit changer son mot de passe\&.
+.SH "OPTIONS"
+.PP
+Les options disponibles pour la commande
+\fBchage\fR
+sont\ \&:
+.PP
+\fB\-d\fR, \fB\-\-lastday\fR\ \&\fILAST_DAY\fR
+.RS 4
+Configurer le nombre du jour, \(`a compter du 1er\ \&janvier\ \&1970, o\(`u le mot de passe a \('et\('e chang\('e la derni\(`ere fois\&. La date peut aussi \(^etre exprim\('ee dans le format AAAA\-MM\-JJ (ou le format utilis\('e plus commun\('ement dans votre r\('egion)\&.
+.RE
+.PP
+\fB\-E\fR, \fB\-\-expiredate\fR\ \&\fIEXPIRE_DATE\fR
+.RS 4
+Configurer la date, ou le nombre de jours \(`a compter du 1er\ \&janvier\ \&1970, \(`a partir de laquelle le compte de l\*(Aqutilisateur ne sera plus accessible\&. La date peut aussi \(^etre exprim\('ee dans le format AAAA\-MM\-JJ (ou le format plus commun\('ement utilis\('e dans votre r\('egion)\&. Un utilisateur dont le compte est bloqu\('e doit contacter l\*(Aqadministrateur syst\(`eme pour pouvoir utiliser \(`a nouveau le syst\(`eme\&.
+.sp
+Une valeur de
+\fI\-1\fR
+pour
+\fIDATE_FIN_VALIDIT\('E\fR
+aura pour effet de supprimer la date de fin de validit\('e\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Afficher un message d\*(Aqaide et quitter\&.
+.RE
+.PP
+\fB\-I\fR, \fB\-\-inactive\fR\ \&\fIINACTIVE\fR
+.RS 4
+Configurer le nombre de jours d\*(Aqinactivit\('e, apr\(`es qu\*(Aqun mot de passe ait d\('epass\('e la date de fin de validit\('e, avant que le compte ne soit bloqu\('e\&. La valeur
+\fIDUR\('EE_INACTIVIT\('E\fR
+est le nombre de jours d\*(Aqinactivit\('e\&. Un utilisateur dont le compte est bloqu\('e doit contacter l\*(Aqadministrateur syst\(`eme avant de pouvoir utiliser de nouveau le syst\(`eme\&.
+.sp
+Une valeur de
+\fI\-1\fR
+pour
+\fIDUR\('EE_INACTIVIT\('E\fR
+supprime la dur\('ee d\*(Aqinactivit\('e pour un compte\&.
+.RE
+.PP
+\fB\-l\fR, \fB\-\-list\fR
+.RS 4
+Afficher les informations sur l\*(Aq\(^age des comptes\&.
+.RE
+.PP
+\fB\-m\fR, \fB\-\-mindays\fR\ \&\fIMIN_DAYS\fR
+.RS 4
+D\('efinir le nombre minimum de jours entre chaque changement de mot de passe \(`a
+\fIMIN_DAYS\fR\&. Une valeur de z\('ero pour ce champ indique que l\*(Aqutilisateur peut changer son mot de passe quand il le souhaite\&.
+.RE
+.PP
+\fB\-M\fR, \fB\-\-maxdays\fR\ \&\fIMAX_DAYS\fR
+.RS 4
+Configurer le nombre maximum de jours pendant lesquels un mot de passe est valable\&. Quand
+\fIJOURS_MAX\fR
+plus
+\fIDERNIER_JOUR\fR
+est inf\('erieur \(`a la date actuelle, l\*(Aqutilisateur est oblig\('e de changer son mot de passe avant de pouvoir utiliser son compte\&. Cet \('ev\('enement peut \(^etre d\('eclench\('e plus t\(^ot gr\(^ace \(`a l\*(Aqoption
+\fB\-W\fR
+qui pr\('evient l\*(Aqutilisateur \(`a l\*(Aqavance par un message d\*(Aqalerte\&.
+.sp
+Une valeur de
+\fI\-1\fR
+pour
+\fIJOURS_MAX\fR
+supprime la v\('erification de validit\('e\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Appliquer les changements dans le r\('epertoire
+\fIR\('EP_CHROOT\fR
+et utiliser les fichiers de configuration du r\('epertoire
+\fIR\('EP_CHROOT\fR\&.
+.RE
+.PP
+\fB\-W\fR, \fB\-\-warndays\fR\ \&\fIWARN_DAYS\fR
+.RS 4
+Configurer le nombre de jours d\*(Aqavertissement avant que le changement de mot de passe ne soit obligatoire\&. La valeur
+\fIDUR\('EE_AVERTISSEMENT\fR
+est le nombre de jours pr\('ec\('edant la fin de validit\('e pendant lesquels un utilisateur sera pr\('evenu que son mot de passe est sur le point d\*(Aqarriver en fin de validit\('e\&.
+.RE
+.PP
+Si aucune de ces options n\*(Aqest donn\('ee,
+\fBchage\fR
+utilise un mode interactif, demandant confirmation \(`a l\*(Aqutilisateur pour les valeurs de tous les champs\&. Entrez la nouvelle valeur pour modifier la valeur du champ, ou laissez la ligne vide pour conserver la valeur actuelle\&. La valeur actuelle est affich\('ee entre crochets\&.
+.SH "NOTE"
+.PP
+Le programme
+\fBchage\fR
+n\('ecessite l\*(Aqutilisation d\*(Aqun fichier de mots de passe cach\('es (\(Fo\ \&shadow password file\ \&\(Fc)\&.
+.PP
+La commande
+\fBchage\fR
+est r\('eserv\('ee \(`a l\*(Aqutilisateur root, sauf pour l\*(Aqoption
+\fB\-l\fR, qui peut \(^etre utilis\('ee par un utilisateur non privil\('egi\('e pour lui permettre de savoir quand son mot de passe ou son compte arrivera en fin de validit\('e\&.
+.SH "CONFIGURATION"
+.PP
+Les variables de configuration suivantes dans
+/etc/login\&.defs
+modifient le comportement de cet outil\ \&:
+.SH "FICHIERS"
+.PP
+/etc/passwd
+.RS 4
+Informations sur les comptes des utilisateurs\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informations s\('ecuris\('ees sur les comptes utilisateurs\&.
+.RE
+.SH "VALEURS DE RETOUR"
+.PP
+La commande
+\fBchage\fR
+retourne les valeurs suivantes en quittant\ \&:
+.PP
+\fI0\fR
+.RS 4
+succ\(`es
+.RE
+.PP
+\fI1\fR
+.RS 4
+permission refus\('ee
+.RE
+.PP
+\fI2\fR
+.RS 4
+erreur de syntaxe
+.RE
+.PP
+\fI15\fR
+.RS 4
+impossible de trouver le fichier des mots de passe cach\('es
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBpasswd\fR(5),
+\fBshadow\fR(5)\&.

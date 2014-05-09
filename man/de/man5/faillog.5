@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: faillog
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09.05.2014
+.\"    Manual: Dateiformate und konvertierung
+.\"    Source: shadow-utils 4.2
+.\"  Language: German
+.\"
+.TH "FAILLOG" "5" "09.05.2014" "shadow\-utils 4\&.2" "Dateiformate und konvertierung"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+faillog \- Datei mit fehlgeschlagenen Anmeldungen
+.SH "BESCHREIBUNG"
+.PP
+In
+/var/log/faillog
+wird der Z\(:ahlerstand von fehlgeschlagenen Anmeldungen und die Beschr\(:ankungen f\(:ur jedes Konto niedergelegt\&.
+.PP
+Eintr\(:age in dieser Datei haben eine festgelegte L\(:ange und sind der zahlenm\(:a\(ssigen UID nach angeordnet\&. Jeder Eintrag besteht aus der Anzahl der fehlgeschlagenen Anmeldungen seit der letzten erfolgreichen Anmeldung, der maximalen Anzahl von Fehlschl\(:agen, ehe das Konto abgeschaltet wird, dem Ger\(:at, auf dem die letzte fehlgeschlagene Anmeldung erfolgte, das Datum der letzten fehlgeschlagenen Anmeldung und die Dauer in Sekunden, f\(:ur die das Konto nach einem Fehlschlag gesperrt ist\&.
+.PP
+Die Datei ist so aufgebaut:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+struct	faillog {
+	short   fail_cnt;
+	short   fail_max;
+	char    fail_line[12];
+	time_t  fail_time;
+	long    fail_locktime;
+};
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DATEIEN"
+.PP
+/var/log/faillog
+.RS 4
+Datei mit fehlgeschlagenen Anmeldungen
+.RE
+.SH "SIEHE AUCH"
+.PP
+\fBfaillog\fR(8)

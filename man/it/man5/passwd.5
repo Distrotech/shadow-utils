@@ -1,0 +1,177 @@
+'\" t
+.\"     Title: passwd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formati di file e conversioni
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "PASSWD" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formati di file e conversioni"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+passwd \- il file delle password
+.SH "DESCRIZIONE"
+.PP
+/etc/passwd
+contiene una riga per ogni account, con sette campi delimitati da due punti (\(Fo:\(Fc)\&. Questi campi sono:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+nome di login
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+password cifrata opzionale
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+ID utente numerico
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+ID gruppo numerico
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+nome utente o commento
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+directory home utente
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+interprete dei comandi utente opzionale
+.RE
+.PP
+Il campo password cifrata pu\(`o essere vuoto, nel qual caso non viene richiesta nessuna password per autenticare lo specifico login\&. Tuttavia alcune applicazioni che leggono il file
+/etc/passwd
+possono decidere di non permettere
+\fInessun\fR
+accesso se il campo
+\fIpassword\fR
+\(`e vuoto\&. Se il campo
+\fIpassword\fR
+contiene solo una
+\(Fox\(Fc
+minuscola, la password cifrata \(`e invece memorizzata nel file
+\fBshadow\fR(5); ci
+\fIdeve\fR
+essere una riga corrispondente nel file
+/etc/shadow
+altrimenti l\*(Aqaccount non sar\(`a valido\&. Se il campo
+\fIpassword\fR
+ha un qualsiasi altro contenuto allora viene trattato come password cifrata, come specificato da
+\fBcrypt\fR(3)\&.
+.PP
+Il campo di commento \(`e utilizzato da vari strumenti di sistema come ad esempio
+\fBfinger\fR(1)\&.
+.PP
+Il campo directory home fornisce il nome della directory di lavoro iniziale\&. Il programma
+\fBlogin\fR
+usa questa informazione per impostare il valore della variabile d\*(Aqambiente
+\fB$HOME\fR\&.
+.PP
+Il campo interprete dei comandi fornisce il nome dell\*(Aqinterprete del linguaggio utente, o il nome del programma da invocare inizialmente\&. Il programma
+\fBlogin\fR
+utilizza questa informazione per impostare il valore della variabile d\*(Aqambiente
+\fB$SHELL\fR\&. Se questo campo \(`e vuoto, il valore predefinito \(`e
+/bin/sh\&.
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+file opzionale delle password cifrate
+.RE
+.PP
+/etc/passwd\-
+.RS 4
+Copia di backup di /etc/passwd\&.
+.sp
+Notare che questo file viene usato dagli strumenti del pacchetto shadow, ma non da tutti gli strumenti per la gestione di utenti e password\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBcrypt\fR(3),
+\fBgetent\fR(1),
+\fBgetpwnam\fR(3),
+\fBlogin\fR(1),
+\fBpasswd\fR(1),
+\fBpwck\fR(8),
+\fBpwconv\fR(8),
+\fBpwunconv\fR(8),
+\fBshadow\fR(5),
+\fBsu\fR(1),
+\fBsulogin\fR(8)\&.

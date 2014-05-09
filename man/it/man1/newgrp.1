@@ -1,0 +1,94 @@
+'\" t
+.\"     Title: newgrp
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi utente
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "NEWGRP" "1" "09/05/2014" "shadow\-utils 4\&.2" "Comandi utente"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+newgrp \- effettua l\*(Aqaccesso a un nuovo gruppo
+.SH "SINOSSI"
+.HP \w'\fBnewgrp\fR\ 'u
+\fBnewgrp\fR [\-] [\fIgruppo\fR]
+.SH "DESCRIZIONE"
+.PP
+\fBnewgrp\fR
+permette di cambiare il proprio ID di gruppo durante una sessione di login\&. Se viene specificato
+\fB\-\fR, l\*(Aqambiente dell\*(Aqutente viene reinizializzato come se l\*(Aqutente stesse effettuando il login, altrimenti l\*(Aqambiente non viene modificato e la directory corrente non viene cambiata\&.
+.PP
+\fBnewgrp\fR
+cambia l\*(AqID di gruppo attuale reale in base al gruppo passato come argomento oppure, se non si passa nessun argomento, al gruppo predefinito nel file
+/etc/passwd\&.
+\fBnewgrp\fR
+cerca anche di inserire il gruppo tra quelli dell\*(Aqutente\&. Se non si tratta di root, all\*(Aqutente viene chiesta una password nel caso che il gruppo lo richieda e l\*(Aqutente non ne abbia (n\('e in
+/etc/shadow
+se l\*(Aqutente \(`e definito anche l\(`i, n\('e in
+/etc/passwd
+altrimenti), oppure se l\*(Aqutente non \(`e elencato tra i membri del gruppo e il gruppo ha una password\&. Viene negato l\*(Aqaccesso all\*(Aqutente nel caso che la password del gruppo sia vuota e l\*(Aqutente non ne faccia parte\&.
+.PP
+Se c\*(Aq\(`e una voce per questo gruppo nel file
+/etc/gshadow, allora l\*(Aqelenco dei membri e la password di questo gruppo sono presi da questo file, altrimenti verr\(`a presa la voce da
+/etc/group\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBSYSLOG_SG_ENAB\fR (booleano)
+.RS 4
+Abilita il tracciamento dell\*(Aqattivit\(`a di
+\fBsg\fR
+su \(Fosyslog\(Fc\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBsu\fR(1),
+\fBsg\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.

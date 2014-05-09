@@ -1,0 +1,242 @@
+'\" t
+.\"     Title: groupadd
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 系统管理命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "GROUPADD" "8" "2014-05-09" "shadow\-utils 4\&.2" "系统管理命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+groupadd \- 创建一个新组
+.SH "大纲"
+.HP \w'\fBgroupadd\fR\ 'u
+\fBgroupadd\fR [\fI选项\fR] \fIgroup\fR
+.SH "描述"
+.PP
+The
+\fBgroupadd\fR
+command creates a new group account using the values specified on the command line plus the default values from the system\&. The new group will be entered into the system files as needed\&.
+.SH "选项"
+.PP
+\fBgroupadd\fR
+命令可以接受的选项有：
+.PP
+\fB\-f\fR, \fB\-\-force\fR
+.RS 4
+This option causes the command to simply exit with success status if the specified group already exists\&. When used with
+\fB\-g\fR, and the specified GID already exists, another (unique) GID is chosen (i\&.e\&.
+\fB\-g\fR
+is turned off)\&.
+.RE
+.PP
+\fB\-g\fR, \fB\-\-gid\fR\ \&\fIGID\fR
+.RS 4
+The numerical value of the group\*(Aqs ID\&. This value must be unique, unless the
+\fB\-o\fR
+option is used\&. The value must be non\-negative\&. The default is to use the smallest ID value greater than or equal to
+\fBGID_MIN\fR
+and greater than every other group\&.
+.sp
+See also the
+\fB\-r\fR
+option and the
+\fBGID_MAX\fR
+description\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+现实帮助信息并退出。
+.RE
+.PP
+\fB\-K\fR, \fB\-\-key\fR\ \&\fIKEY\fR=\fIVALUE\fR
+.RS 4
+Overrides
+/etc/login\&.defs
+defaults (GID_MIN, GID_MAX and others)\&. Multiple
+\fB\-K\fR
+options can be specified\&.
+.sp
+示例：\fB\-K\fR\ \&\fIGID_MIN\fR=\fI100\fR\ \&\fB\-K\fR\ \&\fIGID_MAX\fR=\fI499\fR
+.sp
+注意：\fB\-K\fR\ \&\fIGID_MIN\fR=\fI10\fR,\fIGID_MAX\fR=\fI499\fR
+尚不能工作。
+.RE
+.PP
+\fB\-o\fR, \fB\-\-non\-unique\fR
+.RS 4
+此选项允许添加一个使用非唯一 GID 的组。
+.RE
+.PP
+\fB\-p\fR, \fB\-\-password\fR\ \&\fIPASSWORD\fR
+.RS 4
+加密了的密码，就像
+\fBcrypt\fR(3)
+的返回值。默认为禁用密码。
+.sp
+\fB注意：\fR不推荐使用这个选项，因为密码(或加密过的密码)会被用户通过列出这个过程而看到。
+.sp
+您应该确保密码符合系统的密码政策。
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+创建一个系统组。
+.sp
+The numeric identifiers of new system groups are chosen in the
+\fBSYS_GID_MIN\fR\-\fBSYS_GID_MAX\fR
+range, defined in
+login\&.defs, instead of
+\fBGID_MIN\fR\-\fBGID_MAX\fR\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Apply changes in the
+\fICHROOT_DIR\fR
+directory and use the configuration files from the
+\fICHROOT_DIR\fR
+directory\&.
+.RE
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBGID_MAX\fR (number), \fBGID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR，\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的常规组的组 ID 的范围。
+.sp
+\fBGID_MIN\fR
+和
+\fBGID_MAX\fR
+的默认值分别是 1000 和 60000。
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (number)
+.RS 4
+每个组条目的最大成员数。达到最大值时，在
+/etc/group
+开始一个新条目(行)(使用同样的名称，同样的密码，同样的 GID)。
+.sp
+默认值是 0，意味着组中的成员数没有限制。
+.sp
+此功能(分割组)允许限制组文件中的行长度。这对于确保 NIS 组的行比长于 1024 字符。
+.sp
+如果要强制这个限制，可以使用 25。
+.sp
+注意：分割组可能不受所有工具的支持(甚至在 Shadow 工具集中)。您不应该使用这个变量，除非真的需要。
+.RE
+.PP
+\fBSYS_GID_MAX\fR (number), \fBSYS_GID_MIN\fR (number)
+.RS 4
+\fBuseradd\fR、\fBgroupadd\fR
+或
+\fBnewusers\fR
+创建的系统组的组 ID 的范围。
+.sp
+\fBSYS_GID_MIN\fR
+和
+\fBSYS_GID_MAX\fR
+的默认值分别是 101 和
+\fBGID_MIN\fR\-1。
+.RE
+.SH "文件"
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Shadow 密码套件配置。
+.RE
+.SH "CAVEATS"
+.PP
+组名必须以小写字母或者下划线开头，跟随小写字母、下划线或短横线。可以由美元符号结束。用正则表达式就是：[a\-z_][a\-z0\-9_\-]*[$]?
+.PP
+组名最长为 16 个字符。
+.PP
+You may not add a NIS or LDAP group\&. This must be performed on the corresponding server\&.
+.PP
+If the groupname already exists in an external group database such as NIS or LDAP,
+\fBgroupadd\fR
+will deny the group creation request\&.
+.SH "退出值"
+.PP
+\fBgroupadd\fR
+可能以如下值退出：
+.PP
+\fI0\fR
+.RS 4
+成功
+.RE
+.PP
+\fI2\fR
+.RS 4
+无效的命令语法
+.RE
+.PP
+\fI3\fR
+.RS 4
+给了选项一个无效的参数
+.RE
+.PP
+\fI4\fR
+.RS 4
+GID 不唯一 (没有使用
+\fB\-o\fR)
+.RE
+.PP
+\fI9\fR
+.RS 4
+组名不唯一
+.RE
+.PP
+\fI10\fR
+.RS 4
+无法更新组文件
+.RE
+.SH "参见"
+.PP
+\fBchfn\fR(1),
+\fBchsh\fR(1),
+\fBpasswd\fR(1),
+\fBgpasswd\fR(8),
+\fBgroupdel\fR(8),
+\fBgroupmod\fR(8),
+\fBlogin.defs\fR(5),
+\fBuseradd\fR(8),
+\fBuserdel\fR(8),
+\fBusermod\fR(8)\&.

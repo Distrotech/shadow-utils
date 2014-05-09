@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: login.access
+.\"    Author: Marek Micha\(/lkiewicz
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formati di file e conversioni
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "LOGIN\&.ACCESS" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formati di file e conversioni"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+login.access \- tabella di controllo accessi
+.SH "DESCRIZIONE"
+.PP
+Il file
+\fIlogin\&.access\fR
+specifica le combinazioni (utente, macchina) e/o (utente, terminale) per le quali un accesso sia accettato o rifiutato\&.
+.PP
+Quando avviene un accesso, il file
+.PP
+Ogni riga della tabella di controllo degli accessi ha tre campi separati dal carattere \(Fo:\(Fc:
+.PP
+\fIpermesso\fR:\fIutenti\fR:\fIorigini\fR
+.PP
+Il primo campo dovrebbe essere il carattere \(Fo\fI+\fR\(Fc (accesso concesso) o \(Fo\fI\-\fR\(Fc (accesso negato)\&. Il secondo campo dovrebbe essere un elenco di nomi utente o gruppi oppure
+\fIALL\fR
+(sempre vero)\&. Il terzo campo dovrebbe essere una lista di uno o pi\(`u nomi di terminale (per accesso locale), nomi di macchina, nomi di dominio (con il carattere \(Fo\&.\(Fc all\*(Aqinizio), indirizzi di macchina, numeri di rete internet (termina con il carattere \(Fo\&.\(Fc),
+\fIALL\fR
+(sempre vero) oppure
+\fILOCAL\fR
+(corrisponde a ogni testo che non contenga il carattere \(Fo\&.\(Fc)\&. Se si usa NIS si pu\(`o usare @nomenetgroup come nome macchina o utente\&.
+.PP
+L\*(Aqoperatore
+\fIEXCEPT\fR
+permette di scrivere regole molto compatte\&.
+.PP
+La ricerca nel file dei gruppi avviene solo quando il nome non corrisponde a quello dell\*(Aqutente che accede\&. I gruppi che possono corrispondere sono solo quelli nei quali l\*(Aqutente \(`e esplicitamente elencato: il programma non controlla l\*(Aqid del gruppo primario dell\*(Aqutente\&.
+.SH "FILE"
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBlogin\fR(1)\&.

@@ -1,0 +1,430 @@
+'\" t
+.\"     Title: newusers
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Comandi per la gestione del sistema
+.\"    Source: shadow-utils 4.2
+.\"  Language: Italian
+.\"
+.TH "NEWUSERS" "8" "09/05/2014" "shadow\-utils 4\&.2" "Comandi per la gestione del si"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOME"
+newusers \- aggiorna e crea nuovi utenti in blocco
+.SH "SINOSSI"
+.HP \w'\fBnewusers\fR\ 'u
+\fBnewusers\fR [\fIopzioni\fR] [\fIfile\fR]
+.SH "DESCRIZIONE"
+.PP
+Il comando
+\fBnewusers\fR
+legge un
+\fIfile\fR
+(o il proprio standard input) e utilizza queste informazioni per aggiornare l\*(Aqinsieme di utenti gi\(`a esistenti oppure per crearne di nuovi\&. Ogni riga \(`e nello stesso formato del file standard passwd (vedere
+\fBpasswd\fR(5)) con le seguenti eccezioni:
+.PP
+pw_name:pw_passwd:pw_uid:pw_gid:pw_gecos:pw_dir:pw_shell
+.PP
+\fIpw_name\fR
+.RS 4
+Il nome dell\*(Aqutente\&.
+.sp
+Pu\(`o essere il nome di un nuovo utente o di uno gi\(`a esistente (o uno creato precedentemente da
+\fBnewusers\fR)\&. Nel caso di utente gi\(`a esistente le informazioni sull\*(Aqutente verranno aggiornate, altrimenti verr\(`a creato un nuovo utente\&.
+.RE
+.PP
+\fIpw_passwd\fR
+.RS 4
+Questo campo verr\(`a cifrato e utilizzato come nuovo valore per la password cifrata\&.
+.RE
+.PP
+\fIpw_uid\fR
+.RS 4
+Definisce l\*(AqUID dell\*(Aqutente\&.
+.sp
+Se il campo \(`e vuoto, verr\(`a generato automaticamente un nuovo UID (non utilizzato) da parte di
+\fBnewusers\fR\&.
+.sp
+Se questo campo contiene un numero, verr\(`a utilizzato come UID\&.
+.sp
+Se questo campo contiene il nome di un utente gi\(`a esistente (o il nome di un utente creato precedentemente da
+\fBnewusers\fR), verr\(`a utilizzato l\*(AqUID dell\*(Aqutente specificato\&.
+.sp
+Se viene cambiato l\*(AqUID di un utente esistente, la propriet\(`a dei file di propriet\(`a dell\*(Aqutente stesso andr\(`a cambiata manualmente\&.
+.RE
+.PP
+\fIpw_gid\fR
+.RS 4
+Definisce il l\*(AqID del gruppo primario dell\*(Aqutente\&.
+.sp
+Se questo campo contiene il nome di un gruppo esistente (o un gruppo creato in precedenza da
+\fBnewusers\fR), verr\(`a utilizzato come ID del gruppo primario di questo utente il GID del gruppo stesso\&.
+.sp
+Se questo campo \(`e numerico, questo numero verr\(`a utilizzato come ID del gruppo primario dell\*(Aqutente\&. Se non esiste nessun gruppo con quel GID, ne viene creato uno con il nome dell\*(Aqutente e il GID specificato\&.
+.sp
+Se questo campo \(`e vuoto verr\(`a creato un nuovo gruppo con lo stesso nome dell\*(Aqutente e con un GID determinato automaticamente da
+\fBnewusers\fR
+da utilizzare come ID del gruppo primario dell\*(Aqutente e come GID del nuovo gruppo\&.
+.sp
+Se questo campo contiene il nome di un gruppo che non esiste (e non \(`e stato creato precedentemente da
+\fBnewusers\fR), verr\(`a creato un nuovo gruppo con il nome specificato e un GID determinato automaticamente da
+\fBnewusers\fR
+perch\('e sia utilizzato come ID del gruppo primario dell\*(Aqutente e come GID per il nuovo gruppo\&.
+.RE
+.PP
+\fIpw_gecos\fR
+.RS 4
+Questo campo viene copiato nel campo GECOS dell\*(Aqutente\&.
+.RE
+.PP
+\fIpw_dir\fR
+.RS 4
+Questo campo \(`e utilizzato per impostare la directory home dell\*(Aqutente\&.
+.sp
+Se questo campo non contiene il nome di una directory esistente la directory viene creata, assegnandone la propriet\(`a all\*(Aqutente che si sta definendo o aggiornando e al suo gruppo primario\&.
+.sp
+Se si modifica la directory home di un utente esistente,
+\fBnewusers\fR
+non sposta o copia il contenuto della vecchia directory nella nuova\&. Questo va fatto manualmente\&.
+.RE
+.PP
+\fIpw_shell\fR
+.RS 4
+Questo campo definisce la shell dell\*(Aqutente\&. Su questo campo non viene fatto nessun controllo\&.
+.RE
+.PP
+\fBnewusers\fR
+prova prima a creare o modificare tutti gli utenti specificati e poi scrive tutte le modifiche sui database utente e gruppi\&. Se c\*(Aq\(`e un errore (eccetto sulla scrittura finale dei database) nessuna modifica viene scritta sui database\&.
+.PP
+Questo comando \(`e appositamente pensato per grossi sistemi nei quali molti account sono aggiornati allo stesso tempo\&.
+.SH "OPZIONI"
+.PP
+Il comando
+\fBnewusers\fR
+accetta le seguenti opzioni:
+.PP
+\fB\-c\fR, \fB\-\-crypt\-method\fR
+.RS 4
+Utilizza il metodo specificato per cifrare le password\&.
+.sp
+I metodi disponibili sono DES, MD5, NONE e SHA256 o SHA512 se la propria libc lo consente\&.
+.RE
+.PP
+\fB\-h\fR, \fB\-\-help\fR
+.RS 4
+Mostra un messaggio di aiuto ed esce\&.
+.RE
+.PP
+\fB\-r\fR, \fB\-\-system\fR
+.RS 4
+Crea un account di sistema\&.
+.sp
+Gli utenti di sistema sono creati senza informazioni riguardo la scadenza della password in
+/etc/shadow
+e il loro identificativo numerico \(`e scelto nell\*(Aqintervallo
+\fBSYS_UID_MIN\fR\-\fBSYS_UID_MAX\fR
+definito nel file
+login\&.defs, anzich\('e dell\*(Aqintervallo
+\fBUID_MIN\fR\-\fBUID_MAX\fR
+(e la loro controparte
+\fBGID\fR
+per la creazione dei gruppi)\&.
+.RE
+.PP
+\fB\-R\fR, \fB\-\-root\fR\ \&\fICHROOT_DIR\fR
+.RS 4
+Effettua le modifiche nella directory
+\fICHROOT_DIR\fR
+e usa i file di configurazione dalla directory
+\fICHROOT_DIR\fR\&.
+.RE
+.PP
+\fB\-s\fR, \fB\-\-sha\-rounds\fR
+.RS 4
+Usa il numero specificato di cicli per cifrare la password\&.
+.sp
+Il valore 0 indica che il sistema utilizzer\(`a il numero predefinito di cicli per il metodo crypt (5000)\&.
+.sp
+I valori minimo di 1\&.000 e massimo di 999\&.999\&.999 sono forzati\&.
+.sp
+Si pu\(`o utilizzare questa opzione solo con i metodi di cifratura SHA256 o SHA512\&.
+.sp
+Il numero di cicli predefinito \(`e impostato con le variabili SHA_CRYPT_MIN_ROUNDS e SHA_CRYPT_MAX_ROUNDS nel file
+/etc/login\&.defs\&.
+.RE
+.SH "AVVISI/CAVEAT"
+.PP
+Il file di input deve essere protetto poich\('e contiene password non cifrate\&.
+.PP
+Ci si deve accertare che le password e il metodo di cifratura rispettino le norme delle password del sistema\&.
+.SH "CONFIGURAZIONE"
+.PP
+Le seguenti variabili di configurazione in
+/etc/login\&.defs
+cambiano il comportamento di questo strumento:
+.PP
+\fBENCRYPT_METHOD\fR (testo)
+.RS 4
+Definisce l\*(Aqalgoritmo di cifratura predefinito per le password (se non ne viene specificato uno a riga di comando)\&.
+.sp
+Pu\(`o avere uno dei seguenti valori:
+\fIDES\fR
+(predefinito),
+\fIMD5\fR, \fISHA256\fR, \fISHA512\fR\&.
+.sp
+Nota: questo parametro ha la precedenza sulla variabile
+\fBMD5_CRYPT_ENAB\fR\&.
+.RE
+.PP
+\fBGID_MAX\fR (numerico), \fBGID_MIN\fR (numerico)
+.RS 4
+Intervallo di ID di gruppo per la creazione di gruppi normali tramite
+\fBuseradd\fR,
+\fBgroupadd\fR
+o
+\fBnewusers\fR\&.
+.sp
+Il valore predefinito per
+\fBGID_MIN\fR
+(rispettivamente
+\fBGID_MAX\fR) \(`e 1000 (rispettivmente 60000)\&.
+.RE
+.PP
+\fBMAX_MEMBERS_PER_GROUP\fR (numero)
+.RS 4
+Numero massimo di membri per gruppo\&. Quando viene raggiunto il massimo, viene creata una nuova riga per il gruppo nel file
+/etc/group
+(con lo stesso nome, stessa password e stesso GID)\&.
+.sp
+Il valore predefinito \(`e 0, che non pone nessun limite al numero di membri per gruppo\&.
+.sp
+Questa opzione (dividi gruppo) permette di limitare la lunghezza delle righe nel file \(Fogroup\(Fc\&. Questo \(`e utile per essere certi che le righe per gruppi NIS non eccedano i 1024 caratteri\&.
+.sp
+Se si deve impostare questo limite, si pu\(`o usare 25\&.
+.sp
+Nota: la divisione dei gruppi potrebbe non essere supportata da ogni strumento (anche all\*(Aqinterno del pacchetto Shadow)\&. Non si dovrebbe utilizzare questa variabile a meno di esserci forzati\&.
+.RE
+.PP
+\fBMD5_CRYPT_ENAB\fR (booleano)
+.RS 4
+Indica se le password vanno cifrate usando l\*(Aqalgoritmo basato su MD5\&. Se impostato a
+\fIyes\fR
+le nuove password saranno cifrate usando un algoritmo basato su MD5 e compatibile con quello delle versioni pi\(`u recenti di FreeBSD\&. Supporta password di lunghezza qualsiasi e testi \(Fosalt\(Fc pi\(`u lunghi\&. Impostare a
+\fIno\fR
+se si devono copiare password su altri sistemi che non gestiscono l\*(Aqalgoritmo\&. Il valore predefinito \(`e
+\fIno\fR\&.
+.sp
+Questa variabile ha meno priorit\(`a della variabile
+\fBENCRYPT_METHOD\fR
+e di qualsiasi opzione a riga di comando che imposta un algoritmo di cifratura\&.
+.sp
+Questa variabile non \(`e pi\(`u usata\&. Si dovrebbe utilizzare
+\fBENCRYPT_METHOD\fR\&.
+.RE
+.PP
+\fBPASS_MAX_DAYS\fR (numerico)
+.RS 4
+Il numero massimo di giorni che una password pu\(`o essere utilizzata\&. Se la password \(`e pi\(`u vecchia verr\(`a imposto il suo cambiamento\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_MIN_DAYS\fR (numerico)
+.RS 4
+Il numero minimo di giorni tra due cambiamenti di password\&. Ogni tentativo di cambiare la password prima di questo periodo verr\(`a rifiutato\&. Se non specificato viene assunto \-1 (che disabilita questo controllo)\&.
+.RE
+.PP
+\fBPASS_WARN_AGE\fR (numerico)
+.RS 4
+Il numero di giorni per i quali un utente va avvisato che la sua password sta per scadere\&. Se zero l\*(Aqutente viene avvisato solo alla scadenza\&. Un valore negativo indica che non si deve avvisare mai\&. Se non specificato allora non c\*(Aq\(`e nessun avviso\&.
+.RE
+.PP
+\fBSHA_CRYPT_MIN_ROUNDS\fR (numerico), \fBSHA_CRYPT_MAX_ROUNDS\fR (numerico)
+.RS 4
+Quando
+\fBENCRYPT_METHOD\fR
+vale
+\fISHA256\fR
+o
+\fISHA512\fR, questo definisce il numero di cicli SHA usati per l\*(Aqalgoritmo di cifratura (quando il numero di cicli non \(`e impostato a riga di comando)\&.
+.sp
+Con molti cicli \(`e pi\(`u difficile trovare una password usando la forza bruta\&. Ma va notato che \(`e richiesta maggiore potenza di calcolo per autenticare gli utenti\&.
+.sp
+Se non specificato sar\(`a la libc a scegliere il numero di cicli (5000)\&.
+.sp
+Il valore deve essere compreso tra 1\&.000 e 999\&.999\&.999\&.
+.sp
+Se viene impostato solo uno tra
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+e
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora l\*(Aqunico valore viene utilizzato\&.
+.sp
+Se
+\fBSHA_CRYPT_MIN_ROUNDS\fR
+>
+\fBSHA_CRYPT_MAX_ROUNDS\fR, allora viene utilizzato il maggiore\&.
+.RE
+.PP
+\fBSUB_GID_MIN\fR (number), \fBSUB_GID_MAX\fR (number), \fBSUB_GID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate group IDs) allocate
+\fBSUB_GID_COUNT\fR
+unused group IDs from the range
+\fBSUB_GID_MIN\fR
+to
+\fBSUB_GID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_GID_MIN\fR,
+\fBSUB_GID_MAX\fR,
+\fBSUB_GID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSUB_UID_MIN\fR (number), \fBSUB_UID_MAX\fR (number), \fBSUB_UID_COUNT\fR (number)
+.RS 4
+If
+/etc/subuid
+exists, the commands
+\fBuseradd\fR
+and
+\fBnewusers\fR
+(unless the user already have subordinate user IDs) allocate
+\fBSUB_UID_COUNT\fR
+unused user IDs from the range
+\fBSUB_UID_MIN\fR
+to
+\fBSUB_UID_MAX\fR
+for each new user\&.
+.sp
+The default values for
+\fBSUB_UID_MIN\fR,
+\fBSUB_UID_MAX\fR,
+\fBSUB_UID_COUNT\fR
+are respectively 100000, 600100000 and 10000\&.
+.RE
+.PP
+\fBSYS_GID_MAX\fR (numerico), \fBSYS_GID_MIN\fR (numerico)
+.RS 4
+Intervallo di ID di gruppo utilizzato per la creazione di un gruppo di sistema da
+\fBuseradd\fR,
+\fBgroupadd\fR
+o
+\fBnewusers\fR\&.
+.sp
+Il valore predefinito per
+\fBSYS_GID_MIN\fR
+(rispettivamente
+\fBSYS_GID_MAX\fR) \(`e 101 (rispettivamente
+\fBGID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBSYS_UID_MAX\fR (numerico), \fBSYS_UID_MIN\fR (numerico)
+.RS 4
+Intervallo di ID utente per la creazione degli utenti di sistema con
+\fBuseradd\fR
+o
+\fBnewusers\fR\&.
+.sp
+Il valore predefinito per
+\fBSYS_UID_MIN\fR
+(rispettivamente
+\fBSYS_UID_MAX\fR) \(`e 101 (rispettivamente
+\fBUID_MIN\fR\-1)\&.
+.RE
+.PP
+\fBUID_MAX\fR (numerico), \fBUID_MIN\fR (numerico)
+.RS 4
+Intervallo di ID utente da utilizzare nella creazione degli utenti normali tramite
+\fBuseradd\fR
+o
+\fBnewusers\fR\&.
+.sp
+Il valore predefinito per
+\fBUID_MIN\fR
+(rispettivamente
+\fBUID_MAX\fR) \(`e 1000 (rispettivamente 60000)\&.
+.RE
+.PP
+\fBUMASK\fR (numerico)
+.RS 4
+La maschera di permessi alla creazione dei file \(`e inizializzata con questo valore\&. Se non specificato la maschera viene impostata a 022\&.
+.sp
+\fBuseradd\fR
+e
+\fBnewusers\fR
+usano questa maschera per impostare i permessi della directory home che creano\&.
+.sp
+Viene anche utilizzata da
+\fBlogin\fR
+per definire la maschera iniziale dell\*(Aqutente\&. Notare che questa maschera pu\(`o essere modificata dalla riga GECOS dell\*(Aqutente (se
+\fBQUOTAS_ENAB\fR
+\(`e impostato) o specificando un limite con l\*(Aqidentificativo
+\fIK\fR
+in
+\fBlimits\fR(5)\&.
+.RE
+.SH "FILE"
+.PP
+/etc/passwd
+.RS 4
+Informazioni sugli account utente\&.
+.RE
+.PP
+/etc/shadow
+.RS 4
+Informazioni sicure sugli account utente\&.
+.RE
+.PP
+/etc/group
+.RS 4
+Informazioni sugli account di gruppo\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informazioni sicure sugli account di gruppo\&.
+.RE
+.PP
+/etc/login\&.defs
+.RS 4
+Configurazione del pacchetto password shadow
+.RE
+.PP
+/etc/subgid
+.RS 4
+Per user subordinate group IDs\&.
+.RE
+.PP
+/etc/subuid
+.RS 4
+Per user subordinate user IDs\&.
+.RE
+.SH "VEDERE ANCHE"
+.PP
+\fBlogin.defs\fR(5),
+\fBpasswd\fR(1),
+\fBsubgid\fR(5), \fBsubuid\fR(5),\fBuseradd\fR(8)\&.

@@ -1,0 +1,101 @@
+'\" t
+.\"     Title: gshadow
+.\"    Author: Nicolas Fran\(,cois <nicolas.francois@centraliens.net>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/05/2014
+.\"    Manual: Formats et conversions de fichiers
+.\"    Source: shadow-utils 4.2
+.\"  Language: French
+.\"
+.TH "GSHADOW" "5" "09/05/2014" "shadow\-utils 4\&.2" "Formats et conversions de fich"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NOM"
+gshadow \- informations cach\('ees sur les groupes
+.SH "DESCRIPTION"
+.PP
+/etc/gshadow
+contient les informations cach\('ees sur les groupes\&.
+.PP
+Ce fichier ne doit pas \(^etre accessible en lecture par les utilisateurs normaux afin de maintenir la s\('ecurit\('e des mots de passe, en particuliers pour pr\('evenir les attaques par dictionnaires\&.
+.PP
+Chaque ligne de ce fichier contient les champs suivants, s\('epar\('es par des deux\-points (\(Fo\ \&:\ \&\(Fc)\ \&:
+.PP
+\fBnom du groupe\fR
+.RS 4
+Ce doit \(^etre un nom de groupe valable, qui existe sur le syst\(`eme\&.
+.RE
+.PP
+\fBmot de passe chiffr\('e\fR
+.RS 4
+Consultez
+\fBcrypt\fR(3)
+pour plus d\*(Aqinformations sur le traitement de cette cha\(^ine\&.
+.sp
+Si le champ du mot de passe contient une cha\(^ine qui ne peut pas \(^etre un r\('esultat valable de
+\fBcrypt\fR(3), par exemple si elle contient les caract\(`eres \(Fo\ \&!\ \&\(Fc ou \(Fo\ \&*\ \&\(Fc, les utilisateurs ne pourront pas utiliser le mot de passe UNIX pour acc\('eder au groupe (mais les membres du groupe n\*(Aqont pas besoin de mot de passe)\&.
+.sp
+Le mot de passe est utilis\('e quand un utilisateur non membre du groupe veut obtenir les permissions de ce groupe (consultez
+\fBnewgrp\fR(1))\&.
+.sp
+Ce champ peut \(^etre vide\&. Dans ce cas seuls les membres du groupe peuvent obtenir les permissions du groupe\&.
+.sp
+Un champ de mot de passe qui commence avec un point d\*(Aqexclamation indique que le mot de passe est bloqu\('e\&. Les caract\(`eres restants sur la ligne repr\('esentent le champ de mot de passe avant que le mot de passe n\*(Aqait \('et\('e bloqu\('e\&.
+.sp
+Ce mot de passe remplace tout mot de passe indiqu\('e dans
+/etc/group\&.
+.RE
+.PP
+\fBadministrateurs\fR
+.RS 4
+Ce champ doit \(^etre une liste d\*(Aqutilisateurs, s\('epar\('es par des virgules\&.
+.sp
+Les administrateurs peuvent modifier le mot de passe ou les membres du groupe\&.
+.sp
+Les administrateurs peuvent aussi avoir les m\(^emes permissions que les membres (voir ci\-dessous)\&.
+.RE
+.PP
+\fBmembres\fR
+.RS 4
+Ce champ doit \(^etre une liste d\*(Aqutilisateurs, s\('epar\('es par des virgules\&.
+.sp
+Les membres peuvent acc\('eder au groupe sans qu\*(Aqun mot de passe ne leur soit demand\('e\&.
+.sp
+Vous devez utiliser la m\(^eme liste d\*(Aqutilisateurs que dans
+/etc/group\&.
+.RE
+.SH "FICHIERS"
+.PP
+/etc/group
+.RS 4
+Informations sur les groupes\&.
+.RE
+.PP
+/etc/gshadow
+.RS 4
+Informations s\('ecuris\('ees sur les groupes\&.
+.RE
+.SH "VOIR AUSSI"
+.PP
+\fBgpasswd\fR(5),
+\fBgroup\fR(5),
+\fBgrpck\fR(8),
+\fBgrpconv\fR(8),
+\fBnewgrp\fR(1)\&.

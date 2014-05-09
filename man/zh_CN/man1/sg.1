@@ -1,0 +1,95 @@
+'\" t
+.\"     Title: sg
+.\"    Author: Julianne Frances Haugh
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2014-05-09
+.\"    Manual: 用户命令
+.\"    Source: shadow-utils 4.2
+.\"  Language: Chinese Simplified
+.\"
+.TH "SG" "1" "2014-05-09" "shadow\-utils 4\&.2" "用户命令"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "名称"
+sg \- 以不同的组 ID 执行命令
+.SH "大纲"
+.HP \w'\fBsg\fR\ 'u
+\fBsg\fR [\-] [组\ [\-c]\ 命令]
+.SH "描述"
+.PP
+\fBsg\fR
+命令类似于
+\fBnewgrp\fR，但是可以接受一个命令。这个命令将会使用
+/bin/sh
+shell 来执行。对于您可以使用
+\fBsg\fR
+启动的多数 shell，您需要将多个词的命令用引号引起来。\fBnewgrp\fR
+和
+\fBsg\fR
+之间的另外一个不同点是某些 shell 对
+\fBnewgrp\fR
+有特殊对待，会使用
+\fBnewgrp\fR
+创建的一个新的 shell 实例替换自身。这不会发生在
+\fBsg\fR
+身上，所以从
+\fBsg\fR
+退出后，您会返回到先前的组 ID。
+.SH "配置文件"
+.PP
+在
+/etc/login\&.defs
+中有如下配置变量，可以用来更改此工具的行为：
+.PP
+\fBSYSLOG_SG_ENAB\fR (boolean)
+.RS 4
+允许\(lqsyslog\(rq记录
+\fBsg\fR
+的活动。
+.RE
+.SH "文件"
+.PP
+/etc/passwd
+.RS 4
+用户账户信息。
+.RE
+.PP
+/etc/shadow
+.RS 4
+安全用户账户信息。
+.RE
+.PP
+/etc/group
+.RS 4
+组账户信息。
+.RE
+.PP
+/etc/gshadow
+.RS 4
+安全组账户信息。
+.RE
+.SH "参见"
+.PP
+\fBid\fR(1),
+\fBlogin\fR(1),
+\fBnewgrp\fR(1),
+\fBsu\fR(1),
+\fBgpasswd\fR(1),
+\fBgroup\fR(5), \fBgshadow\fR(5)\&.
