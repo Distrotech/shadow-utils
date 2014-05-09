@@ -10,6 +10,7 @@ usr/sbin/cppw
 usr/sbin/groupadd
 usr/sbin/groupdel
 usr/sbin/groupmod
+usr/sbin/groupmems
 usr/sbin/grpck
 usr/sbin/grpconv
 usr/sbin/grpunconv
@@ -34,6 +35,7 @@ usr/share/man/*/man8/chpasswd.8
 usr/share/man/*/man8/groupadd.8
 usr/share/man/*/man8/groupdel.8
 usr/share/man/*/man8/groupmod.8
+usr/share/man/*/man8/groupmems.8
 usr/share/man/*/man8/grpck.8
 usr/share/man/*/man8/grpconv.8
 usr/share/man/*/man8/grpunconv.8
