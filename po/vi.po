@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shadow\n"
 "Report-Msgid-Bugs-To: pkg-shadow-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2012-05-20 19:52+0200\n"
+"POT-Creation-Date: 2014-05-09 12:52+0200\n"
 "PO-Revision-Date: 2014-04-11 15:01+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <debian-l10n-vietnamese@lists.debian.org>\n"
@@ -425,6 +425,11 @@ msgstr "%s: đường dẫn chroot không hợp lệ “%s”\n"
 msgid "%s: cannot access chroot directory %s: %s\n"
 msgstr "%s: không thể truy cập thư mục chroot %s: %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: cannot access chroot directory %s: %s\n"
+msgid "%s: cannot chdir to chroot directory %s: %s\n"
+msgstr "%s: không thể truy cập thư mục chroot %s: %s\n"
+
 #, c-format
 msgid "%s: unable to chroot to directory %s: %s\n"
 msgstr "%s: không thể thay đổi thư mục gốc thành %s: %s\n"
@@ -785,6 +790,11 @@ msgstr "%s: dòng %d: dòng quá dài\n"
 #, c-format
 msgid "%s: line %d: missing new password\n"
 msgstr "%s: dòng %d: thiếu mật khẩu mới\n"
+
+#, fuzzy, c-format
+#| msgid "%s: Failed to write %s: %s\n"
+msgid "%s: failed to crypt password with salt '%s': %s\n"
+msgstr "%s: Gặp lỗi khi ghi %s: %s\n"
 
 #, c-format
 msgid "%s: line %d: group '%s' does not exist\n"
@@ -1470,6 +1480,11 @@ msgstr ""
 "Cách dùng: sg group [[-c] lệnh]\n"
 "[group: nhóm]\n"
 
+#, fuzzy, c-format
+#| msgid "%s: Failed to write %s: %s\n"
+msgid "%s: failed to crypt password with previous salt: %s\n"
+msgstr "%s: Gặp lỗi khi ghi %s: %s\n"
+
 msgid "Invalid password.\n"
 msgstr "Mật khẩu không hợp lệ.\n"
 
@@ -1537,6 +1552,21 @@ msgstr "%s: dòng %d: lỗi chown (thay đổi quyền sở hữu) %s: %s\n"
 #, c-format
 msgid "%s: line %d: can't update entry\n"
 msgstr "%s: dòng %d: không thể cập nhật mục tin\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to prepare new %s entry\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create user\n"
+msgid "%s: can't find subordinate user range\n"
+msgstr "%s: không thể tạo người dùng\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create group\n"
+msgid "%s: can't find subordinate group range\n"
+msgstr "%s: không thể tạo nhóm\n"
 
 msgid ""
 "  -a, --all                     report password status on all accounts\n"
@@ -1828,12 +1858,12 @@ msgstr "%s: trục trặc mặt nạ tín hiệu\n"
 msgid "Session terminated, terminating shell..."
 msgstr "Phiên làm việc đã kết thúc, nên kết thúc hệ vỏ..."
 
+msgid " ...terminated.\n"
+msgstr " ...đã chấm dứt.\n"
+
 #, c-format
 msgid "%s: %s\n"
 msgstr "%s: %s\n"
-
-msgid " ...terminated.\n"
-msgstr " ...đã chấm dứt.\n"
 
 msgid ""
 "Usage: su [options] [LOGIN]\n"
@@ -2116,6 +2146,11 @@ msgstr "%s: không đặt lại được mục tin faillog của UID %lu: %s\n"
 msgid "%s: failed to reset the lastlog entry of UID %lu: %s\n"
 msgstr "%s: gặp lỗi khi đặt lại mục tin lastlog của UID %lu: %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to prepare the new %s entry\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
+
 #, c-format
 msgid "%s: cannot create directory %s\n"
 msgstr "%s: không thể tạo thư mục %s\n"
@@ -2155,6 +2190,16 @@ msgstr "%s: Gặp lỗi khi tạo thư mục tcb cho %s\n"
 
 #, c-format
 msgid "%s: can't create group\n"
+msgstr "%s: không thể tạo nhóm\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create user\n"
+msgid "%s: can't create subordinate user IDs\n"
+msgstr "%s: không thể tạo người dùng\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create group\n"
+msgid "%s: can't create subordinate group IDs\n"
 msgstr "%s: không thể tạo nhóm\n"
 
 #, c-format
@@ -2203,6 +2248,11 @@ msgstr "%s: không thể gỡ bỏ nhóm %s bởi vì nó có thành viên khác
 msgid "%s: group %s is the primary group of another user and is not removed.\n"
 msgstr ""
 "%s: nhóm %s là nhóm chính của một người dùng khác thì không bị gỡ bỏ.\n"
+
+#, fuzzy, c-format
+#| msgid "%s: cannot remove entry '%s' from %s\n"
+msgid "%s: cannot remove entry %lu from %s\n"
+msgstr "%s: không thể gỡ bỏ mục tin “%s” khỏi %s\n"
 
 #, c-format
 msgid "%s: %s mail spool (%s) not found\n"
@@ -2321,6 +2371,18 @@ msgstr "  -u, --uid UID                 UID mới cho tài khoản người dùn
 msgid "  -U, --unlock                  unlock the user account\n"
 msgstr "  -U, --unlock                  mở khoá tài khoản người dùng\n"
 
+msgid "  -v, --add-subuids FIRST-LAST  add range of subordinate uids\n"
+msgstr ""
+
+msgid "  -V, --del-subuids FIRST-LAST  remove range of subordinate uids\n"
+msgstr ""
+
+msgid "  -w, --add-subgids FIRST-LAST  add range of subordinate gids\n"
+msgstr ""
+
+msgid "  -W, --del-subgids FIRST-LAST  remove range of subordinate gids\n"
+msgstr ""
+
 msgid ""
 "  -Z, --selinux-user SEUSER     new SELinux user mapping for the user "
 "account\n"
@@ -2341,6 +2403,16 @@ msgstr ""
 msgid "%s: user '%s' already exists in %s\n"
 msgstr "%s: người dùng “%s” đã có trong %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: invalid date '%s'\n"
+msgid "%s: invalid subordinate uid range '%s'\n"
+msgstr "%s: ngày không hợp lệ “%s”\n"
+
+#, fuzzy, c-format
+#| msgid "%s: invalid date '%s'\n"
+msgid "%s: invalid subordinate gid range '%s'\n"
+msgstr "%s: ngày không hợp lệ “%s”\n"
+
 #, c-format
 msgid "%s: no options\n"
 msgstr "%s: không tùy chọn\n"
@@ -2356,6 +2428,31 @@ msgstr "%s: mật khẩu shadow cần cho hai tùy chọn “-e” và “-f”\
 #, c-format
 msgid "%s: UID '%lu' already exists\n"
 msgstr "%s: UID “%lu” đã có\n"
+
+#, fuzzy, c-format
+#| msgid "%s: %s is not authorized to change the password of %s\n"
+msgid "%s: %s does not exist, you cannot use the flags %s or %s\n"
+msgstr "%s: %s không có quyền thay đổi mật khẩu của %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to remove uid range %lu-%lu from '%s'\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to add uid range %lu-%lu from '%s'\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to remove gid range %lu-%lu from '%s'\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to add gid range %lu-%lu from '%s'\n"
+msgstr "%s: gặp lỗi khi chuẩn bị mục tin %s mới “%s”\n"
 
 #, c-format
 msgid "%s: directory %s exists\n"
@@ -2454,6 +2551,20 @@ msgstr "Không thể khoá tập tin"
 
 msgid "Couldn't make backup"
 msgstr "Không thể sao lưu"
+
+#, fuzzy, c-format
+#| msgid "%s: PAM: %s\n"
+msgid "%s: %s: %s\n"
+msgstr "%s: PAM: %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: nscd exited with status %d\n"
+msgid "%s: %s returned with status %d\n"
+msgstr "%s: nscd đã thoát với mã là %d\n"
+
+#, c-format
+msgid "%s: %s killed by signal %d\n"
+msgstr ""
 
 msgid "failed to open scratch file"
 msgstr "gặp lỗi khi mở tập tin hỗn tạp"

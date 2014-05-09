@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shadow\n"
 "Report-Msgid-Bugs-To: pkg-shadow-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2012-05-20 19:52+0200\n"
+"POT-Creation-Date: 2014-05-09 12:52+0200\n"
 "PO-Revision-Date: 2004-06-03 21:41+0200\n"
 "Last-Translator: Håvard Korsvoll <korsvoll@skulelinux.no>\n"
 "Language-Team: Norwegian (Nynorsk) <i18n-nn@lister.ping.uio.no>\n"
@@ -435,6 +435,11 @@ msgstr "%s: kan ikkje oppretta mappa %s\n"
 
 #, fuzzy, c-format
 #| msgid "%s: cannot create directory %s\n"
+msgid "%s: cannot chdir to chroot directory %s: %s\n"
+msgstr "%s: kan ikkje oppretta mappa %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: cannot create directory %s\n"
 msgid "%s: unable to chroot to directory %s: %s\n"
 msgstr "%s: kan ikkje oppretta mappa %s\n"
 
@@ -775,6 +780,10 @@ msgstr "%s: linje %d: linja er for lang\n"
 #, c-format
 msgid "%s: line %d: missing new password\n"
 msgstr "%s: linje %d: manglar nytt passord\n"
+
+#, fuzzy, c-format
+msgid "%s: failed to crypt password with salt '%s': %s\n"
+msgstr "%s: ugyldig telefonnummer, arbeid: «%s»\n"
 
 #, fuzzy, c-format
 #| msgid "%s: group %s does not exist\n"
@@ -1427,6 +1436,10 @@ msgstr "Bruk: newgrp [-] [gruppe]\n"
 msgid "Usage: sg group [[-c] command]\n"
 msgstr "Bruk: sg gruppe [[-c] kommando]\n"
 
+#, fuzzy, c-format
+msgid "%s: failed to crypt password with previous salt: %s\n"
+msgstr "%s: ugyldig telefonnummer, arbeid: «%s»\n"
+
 #, fuzzy
 msgid "Invalid password.\n"
 msgstr "Gamalt passord:"
@@ -1495,6 +1508,20 @@ msgstr "%s: linje %d: chown feila\n"
 #, c-format
 msgid "%s: line %d: can't update entry\n"
 msgstr "%s: linje %d: kan ikkje oppdatere oppføring\n"
+
+#, fuzzy, c-format
+#| msgid "%s: line %d: can't update entry\n"
+msgid "%s: failed to prepare new %s entry\n"
+msgstr "%s: linje %d: kan ikkje oppdatere oppføring\n"
+
+#, fuzzy, c-format
+msgid "%s: can't find subordinate user range\n"
+msgstr "%s: kan ikkje oppretta %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't update group file\n"
+msgid "%s: can't find subordinate group range\n"
+msgstr "%s: klarer ikkje oppdatere gruppefil\n"
 
 msgid ""
 "  -a, --all                     report password status on all accounts\n"
@@ -1771,12 +1798,12 @@ msgstr ""
 msgid "Session terminated, terminating shell..."
 msgstr ""
 
+msgid " ...terminated.\n"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s: %s\n"
 msgstr "passwd: %s\n"
-
-msgid " ...terminated.\n"
-msgstr ""
 
 msgid ""
 "Usage: su [options] [LOGIN]\n"
@@ -2030,6 +2057,11 @@ msgstr ""
 msgid "%s: failed to reset the lastlog entry of UID %lu: %s\n"
 msgstr ""
 
+#, fuzzy, c-format
+#| msgid "%s: line %d: can't update entry\n"
+msgid "%s: failed to prepare the new %s entry\n"
+msgstr "%s: linje %d: kan ikkje oppdatere oppføring\n"
+
 #, c-format
 msgid "%s: cannot create directory %s\n"
 msgstr "%s: kan ikkje oppretta mappa %s\n"
@@ -2073,6 +2105,14 @@ msgstr "%s: kan ikkje oppretta mappa %s\n"
 msgid "%s: can't create group\n"
 msgstr "%s: kan ikkje oppretta %s\n"
 
+#, fuzzy, c-format
+msgid "%s: can't create subordinate user IDs\n"
+msgstr "%s: kan ikkje oppretta %s\n"
+
+#, fuzzy, c-format
+msgid "%s: can't create subordinate group IDs\n"
+msgstr "%s: kan ikkje oppretta %s\n"
+
 #, c-format
 msgid ""
 "%s: warning: the home directory already exists.\n"
@@ -2108,6 +2148,11 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: group %s is the primary group of another user and is not removed.\n"
 msgstr "%s: klarer ikkje fjerna primærgruppa til brukaren.\n"
+
+#, fuzzy, c-format
+#| msgid "%s: cannot rename directory %s to %s\n"
+msgid "%s: cannot remove entry %lu from %s\n"
+msgstr "%s: klarte ikkje endra namn på mappa %s til %s\n"
 
 #, fuzzy, c-format
 msgid "%s: %s mail spool (%s) not found\n"
@@ -2215,6 +2260,18 @@ msgstr ""
 msgid "  -U, --unlock                  unlock the user account\n"
 msgstr ""
 
+msgid "  -v, --add-subuids FIRST-LAST  add range of subordinate uids\n"
+msgstr ""
+
+msgid "  -V, --del-subuids FIRST-LAST  remove range of subordinate uids\n"
+msgstr ""
+
+msgid "  -w, --add-subgids FIRST-LAST  add range of subordinate gids\n"
+msgstr ""
+
+msgid "  -W, --del-subgids FIRST-LAST  remove range of subordinate gids\n"
+msgstr ""
+
 msgid ""
 "  -Z, --selinux-user SEUSER     new SELinux user mapping for the user "
 "account\n"
@@ -2232,6 +2289,14 @@ msgid "%s: user '%s' already exists in %s\n"
 msgstr "%s: brukar %s finst\n"
 
 #, fuzzy, c-format
+msgid "%s: invalid subordinate uid range '%s'\n"
+msgstr "%s: ugyldig dato «%s»\n"
+
+#, fuzzy, c-format
+msgid "%s: invalid subordinate gid range '%s'\n"
+msgstr "%s: ugyldig dato «%s»\n"
+
+#, fuzzy, c-format
 #| msgid "%s: cannot open file %s\n"
 msgid "%s: no options\n"
 msgstr "%s: klarer ikkje opna fila %s\n"
@@ -2247,6 +2312,27 @@ msgstr "%s: skuggepassord krevst for -e og -f\n"
 #, c-format
 msgid "%s: UID '%lu' already exists\n"
 msgstr ""
+
+#, c-format
+msgid "%s: %s does not exist, you cannot use the flags %s or %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: failed to remove uid range %lu-%lu from '%s'\n"
+msgstr "%s: ugyldig telefonnummer, arbeid: «%s»\n"
+
+#, fuzzy, c-format
+#| msgid "%s: fields too long\n"
+msgid "%s: failed to add uid range %lu-%lu from '%s'\n"
+msgstr "%s: felta er for lange\n"
+
+#, fuzzy, c-format
+msgid "%s: failed to remove gid range %lu-%lu from '%s'\n"
+msgstr "%s: ugyldig telefonnummer, arbeid: «%s»\n"
+
+#, fuzzy, c-format
+msgid "%s: failed to add gid range %lu-%lu from '%s'\n"
+msgstr "%s: ugyldig startmappe «%s»\n"
 
 #, c-format
 msgid "%s: directory %s exists\n"
@@ -2346,6 +2432,19 @@ msgstr "Klarte ikkje låsa fil"
 
 msgid "Couldn't make backup"
 msgstr "Klarte ikkje laga reservekopi"
+
+#, fuzzy, c-format
+msgid "%s: %s: %s\n"
+msgstr "passwd: %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: %s not found in /etc/passwd\n"
+msgid "%s: %s returned with status %d\n"
+msgstr "%s: %s ikkje funne i /etc/passwd\n"
+
+#, c-format
+msgid "%s: %s killed by signal %d\n"
+msgstr ""
 
 #, fuzzy
 msgid "failed to open scratch file"
@@ -2525,9 +2624,6 @@ msgstr "%s: ugyldig startmappe «%s»\n"
 
 #~ msgid "Cannot open the password file.\n"
 #~ msgstr "Klarer ikkje opna passordfila.\n"
-
-#~ msgid "%s: %s not found in /etc/passwd\n"
-#~ msgstr "%s: %s ikkje funne i /etc/passwd\n"
 
 #~ msgid "Error updating the password entry.\n"
 #~ msgstr "Feil ved oppdatering av passordet.\n"
@@ -2724,9 +2820,6 @@ msgstr "%s: ugyldig startmappe «%s»\n"
 
 #~ msgid "%s: can't update shadow group file\n"
 #~ msgstr "%s: klarer ikkje oppdatere skuggegruppefil\n"
-
-#~ msgid "%s: can't update group file\n"
-#~ msgstr "%s: klarer ikkje oppdatere gruppefil\n"
 
 #~ msgid "%s: can't delete shadow group file\n"
 #~ msgstr "%s: klan ikkje slette skuggegruppefil\n"

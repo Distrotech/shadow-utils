@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shadow_po_el\n"
 "Report-Msgid-Bugs-To: pkg-shadow-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2012-05-20 19:52+0200\n"
+"POT-Creation-Date: 2014-05-09 12:52+0200\n"
 "PO-Revision-Date: 2012-01-21 00:22+0200\n"
 "Last-Translator: Thomas Vasileiou <thomas-v@wildmail.com>\n"
 "Language-Team: Greek <debian-l10n-greek@lists.debian.org>\n"
@@ -432,6 +432,11 @@ msgstr "%s: διαδρομή chroot μη έγκυρη '%s'\n"
 msgid "%s: cannot access chroot directory %s: %s\n"
 msgstr "%s: αδυναμία προσπέλαση του καταλόγου chroot %s: %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: cannot access chroot directory %s: %s\n"
+msgid "%s: cannot chdir to chroot directory %s: %s\n"
+msgstr "%s: αδυναμία προσπέλαση του καταλόγου chroot %s: %s\n"
+
 #, c-format
 msgid "%s: unable to chroot to directory %s: %s\n"
 msgstr ""
@@ -805,6 +810,11 @@ msgstr "%s: γραμμή %d: πολύ μεγάλη γραμμή\n"
 #, c-format
 msgid "%s: line %d: missing new password\n"
 msgstr "%s: γραμμή %d: έλλειψη νέου συνθηματικού\n"
+
+#, fuzzy, c-format
+#| msgid "%s: Failed to write %s: %s\n"
+msgid "%s: failed to crypt password with salt '%s': %s\n"
+msgstr "%s: Αποτυχία εγγραφής %s: %s\n"
 
 #, c-format
 msgid "%s: line %d: group '%s' does not exist\n"
@@ -1494,6 +1504,11 @@ msgstr "Χρήση: newgrp [-] [ομάδα]\n"
 msgid "Usage: sg group [[-c] command]\n"
 msgstr "Χρήση: sg ομάδα [[-c] εντολή]\n"
 
+#, fuzzy, c-format
+#| msgid "%s: Failed to write %s: %s\n"
+msgid "%s: failed to crypt password with previous salt: %s\n"
+msgstr "%s: Αποτυχία εγγραφής %s: %s\n"
+
 msgid "Invalid password.\n"
 msgstr "Λάθος συνθηματικό.\n"
 
@@ -1561,6 +1576,21 @@ msgstr "%s: γραμμή %d: αποτυχία αλλαγής ιδιοκτήτη 
 #, c-format
 msgid "%s: line %d: can't update entry\n"
 msgstr "%s: γραμμή %d: αδυναμία ανανέωσης καταχώρησης\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to prepare new %s entry\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create user\n"
+msgid "%s: can't find subordinate user range\n"
+msgstr "%s: αδυναμία δημιουργίας του χρήστη\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't update group file\n"
+msgid "%s: can't find subordinate group range\n"
+msgstr "%s: αδυναμία ανανέωσης για το αρχείο ομάδων\n"
 
 msgid ""
 "  -a, --all                     report password status on all accounts\n"
@@ -1871,12 +1901,12 @@ msgstr "%s: δυσλειτουργία μασκαρίσμος του σήματ�
 msgid "Session terminated, terminating shell..."
 msgstr "Συνεδρία τερματίστηκε, τερματισμός φλοιού..."
 
+msgid " ...terminated.\n"
+msgstr " ...τερματίστηκε.\n"
+
 #, c-format
 msgid "%s: %s\n"
 msgstr "%s: %s\n"
-
-msgid " ...terminated.\n"
-msgstr " ...τερματίστηκε.\n"
 
 msgid ""
 "Usage: su [options] [LOGIN]\n"
@@ -2167,6 +2197,11 @@ msgstr "%s: αποτυχία επαναφοράς της καταχώρησης 
 msgid "%s: failed to reset the lastlog entry of UID %lu: %s\n"
 msgstr "%s: αποτυχία επαναφοράς της καταχώρησης στο lastlog του UID %lu: %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to prepare the new %s entry\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
+
 #, c-format
 msgid "%s: cannot create directory %s\n"
 msgstr "%s: αδυναμία δημιουργίας καταλόγου %s\n"
@@ -2207,6 +2242,16 @@ msgstr "%s: Αδυναμία δημιουργίας tcb καταλόγου γι�
 
 #, c-format
 msgid "%s: can't create group\n"
+msgstr "%s: αδυναμία δημιουργίας ομάδας\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create user\n"
+msgid "%s: can't create subordinate user IDs\n"
+msgstr "%s: αδυναμία δημιουργίας του χρήστη\n"
+
+#, fuzzy, c-format
+#| msgid "%s: can't create group\n"
+msgid "%s: can't create subordinate group IDs\n"
 msgstr "%s: αδυναμία δημιουργίας ομάδας\n"
 
 #, c-format
@@ -2258,6 +2303,11 @@ msgstr "%s: η ομάδα %s δεν αφαιρέθηκε γιατί περιέχ
 msgid "%s: group %s is the primary group of another user and is not removed.\n"
 msgstr ""
 "%s: η ομάδα %s είναι πρωταρχική ομάδα για άλλο χρήστη και δεν διαγράφηκε.\n"
+
+#, fuzzy, c-format
+#| msgid "%s: cannot remove entry '%s' from %s\n"
+msgid "%s: cannot remove entry %lu from %s\n"
+msgstr "%s: αδυναμία απομάκρυνσης της εγγραφής '%s' από το %s\n"
 
 #, c-format
 msgid "%s: %s mail spool (%s) not found\n"
@@ -2386,6 +2436,18 @@ msgid "  -U, --unlock                  unlock the user account\n"
 msgstr ""
 "  -U, --unlock                  ξεκλείδωμα του λογαριασμού του χρήστη\n"
 
+msgid "  -v, --add-subuids FIRST-LAST  add range of subordinate uids\n"
+msgstr ""
+
+msgid "  -V, --del-subuids FIRST-LAST  remove range of subordinate uids\n"
+msgstr ""
+
+msgid "  -w, --add-subgids FIRST-LAST  add range of subordinate gids\n"
+msgstr ""
+
+msgid "  -W, --del-subgids FIRST-LAST  remove range of subordinate gids\n"
+msgstr ""
+
 msgid ""
 "  -Z, --selinux-user SEUSER     new SELinux user mapping for the user "
 "account\n"
@@ -2407,6 +2469,16 @@ msgstr ""
 msgid "%s: user '%s' already exists in %s\n"
 msgstr "%s: Ο χρήστης %s υπάρχει ήδη στο %s\n"
 
+#, fuzzy, c-format
+#| msgid "%s: invalid date '%s'\n"
+msgid "%s: invalid subordinate uid range '%s'\n"
+msgstr "%s: Μη έγκυρη ημερομηνία '%s'\n"
+
+#, fuzzy, c-format
+#| msgid "%s: invalid date '%s'\n"
+msgid "%s: invalid subordinate gid range '%s'\n"
+msgstr "%s: Μη έγκυρη ημερομηνία '%s'\n"
+
 #, c-format
 msgid "%s: no options\n"
 msgstr "%s: χωρίς επιλογές\n"
@@ -2422,6 +2494,33 @@ msgstr "%s: σκιώδη συνθηματικά απαιτούνται για τ
 #, c-format
 msgid "%s: UID '%lu' already exists\n"
 msgstr "%s: το UID '%lu' υπάρχει ήδη\n"
+
+#, fuzzy, c-format
+#| msgid "%s: %s is not authorized to change the password of %s\n"
+msgid "%s: %s does not exist, you cannot use the flags %s or %s\n"
+msgstr ""
+"%s: ο χρήστης %s δεν είναι εξουσιοδοτημένος να αλλάξει το συνθηματικό του "
+"%s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to remove uid range %lu-%lu from '%s'\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to add uid range %lu-%lu from '%s'\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to remove gid range %lu-%lu from '%s'\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
+
+#, fuzzy, c-format
+#| msgid "%s: failed to prepare the new %s entry '%s'\n"
+msgid "%s: failed to add gid range %lu-%lu from '%s'\n"
+msgstr "%s: αποτυχία προετοιμασίας της νέας εγγραφής %s '%s'\n"
 
 #, c-format
 msgid "%s: directory %s exists\n"
@@ -2525,6 +2624,20 @@ msgstr "Αδυναμία ξεκλειδώματος αρχείου"
 
 msgid "Couldn't make backup"
 msgstr "Αδυναμία δημιουργίας αντιγράφου ασφαλείας "
+
+#, fuzzy, c-format
+#| msgid "%s: PAM: %s\n"
+msgid "%s: %s: %s\n"
+msgstr "%s: PAM: %s\n"
+
+#, fuzzy, c-format
+#| msgid "%s: nscd exited with status %d"
+msgid "%s: %s returned with status %d\n"
+msgstr "%s: το ncsd τερμάτισε με κατάσταση εξόδου %d"
+
+#, c-format
+msgid "%s: %s killed by signal %d\n"
+msgstr ""
 
 msgid "failed to open scratch file"
 msgstr "αποτυχία ανοίγματος προσωρινού αρχείου"
@@ -3385,9 +3498,6 @@ msgstr "%s: αποτυχία εύρεσης καταλόγου tcb %s\n"
 
 #~ msgid "%s: can't update shadow group file\n"
 #~ msgstr "%s: αδυναμία ανανέωσης του αρχείου σκιωδών συνθηματικών ομάδων\n"
-
-#~ msgid "%s: can't update group file\n"
-#~ msgstr "%s: αδυναμία ανανέωσης για το αρχείο ομάδων\n"
 
 #~ msgid "%s: can't delete shadow group file\n"
 #~ msgstr ""
