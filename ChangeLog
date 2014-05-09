@@ -1,3 +1,7 @@
+2014-04-30  Christian Perrier  <bubulle@debian.org>
+
+	* Release 4.2 "as is"
+
 2013-08-25  Nicolas François  <nicolas.francois@centraliens.net>
 
 	* src/vipw.c: After waitpid(), use errno only if waitpid returned
