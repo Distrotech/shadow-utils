@@ -1,3 +1,10 @@
+2014-05-09  Christian Perrier  <bubulle@debian.org>
+
+	* Include patches only included in Debian for 4.2
+	* man/su.1.xml: Fix typo
+	* etc/login.defs src/newusers.c src/useradd.c libmisc/find_new_sub_uids.c libmisc/find_new_sub_gids.c:
+	  configure userns
+
 2014-04-30  Christian Perrier  <bubulle@debian.org>
 
 	* Release 4.2 "as is"
