@@ -1,6 +1,18 @@
 $Id$
 
-shadow-4.1.5.1 -> shadow-4.2					UNRELEASED
+shadow-4.2 -> shadow-4.2.1					UNRELEASED
+
+*** general
+  * Properly release with a generated configure script, built manpages
+  * Include the configure_userns patch from Debian
+
+*** translation
+  * Vietnamese translation update
+  * French man pages translation update
+  * French translation update
+  * Typo fixes in German translation
+
+shadow-4.1.5.1 -> shadow-4.2					2013-04-30
 
 *** general
   * Handle libc whose crypt() returns NULL when passed a salt that
