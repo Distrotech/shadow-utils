@@ -6,6 +6,7 @@
 	  configure userns
 	* po/vi.po: Vietnamese translation update
 	* po/fr.po, man/po/fr.po: French translation update
+	* po/de.po: German translation update
 
 2014-04-30  Christian Perrier  <bubulle@debian.org>
 
