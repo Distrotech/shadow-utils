@@ -3,6 +3,8 @@
 
 DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 
+export DEB_BUILD_HARDENING=1
+
 # Enable PIE, BINDNOW, and possible future flags.
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
