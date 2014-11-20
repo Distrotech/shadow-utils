@@ -1,11 +1,11 @@
-shadow (1:4.2-3) UNRELEASED; urgency=low
+shadow (1:4.2-3) unstable; urgency=low
 
   * Enforce hardened builds to workaround cdbs sometimes not building
     with hardening flags as in 1:4.2-2+b1
     Thanks to Dr. Markus Waldeck for pointing the issue and Simon Ruderich
     For providing a working patch.
 
- -- Christian Perrier <bubulle@debian.org>  Wed, 19 Nov 2014 21:50:10 +0100
+ -- Christian Perrier <bubulle@debian.org>  Wed, 19 Nov 2014 21:59:09 +0100
 
 shadow (1:4.2-2) unstable; urgency=low
 
